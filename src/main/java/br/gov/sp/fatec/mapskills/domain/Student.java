@@ -14,6 +14,14 @@ public class Student implements Profile {
 	public Integer id() {
 		return id;
 	}
+
+	public String name() {
+		return name;
+	}
+
+	public void changeName(String newName) {
+		this.name = newName;
+	}
 	
 
 }
