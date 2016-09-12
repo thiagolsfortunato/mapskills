@@ -8,32 +8,40 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "skill")
-public class Skill {
+@Table(name = "alternative")
+public class Alternative {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ski_id")
+	@Column(name = "alt_id")
 	private Integer id;
 	
-	@Column(name = "ski_description", nullable = false)
+	@Column(name = "alt_description", nullable = false)
 	private String description;
 	
-	public Skill() {}
+	@Column(name = "alt_skillValue", nullable = false)
+	private Integer skillValue;
+		
+	public Alternative() {}
 	
-	public Skill(final String description) {
+	public Alternative(final String description, final Integer skillValue) {
 		this.description = description;
-	}
-	
-	public Integer id() {
-		return id;
+		this.skillValue = skillValue;
 	}
 	
 	public String description() {
 		return description;
 	}
 	
+	public Integer skillValue() {
+		return skillValue;
+	}
+	
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
+	}
+	
+	public void changeSkillValue(final Integer newSkillValue) {
+		this.skillValue = newSkillValue;
 	}
 
 }

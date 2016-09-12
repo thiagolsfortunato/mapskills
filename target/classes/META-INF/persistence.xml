@@ -13,6 +13,9 @@
 		<!-- entidade mapeada -->
 		<class>br.gov.sp.fatec.mapskills.domain.Mentor</class>
 		<class>br.gov.sp.fatec.mapskills.domain.Institution</class>
+		<class>br.gov.sp.fatec.mapskills.domain.Skill</class>
+		<class>br.gov.sp.fatec.mapskills.domain.Question</class>
+		<class>br.gov.sp.fatec.mapskills.domain.Alternative</class>
 
 		<properties>
 			<!-- dados da conexao -->

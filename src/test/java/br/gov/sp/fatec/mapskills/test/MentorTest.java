@@ -9,16 +9,15 @@ import br.gov.sp.fatec.mapskills.domain.Institution;
 import br.gov.sp.fatec.mapskills.domain.Mentor;
 import br.gov.sp.fatec.mapskills.domain.Profile;
 import br.gov.sp.fatec.mapskills.repository.MentorRepository;
-import br.gov.sp.fatec.mapskills.repository.Repository;
 
-public class ProfileTest {
+public class MentorTest implements ApplicationTest{
 	
-	Repository persistence = new MentorRepository();
+	final MentorRepository persistence = new MentorRepository();
 	
 	@Test
 	public void save() {
-		Institution fatec = new Institution("83237522000139", "Jessen Vidal", "São José");
-		Profile mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123", fatec);
+		final Institution fatec = new Institution("83237522000139", "Jessen Vidal", "São José");
+		final Profile mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123", fatec);
 		persistence.save(mentor);
 		
 		assertEquals(mentor.id(), persistence.findById(mentor.id()).id());
@@ -27,8 +26,9 @@ public class ProfileTest {
 	
 	@Test
 	public void update() {
-		Profile mentor = persistence.findById(1);
+		final Mentor mentor = persistence.findById(2);
 		mentor.changeName("Marcos Silveira");
+		mentor.changeInstitution(new Institution("71461173000155","Fatec Jacarei","Jacarei"));
 		persistence.update(mentor);
 		
 		assertEquals("Marcos Silveira", persistence.findById(mentor.id()).name());
@@ -37,7 +37,7 @@ public class ProfileTest {
 	
 	@Test
 	public void delete() {
-		Profile mentor = persistence.findById(1);
+		final Profile mentor = persistence.findById(1);
 		persistence.delete(mentor);
 
 		Assert.assertNull(persistence.findById(1));

@@ -5,35 +5,34 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import br.gov.sp.fatec.mapskills.domain.Mentor;
-import br.gov.sp.fatec.mapskills.domain.Profile;
 
 public class MentorRepository implements Repository {
 
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("mapskills");
 	EntityManager manager = factory.createEntityManager();
 
-	public void save(Profile profile) {
+	public void save(final Object profile) {
 		manager.getTransaction().begin();
 		manager.persist(profile);
 		manager.getTransaction().commit();
 
 	}
 
-	public void update(Profile profile) {
+	public void update(final Object profile) {
 		manager.getTransaction().begin();
 		manager.merge(profile);
 		manager.getTransaction().commit();
 
 	}
 
-	public void delete(Profile profile) {
+	public void delete(final Object profile) {
 		manager.getTransaction().begin();
 		manager.remove(profile);
 		manager.getTransaction().commit();
 
 	}
 
-	public Profile findById(Integer id) {
+	public Mentor findById(final Integer id) {
 		return manager.find(Mentor.class, id);
 	}
 
