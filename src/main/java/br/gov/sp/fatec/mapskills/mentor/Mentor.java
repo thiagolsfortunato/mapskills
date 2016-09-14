@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.domain;
+package br.gov.sp.fatec.mapskills.mentor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
 @Table(name="mentor")
@@ -49,7 +51,7 @@ public class Mentor implements Profile {
 		return name;
 	}
 	
-	public void changeName(final String newName) {
+	public void setName(final String newName) {
 		this.name = newName;
 	}
 	

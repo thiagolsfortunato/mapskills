@@ -4,44 +4,47 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.sp.fatec.mapskills.domain.Institution;
-import br.gov.sp.fatec.mapskills.domain.Mentor;
-import br.gov.sp.fatec.mapskills.domain.Profile;
-import br.gov.sp.fatec.mapskills.repository.MentorRepository;
+import br.gov.sp.fatec.mapskills.mentor.Institution;
+import br.gov.sp.fatec.mapskills.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.mentor.MentorRepository;
 
 public class MentorTest implements ApplicationTest{
 	
-	final MentorRepository persistence = new MentorRepository();
+	@Autowired
+	MentorRepository repository;
 	
 	@Test
+	@Transactional
 	public void save() {
-		final Institution fatec = new Institution("83237522000139", "Jessen Vidal", "São José");
-		final Profile mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123", fatec);
-		persistence.save(mentor);
+		final Institution fatec = new Institution("83237522000139", "Jessen Vidal", "Sï¿½o Josï¿½");
+		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123", fatec);
+		repository.save(mentor);
 		
-		assertEquals(mentor.id(), persistence.findById(mentor.id()).id());
-		persistence.close();
+		
+		assertEquals(mentor.id(), repository.findById(mentor.id()).id());
 	}
 	
 	@Test
+	@Transactional
 	public void update() {
-		final Mentor mentor = persistence.findById(2);
-		mentor.changeName("Marcos Silveira");
+		final Mentor mentor = repository.findById(2);
+		mentor.setName("Marcos Silveira");
 		mentor.changeInstitution(new Institution("71461173000155","Fatec Jacarei","Jacarei"));
-		persistence.update(mentor);
+		repository.save(mentor);
 		
-		assertEquals("Marcos Silveira", persistence.findById(mentor.id()).name());
-		persistence.close();
+		assertEquals("Marcos Silveira", repository.findById(mentor.id()).name());
 	}
 	
 	@Test
+	@Transactional
 	public void delete() {
-		final Profile mentor = persistence.findById(1);
-		persistence.delete(mentor);
+		final Mentor mentor = repository.findById(1);
+		repository.delete(mentor);
 
-		Assert.assertNull(persistence.findById(1));
-		persistence.close();
+		Assert.assertNull(repository.findById(1));
 	}
 
 }

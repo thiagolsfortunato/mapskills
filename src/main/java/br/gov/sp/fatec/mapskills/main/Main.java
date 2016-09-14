@@ -1,6 +1,6 @@
 package br.gov.sp.fatec.mapskills.main;
 
-import br.gov.sp.fatec.mapskills.domain.Institution;
+import br.gov.sp.fatec.mapskills.mentor.Institution;
 
 public class Main {
 	

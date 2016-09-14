@@ -6,27 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.sp.fatec.mapskills.domain.Alternative;
-import br.gov.sp.fatec.mapskills.domain.Question;
-import br.gov.sp.fatec.mapskills.repository.QuestionRepository;
+import br.gov.sp.fatec.mapskills.question.Alternative;
+import br.gov.sp.fatec.mapskills.question.Question;
+import br.gov.sp.fatec.mapskills.question.QuestionRepository;
 
 public class QuestionTest implements ApplicationTest {
 	
-	final QuestionRepository repository = new QuestionRepository();
+	@Autowired
+	QuestionRepository repository;
 
 	@Test
+	@Transactional
 	public void save() {
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final Question question = new Question("Questão002 Mock", alternatives, 1, 1);
 		repository.save(question);
 		
 		assertEquals("Questão002 Mock", repository.findById(question.id()).description());
-		repository.close();
-		
 	}
 
 	@Test
+	@Transactional
 	public void update() {
 		final int id = 2;
 		final Question question = repository.findById(id);
@@ -34,19 +37,17 @@ public class QuestionTest implements ApplicationTest {
 		question.setStatus(false);
 		question.changeAlternatives(builderMockAlternatives());
 		question.changeIndex(2);
-		repository.update(question);
+		repository.save(question);
 		
 		assertEquals("Questão002 Mock alt", repository.findById(id).description());
-		repository.close();
-
 	}
 	
 	@Test
+	@Transactional
 	public void desc() {
 		List<Question> questions = repository.questionList();
 		
 		assertEquals(new Integer("1"), questions.get(0).index());
-		repository.close();
 	}
 	
 	private List<Alternative> builderMockAlternatives() {

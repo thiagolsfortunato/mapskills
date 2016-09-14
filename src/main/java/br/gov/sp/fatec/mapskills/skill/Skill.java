@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.domain;
+package br.gov.sp.fatec.mapskills.skill;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

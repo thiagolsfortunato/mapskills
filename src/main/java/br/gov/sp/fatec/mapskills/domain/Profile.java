@@ -4,6 +4,6 @@ public interface Profile {
 	
 	public Integer id();
 	public String name();
-	public void changeName(final String newName);
+	public void setName(final String newName);
 
 }

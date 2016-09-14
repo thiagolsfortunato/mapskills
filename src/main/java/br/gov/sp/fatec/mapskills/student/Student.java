@@ -1,4 +1,6 @@
-package br.gov.sp.fatec.mapskills.domain;
+package br.gov.sp.fatec.mapskills.student;
+
+import br.gov.sp.fatec.mapskills.domain.Profile;
 
 public class Student implements Profile {
 	
@@ -28,7 +30,7 @@ public class Student implements Profile {
 		return name;
 	}
 
-	public void changeName(String newName) {
+	public void setName(String newName) {
 		this.name = newName;
 	}
 	
