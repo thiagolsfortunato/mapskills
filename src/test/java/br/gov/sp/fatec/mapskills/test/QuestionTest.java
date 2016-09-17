@@ -6,13 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.question.Alternative;
 import br.gov.sp.fatec.mapskills.question.Question;
 import br.gov.sp.fatec.mapskills.question.QuestionRepository;
+import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringRootConfig.class, loader = AnnotationConfigContextLoader.class)
 public class QuestionTest implements ApplicationTest {
 	
 	@Autowired
@@ -22,10 +29,10 @@ public class QuestionTest implements ApplicationTest {
 	@Transactional
 	public void save() {
 		final List<Alternative> alternatives = builderMockAlternatives();
-		final Question question = new Question("Questão002 Mock", alternatives, 1, 1);
+		final Question question = new Question("Questï¿½o002 Mock", alternatives, 1, 1);
 		repository.save(question);
 		
-		assertEquals("Questão002 Mock", repository.findById(question.id()).description());
+		assertEquals("Questï¿½o002 Mock", repository.findById(question.id()).description());
 	}
 
 	@Test
@@ -33,13 +40,13 @@ public class QuestionTest implements ApplicationTest {
 	public void update() {
 		final int id = 2;
 		final Question question = repository.findById(id);
-		question.changeDescription("Questão002 Mock alt");
+		question.changeDescription("Questï¿½o002 Mock alt");
 		question.setStatus(false);
 		question.changeAlternatives(builderMockAlternatives());
 		question.changeIndex(2);
 		repository.save(question);
 		
-		assertEquals("Questão002 Mock alt", repository.findById(id).description());
+		assertEquals("Questï¿½o002 Mock alt", repository.findById(id).description());
 	}
 	
 	@Test

@@ -4,13 +4,20 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.mentor.Institution;
 import br.gov.sp.fatec.mapskills.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.mentor.MentorRepository;
+import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringRootConfig.class, loader = AnnotationConfigContextLoader.class)
 public class MentorTest implements ApplicationTest{
 	
 	@Autowired

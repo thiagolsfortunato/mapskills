@@ -24,6 +24,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring Test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -54,8 +60,8 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${org.hibernate.version}</version>
 		</dependency>
-		
-		<!-- MySQL  -->
+
+		<!-- MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
