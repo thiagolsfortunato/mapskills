@@ -1,5 +1,7 @@
 package br.gov.sp.fatec.mapskills.mentor;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,12 @@ import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
 @Table(name="mentor")
-public class Mentor implements Profile {
+public class Mentor implements Profile, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8734152933324471676L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "men_id")

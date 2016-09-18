@@ -1,5 +1,7 @@
 package br.gov.sp.fatec.mapskills.student;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,12 @@ import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
 @Table(name = "student")
-public class Student implements Profile {
+public class Student implements Profile, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6161259826708802596L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "stu_id")

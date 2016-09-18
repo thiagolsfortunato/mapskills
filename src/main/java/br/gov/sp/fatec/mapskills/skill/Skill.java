@@ -1,5 +1,7 @@
 package br.gov.sp.fatec.mapskills.skill;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "skill")
-public class Skill {
+public class Skill implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6714152121331987401L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ski_id")

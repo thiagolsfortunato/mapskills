@@ -1,5 +1,7 @@
 package br.gov.sp.fatec.mapskills.question;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "alternative")
-public class Alternative {
+public class Alternative implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2171406521218896623L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "alt_id")
