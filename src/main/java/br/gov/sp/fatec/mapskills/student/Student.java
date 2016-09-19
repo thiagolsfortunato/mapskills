@@ -2,13 +2,18 @@ package br.gov.sp.fatec.mapskills.student;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
@@ -30,26 +35,25 @@ public class Student implements Profile, Serializable {
 	@Column(name = "stu_ra", nullable = false)
 	private Integer ra;
 	
-	@Column(name = "stu_email", nullable = false)
-	private String email;
-	
-	@Column(name = "stu_password", nullable = false)
-	private String password;
-	
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
 	
 	@Column(name = "ins_id", nullable = false)
 	private Integer institutionId;
 	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "log_id")
+	private Login login;
+	
 	public Student() {}
 	
-	public Student(final String name, final Integer ra, final String email, final String password, final String phone) {
+	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final Login login) {
 		this.name = name;
 		this.ra = ra;
-		this.email = email;
-		this.password = password;
 		this.phone = phone;
+		this.institutionId = institutionId;
+		this.login = login;
+		
 	}
 
 	public Integer id() {

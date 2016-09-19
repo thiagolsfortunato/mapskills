@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
@@ -31,22 +32,19 @@ public class Mentor implements Profile, Serializable {
 	@Column(name = "men_name", nullable = true)
 	private String name;
 	
-	@Column(name = "men_email", nullable = true, unique = true)
-	private String email;
-	
-	@Column(name = "men_password", nullable = true)
-	private String password;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ins_id")
+	private Institution institution;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name="ins_id")
-	private Institution institution;
+	@JoinColumn(name = "log_id")
+	private Login login;
 	
 	public Mentor() {}
 	
-	public Mentor(final String name, final String email, final String password, final Institution institution) {
+	public Mentor(final String name, final Login login, final Institution institution) {
 		this.name = name;
-		this.email = email;
-		this.password = password;
+		this.login = login;
 		this.institution = institution;
 	}
 

@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.skill;
+package br.gov.sp.fatec.mapskills.question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 import br.gov.sp.fatec.mapskills.domain.PersistenceService;
 
 @Service
-public class SkillService implements PersistenceService<Skill>{
+public class QuestionService implements PersistenceService<Question> {
 
 	@Autowired(required = true)
-	@Qualifier("skillRepository")
-	SkillRepository repository;
-
+	@Qualifier("questionRepository")
+	QuestionRepository repository;
+	
 	@Override
-	public void save(final Skill skill) {
-		repository.save(skill);
+	public void save(final Question obj) {
+		repository.save(obj);
 	}
 
 	@Override
-	public Skill findById(final Integer id) {
+	public Question findById(Integer id) {
 		return repository.findById(id);
 	}
 
