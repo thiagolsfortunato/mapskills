@@ -11,11 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.sp.fatec.mapskills.question.Alternative;
-import br.gov.sp.fatec.mapskills.question.Question;
-import br.gov.sp.fatec.mapskills.question.QuestionRepository;
+import br.gov.sp.fatec.mapskills.domain.question.Alternative;
+import br.gov.sp.fatec.mapskills.domain.question.Question;
+import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
 import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,36 +22,35 @@ import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 public class QuestionTest implements ApplicationTest {
 	
 	@Autowired
-	QuestionRepository repository;
+	QuestionService service;
 
 	@Test
-	@Transactional
+	@Override
 	public void save() {
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final Question question = new Question("Quest�o002 Mock", alternatives, 1, 1);
-		repository.save(question);
+		service.create(question);
 		
-		assertEquals("Quest�o002 Mock", repository.findById(question.id()).description());
+		assertEquals("Quest�o002 Mock", service.findById(question.id()).description());
 	}
 
 	@Test
-	@Transactional
+	@Override
 	public void update() {
 		final int id = 2;
-		final Question question = repository.findById(id);
+		final Question question = service.findById(id);
 		question.changeDescription("Quest�o002 Mock alt");
 		question.setStatus(false);
 		question.changeAlternatives(builderMockAlternatives());
 		question.changeIndex(2);
-		repository.save(question);
+		service.create(question);
 		
-		assertEquals("Quest�o002 Mock alt", repository.findById(id).description());
+		assertEquals("Quest�o002 Mock alt", service.findById(id).description());
 	}
 	
 	@Test
-	@Transactional
 	public void desc() {
-		List<Question> questions = repository.questionList();
+		List<Question> questions = service.questionList();
 		
 		assertEquals(new Integer("1"), questions.get(0).index());
 	}

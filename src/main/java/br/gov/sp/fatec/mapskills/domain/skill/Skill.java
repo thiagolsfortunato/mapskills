@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.skill;
+package br.gov.sp.fatec.mapskills.domain.skill;
 
 import java.io.Serializable;
 

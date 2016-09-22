@@ -9,7 +9,7 @@ package br.gov.sp.fatec.mapskills.domain;
  */
 public interface PersistenceService<T> {
 	
-	public void save(final T obj);
+	public void create(final T obj);
 	public T findById(final Integer id);
 
 }

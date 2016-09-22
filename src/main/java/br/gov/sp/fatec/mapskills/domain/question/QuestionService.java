@@ -1,4 +1,6 @@
-package br.gov.sp.fatec.mapskills.question;
+package br.gov.sp.fatec.mapskills.domain.question;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,13 +16,17 @@ public class QuestionService implements PersistenceService<Question> {
 	QuestionRepository repository;
 	
 	@Override
-	public void save(final Question obj) {
+	public void create(final Question obj) {
 		repository.save(obj);
 	}
 
 	@Override
-	public Question findById(Integer id) {
+	public Question findById(final Integer id) {
 		return repository.findById(id);
+	}
+	
+	public List<Question> questionList() {
+		return repository.questionList();
 	}
 
 }

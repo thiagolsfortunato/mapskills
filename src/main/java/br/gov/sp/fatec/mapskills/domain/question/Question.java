@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.question;
+package br.gov.sp.fatec.mapskills.domain.question;
 
 import java.io.Serializable;
 import java.util.List;

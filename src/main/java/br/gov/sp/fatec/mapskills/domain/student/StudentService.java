@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.student;
+package br.gov.sp.fatec.mapskills.domain.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,12 +14,12 @@ public class StudentService implements PersistenceService<Student> {
 	StudentRepository repository;
 	
 	@Override
-	public void save(final Student obj) {
+	public void create(final Student obj) {
 		repository.save(obj);
 	}
 
 	@Override
-	public Student findById(Integer id) {
+	public Student findById(final Integer id) {
 		return repository.findById(id);
 	}
 

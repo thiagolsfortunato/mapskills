@@ -1,6 +1,4 @@
-package br.gov.sp.fatec.mapskills.student;
-
-import java.io.Serializable;
+package br.gov.sp.fatec.mapskills.domain.mentor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,56 +15,53 @@ import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
 
 @Entity
-@Table(name = "student")
-public class Student implements Profile, Serializable {
+@Table(name="mentor")
+public class Mentor extends Profile {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6161259826708802596L;
+	private static final long serialVersionUID = 6428237039193310193L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "stu_id")
+	@Column(name = "men_id")
 	private Integer id;
 	
-	@Column(name = "stu_name", nullable = false)
+	@Column(name = "men_name", nullable = true)
 	private String name;
 	
-	@Column(name = "stu_ra", nullable = false)
-	private Integer ra;
-	
-	@Column(name = "stu_phone", nullable = false)
-	private String phone;
-	
-	@Column(name = "ins_id", nullable = false)
-	private Integer institutionId;
-	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ins_id")
+	private Institution institution;
+/*	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "log_id")
 	private Login login;
+*/	
+	//public Mentor() {}
 	
-	public Student() {}
-	
-	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final Login login) {
+	public Mentor(final String name, final Login login, final Institution institution) {
+		super(login);
 		this.name = name;
-		this.ra = ra;
-		this.phone = phone;
-		this.institutionId = institutionId;
-		this.login = login;
-		
+		this.institution = institution;
 	}
 
 	public Integer id() {
 		return id;
 	}
-
+	
 	public String name() {
 		return name;
 	}
-
-	public void setName(String newName) {
+	
+	public void setName(final String newName) {
 		this.name = newName;
 	}
 	
+	public void changeInstitution(final Institution newInstitution) {
+		this.institution.changeCompany(newInstitution.company());
+		this.institution.changeCnpj(newInstitution.cnpj());
+		this.institution.changeCity(newInstitution.city());
+	}
 
 }

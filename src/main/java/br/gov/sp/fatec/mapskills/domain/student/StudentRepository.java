@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.student;
+package br.gov.sp.fatec.mapskills.domain.student;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

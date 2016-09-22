@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.skill;
+package br.gov.sp.fatec.mapskills.domain.skill;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +14,7 @@ public class SkillService implements PersistenceService<Skill>{
 	SkillRepository repository;
 
 	@Override
-	public void save(final Skill skill) {
+	public void create(final Skill skill) {
 		repository.save(skill);
 	}
 

@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.mentor;
+package br.gov.sp.fatec.mapskills.domain.mentor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ public class MentorService implements PersistenceService<Mentor> {
 	MentorRepository repository;
 
 	@Override
-	public void save(final Mentor obj) {
+	public void create(final Mentor obj) {
 		repository.save(obj);
 	}
 
 	@Override
-	public Mentor findById(Integer id) {
+	public Mentor findById(final Integer id) {
 		return repository.findById(id);
 	}
 	
