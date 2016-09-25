@@ -1,16 +1,9 @@
 package br.gov.sp.fatec.mapskills.main;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import br.gov.sp.fatec.mapskills.domain.skill.Skill;
-import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
-import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
-
 public class Main {
 	
 	public static void main(String[] args) {
-		@SuppressWarnings("resource")
+		/*@SuppressWarnings("resource")
 		final ApplicationContext context = new AnnotationConfigApplicationContext(SpringRootConfig.class);
 		
 		final SkillService service = (SkillService) context.getBean("skillService");
@@ -19,6 +12,9 @@ public class Main {
 		skill.changeDescription("Resiliencia");
 		service.create(skill);
 		System.out.println(String.format("new description: %s", service.findById(1).description()));
+		final MentorService service = (MentorService) context.getBean("mentorService");*/
+		
+
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
+import br.gov.sp.fatec.mapskills.domain.ProfileType;
 
 @Entity
 @Table(name = "student")
@@ -17,7 +18,7 @@ public class Student extends Profile {
 	 * 
 	 */
 	private static final long serialVersionUID = 6161259826708802596L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "stu_id")
@@ -39,26 +40,28 @@ public class Student extends Profile {
 	@JoinColumn(name = "log_id")
 	private Login login;
 */	
-	//public Student() {}
+	public Student() {
+		super(ProfileType.STUDENT);
+	}
 	
 	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final Login login) {
-		super(login);
+		super(login, ProfileType.STUDENT);
 		this.name = name;
 		this.ra = ra;
 		this.phone = phone;
 		this.institutionId = institutionId;		
 	}
-
+	
 	public Integer id() {
 		return id;
 	}
-
+	
 	public String name() {
 		return name;
 	}
 
 	public void setName(String newName) {
-		this.name = newName;
+		name = newName;
 	}
 	
 

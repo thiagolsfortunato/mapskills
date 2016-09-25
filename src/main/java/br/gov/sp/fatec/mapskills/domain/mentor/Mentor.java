@@ -13,20 +13,21 @@ import javax.persistence.Table;
 
 import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
+import br.gov.sp.fatec.mapskills.domain.ProfileType;
 
 @Entity
-@Table(name="mentor")
+@Table(name = "mentor")
 public class Mentor extends Profile {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6428237039193310193L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "men_id")
+	@Column (name = "men_id")
 	private Integer id;
-	
+
 	@Column(name = "men_name", nullable = true)
 	private String name;
 	
@@ -38,10 +39,12 @@ public class Mentor extends Profile {
 	@JoinColumn(name = "log_id")
 	private Login login;
 */	
-	//public Mentor() {}
+	public Mentor() {
+		super(ProfileType.MENTOR);
+	}
 	
 	public Mentor(final String name, final Login login, final Institution institution) {
-		super(login);
+		super(login, ProfileType.MENTOR);
 		this.name = name;
 		this.institution = institution;
 	}
@@ -55,7 +58,7 @@ public class Mentor extends Profile {
 	}
 	
 	public void setName(final String newName) {
-		this.name = newName;
+		name = newName;
 	}
 	
 	public void changeInstitution(final Institution newInstitution) {
@@ -63,5 +66,6 @@ public class Mentor extends Profile {
 		this.institution.changeCnpj(newInstitution.cnpj());
 		this.institution.changeCity(newInstitution.city());
 	}
+	
 
 }

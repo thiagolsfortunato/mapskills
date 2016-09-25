@@ -24,7 +24,7 @@ public class MentorTest implements ApplicationTest{
 	
 	@Test
 	public void save() {
-		final Institution fatec = new Institution("83237522000139", "Jessen Vidal", "São José");
+		final Institution fatec = new Institution("123456789000", "Jessen Vidal", "São José");
 		final Mentor mentor = new Mentor("Mentor Responsavel Teste", new Login("marquinhos@fatec", "Mudar@123"), fatec);
 		service.create(mentor);
 		
