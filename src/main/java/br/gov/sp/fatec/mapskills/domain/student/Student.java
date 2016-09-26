@@ -1,5 +1,8 @@
 package br.gov.sp.fatec.mapskills.domain.student;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import javax.persistence.Table;
 import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.Profile;
 import br.gov.sp.fatec.mapskills.domain.ProfileType;
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 
 @Entity
 @Table(name = "student")
@@ -35,6 +39,8 @@ public class Student extends Profile {
 	
 	@Column(name = "ins_id", nullable = false)
 	private Integer institutionId;
+	
+	private Map<Skill, Integer> skillMap;
 /*	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "log_id")
@@ -42,6 +48,7 @@ public class Student extends Profile {
 */	
 	public Student() {
 		super(ProfileType.STUDENT);
+		skillMap = new HashMap<Skill, Integer>();
 	}
 	
 	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final Login login) {
@@ -49,7 +56,8 @@ public class Student extends Profile {
 		this.name = name;
 		this.ra = ra;
 		this.phone = phone;
-		this.institutionId = institutionId;		
+		this.institutionId = institutionId;
+		skillMap = new HashMap<Skill, Integer>();
 	}
 	
 	public Integer id() {
@@ -62,6 +70,10 @@ public class Student extends Profile {
 
 	public void setName(String newName) {
 		name = newName;
+	}
+	
+	public Map<Skill, Integer> getSkillMap() {
+		return skillMap;
 	}
 	
 
