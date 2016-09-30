@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.spring;
+package br.gov.sp.fatec.mapskills.config;
 
 import org.springframework.context.annotation.ImportResource;
 

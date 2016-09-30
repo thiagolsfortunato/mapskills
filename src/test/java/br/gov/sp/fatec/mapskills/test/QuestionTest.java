@@ -12,10 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import br.gov.sp.fatec.mapskills.config.SpringRootConfig;
 import br.gov.sp.fatec.mapskills.domain.question.Alternative;
 import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
-import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringRootConfig.class, loader = AnnotationConfigContextLoader.class)

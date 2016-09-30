@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.spring;
+package br.gov.sp.fatec.mapskills.config;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;

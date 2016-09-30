@@ -9,11 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import br.gov.sp.fatec.mapskills.config.SpringRootConfig;
 import br.gov.sp.fatec.mapskills.domain.Login;
 import br.gov.sp.fatec.mapskills.domain.mentor.Institution;
 import br.gov.sp.fatec.mapskills.domain.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.mentor.MentorService;
-import br.gov.sp.fatec.mapskills.spring.SpringRootConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringRootConfig.class, loader = AnnotationConfigContextLoader.class)
