@@ -11,16 +11,19 @@ public class SkillService implements PersistenceService<Skill>{
 
 	@Autowired(required = true)
 	@Qualifier("skillRepository")
-	SkillRepository repository;
+	private SkillRepository repository;
 
-	@Override
 	public void create(final Skill skill) {
 		repository.save(skill);
 	}
+	
+	public void update(final Skill skill) {
+		repository.save(skill);
+	}
 
-	@Override
 	public Skill findById(final Integer id) {
 		return repository.findById(id);
 	}
+	
 
 }

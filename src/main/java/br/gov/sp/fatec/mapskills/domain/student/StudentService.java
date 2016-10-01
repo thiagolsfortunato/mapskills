@@ -13,12 +13,10 @@ public class StudentService implements PersistenceService<Student> {
 	@Qualifier("studentRepository")
 	StudentRepository repository;
 	
-	@Override
 	public void create(final Student obj) {
 		repository.save(obj);
 	}
 
-	@Override
 	public Student findById(final Integer id) {
 		return repository.findById(id);
 	}

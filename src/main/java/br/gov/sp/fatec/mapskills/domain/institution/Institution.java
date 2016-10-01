@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.domain.mentor;
+package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
 

@@ -15,12 +15,10 @@ public class QuestionService implements PersistenceService<Question> {
 	@Qualifier("questionRepository")
 	QuestionRepository repository;
 	
-	@Override
 	public void create(final Question obj) {
 		repository.save(obj);
 	}
 
-	@Override
 	public Question findById(final Integer id) {
 		return repository.findById(id);
 	}

@@ -12,22 +12,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "skill")
 public class Skill implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6714152121331987401L;
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ski_id")
 	private Integer id;
 	
-	@Column(name = "ski_description", nullable = false)
+	@Column(name = "ski_type", nullable = false)
+	private String type;
+	
+	@Column(name = "ski_description")
 	private String description;
 	
 	public Skill() {}
 	
-	public Skill(final String description) {
+	public Skill(final String type, final String description) {
+		this.type = type;
 		this.description = description;
 	}
 	
@@ -35,8 +37,16 @@ public class Skill implements Serializable{
 		return id;
 	}
 	
-	public String description() {
+	public String getType() {
+		return type;
+	}
+	
+	public String getDescription() {
 		return description;
+	}
+	
+	public void changeType(final String newType) {
+		this.type = newType;
 	}
 	
 	public void changeDescription(final String newDescription) {

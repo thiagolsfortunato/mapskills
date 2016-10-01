@@ -1,36 +1,21 @@
 package br.gov.sp.fatec.mapskills.domain.administrator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import br.gov.sp.fatec.mapskills.domain.Login;
-import br.gov.sp.fatec.mapskills.domain.Profile;
 import br.gov.sp.fatec.mapskills.domain.ProfileType;
+import br.gov.sp.fatec.mapskills.domain.User;
 
 @Entity
 @Table(name = "administrator")
-public class Administrator extends Profile {
+@PrimaryKeyJoinColumn(name = "use_id")
+public class Administrator extends User {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3704854251791882324L;
+	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "adm_id")
-	private Integer id;
-	
-	@Column(name = "adm_name", nullable = false)
-	private String name;
-		
-	public Administrator(final String name, final Login login) {
-		super(login, ProfileType.ADMINISTRATOR);
-		this.name = name;
+	public Administrator(final String name, final String email, final String password) {
+		super(name, email, password, ProfileType.ADMINISTRATOR);
 	}
 
 }

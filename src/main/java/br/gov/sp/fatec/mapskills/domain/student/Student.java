@@ -1,35 +1,19 @@
 package br.gov.sp.fatec.mapskills.domain.student;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import br.gov.sp.fatec.mapskills.domain.Login;
-import br.gov.sp.fatec.mapskills.domain.Profile;
 import br.gov.sp.fatec.mapskills.domain.ProfileType;
-import br.gov.sp.fatec.mapskills.domain.skill.Skill;
+import br.gov.sp.fatec.mapskills.domain.User;
 
 @Entity
 @Table(name = "student")
-public class Student extends Profile {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6161259826708802596L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "stu_id")
-	private Integer id;
-	
-	@Column(name = "stu_name", nullable = false)
-	private String name;
+@PrimaryKeyJoinColumn(name = "use_id")
+public class Student extends User {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "stu_ra", nullable = false)
 	private Integer ra;
@@ -40,41 +24,22 @@ public class Student extends Profile {
 	@Column(name = "ins_id", nullable = false)
 	private Integer institutionId;
 	
-	private Map<Skill, Integer> skillMap;
+	//private Map<Skill, Integer> skillMap = new HashMap<Skill, Integer>();
 /*	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "log_id")
 	private Login login;
 */	
-	public Student() {
-		super(ProfileType.STUDENT);
-		skillMap = new HashMap<Skill, Integer>();
-	}
+	public Student() { }
 	
-	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final Login login) {
-		super(login, ProfileType.STUDENT);
-		this.name = name;
+	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final String email, final String password) {
+		super(name, email, password, ProfileType.STUDENT);
 		this.ra = ra;
 		this.phone = phone;
 		this.institutionId = institutionId;
-		skillMap = new HashMap<Skill, Integer>();
-	}
-	
-	public Integer id() {
-		return id;
-	}
-	
-	public String name() {
-		return name;
+		//skillMap = new HashMap<Skill, Integer>();
 	}
 
-	public void setName(String newName) {
-		name = newName;
-	}
-	
-	public Map<Skill, Integer> getSkillMap() {
-		return skillMap;
-	}
 	
 
 }
