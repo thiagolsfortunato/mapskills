@@ -38,7 +38,7 @@ public abstract class UserXLSXParser {
 		Row row;
 		while (rowIterator.hasNext()) {
 			row = rowIterator.next();
-			Iterator<Cell> cellIterator = row.cellIterator();
+			final Iterator<Cell> cellIterator = row.cellIterator();
 			userList.add(buildUser(cellIterator));
 		}
 		return userList;
