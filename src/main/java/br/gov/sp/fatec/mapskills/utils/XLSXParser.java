@@ -3,6 +3,7 @@ package br.gov.sp.fatec.mapskills.utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -43,25 +44,15 @@ public abstract class XLSXParser {
 		return userList;
 	}
 	
-	protected String[] objectArgs(final Iterator<Cell> cellIterator) {
-		final String[] args = new String[this.size(cellIterator)];
+	protected List<String> objectArgs(final Iterator<Cell> cellIterator) {
+		final List<String> args = new LinkedList<>();
 		Cell cell;
 		while (cellIterator.hasNext()) {
 			cell = cellIterator.next();
 			cell.setCellType(Cell.CELL_TYPE_STRING);
-			args[cell.getColumnIndex()] = cell.getStringCellValue();
+			args.add(cell.getStringCellValue());
 		}
 		return args;
-	}
-	// DESCOBRIR TAMANHO DO ITERATOR, COMO FAZER CLONE DO ITERATOR?
-	private int size(final Iterator<Cell> cellIterator) {
-		int sizeValue = 0;
-		final Iterator<Cell> iteratorCellTmp = cellIterator;
-		while(iteratorCellTmp.hasNext()) {
-			sizeValue++;
-			cellIterator.next();
-		}
-		return sizeValue;
 	}
 
 }

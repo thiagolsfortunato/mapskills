@@ -33,8 +33,8 @@ public class MentorXLSXParser extends XLSXParser {
 
 	@Override
 	protected Mentor buildUser(final Iterator<Cell> cellIterator) {
-		final String[] args = super.objectArgs(cellIterator);
-		return new Mentor(args[0], args[1], args[2], new Institution(args[3], args[4], args[5]));
+		final List<String> args = super.objectArgs(cellIterator);
+		return new Mentor(args.get(0), args.get(1), args.get(2), new Institution(args.get(3), args.get(4), args.get(5)));
 	}
 
 }

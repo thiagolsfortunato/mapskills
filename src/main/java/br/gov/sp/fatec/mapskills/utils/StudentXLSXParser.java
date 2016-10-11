@@ -31,8 +31,8 @@ public class StudentXLSXParser extends XLSXParser {
 	}
 	
 	protected Student buildUser(final Iterator<Cell> cellIterator) {
-		final String[] args = super.objectArgs(cellIterator);
-		return new Student(args[1], new Integer(args[0]), args[3], null, args[2], "Mudar@123");
+		final List<String> args = super.objectArgs(cellIterator);
+		return new Student(args.get(1), new Integer(args.get(0)), args.get(3), null, args.get(2), "Mudar@123");
 	}
 
 }
