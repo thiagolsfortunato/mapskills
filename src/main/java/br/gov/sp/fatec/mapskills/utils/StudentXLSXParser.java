@@ -5,11 +5,13 @@
  */
 package br.gov.sp.fatec.mapskills.utils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import br.gov.sp.fatec.mapskills.domain.User;
 import br.gov.sp.fatec.mapskills.domain.student.Student;
 /**
  * A classe <code>StudentXLSXParser</code> converte um arquivo xlsx em objetos do tipo Student
@@ -18,21 +20,19 @@ import br.gov.sp.fatec.mapskills.domain.student.Student;
  * @author Marcelo
  *
  */
-public class StudentXLSXParser extends UserXLSXParser {
+public class StudentXLSXParser extends XLSXParser {
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Student> toUserList(final File file) throws Exception {
+		final List<Student> studentList = new ArrayList<>();
+		studentList.addAll((List<Student>) super.userListFactory(file));
+		return studentList;
+	}
 	
-	protected User buildUser(final Iterator<Cell> cellIterator) {
-		final String[] obj = new String[4];
-		Cell cell;
-		while (cellIterator.hasNext()) {
-			cell = cellIterator.next();
-			cell.setCellType(Cell.CELL_TYPE_STRING);
-			obj[cell.getColumnIndex()] = cell.getStringCellValue();
-		}
-		return new Student(obj[1], new Integer(obj[0]), obj[3], new Integer("1"), obj[2], "Mudar@123");
-					/*.ra(obj[0])
-					.name(obj[1])
-					.email(obj[2])
-					.phone(obj[3]);*/
+	protected Student buildUser(final Iterator<Cell> cellIterator) {
+		final String[] args = super.objectArgs(cellIterator);
+		return new Student(args[1], new Integer(args[0]), args[3], null, args[2], "Mudar@123");
 	}
 
 }

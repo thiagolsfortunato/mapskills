@@ -1,14 +1,15 @@
 package br.gov.sp.fatec.mapskills.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @Configuration
-//@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi.serializer",""})
 //@PropertySource({""})
 //@Import({DomainEventsBeans.class})
-@ImportResource("applicationContext.xml")
+//@ImportResource("applicationContext.xml")
+@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills"})
+@EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.student"})
 public class SpringContextConfiguration {
-
 }

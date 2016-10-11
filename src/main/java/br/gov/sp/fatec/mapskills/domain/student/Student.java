@@ -40,6 +40,8 @@ public class Student extends User {
 		//skillMap = new HashMap<Skill, Integer>();
 	}
 
-	
+	public void setInstitution(final int id) {
+		institutionId = id;
+	}
 
 }

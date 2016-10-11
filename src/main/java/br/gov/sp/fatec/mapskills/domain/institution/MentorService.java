@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.PersistenceService;
 
-@Service
+
 public class MentorService implements PersistenceService<Mentor> {
 	
 	@Autowired(required = true)

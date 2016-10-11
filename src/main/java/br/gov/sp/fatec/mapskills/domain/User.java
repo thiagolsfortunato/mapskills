@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User implements Serializable {
+public abstract class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

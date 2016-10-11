@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.PersistenceService;
 
-@Service
+
 public class QuestionService implements PersistenceService<Question> {
 
 	@Autowired(required = true)

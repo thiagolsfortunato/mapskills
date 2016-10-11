@@ -5,11 +5,13 @@
  */
 package br.gov.sp.fatec.mapskills.utils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import br.gov.sp.fatec.mapskills.domain.User;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 /**
@@ -19,18 +21,20 @@ import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
  * @author Marcelo
  *
  */
-public class MentorXLSXParser extends UserXLSXParser {
+public class MentorXLSXParser extends XLSXParser {
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Mentor> toUserList(final File file) throws Exception {
+		List<Mentor> objectList = new ArrayList<>();
+		objectList.addAll((List<Mentor>) super.userListFactory(file));
+		return objectList;
+	}
 
 	@Override
-	protected User buildUser(final Iterator<Cell> cellIterator) {
-		final String[] obj = new String[6];
-		Cell cell;
-		while (cellIterator.hasNext()) {
-			cell = cellIterator.next();
-			cell.setCellType(Cell.CELL_TYPE_STRING);
-			obj[cell.getColumnIndex()] = cell.getStringCellValue();
-		}
-		return new Mentor(obj[0], obj[1], obj[2], new Institution(obj[3], obj[4], obj[5]));
+	protected Mentor buildUser(final Iterator<Cell> cellIterator) {
+		final String[] args = super.objectArgs(cellIterator);
+		return new Mentor(args[0], args[1], args[2], new Institution(args[3], args[4], args[5]));
 	}
 
 }

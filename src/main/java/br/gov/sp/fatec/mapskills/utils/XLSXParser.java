@@ -1,8 +1,6 @@
 package br.gov.sp.fatec.mapskills.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,20 +18,21 @@ import br.gov.sp.fatec.mapskills.domain.User;
  * @author Marcelo
  *
  */
-public abstract class UserXLSXParser {
+public abstract class XLSXParser {
 	
+	protected abstract List<?> toUserList(final File file) throws Exception;
+
 	protected abstract User buildUser(final Iterator<Cell> cellIterator);
-	
-	public List<User> toObject(final String path) throws IOException {
-		final FileInputStream file = new FileInputStream(new File(path));
+
+	protected List<? extends User> userListFactory(final File file) throws Exception {
 		final XSSFWorkbook workbook = new XSSFWorkbook(file);
 		final XSSFSheet sheet = workbook.getSheetAt(0);
-		final Iterator<Row> rowIterator = sheet.iterator();
+		final Iterator<Row> rowIterator = sheet.iterator(); 
 		workbook.close();
 		return userListBuilder(rowIterator);
 	}
-
-	private List<User> userListBuilder(final Iterator<Row> rowIterator) {
+		
+	private List<? extends User> userListBuilder(final Iterator<Row> rowIterator) {
 		final List<User> userList = new ArrayList<>();
 		Row row;
 		while (rowIterator.hasNext()) {
@@ -42,6 +41,27 @@ public abstract class UserXLSXParser {
 			userList.add(buildUser(cellIterator));
 		}
 		return userList;
+	}
+	
+	protected String[] objectArgs(final Iterator<Cell> cellIterator) {
+		final String[] args = new String[this.size(cellIterator)];
+		Cell cell;
+		while (cellIterator.hasNext()) {
+			cell = cellIterator.next();
+			cell.setCellType(Cell.CELL_TYPE_STRING);
+			args[cell.getColumnIndex()] = cell.getStringCellValue();
+		}
+		return args;
+	}
+	// DESCOBRIR TAMANHO DO ITERATOR, COMO FAZER CLONE DO ITERATOR?
+	private int size(final Iterator<Cell> cellIterator) {
+		int sizeValue = 0;
+		final Iterator<Cell> iteratorCellTmp = cellIterator;
+		while(iteratorCellTmp.hasNext()) {
+			sizeValue++;
+			cellIterator.next();
+		}
+		return sizeValue;
 	}
 
 }

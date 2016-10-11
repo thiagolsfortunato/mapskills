@@ -1,7 +1,7 @@
 package br.gov.sp.fatec.mapskills.domain;
 /**
- * interface respons√°vel por persistir os objetos no banco de dados
- * quem implementa deve declarar o tipo do objeto substituindo o <code>T<code/>
+ * interface respons·vel por persistir os objetos no banco de dados
+ * quem implementa deve declarar o tipo do objeto substituindo o <T> por classe
  *  
  * @author Marcelo
  *
