@@ -1,3 +1,9 @@
+/*
+ * @(#)Question.java 1.0 01/11/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.question;
 
 import java.io.Serializable;
@@ -16,7 +22,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "question")
-public class Question implements Serializable {
+public class Question implements Serializable, Comparable<Question> {
 	/**
 	 * 
 	 */
@@ -83,6 +89,11 @@ public class Question implements Serializable {
 	
 	public void setStatus(final Boolean status) {
 		this.isAtive = status;
+	}
+
+	@Override
+	public int compareTo(final Question question) {
+		return this.index < question.index() ? -1 : (this.index == question.index ? 0 : 1);
 	}
 
 }

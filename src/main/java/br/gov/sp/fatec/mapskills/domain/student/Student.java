@@ -1,3 +1,9 @@
+/*
+ * @(#)Student.java 1.0 01/11/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.student;
 
 import javax.persistence.Column;
@@ -5,8 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import br.gov.sp.fatec.mapskills.domain.ProfileType;
-import br.gov.sp.fatec.mapskills.domain.User;
+import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
+import br.gov.sp.fatec.mapskills.domain.user.User;
 
 @Entity
 @Table(name = "student")
@@ -24,7 +30,7 @@ public class Student extends User {
 	@Column(name = "ins_id", nullable = false)
 	private Integer institutionId;
 	
-	//private Map<Skill, Integer> skillMap = new HashMap<Skill, Integer>();
+	//private Map<String, Integer> skillMap = new HashMap<Stirng, Integer>();
 /*	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "log_id")
