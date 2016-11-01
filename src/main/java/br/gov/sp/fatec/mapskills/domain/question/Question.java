@@ -23,10 +23,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "question")
 public class Question implements Serializable, Comparable<Question> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1796697684098689221L;
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -43,7 +43,11 @@ public abstract class User implements Serializable {
 	@Enumerated(value = EnumType.ORDINAL)
 	@Column(name = "pro_id")
 	private ProfileType profile;
-	
+/*	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "log_id")
+	private Login login;
+*/	
 	public User() {}
 	
 	public User(final String name, final String email, final String password, final ProfileType profile) {
@@ -57,23 +61,23 @@ public abstract class User implements Serializable {
 		this.profile = profile;
 	}
 	
-	public Integer getId() {
+	public Integer id() {
 		return id;
 	}
 	
-	public String getName() {
+	public String name() {
 		return name;
 	}
 	
-	public String getEmail() {
+	public String email() {
 		return email;
 	}
 	
-	public String getPassword() {
+	public String password() {
 		return password;
 	}
 	
-	public void setName(final String newName) {
+	public void changeName(final String newName) {
 		name = newName;
 	}
 

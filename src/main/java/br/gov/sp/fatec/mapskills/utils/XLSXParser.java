@@ -16,8 +16,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import br.gov.sp.fatec.mapskills.domain.user.User;
 /**
  * A classe <code>UserXLSXParser</code> tem objetivo de converter arquivo xlsx em objetos
  * para serem persistidos no banco de dados.
@@ -27,27 +25,27 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
  */
 public abstract class XLSXParser {
 	
-	protected abstract List<?> toUserList(final File file) throws Exception;
+	protected abstract List<?> toObjectList(final File file) throws Exception;
 
-	protected abstract User buildUser(final Iterator<Cell> cellIterator);
+	protected abstract Object build(final Iterator<Cell> cellIterator);
 
-	protected List<? extends User> userListFactory(final File file) throws Exception {
+	protected List<?> objectListFactory(final File file) throws Exception {
 		final XSSFWorkbook workbook = new XSSFWorkbook(file);
 		final XSSFSheet sheet = workbook.getSheetAt(0);
 		final Iterator<Row> rowIterator = sheet.iterator(); 
 		workbook.close();
-		return userListBuilder(rowIterator);
+		return objectListBuilder(rowIterator);
 	}
 		
-	private List<? extends User> userListBuilder(final Iterator<Row> rowIterator) {
-		final List<User> userList = new ArrayList<>();
+	private List<?> objectListBuilder(final Iterator<Row> rowIterator) {
+		final List<Object> objectList = new ArrayList<>();
 		Row row;
 		while (rowIterator.hasNext()) {
 			row = rowIterator.next();
 			final Iterator<Cell> cellIterator = row.cellIterator();
-			userList.add(buildUser(cellIterator));
+			objectList.add(build(cellIterator));
 		}
-		return userList;
+		return objectList;
 	}
 	
 	protected List<String> objectArgs(final Iterator<Cell> cellIterator) {

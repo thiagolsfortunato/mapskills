@@ -10,9 +10,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MentorRepository extends CrudRepository<Mentor, Integer> {
+public interface InstitutionRepository extends CrudRepository<Institution, Integer> {
 	
-	public Mentor findById(final Integer id);
+	public Institution findById(final Integer id);
 
 
 }

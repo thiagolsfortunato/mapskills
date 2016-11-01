@@ -8,10 +8,8 @@ package br.gov.sp.fatec.mapskills.domain.skill;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-import br.gov.sp.fatec.mapskills.domain.user.PersistenceService;
-
+import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
 
 public class SkillService implements PersistenceService<Skill>{
 

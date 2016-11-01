@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.user;
+package br.gov.sp.fatec.mapskills.infrastructure;
 /**
  * interface responsável por persistir os objetos no banco de dados
  * quem implementa deve declarar o tipo do objeto substituindo o <T> por classe
@@ -15,7 +15,6 @@ package br.gov.sp.fatec.mapskills.domain.user;
  */
 public interface PersistenceService<T> {
 	
-	public void create(final T obj);
 	public T findById(final Integer id);
 
 }

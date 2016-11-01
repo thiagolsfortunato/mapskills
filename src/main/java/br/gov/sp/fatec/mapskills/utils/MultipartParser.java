@@ -11,7 +11,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
-
+/**
+ * A classe <code>MultipartParser</code> tem a resposabilidade de converter objetos MultipartFile
+ * em objeto File.
+ * 
+ * @author HyperClass04
+ *
+ */
 public class MultipartParser {
 	
 	public File toFile(final MultipartFile file) throws IOException {    

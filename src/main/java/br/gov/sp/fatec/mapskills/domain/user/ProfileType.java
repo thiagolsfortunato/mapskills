@@ -7,8 +7,8 @@
 package br.gov.sp.fatec.mapskills.domain.user;
 
 /**
- * A enumeração <code>ProfileType</code> contém os tipos de perfis que podem ser
- * assumidos por login da aplicação
+ * A enumeracao <code>ProfileType</code> contem os tipos de perfis que podem ser
+ * assumidos por login da aplicacao.
  * 
  * @author Marcelo
  *

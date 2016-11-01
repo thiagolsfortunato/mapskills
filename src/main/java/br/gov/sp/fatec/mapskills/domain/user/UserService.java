@@ -1,10 +1,10 @@
 /*
- * @(#)QuestionService.java 1.0 01/11/2016
+ * @(#)UserService.java 1.0 01/11/2016
  *
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.question;
+package br.gov.sp.fatec.mapskills.domain.user;
 
 import java.util.List;
 
@@ -13,23 +13,23 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
 
-
-public class QuestionService implements PersistenceService<Question> {
-
-	@Autowired(required = true)
-	@Qualifier("questionRepository")
-	QuestionRepository repository;
+public class UserService implements PersistenceService<User> {
 	
-	public void create(final Question obj) {
+	@Autowired(required = true)
+	@Qualifier("mentorRepository")
+	private UserRepository repository;
+
+	public void create(final Student obj) {
+		repository.save(obj);
+	}
+	
+	public void create(final List<Student> obj) {
 		repository.save(obj);
 	}
 
-	public Question findById(final Integer id) {
+	@Override
+	public User findById(final Integer id) {
 		return repository.findById(id);
-	}
-	
-	public List<Question> questionList() {
-		return repository.questionList();
 	}
 
 }

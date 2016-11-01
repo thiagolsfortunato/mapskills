@@ -8,20 +8,22 @@ package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "institution")
-public class Institution implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4892243634569707395L;
+public class Institution implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +38,18 @@ public class Institution implements Serializable{
 	
 	@Column(name = "ins_city", nullable = true)
 	private String city;
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "men_id")
+	private Mentor mentor;
 
 	public Institution() {}
 	
-	public Institution(final String cnpj, final String company, final String city) {
+	public Institution(final String cnpj, final String company, final String city, final Mentor mentor) {
 		this.cnpj = cnpj;
 		this.company = company;
 		this.city = city;
+		this.mentor = mentor;
 	}
 	
 	public void changeCnpj(final String newCnpj) {
@@ -57,6 +64,14 @@ public class Institution implements Serializable{
 		this.city = newCity;
 	}
 	
+	public void changeMentorName(final String newName) {
+		mentor.changeName(newName);
+	}
+	
+	public Integer id() {
+		return id;
+	}
+	
 	public String cnpj() {
 		return cnpj;
 	}
@@ -67,6 +82,10 @@ public class Institution implements Serializable{
 	
 	public String city() {
 		return city;
+	}
+	
+	public String mentor() {
+		return mentor.name();
 	}
 	
 }

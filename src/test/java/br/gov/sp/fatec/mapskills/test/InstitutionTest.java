@@ -12,32 +12,34 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import br.gov.sp.fatec.mapskills.config.SpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.institution.MentorService;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfiguration.class, loader = AnnotationConfigContextLoader.class)
-public class MentorTest implements ApplicationTest{
+public class InstitutionTest implements ApplicationTest{
 	
 	@Autowired
-	MentorService service;
+	InstitutionService service;
 	
 	@Test
 	public void save() {
-		final Institution fatec = new Institution("123456789000", "Jessen Vidal", "São José");
-		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123", fatec);
-		service.create(mentor);
+		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123");
+		final Institution fatec = new Institution("123456789000", "Jessen Vidal", "São José", mentor);
+		service.create(fatec);
 		
-		assertEquals(mentor.getId(), service.findById(mentor.getId()).getId());
+		assertEquals(mentor.id(), service.findById(fatec.id()).id());
 	}
 	
 	@Test
 	public void update() {
-		final Mentor mentor = service.findById(1);
-		mentor.setName("Marcos Silveira");
-		mentor.changeInstitution(new Institution("71461173000155","Fatec Jacarei","Jacarei"));
-		service.create(mentor);
+		final Institution institution = service.findById(1);
+		institution.changeMentorName("Marcos Silveira");
+		institution.changeCnpj("71461173000155");
+		institution.changeCity("Jacarei");
+		institution.changeCompany("Fatec Jacarei");
+		service.create(institution);
 		
-		assertEquals("Marcos Silveira", service.findById(mentor.getId()).getName());
+		assertEquals("Marcos Silveira", service.findById(institution.id()).mentor());
 	}
 	
 

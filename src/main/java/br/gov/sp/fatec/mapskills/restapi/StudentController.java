@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.gov.sp.fatec.mapskills.domain.student.Student;
-import br.gov.sp.fatec.mapskills.domain.student.StudentService;
+import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.utils.MultipartParser;
 import br.gov.sp.fatec.mapskills.utils.StudentXLSXParser;
 
@@ -33,13 +33,14 @@ import br.gov.sp.fatec.mapskills.utils.StudentXLSXParser;
 public class StudentController {
 	
 	@Autowired
-	private StudentService service;
+	private UserService service;
 	
-	@RequestMapping(value = "/upload/alunos", method = RequestMethod.POST)
+	@RequestMapping(value = "/upload/students", method = RequestMethod.POST)
 	public ResponseEntity<?> importStudents(@RequestParam("file") final MultipartFile multiPartFile,
-			@RequestParam("insId") final int insId) throws Exception {
+			@RequestParam("institutionId") final int institutionId) throws Exception {
+		
 		final StudentXLSXParser userXLSX = new StudentXLSXParser();
-		final List<Student> users = userXLSX.toUserList(new MultipartParser().toFile(multiPartFile));
+		final List<Student> users = userXLSX.toObjectList(new MultipartParser().toFile(multiPartFile));
 		service.create(users);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -8,22 +8,21 @@ package br.gov.sp.fatec.mapskills.domain.institution;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-import br.gov.sp.fatec.mapskills.domain.user.PersistenceService;
+import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
 
 
-public class MentorService implements PersistenceService<Mentor> {
+public class InstitutionService implements PersistenceService<Institution> {
 	
 	@Autowired(required = true)
 	@Qualifier("mentorRepository")
-	private MentorRepository repository;
+	private InstitutionRepository repository;
 
-	public void create(final Mentor obj) {
+	public void create(final Institution obj) {
 		repository.save(obj);
 	}
 
-	public Mentor findById(final Integer id) {
+	public Institution findById(final Integer id) {
 		return repository.findById(id);
 	}
 

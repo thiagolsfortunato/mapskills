@@ -6,11 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -24,26 +20,10 @@ public class Mentor extends User {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "ins_id")
-	private Institution institution;
-/*	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "log_id")
-	private Login login;
-*/	
 	public Mentor() { }
 	
-	public Mentor(final String name, final String email, final String password, final Institution institution) {
+	public Mentor(final String name, final String email, final String password) {
 		super(name, email, password, ProfileType.MENTOR);
-		this.institution = institution;
-	}
-	
-	public void changeInstitution(final Institution newInstitution) {
-		this.institution.changeCompany(newInstitution.company());
-		this.institution.changeCnpj(newInstitution.cnpj());
-		this.institution.changeCity(newInstitution.city());
-	}
-	
+	}	
 
 }

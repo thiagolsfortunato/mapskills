@@ -18,10 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "alternative")
 public class Alternative implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2171406521218896623L;
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
