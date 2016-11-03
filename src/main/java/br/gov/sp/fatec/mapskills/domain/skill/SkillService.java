@@ -9,9 +9,9 @@ package br.gov.sp.fatec.mapskills.domain.skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
+import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
-public class SkillService implements PersistenceService<Skill>{
+public class SkillService implements RepositoryService<Skill>{
 
 	@Autowired(required = true)
 	@Qualifier("skillRepository")

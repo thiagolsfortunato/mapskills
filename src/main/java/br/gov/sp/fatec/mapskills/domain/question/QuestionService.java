@@ -11,10 +11,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
+import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 
-public class QuestionService implements PersistenceService<Question> {
+public class QuestionService implements RepositoryService<Question> {
 
 	@Autowired(required = true)
 	@Qualifier("questionRepository")

@@ -7,13 +7,10 @@
 package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.gov.sp.fatec.mapskills.restapi.serializer.SkillDeserializer;
-import br.gov.sp.fatec.mapskills.restapi.serializer.SkillSerializer;
 
 @JsonDeserialize(using = SkillDeserializer.class)
-@JsonSerialize(using = SkillSerializer.class)
 public class SkillWrapper {
 
 }

@@ -9,10 +9,10 @@ package br.gov.sp.fatec.mapskills.domain.institution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
+import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 
-public class InstitutionService implements PersistenceService<Institution> {
+public class InstitutionService implements RepositoryService<Institution> {
 	
 	@Autowired(required = true)
 	@Qualifier("mentorRepository")

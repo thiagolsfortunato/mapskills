@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
+import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
-public class UserService implements PersistenceService<User> {
+public class UserService implements RepositoryService<User> {
 	
 	@Autowired(required = true)
 	@Qualifier("userRepository")

@@ -28,7 +28,13 @@ public abstract class XLSXParser {
 	protected abstract List<?> toObjectList(final File file) throws Exception;
 
 	protected abstract Object build(final Iterator<Cell> cellIterator);
-
+	/**
+	 * O método <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
+	 * 
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
 	protected List<?> objectListFactory(final File file) throws Exception {
 		final XSSFWorkbook workbook = new XSSFWorkbook(file);
 		final XSSFSheet sheet = workbook.getSheetAt(0);
@@ -36,7 +42,13 @@ public abstract class XLSXParser {
 		workbook.close();
 		return objectListBuilder(rowIterator);
 	}
-		
+	/**
+	 * O método <code>objectListBuilder</code> auxilia o método <code>objectListFactory<code> na conversão
+	 * de um arquivo em uma lista de objeto, iterando nas linhas do documento.
+	 * 
+	 * @param rowIterator
+	 * @return
+	 */
 	private List<?> objectListBuilder(final Iterator<Row> rowIterator) {
 		final List<Object> objectList = new ArrayList<>();
 		Row row;
@@ -47,7 +59,13 @@ public abstract class XLSXParser {
 		}
 		return objectList;
 	}
-	
+	/**
+	 * O método <code>objectArgs</code> perrcorre nas celulas da linha do arquivo e retorna uma lista de String,
+	 * para ser usado como parametro em quem a chamou.
+	 * 
+	 * @param cellIterator
+	 * @return
+	 */
 	protected List<String> objectArgs(final Iterator<Cell> cellIterator) {
 		final List<String> args = new LinkedList<>();
 		Cell cell;

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.StudentXLSXParser;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.utils.MultipartParser;
-import br.gov.sp.fatec.mapskills.utils.StudentXLSXParser;
 
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
