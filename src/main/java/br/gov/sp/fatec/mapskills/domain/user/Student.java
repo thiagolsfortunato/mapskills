@@ -27,20 +27,13 @@ public class Student extends User {
 	@Column(name = "ins_id", nullable = false)
 	private Integer institutionId;
 	
-	//private Map<String, Integer> skillMap = new HashMap<Stirng, Integer>();
-/*	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "log_id")
-	private Login login;
-*/	
 	public Student() { }
 	
 	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final String email, final String password) {
-		super(name, email, password, ProfileType.STUDENT);
+		super(name, new Login(email, password), ProfileType.STUDENT);
 		this.ra = ra;
 		this.phone = phone;
 		this.institutionId = institutionId;
-		//skillMap = new HashMap<Skill, Integer>();
 	}
 
 	public void setInstitution(final int id) {

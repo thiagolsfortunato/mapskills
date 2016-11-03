@@ -10,13 +10,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.infrastructure.PersistenceService;
 
+@Component
 public class UserService implements PersistenceService<User> {
 	
 	@Autowired(required = true)
-	@Qualifier("mentorRepository")
+	@Qualifier("userRepository")
 	private UserRepository repository;
 
 	public void create(final Student obj) {

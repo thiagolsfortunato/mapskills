@@ -8,14 +8,17 @@ package br.gov.sp.fatec.mapskills.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @Configuration
-//@PropertySource({""})
+@PropertySource("classpath:application.properties")
 //@Import({DomainEventsBeans.class})
 //@ImportResource("applicationContext.xml")
-@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills"})
-@EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.student"})
+@Import({DataBaseConfig.class})
+@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.domain.user"})
+@EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user"})
 public class SpringContextConfiguration {
 }

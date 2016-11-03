@@ -23,10 +23,10 @@ public class StudentTest implements ApplicationTest {
 	@Test
 	@Override
 	public void save() {
-		final Student student = new Student("Name Fake", 2016708010, "1289003400", 2, "nick4s2@fate.sp.gov.br","mudar@123");
+		final Student student = new Student("Name Fake embedded", 2017008010, "1289003400", 1, "nick5s2@fate.sp.gov.br","mudar@123");
 		service.create(student);
 		
-		assertEquals("Name Fake", service.findById(student.id()).name());
+		assertEquals("Name Fake embedded", service.findById(student.id()).name());
 
 	}
 
