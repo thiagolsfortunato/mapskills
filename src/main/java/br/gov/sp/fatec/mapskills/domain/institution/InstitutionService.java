@@ -22,7 +22,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 		repository.save(obj);
 	}
 
-	public Institution findById(final Integer id) {
+	public Institution findById(final int id) {
 		return repository.findById(id);
 	}
 

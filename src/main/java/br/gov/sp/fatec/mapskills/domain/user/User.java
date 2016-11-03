@@ -36,7 +36,7 @@ public abstract class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "use_id")
-	private Integer id;
+	private int id;
 	
 	@Column(name = "use_name")
 	private String name;
@@ -60,7 +60,7 @@ public abstract class User implements Serializable {
 		this.profile = profile;
 	}
 	
-	public Integer id() {
+	public int id() {
 		return id;
 	}
 	

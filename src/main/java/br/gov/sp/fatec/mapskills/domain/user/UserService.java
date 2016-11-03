@@ -30,7 +30,7 @@ public class UserService implements RepositoryService<User> {
 	}
 
 	@Override
-	public User findById(final Integer id) {
+	public User findById(final int id) {
 		return repository.findById(id);
 	}
 

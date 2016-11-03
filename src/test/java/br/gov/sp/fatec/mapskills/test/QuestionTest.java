@@ -50,7 +50,7 @@ public class QuestionTest {
 	public void desc() {
 		List<Question> questions = service.questionList();
 		
-		assertEquals(new Integer("1"), questions.get(0).index());
+		assertEquals(1, questions.get(0).index());
 	}
 	
 	private List<Alternative> builderMockAlternatives() {

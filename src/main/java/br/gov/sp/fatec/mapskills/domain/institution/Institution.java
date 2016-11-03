@@ -28,7 +28,7 @@ public class Institution implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ins_id")
-	private Integer id;
+	private int id;
 	
 	@Column(name = "ins_cnpj", nullable = true, unique = true)
 	private String cnpj;
@@ -68,7 +68,7 @@ public class Institution implements Serializable {
 		mentor.changeName(newName);
 	}
 	
-	public Integer id() {
+	public int id() {
 		return id;
 	}
 	

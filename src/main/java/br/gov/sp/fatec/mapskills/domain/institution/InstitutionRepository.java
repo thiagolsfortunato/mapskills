@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InstitutionRepository extends CrudRepository<Institution, Integer> {
 	
-	public Institution findById(final Integer id);
+	public Institution findById(final int id);
 
 
 }

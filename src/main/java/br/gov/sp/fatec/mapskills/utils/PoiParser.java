@@ -6,7 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.utils;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -23,20 +23,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Marcelo
  *
  */
-public abstract class XLSXParser {
+public abstract class PoiParser {
 	
-	protected abstract List<?> toObjectList(final File file) throws Exception;
+	protected abstract List<?> toObjectList(final InputStream inputStream) throws Exception;
 
 	protected abstract Object build(final Iterator<Cell> cellIterator);
 	/**
 	 * O método <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
 	 * 
-	 * @param file
+	 * @param inputStream
 	 * @return
 	 * @throws Exception
 	 */
-	protected List<?> objectListFactory(final File file) throws Exception {
-		final XSSFWorkbook workbook = new XSSFWorkbook(file);
+	protected List<?> objectListFactory(final InputStream inputStream) throws Exception {
+		final XSSFWorkbook workbook = new XSSFWorkbook(inputStream); 
 		final XSSFSheet sheet = workbook.getSheetAt(0);
 		final Iterator<Row> rowIterator = sheet.iterator(); 
 		workbook.close();

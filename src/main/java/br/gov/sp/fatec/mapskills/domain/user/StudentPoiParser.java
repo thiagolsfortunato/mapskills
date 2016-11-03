@@ -5,14 +5,14 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import br.gov.sp.fatec.mapskills.utils.XLSXParser;
+import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>StudentXLSXParser</code> converte um arquivo xlsx em objetos do tipo Student
  * para serem persistidos no banco de dados.
@@ -20,16 +20,16 @@ import br.gov.sp.fatec.mapskills.utils.XLSXParser;
  * @author Marcelo
  *
  */
-public class StudentXLSXParser extends XLSXParser {
+public class StudentPoiParser extends PoiParser {
 	/**
 	 * O método <code>toObjectList</code> converte um arqiuvo do tipo excel xlsx em uma
 	 * lista de objetos do tipo Student.
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Student> toObjectList(final File file) throws Exception {
+	public List<Student> toObjectList(final InputStream inputStream) throws Exception {
 		final List<Student> studentList = new ArrayList<>();
-		studentList.addAll((List<Student>) super.objectListFactory(file));
+		studentList.addAll((List<Student>) super.objectListFactory(inputStream));
 		return studentList;
 	}
 	/**
@@ -38,7 +38,13 @@ public class StudentXLSXParser extends XLSXParser {
 	 */
 	protected Student build(final Iterator<Cell> cellIterator) {
 		final List<String> args = super.objectArgs(cellIterator);
-		return new Student(args.get(1), new Integer(args.get(0)), args.get(3), null, args.get(2), "Mudar@123");
+		return new Student(args.get(1), new Integer(args.get(0)), args.get(3), 0, args.get(2), "Mudar@123");
+	}
+	
+	public void setInstitutionId(final List<Student> studentList, final int id) {
+		for(final Student student : studentList) {
+			student.setInstitution(id);
+		}
 	}
 
 }

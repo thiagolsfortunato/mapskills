@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -20,6 +21,9 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
 public class Mentor extends User {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Column(name = "ins_id", nullable = false)
+	private int institutionId;
 
 	public Mentor() { }
 	

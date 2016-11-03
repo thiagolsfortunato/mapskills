@@ -5,14 +5,14 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import br.gov.sp.fatec.mapskills.utils.XLSXParser;
+import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
  * para serem persistidos no banco de dados.
@@ -20,13 +20,13 @@ import br.gov.sp.fatec.mapskills.utils.XLSXParser;
  * @author Marcelo
  *
  */
-public class InstitutionXLSXParser extends XLSXParser {
+public class InstitutionPoiParser extends PoiParser {
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Institution> toObjectList(final File file) throws Exception {
+	public List<Institution> toObjectList(final InputStream inputStream) throws Exception {
 		List<Institution> objectList = new ArrayList<>();
-		objectList.addAll((List<Institution>) super.objectListFactory(file));
+		objectList.addAll((List<Institution>) super.objectListFactory(inputStream));
 		return objectList;
 	}
 

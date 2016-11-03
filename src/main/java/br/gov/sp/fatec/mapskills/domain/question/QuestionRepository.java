@@ -18,6 +18,6 @@ public interface QuestionRepository extends CrudRepository<Question, Integer> {
 	@Query("SELECT q FROM Question q ORDER BY q.index")
 	public List<Question> questionList();
 	
-	public Question findById(final Integer id);
+	public Question findById(final int id);
 	
 }

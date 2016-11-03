@@ -29,7 +29,7 @@ public class Question implements Serializable, Comparable<Question> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "que_id")
-	private Integer id;
+	private int id;
 	
 	@Column(name = "que_description", nullable = false)
 	private String description;
@@ -39,17 +39,17 @@ public class Question implements Serializable, Comparable<Question> {
 	private List<Alternative> alternatives;
 	
 	@Column(name = "que_index", nullable = false, unique = true)
-	private Integer index;
+	private int index;
 	
 	@Column(name = "ski_id", nullable = false)
-	private Integer skillId;
+	private int skillId;
 	
 	@Column(name = "que_isAtive", nullable = false)
 	private Boolean isAtive;
 	
 	public Question() {}
 	
-	public Question(final String description, final List<Alternative> alternatives, final Integer skillId, final Integer index) {
+	public Question(final String description, final List<Alternative> alternatives, final int skillId, final int index) {
 		this.description = description;
 		this.alternatives = alternatives;
 		this.skillId = skillId;
@@ -57,7 +57,7 @@ public class Question implements Serializable, Comparable<Question> {
 		this.isAtive = true;
 	}
 	
-	public Integer id() {
+	public int id() {
 		return id;
 	}
 	
@@ -65,7 +65,7 @@ public class Question implements Serializable, Comparable<Question> {
 		return description;
 	}
 	
-	public Integer index() {
+	public int index() {
 		return index;
 	}
 	
@@ -81,7 +81,7 @@ public class Question implements Serializable, Comparable<Question> {
 		}
 	}
 	
-	public void changeIndex(final Integer newIndex) {
+	public void changeIndex(final int newIndex) {
 		this.index = newIndex;
 	}
 	

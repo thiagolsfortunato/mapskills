@@ -17,14 +17,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "skill")
-public class Skill implements Serializable{
+public class Skill implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ski_id")
-	private Integer id;
+	private int id;
 	
 	@Column(name = "ski_type", nullable = false)
 	private String type;
@@ -39,7 +39,7 @@ public class Skill implements Serializable{
 		this.description = description;
 	}
 	
-	public Integer id() {
+	public int id() {
 		return id;
 	}
 	

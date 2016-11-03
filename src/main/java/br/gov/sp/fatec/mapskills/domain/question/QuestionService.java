@@ -24,7 +24,7 @@ public class QuestionService implements RepositoryService<Question> {
 		repository.save(obj);
 	}
 
-	public Question findById(final Integer id) {
+	public Question findById(final int id) {
 		return repository.findById(id);
 	}
 	

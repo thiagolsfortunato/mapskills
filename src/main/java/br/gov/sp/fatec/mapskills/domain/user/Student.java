@@ -19,17 +19,17 @@ public class Student extends User {
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "stu_ra", nullable = false)
-	private Integer ra;
+	private int ra;
 	
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
 	
 	@Column(name = "ins_id", nullable = false)
-	private Integer institutionId;
+	private int institutionId;
 	
 	public Student() { }
 	
-	public Student(final String name, final Integer ra, final String phone, final Integer institutionId, final String email, final String password) {
+	public Student(final String name, final int ra, final String phone, final int institutionId, final String email, final String password) {
 		super(name, new Login(email, password), ProfileType.STUDENT);
 		this.ra = ra;
 		this.phone = phone;
