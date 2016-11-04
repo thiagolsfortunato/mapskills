@@ -18,10 +18,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "question")
+@SecondaryTable(name="grid_theme", pkJoinColumns={@PrimaryKeyJoinColumn(name="que_id")})
 public class Question implements Serializable, Comparable<Question> {
 
 	private static final long serialVersionUID = 1L;
@@ -31,6 +34,12 @@ public class Question implements Serializable, Comparable<Question> {
 	@Column(name = "que_id")
 	private int id;
 	
+	@Column(name = "gth_id", nullable = false)
+	private int themeId;
+	
+	@Column(name = "gri_index", nullable = false)
+	private int index;
+	
 	@Column(name = "que_description", nullable = false)
 	private String description;
 	
@@ -38,36 +47,40 @@ public class Question implements Serializable, Comparable<Question> {
 	@JoinColumn(name="que_id")
 	private List<Alternative> alternatives;
 	
-	@Column(name = "que_index", nullable = false, unique = true)
-	private int index;
-	
 	@Column(name = "ski_id", nullable = false)
 	private int skillId;
 	
 	@Column(name = "que_isAtive", nullable = false)
-	private Boolean isAtive;
+	private boolean active;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="qtx_id")
+	private List<Text> texts;
 	
 	public Question() {}
 	
-	public Question(final String description, final List<Alternative> alternatives, final int skillId, final int index) {
+	public Question(final String description, final List<Alternative> alternatives, final List<Text> texts,
+			final int skillId) {
+		
 		this.description = description;
 		this.alternatives = alternatives;
+		this.texts = texts;
 		this.skillId = skillId;
-		this.index = index;
-		this.isAtive = true;
+		this.active = true;
 	}
 	
 	public int id() {
 		return id;
 	}
 	
-	public String description() {
-		return description;
-	}
-	
 	public int index() {
 		return index;
 	}
+	
+	public String description() {
+		return description;
+	}
+
 	
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
@@ -80,15 +93,18 @@ public class Question implements Serializable, Comparable<Question> {
 			this.alternatives.get(i).changeSkillValue(newAlternatives.get(i).skillValue());
 		}
 	}
-	
-	public void changeIndex(final int newIndex) {
-		this.index = newIndex;
+
+	public void on() {
+		this.active = true;
 	}
 	
-	public void setStatus(final Boolean status) {
-		this.isAtive = status;
+	public void off() {
+		this.active = false;
 	}
 
+	/**
+	 * O método compareTo é utilizado para realizar a ordenacao das questoes através do index da questão
+	 */
 	@Override
 	public int compareTo(final Question question) {
 		return this.index < question.index() ? -1 : (this.index == question.index ? 0 : 1);

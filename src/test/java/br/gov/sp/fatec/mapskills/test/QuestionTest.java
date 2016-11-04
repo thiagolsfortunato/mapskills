@@ -14,8 +14,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.config.SpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.domain.question.Alternative;
+import br.gov.sp.fatec.mapskills.domain.question.Multimedia;
 import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
+import br.gov.sp.fatec.mapskills.domain.question.Text;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfiguration.class, loader = AnnotationConfigContextLoader.class)
@@ -27,7 +29,8 @@ public class QuestionTest {
 	@Test
 	public void save() {
 		final List<Alternative> alternatives = builderMockAlternatives();
-		final Question question = new Question("Questao002 Mock", alternatives, 1, 1);
+		final List<Text> texts = buildMockTexts();
+		final Question question = new Question("Questao002 Mock", alternatives, texts, 1);
 		service.create(question);
 		
 		assertEquals("Questao002 Mock", service.findById(question.id()).description());
@@ -38,9 +41,7 @@ public class QuestionTest {
 		final int id = 2;
 		final Question question = service.findById(id);
 		question.changeDescription("Questao002 Mock alt");
-		question.setStatus(false);
 		question.changeAlternatives(builderMockAlternatives());
-		question.changeIndex(2);
 		service.create(question);
 		
 		assertEquals("Questao002 Mock alt", service.findById(id).description());
@@ -50,7 +51,7 @@ public class QuestionTest {
 	public void desc() {
 		List<Question> questions = service.questionList();
 		
-		assertEquals(1, questions.get(0).index());
+		assertEquals(1, questions.get(0).id());
 	}
 	
 	private List<Alternative> builderMockAlternatives() {
@@ -64,6 +65,14 @@ public class QuestionTest {
 		alternatives.add(c);
 		alternatives.add(d);
 		return alternatives;
+	}
+	
+	private List<Text> buildMockTexts() {
+		final List<Text> texts = new ArrayList<>();
+		texts.add(new Text("TextoMock001", new Multimedia("http://site/img/001")));
+		texts.add(new Text("TextoMock002", new Multimedia("http://site/img/002")));
+		texts.add(new Text("TextoMock003", new Multimedia("http://site/img/003")));
+		return texts;
 	}
 
 }

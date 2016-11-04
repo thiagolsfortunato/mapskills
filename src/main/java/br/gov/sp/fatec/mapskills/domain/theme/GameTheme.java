@@ -6,18 +6,52 @@
  */
 package br.gov.sp.fatec.mapskills.domain.theme;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import br.gov.sp.fatec.mapskills.domain.question.Question;
-
+@Entity
+@Table(name = "game_theme")
 public class GameTheme {
 	
-	private final List<Question> questions = new ArrayList<>();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "gth_id")
+	private int id;
 	
-	public GameTheme(final List<Question> questions) {
-		this.questions.clear();
-		this.questions.addAll(questions);
+	@Column(name = "gth_description", nullable = false)
+	private String description;
+	
+	@Column(name = "gth_isActive", nullable = false)
+	private boolean active = false;
+	
+	public GameTheme() {}
+	
+	public GameTheme(final String description) {
+		this.description = description;
+	}
+	
+	public int id() {
+		return id;
+	}
+	
+	public String description() {
+		return description;
+	}
+	
+	public void off() {
+		active = false;
+	}
+	
+	public void on() {
+		active = true;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 
 }

@@ -13,23 +13,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
-
 public class QuestionService implements RepositoryService<Question> {
 
-	@Autowired(required = true)
-	@Qualifier("questionRepository")
-	QuestionRepository repository;
+	private QuestionRepository questionRepository;
 	
 	public void create(final Question obj) {
-		repository.save(obj);
+		questionRepository.save(obj);
 	}
 
 	public Question findById(final int id) {
-		return repository.findById(id);
+		return questionRepository.findById(id);
 	}
 	
 	public List<Question> questionList() {
-		return repository.questionList();
+		return questionRepository.questionList();
+	}
+	
+	@Autowired(required = true)
+	public void setQuestionRespository(final @Qualifier("questionRepository") QuestionRepository repository) {
+		this.questionRepository = repository;
 	}
 
 }
