@@ -6,13 +6,15 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
+import org.springframework.data.repository.CrudRepository;
+
 public interface InstitutionRepository extends CrudRepository<Institution, Integer> {
 	
 	public Institution findById(final int id);
+	
+	public void save(final List<Course> course);
 
 
 }

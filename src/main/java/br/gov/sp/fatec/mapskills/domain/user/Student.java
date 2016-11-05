@@ -24,20 +24,20 @@ public class Student extends User {
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
 	
-	@Column(name = "ins_id", nullable = false)
-	private int institutionId;
+	@Column(name = "crs_id", nullable = false)
+	private int courseId;
 	
 	public Student() { }
 	
-	public Student(final String name, final int ra, final String phone, final int institutionId, final String email, final String password) {
-		super(name, new Login(email, password), ProfileType.STUDENT);
+	public Student(final String name, final int ra, final String phone, final int courseId, final String username, final String password) {
+		super(name, new Login(username, password), ProfileType.STUDENT);
 		this.ra = ra;
 		this.phone = phone;
-		this.institutionId = institutionId;
+		this.courseId = courseId;
 	}
 
 	public void setInstitution(final int id) {
-		institutionId = id;
+		courseId = id;
 	}
 
 }

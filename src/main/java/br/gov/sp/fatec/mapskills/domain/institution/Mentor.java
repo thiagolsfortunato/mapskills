@@ -27,8 +27,8 @@ public class Mentor extends User {
 
 	public Mentor() { }
 	
-	public Mentor(final String name, final String email, final String password) {
-		super(name, new Login(email, password), ProfileType.MENTOR);
+	public Mentor(final String name, final String username, final String password) {
+		super(name, new Login(username, password), ProfileType.MENTOR);
 	}	
 
 }

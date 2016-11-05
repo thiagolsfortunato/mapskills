@@ -6,6 +6,8 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -24,6 +26,10 @@ public class InstitutionService implements RepositoryService<Institution> {
 
 	public Institution findById(final int id) {
 		return repository.findById(id);
+	}
+	
+	public void create(final List<Course> courses) {
+		repository.save(courses);
 	}
 
 	

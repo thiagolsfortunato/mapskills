@@ -17,7 +17,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Login {
 	
-	@Column(name = "use_email", nullable = false, unique = true)
+	@Column(name = "use_username", nullable = false, unique = true)
 	private String username;
 	
 	@Column(name = "use_password", nullable = false)

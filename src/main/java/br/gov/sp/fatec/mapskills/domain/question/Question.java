@@ -18,13 +18,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "question")
-@SecondaryTable(name="grid_theme", pkJoinColumns={@PrimaryKeyJoinColumn(name="que_id")})
 public class Question implements Serializable, Comparable<Question> {
 
 	private static final long serialVersionUID = 1L;
