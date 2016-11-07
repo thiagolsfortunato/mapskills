@@ -19,7 +19,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@ImportResource("applicationContext.xml")
 @Import({DataBaseConfig.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
+		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.utils"})
-@EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user"})
+@EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
+		"br.gov.sp.fatec.mapskills.domain.institution"})
 public class SpringContextConfiguration {
 }

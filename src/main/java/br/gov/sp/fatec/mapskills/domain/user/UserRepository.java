@@ -6,10 +6,17 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 	
 	public User findById(final int id);
-
+	
+	/*@Query("SELECT s FROM Student s INNER JOIN Course c ON s.courseCode = c.code "
+			+ "INNER JOIN Institution i ON c.institutionId = i.id = ?2 WHERE c.code = ?1")
+	public Collection<Student> findAllStudentByCourseCode(final int code, final int institutionId);
+*/
 }
