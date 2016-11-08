@@ -69,7 +69,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 	
 	public Collection<Course> findAllCoursesByInstitution(final int id) {
 		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAllByInstitutionId(id)) {
+		for(final Course course : courseRepository.findAllByInstitutionCode(id)) {
 			courses.add(course);
 		}
 		return courses;
