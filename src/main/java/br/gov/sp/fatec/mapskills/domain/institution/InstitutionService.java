@@ -20,6 +20,12 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 @Service
 public class InstitutionService implements RepositoryService<Institution> {
 	
+	@Override
+	public Institution findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Autowired
 	private InstitutionRepository institutionRepository;
 	
@@ -41,8 +47,8 @@ public class InstitutionService implements RepositoryService<Institution> {
 		institutionRepository.save(institution);
 	}
 
-	public Institution findById(final int id) {
-		return institutionRepository.findById(id);
+	public Institution findByCode(final int code) {
+		return institutionRepository.findByCode(code);
 	}
 	
 	public Collection<Institution> findAllInstitutions() {
@@ -71,7 +77,15 @@ public class InstitutionService implements RepositoryService<Institution> {
 	
 	public Collection<Student> findAllStudentsByCourse(final int courseCode, final int institutionCode) {
 		final List<Student> courses = new ArrayList<>();
-		for(final Student student : userRepository.findAllStudentByCourseCode(courseCode, institutionCode)) {
+		for(final Student student : userRepository.findAllStudentByCourse(courseCode, institutionCode)) {
+			courses.add(student);
+		}
+		return courses;
+	}
+	
+	public Collection<Student> findAllStudentsByInstitution(final int institutionCode) {
+		final List<Student> courses = new ArrayList<>();
+		for(final Student student : userRepository.findAllStudentByInstitution(institutionCode)) {
 			courses.add(student);
 		}
 		return courses;

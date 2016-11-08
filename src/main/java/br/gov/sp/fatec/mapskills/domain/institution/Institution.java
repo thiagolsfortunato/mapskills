@@ -30,6 +30,9 @@ public class Institution implements Serializable {
 	@Column(name = "ins_id")
 	private int id;
 	
+	@Column(name = "ins_code", nullable = false, unique = true)
+	private int code;
+	
 	@Column(name = "ins_cnpj", nullable = true, unique = true)
 	private String cnpj;
 	
@@ -49,7 +52,9 @@ public class Institution implements Serializable {
 
 	public Institution() {}
 	
-	public Institution(final String cnpj, final String company, final String city, final Mentor mentor) {
+	public Institution(final int code, final String cnpj, final String company,
+			final String city, final Mentor mentor) {
+		
 		this.cnpj = cnpj;
 		this.company = company;
 		this.city = city;
@@ -72,8 +77,8 @@ public class Institution implements Serializable {
 		mentor.changeName(newName);
 	}
 	
-	public int id() {
-		return id;
+	public int code() {
+		return code;
 	}
 	
 	public String cnpj() {

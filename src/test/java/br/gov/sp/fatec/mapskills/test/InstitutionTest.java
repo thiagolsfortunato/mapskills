@@ -29,23 +29,23 @@ public class InstitutionTest implements ApplicationTest {
 	@Test
 	public void save() {
 		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123");
-		final Institution fatec = new Institution("123456789000", "Jessen Vidal", "São José", mentor);
+		final Institution fatec = new Institution(146, "123456789000", "Jessen Vidal", "São José", mentor);
 		service.saveInstitution(fatec);
 		
-		assertEquals(fatec.id(), service.findById(fatec.id()).id());
+		assertEquals(fatec.code(), service.findByCode(fatec.code()).code());
 	}
 	
 	@Test
 	public void saveInstitutions() {
 		final List<Institution> list = new ArrayList<>();
 		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "valdez@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("123456789001", "Fatec Ourinhos", "São José", mentorA);
+		final Institution fatecOURINHOS = new Institution(147, "123456789001", "Fatec Ourinhos", "São José", mentorA);
 		
 		final Mentor mentorB = new Mentor("Mentor Responsavel PINDA", "paulo@fatec", "Mudar@123");
-		final Institution fatecPINDA = new Institution("123456789002", "Fatec Pinda", "Pindamonhangaba", mentorB);
+		final Institution fatecPINDA = new Institution(148, "123456789002", "Fatec Pinda", "Pindamonhangaba", mentorB);
 		
 		final Mentor mentorC = new Mentor("Mentor Responsavel SP", "fagundez@fatec", "Mudar@123");
-		final Institution fatecSP = new Institution("123456789003", "Fatec SP", "São Paulo", mentorC);
+		final Institution fatecSP = new Institution(149, "123456789003", "Fatec SP", "São Paulo", mentorC);
 		
 		list.add(fatecOURINHOS);
 		list.add(fatecPINDA);
@@ -83,19 +83,21 @@ public class InstitutionTest implements ApplicationTest {
 	@Test
 	public void findAllStudentsByCourse() {
 		final List<Student> students = new ArrayList<>();
-		students.addAll(service.findAllStudentsByCourse(1, 1));
+		students.addAll(service.findAllStudentsByCourse(1495, 1));
+		
+		assertEquals(1, students.size());
 	}
 	
 	@Test
 	public void update() {
-		final Institution institution = service.findById(1);
+		final Institution institution = service.findById(146);
 		institution.changeMentorName("Marcos Silveira");
 		institution.changeCnpj("71461173000155");
 		institution.changeCity("Jacarei");
 		institution.changeCompany("Fatec Jacarei");
 		service.update(institution);
 		
-		assertEquals("Marcos Silveira", service.findById(institution.id()).mentor());
+		assertEquals("Marcos Silveira", service.findById(institution.code()).mentor());
 	}
 	
 

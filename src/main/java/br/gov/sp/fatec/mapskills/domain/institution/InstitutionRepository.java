@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface InstitutionRepository extends CrudRepository<Institution, Integer> {
 	
-	public Institution findById(final int id);
+	public Institution findByCode(final int code);
 	
 	//public Institution save(final Institution institution);
 	

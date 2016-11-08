@@ -39,18 +39,22 @@ public class StudentTest implements ApplicationTest {
 	@Test
 	public void saveList() {
 		final List<Student> students = new ArrayList<>();
-		final Student studentA = new Student("Name Student A", 2017008011, "1289003400", 1, "nick5s2@fate.sp.gov.br","mudar@123");
-		final Student studentB = new Student("Name Student B", 2017008012, "1289003400", 1, "nick5s2@fate.sp.gov.br","mudar@123");
-		final Student studentC = new Student("Name Student C", 2017008013, "1289003400", 1, "nick5s2@fate.sp.gov.br","mudar@123");
-		final Student studentD = new Student("Name Student D", 2017008014, "1289003400", 1, "nick5s2@fate.sp.gov.br","mudar@123");
+		final Student studentA = new Student("Name Student A", 2017008011, "1289003400", 1485, "studentA@fate.sp.gov.br","mudar@123");
+		final Student studentB = new Student("Name Student B", 2017008012, "1289003400", 1485, "studentB@fate.sp.gov.br","mudar@123");
+		final Student studentC = new Student("Name Student C", 2017008013, "1289003400", 1485, "studentC@fate.sp.gov.br","mudar@123");
+		final Student studentD = new Student("Name Student D", 2017008014, "1289003400", 1495, "studentD@fate.sp.gov.br","mudar@123");
 		students.add(studentA);
 		students.add(studentB);
 		students.add(studentC);
 		students.add(studentD);
 		
 		userService.create(students);
-		
-		//assertEquals(4, institutionService.findAllStudentsByCourse(1, 1));
+	
+	}
+	
+	@Test
+	public void findAllStudentsByInstitution() {
+		assertEquals(4, institutionService.findAllStudentsByInstitution(1).size());
 	}
 
 	@Test

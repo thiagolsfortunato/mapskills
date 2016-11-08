@@ -40,11 +40,5 @@ public class StudentPoiParser extends PoiParser {
 		final List<String> args = super.objectArgs(cellIterator);
 		return new Student(args.get(1), new Integer(args.get(0)), args.get(3), 0, args.get(2), "Mudar@123");
 	}
-	
-	public void setInstitutionId(final List<Student> studentList, final int id) {
-		for(final Student student : studentList) {
-			student.setInstitution(id);
-		}
-	}
 
 }

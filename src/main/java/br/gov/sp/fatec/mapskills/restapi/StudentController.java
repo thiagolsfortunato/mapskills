@@ -39,7 +39,6 @@ public class StudentController {
 		
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		studentPoi.setInstitutionId(students, inputStreamWrapper.getInstitutionId());
 		service.create(students);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
