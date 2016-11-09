@@ -58,10 +58,10 @@ public class InstitutionTest implements ApplicationTest {
 	@Test
 	public void saveCourses() {
 		final List<Course> coursesList = new ArrayList<>();
-		final Course courseA = new Course(1485, "Banco de dados", 1);
-		final Course courseB = new Course(1495, "Logistica", 1);
-		final Course courseC = new Course(1505, "Estruturas Leves", 1);
-		final Course courseD = new Course(1515, "Manutenção de Aeronaves", 1);
+		final Course courseA = new Course(28, "Banco de dados", 146);
+		final Course courseB = new Course(29, "Logistica", 146);
+		final Course courseC = new Course(30, "Estruturas Leves", 146);
+		final Course courseD = new Course(31, "Manutenção de Aeronaves", 146);
 		coursesList.add(courseA);
 		coursesList.add(courseB);
 		coursesList.add(courseC);
@@ -90,14 +90,14 @@ public class InstitutionTest implements ApplicationTest {
 	
 	@Test
 	public void update() {
-		final Institution institution = service.findById(146);
+		final Institution institution = service.findByCode(146);
 		institution.changeMentorName("Marcos Silveira");
 		institution.changeCnpj("71461173000155");
 		institution.changeCity("Jacarei");
 		institution.changeCompany("Fatec Jacarei");
 		service.update(institution);
 		
-		assertEquals("Marcos Silveira", service.findById(institution.code()).mentor());
+		assertEquals("Marcos Silveira", service.findByCode(institution.code()).mentor());
 	}
 	
 

@@ -14,7 +14,4 @@ package br.gov.sp.fatec.mapskills.infrastructure;
  * @param <T>
  */
 public interface RepositoryService<T> {
-	
-	public T findById(final int id);
-
 }

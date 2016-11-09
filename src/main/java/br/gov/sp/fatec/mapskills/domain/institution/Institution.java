@@ -55,6 +55,7 @@ public class Institution implements Serializable {
 	public Institution(final int code, final String cnpj, final String company,
 			final String city, final Mentor mentor) {
 		
+		this.code = code;
 		this.cnpj = cnpj;
 		this.company = company;
 		this.city = city;
@@ -77,6 +78,9 @@ public class Institution implements Serializable {
 		mentor.changeName(newName);
 	}
 	
+	public int id() {
+		return id;
+	}
 	public int code() {
 		return code;
 	}

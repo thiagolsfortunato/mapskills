@@ -7,6 +7,7 @@
 package br.gov.sp.fatec.mapskills.domain.user;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -18,8 +19,8 @@ public class Student extends User {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "stu_ra", nullable = false)
-	private int ra;
+	@Embedded
+	private AcademicRegistry ra;
 	
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
@@ -27,16 +28,35 @@ public class Student extends User {
 	@Column(name = "stu_isCompleted")
 	private boolean completed = false;
 	
-	@Column(name = "crs_code", nullable = false)
-	private int courseCode;
 	
 	public Student() { }
 	
-	public Student(final String name, final int ra, final String phone, final int courseCode, final String username, final String password) {
+	public Student(final String ra, final String name, final String phone, final String username,
+			final String password) throws MapSkillsException {
+		
 		super(name, new Login(username, password), ProfileType.STUDENT);
-		this.ra = ra;
+		this.ra = new AcademicRegistry(ra);
 		this.phone = phone;
-		this.courseCode = courseCode;
+	}
+	
+	public String ra() {
+		return ra.ra();
+	}
+	
+	public String courseCode() {
+		return ra.courseCode();
+	}
+	
+	public String phone() {
+		return phone;
+	}
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+	
+	public void completed() {
+		completed = true;
 	}
 
 }

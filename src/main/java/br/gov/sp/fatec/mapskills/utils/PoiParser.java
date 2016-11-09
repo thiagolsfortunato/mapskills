@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import br.gov.sp.fatec.mapskills.domain.user.MapSkillsException;
 /**
  * A classe <code>UserXLSXParser</code> tem objetivo de converter arquivo xlsx em objetos
  * para serem persistidos no banco de dados.
@@ -27,7 +29,7 @@ public abstract class PoiParser {
 	
 	protected abstract List<?> toObjectList(final InputStream inputStream) throws Exception;
 
-	protected abstract Object build(final Iterator<Cell> cellIterator);
+	protected abstract Object build(final Iterator<Cell> cellIterator) throws MapSkillsException;
 	/**
 	 * O método <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
 	 * 
@@ -48,8 +50,9 @@ public abstract class PoiParser {
 	 * 
 	 * @param rowIterator
 	 * @return
+	 * @throws MapSkillsException 
 	 */
-	private List<?> objectListBuilder(final Iterator<Row> rowIterator) {
+	private List<?> objectListBuilder(final Iterator<Row> rowIterator) throws MapSkillsException {
 		final List<Object> objectList = new ArrayList<>();
 		Row row;
 		while (rowIterator.hasNext()) {

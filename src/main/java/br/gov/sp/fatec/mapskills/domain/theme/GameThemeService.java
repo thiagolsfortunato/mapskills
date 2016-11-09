@@ -14,7 +14,6 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	
 	private GameThemeRepository repository;
 
-	@Override
 	public GameTheme findById(final int id) {
 		return repository.findById(id);
 	}

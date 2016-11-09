@@ -23,7 +23,6 @@ public class SkillTest implements ApplicationTest{
 	private SkillService service;
 
 	@Test
-	@Override
 	public void save() {
 		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
 		service.create(skill);
@@ -33,7 +32,6 @@ public class SkillTest implements ApplicationTest{
 	}
 
 	@Test
-	@Override
 	public void update() {
 		Skill skill = service.findById(1);
 		skill.changeType("Trabalho em Equipe");

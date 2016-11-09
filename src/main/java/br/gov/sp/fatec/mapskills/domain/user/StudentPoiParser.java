@@ -35,10 +35,11 @@ public class StudentPoiParser extends PoiParser {
 	/**
 	 * O método <code>build</code> constroi um objeto do tipo Student a partir de uma lista de
 	 * String devolvida da chamada do método <code>objectArgs</code>.
+	 * @throws MapSkillsException 
 	 */
-	protected Student build(final Iterator<Cell> cellIterator) {
+	protected Student build(final Iterator<Cell> cellIterator) throws MapSkillsException {
 		final List<String> args = super.objectArgs(cellIterator);
-		return new Student(args.get(1), new Integer(args.get(0)), args.get(3), 0, args.get(2), "Mudar@123");
+		return new Student(args.get(0), args.get(1), args.get(2), args.get(3), "Mudar@123");
 	}
 
 }

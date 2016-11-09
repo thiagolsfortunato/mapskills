@@ -26,15 +26,15 @@ public class Course implements Serializable {
 	@Column(name = "crs_name")
 	private String name;
 	
-	@Column(name = "ins_id")
-	private int institutionId;
+	@Column(name = "ins_code")
+	private int institutionCode;
 	
 	public Course() {}
 	
-	public Course(final int code, final String name, final int institutionId) {
+	public Course(final int code, final String name, final int institutionCode) {
 		this.code = code;
 		this.name = name;
-		this.institutionId = institutionId;
+		this.institutionCode = institutionCode;
 	}
 	
 	public int id() {
@@ -49,8 +49,8 @@ public class Course implements Serializable {
 		return name;
 	}
 	
-	public int institutionId() {
-		return institutionId;
+	public int institutionCode() {
+		return institutionCode;
 	}
 
 }

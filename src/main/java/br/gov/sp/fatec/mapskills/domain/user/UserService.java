@@ -29,7 +29,6 @@ public class UserService implements RepositoryService<User> {
 		repository.save(obj);
 	}
 
-	@Override
 	public User findById(final int id) {
 		return repository.findById(id);
 	}
