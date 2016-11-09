@@ -8,16 +8,18 @@ package br.gov.sp.fatec.mapskills.domain.skill;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
+@Service
 public class SkillService implements RepositoryService<Skill>{
 
 	@Autowired(required = true)
 	@Qualifier("skillRepository")
 	private SkillRepository repository;
 
-	public void create(final Skill skill) {
+	public void save(final Skill skill) {
 		repository.save(skill);
 	}
 	
@@ -28,6 +30,5 @@ public class SkillService implements RepositoryService<Skill>{
 	public Skill findById(final int id) {
 		return repository.findById(id);
 	}
-	
 
 }

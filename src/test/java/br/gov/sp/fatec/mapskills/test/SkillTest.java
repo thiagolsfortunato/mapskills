@@ -16,16 +16,16 @@ import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfiguration.class, loader = AnnotationConfigContextLoader.class)
-public class SkillTest implements ApplicationTest{
+public class SkillTest implements ApplicationTest {
 	
-	@Autowired
+	@Autowired(required = true)
 	@Qualifier("skillService")
 	private SkillService service;
 
 	@Test
 	public void save() {
 		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
-		service.create(skill);
+		service.save(skill);
 		
 		assertEquals("Liderança", service.findById(skill.id()).getType());
 		

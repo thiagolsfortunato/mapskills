@@ -6,10 +6,16 @@
  */
 package br.gov.sp.fatec.mapskills.domain.theme;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
+@Service
 public class GameThemeService implements RepositoryService<GameTheme> {
 	
 	private GameThemeRepository repository;
@@ -18,13 +24,22 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 		return repository.findById(id);
 	}
 	
-	public void create(final GameTheme theme) {
+	public void save(final GameTheme theme) {
 		repository.save(theme);
 	}
 	
+
+	public Collection<GameTheme> findAllThemes() {
+		final List<GameTheme> themes = new ArrayList<>();
+		for(final GameTheme theme : repository.findAll()) {
+			themes.add(theme);
+		}
+		return themes;
+	}
+
 	@Autowired
 	public void setGameThemeRepository(final GameThemeRepository repository) {
 		this.repository = repository;
 	}
-
+	
 }

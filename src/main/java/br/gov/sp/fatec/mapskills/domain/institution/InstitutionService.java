@@ -41,6 +41,11 @@ public class InstitutionService implements RepositoryService<Institution> {
 		courseRepository.save(courses);
 	}
 	
+	public void saveCourse(final Course course) {
+		courseRepository.save(course);
+		
+	}
+	
 	public void update(final Institution institution) {
 		institutionRepository.save(institution);
 	}
@@ -65,9 +70,9 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return courses;
 	}
 
-	public Collection<Course> findAllCoursesByInstitution(final int id) {
+	public Collection<Course> findAllCoursesByInstitution(final int code) {
 		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAllByInstitutionCode(id)) {
+		for(final Course course : courseRepository.findAllByInstitutionCode(code)) {
 			courses.add(course);
 		}
 		return courses;

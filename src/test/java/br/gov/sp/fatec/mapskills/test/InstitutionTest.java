@@ -27,7 +27,12 @@ public class InstitutionTest implements ApplicationTest {
 	InstitutionService service;
 	
 	@Test
-	public void save() {
+	public void test() {
+		assertEquals(4, 2 + 2);
+	}
+	
+	@Test
+	public void saveInstitution() {
 		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123");
 		final Institution fatec = new Institution(146, "123456789000", "Jessen Vidal", "São José", mentor);
 		service.saveInstitution(fatec);
@@ -52,7 +57,7 @@ public class InstitutionTest implements ApplicationTest {
 		list.add(fatecSP);
 		service.saveInstitutions(list);
 		
-		assertEquals(4, service.findAllInstitutions().size());
+		assertEquals(3, service.findAllInstitutions().size());
 	}
 	
 	@Test
@@ -74,10 +79,12 @@ public class InstitutionTest implements ApplicationTest {
 	
 	@Test
 	public void findAllCoursesByInstitution() {
-		final List<Course> courses = new ArrayList<>(); 
-		courses.addAll(service.findAllCoursesByInstitution(2));
+		service.saveCourse(new Course(28, "Banco de dados", 146));
 		
-		assertEquals(0, courses.size());
+		final List<Course> courses = new ArrayList<>(); 
+		courses.addAll(service.findAllCoursesByInstitution(146));
+		
+		assertEquals(1, courses.size());
 	}
 	
 	@Test

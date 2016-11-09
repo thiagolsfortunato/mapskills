@@ -33,4 +33,8 @@ public class UserService implements RepositoryService<User> {
 		return repository.findById(id);
 	}
 
+	public User findUserByUsernamePassword(final String username, final String password) {
+		return repository.findByLogin(new Login(username, password));
+	}
+
 }
