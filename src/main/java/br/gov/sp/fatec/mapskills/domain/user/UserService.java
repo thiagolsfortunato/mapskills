@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
@@ -34,7 +35,7 @@ public class UserService implements RepositoryService<User> {
 	}
 
 	public User findUserByUsernamePassword(final String username, final String password) {
-		return repository.findByLogin(new Login(username, password));
+		return (Mentor) repository.findByLogin(new Login(username, password));
 	}
 
 }
