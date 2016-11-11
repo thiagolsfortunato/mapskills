@@ -47,6 +47,10 @@ public class Student extends User {
 		return ra.courseCode();
 	}
 	
+	public String institutionCode() {
+		return ra.institutionCode();
+	}
+	
 	public String phone() {
 		return phone;
 	}

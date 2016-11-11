@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.sp.fatec.mapskills.domain.user.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.StudentPoiParser;
+import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.LoginWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
@@ -39,8 +43,15 @@ public class StudentController {
 		
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		service.create(students);
+		service.save(students);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<UserWrapper> login(@RequestBody final LoginWrapper loginWrapper) throws MapSkillsException {
+		final User user = service.findUserByUsernamePassword(loginWrapper.username(), loginWrapper.password());
+		final UserWrapper userWrapper = new UserWrapper(user);
+		return new ResponseEntity<>(userWrapper, HttpStatus.OK);
 	}
 
 

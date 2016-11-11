@@ -1,4 +1,4 @@
-/* @(#)StudentXLSXParser.java 1.0 05/10/2016
+/* @(#)StudentPoiParser.java 1.0 03/11/2016
  *
  * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
  * proprietary/confidential. Use is subject to license terms.
@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
- * A classe <code>StudentXLSXParser</code> converte um arquivo xlsx em objetos do tipo Student
+ * A classe <code>StudentPoiParser</code> converte um arquivo xlsx em objetos do tipo Student
  * para serem persistidos no banco de dados.
  * 
  * @author Marcelo

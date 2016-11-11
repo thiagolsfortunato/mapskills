@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
@@ -22,20 +21,28 @@ public class UserService implements RepositoryService<User> {
 	@Qualifier("userRepository")
 	private UserRepository repository;
 
-	public void create(final Student obj) {
+	public void save(final Student obj) {
 		repository.save(obj);
 	}
 	
-	public void create(final List<Student> obj) {
+	public void save(final List<Student> obj) {
 		repository.save(obj);
 	}
 
-	public User findById(final int id) {
-		return repository.findById(id);
+	public User findById(final int id) throws MapSkillsException {
+		final User user = repository.findById(id);
+		if (user == null) {
+			throw new UserNotFoundException(String.valueOf(id));
+		}
+		return user; 
 	}
 
-	public User findUserByUsernamePassword(final String username, final String password) {
-		return (Mentor) repository.findByLogin(new Login(username, password));
+	public User findUserByUsernamePassword(final String username, final String password) throws MapSkillsException {
+		final User user = repository.findByLogin(new Login(username, password));
+		if (user == null) {
+			throw new UserNotFoundException(username);
+		}
+		return user;
 	}
 
 }

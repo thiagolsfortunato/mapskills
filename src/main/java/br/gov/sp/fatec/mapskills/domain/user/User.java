@@ -56,8 +56,8 @@ public abstract class User implements Serializable {
 		this.profile = profile;
 	}
 	
-	public String profile() {
-		return profile.name();
+	public ProfileType profile() {
+		return profile;
 	}
 	
 	public int id() {

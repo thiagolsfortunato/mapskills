@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -20,7 +21,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi"})
+@Import(SerializersConfig.class)
+@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi",
+		"br.gov.sp.fatec.mapskills.restapi.serializer"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Resource

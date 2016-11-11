@@ -1,8 +1,9 @@
-package br.gov.sp.fatec.mapskills.domain.user;
+package br.gov.sp.fatec.mapskills.domain.institution;
 
 import org.springframework.stereotype.Component;
 
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.User;
+import br.gov.sp.fatec.mapskills.domain.user.UserFactory;
 
 @Component
 public class MentorFactory implements UserFactory {
