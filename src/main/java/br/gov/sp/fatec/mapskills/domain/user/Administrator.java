@@ -17,6 +17,8 @@ public class Administrator extends User {
 
 	private static final long serialVersionUID = 1L;
 	
+	public Administrator() {}
+	
 	public Administrator(final String name, final String email, final String password) {
 		super(name, new Login(email, password), ProfileType.ADMINISTRATOR);
 	}

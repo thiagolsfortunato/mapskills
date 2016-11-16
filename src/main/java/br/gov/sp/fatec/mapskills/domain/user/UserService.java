@@ -21,12 +21,16 @@ public class UserService implements RepositoryService<User> {
 	@Qualifier("userRepository")
 	private UserRepository repository;
 
-	public void save(final Student obj) {
-		repository.save(obj);
+	public void save(final Student user) {
+		repository.save(user);
 	}
 	
-	public void save(final List<Student> obj) {
-		repository.save(obj);
+	public void save(final List<Student> user) {
+		repository.save(user);
+	}
+	
+	public void save(final Administrator user) {
+		repository.save(user);
 	}
 
 	public User findById(final int id) throws MapSkillsException {

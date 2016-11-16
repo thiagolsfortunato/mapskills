@@ -19,6 +19,7 @@ import br.gov.sp.fatec.mapskills.config.SpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
@@ -88,6 +89,12 @@ public class UserTest implements ApplicationTest {
 		
 		assertEquals(EXPECTED, student.ra());
 		assertEquals("Mentor Fatec GRU", mentor.name());
+	}
+	
+	@Test
+	public void saveAdministrator() {
+		final Administrator admin = new Administrator("Administrador", "admin", "admin");
+		userService.save(admin);
 	}
 
 }
