@@ -102,7 +102,7 @@ public class InstitutionTest implements ApplicationTest {
 		institution.changeCnpj("71461173000155");
 		institution.changeCity("Jacarei");
 		institution.changeCompany("Fatec Jacarei");
-		service.update(institution);
+		service.updateInstitution(institution);
 		
 		assertEquals("Marcos Silveira", service.findByCode(institution.code()).mentor());
 	}

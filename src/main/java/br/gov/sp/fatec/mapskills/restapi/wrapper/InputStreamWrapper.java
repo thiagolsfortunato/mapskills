@@ -8,17 +8,16 @@ package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import java.io.InputStream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.gov.sp.fatec.mapskills.restapi.serializer.InputStreamDeserializer;
 import br.gov.sp.fatec.mapskills.utils.Base64Parser;
+import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
 @JsonDeserialize(using = InputStreamDeserializer.class)
 public class InputStreamWrapper {
 	
-	private Base64Parser parser;
+	private Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	private final InputStream inputStream;
 	private final int institutionId;
 	
@@ -34,12 +33,5 @@ public class InputStreamWrapper {
 	public int getInstitutionId() {
 		return institutionId;
 	}
-	
-	@Autowired
-	public void setBase64Parser(final Base64Parser base64Parser) {
-		this.parser = base64Parser;
-	}
-	
-	
 
 }

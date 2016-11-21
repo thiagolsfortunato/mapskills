@@ -25,6 +25,8 @@ public class Multimedia {
 	@Column(name = "mid_url")
 	private String url;
 	
+	public Multimedia() {}
+	
 	public Multimedia(final String url) {
 		this.url = url;
 	}

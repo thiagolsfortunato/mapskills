@@ -30,8 +30,10 @@ public class Text {
 	private String text;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="tmi_id")
+	@JoinColumn(name="mid_id")
 	private Multimedia multimedia;
+	
+	public Text() {}
 	
 	public Text(final String text, final Multimedia multimedia) {
 		this.text = text;

@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.user.Student;
@@ -20,13 +21,8 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 @Service
 public class InstitutionService implements RepositoryService<Institution> {
 		
-	@Autowired
 	private InstitutionRepository institutionRepository;
-	
-	@Autowired
 	private CourseRepository courseRepository;
-	
-	@Autowired
 	private UserRepository userRepository;
 
 	public void saveInstitution(final Institution institution) {
@@ -37,16 +33,15 @@ public class InstitutionService implements RepositoryService<Institution> {
 		institutionRepository.save(institutions);
 	}
 	
+	public void saveCourse(final Course course) {
+		courseRepository.save(course);
+	}
+	
 	public void saveCourses(final List<Course> courses) {
 		courseRepository.save(courses);
 	}
 	
-	public void saveCourse(final Course course) {
-		courseRepository.save(course);
-		
-	}
-	
-	public void update(final Institution institution) {
+	public void updateInstitution(final Institution institution) {
 		institutionRepository.save(institution);
 	}
 
@@ -70,6 +65,11 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return courses;
 	}
 
+	/**
+	 * Método que recupera todos os cursos de uma determinada instituição
+	 * @param code
+	 * @return
+	 */
 	public Collection<Course> findAllCoursesByInstitution(final int code) {
 		final List<Course> courses = new ArrayList<>();
 		for(final Course course : courseRepository.findAllByInstitutionCode(code)) {
@@ -92,6 +92,24 @@ public class InstitutionService implements RepositoryService<Institution> {
 			courses.add(student);
 		}
 		return courses;
+	}
+	
+	@Autowired
+	@Qualifier("institutionRepository")
+	public void setInstitutionRepository(final InstitutionRepository repository) {
+		institutionRepository = repository;
+	}
+	
+	@Autowired
+	@Qualifier("courseRepository")
+	public void setCourseRepository(final CourseRepository repository) {
+		courseRepository = repository;
+	}
+	
+	@Autowired
+	@Qualifier("userRepository")
+	public void setUserRepository(final UserRepository repository) {
+		userRepository = repository;
 	}
 
 }

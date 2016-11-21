@@ -14,12 +14,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.config.SpringContextConfiguration;
+import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfiguration.class, loader = AnnotationConfigContextLoader.class)
-public class ThemeTest implements ApplicationTest {
+public class GameThemeTest implements ApplicationTest {
 
 	@Autowired
 	private GameThemeService service;
@@ -34,10 +35,19 @@ public class ThemeTest implements ApplicationTest {
 	}
 	
 	@Test
+	public void findAllQustionsIsEnableByThemeId() {
+		final int THEME = 1;
+		final List<Question> questions = new ArrayList<>();
+		questions.addAll(service.findAllQuestionsIsEnableByThemeId(THEME));
+		
+		assertEquals(2, questions.size());
+	}
+	
+	@Test
 	public void findAllThemes() {
 		final List<GameTheme> themes = new ArrayList<>();
 		themes.addAll(service.findAllThemes());
 		
-		assertEquals(0, themes.size());
+		assertEquals(1, themes.size());
 	}
 }

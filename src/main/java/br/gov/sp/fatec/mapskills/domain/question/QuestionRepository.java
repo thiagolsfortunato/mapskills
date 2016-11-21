@@ -19,5 +19,23 @@ public interface QuestionRepository extends CrudRepository<Question, Integer> {
 	public List<Question> questionList();
 	
 	public Question findById(final int id);
+
+	/**
+	 * Método que recupera todas questões de um determinado tema e que não esteja desabilitada
+	 * @param themeId
+	 * @param active
+	 * @return
+	 */
+	public List<Question> findAllByThemeIdAndEnable(final int themeId, final boolean active);
+	
+	//MÉTODO PARA BUSCAR TODAS QUESTOES HABILITADAS E NÃO RESPONDIDAS DE UM DETERMINADO ALUNO
+	
+	/**
+	 * Método recupera o próximo index valido para uma questão de um tema
+	 * @param themeId
+	 * @return
+	 */
+	@Query("SELECT (COUNT(*) + 1) FROM Question q INNER JOIN GameTheme t ON q.themeId = t.id WHERE t.id = ?1")
+	public int findNextIndex(final int themeId);
 	
 }

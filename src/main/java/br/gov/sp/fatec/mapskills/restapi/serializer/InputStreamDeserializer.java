@@ -2,6 +2,8 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 
+@Component
 public class InputStreamDeserializer extends JsonDeserializer<InputStreamWrapper> {
 
 	@Override

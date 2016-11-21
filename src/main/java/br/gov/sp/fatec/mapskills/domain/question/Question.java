@@ -34,7 +34,7 @@ public class Question implements Serializable, Comparable<Question> {
 	@Column(name = "gth_id", nullable = false)
 	private int themeId;
 	
-	@Column(name = "gri_index", nullable = false)
+	@Column(name = "que_index", nullable = false)
 	private int index;
 	
 	@Column(name = "que_description", nullable = false)
@@ -47,27 +47,32 @@ public class Question implements Serializable, Comparable<Question> {
 	@Column(name = "ski_id", nullable = false)
 	private int skillId;
 	
-	@Column(name = "que_isAtive", nullable = false)
-	private boolean active;
-	
+	@Column(name = "que_isActive", nullable = false)
+	private boolean enable;
+		
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="qtx_id")
+	@JoinColumn(name="que_id")
 	private List<Text> texts;
 	
 	public Question() {}
 	
 	public Question(final String description, final List<Alternative> alternatives, final List<Text> texts,
-			final int skillId) {
+			final int skillId, final int themeId) {
 		
 		this.description = description;
 		this.alternatives = alternatives;
 		this.texts = texts;
 		this.skillId = skillId;
-		this.active = true;
+		this.themeId = themeId;
+		this.enable = true;
 	}
 	
 	public int id() {
 		return id;
+	}
+	
+	public int themeId() {
+		return themeId;
 	}
 	
 	public int index() {
@@ -78,6 +83,9 @@ public class Question implements Serializable, Comparable<Question> {
 		return description;
 	}
 
+	public void putIndex(final int index) {
+		this.index = index;
+	}
 	
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
@@ -91,12 +99,16 @@ public class Question implements Serializable, Comparable<Question> {
 		}
 	}
 
-	public void on() {
-		this.active = true;
+	public void enable() {
+		this.enable = true;
 	}
 	
-	public void off() {
-		this.active = false;
+	public void disable() {
+		this.enable = false;
+	}
+	
+	public boolean isEnable() {
+		return enable;
 	}
 
 	/**

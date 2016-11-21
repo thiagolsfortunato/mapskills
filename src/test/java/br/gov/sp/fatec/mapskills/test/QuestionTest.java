@@ -1,6 +1,7 @@
 package br.gov.sp.fatec.mapskills.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,30 +29,40 @@ public class QuestionTest {
 
 	@Test
 	public void save() {
+		final int THEME = 1;
+		final int SKILL = 1;
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final List<Text> texts = buildMockTexts();
-		final Question question = new Question("Questao002 Mock", alternatives, texts, 1);
+		final Question question = new Question("Questao003 Mock", alternatives, texts, SKILL, THEME);
 		service.create(question);
 		
-		assertEquals("Questao002 Mock", service.findById(question.id()).description());
+		assertEquals("Questao003 Mock", service.findById(question.id()).description());
+	}
+	
+	@Test
+	public void nextIndex() {
+		final int index = service.nextIndex(1);
+		
+		assertEquals(2, index);
 	}
 
 	@Test
 	public void update() {
-		final int id = 2;
-		final Question question = service.findById(id);
-		question.changeDescription("Questao002 Mock alt");
-		question.changeAlternatives(builderMockAlternatives());
-		service.create(question);
+		final int ID = 4;
+		final Question question = service.findById(ID);
+		question.changeDescription("Questao002 Mock deprecated");
+		question.disable();
+		service.update(question);
 		
-		assertEquals("Questao002 Mock alt", service.findById(id).description());
+		assertEquals("Questao002 Mock deprecated", service.findById(ID).description());
+		assertFalse(service.findById(ID).isEnable());
 	}
 	
 	@Test
 	public void desc() {
 		List<Question> questions = service.questionList();
 		
-		assertEquals(1, questions.get(0).id());
+		assertEquals(3, questions.size());
 	}
 	
 	private List<Alternative> builderMockAlternatives() {

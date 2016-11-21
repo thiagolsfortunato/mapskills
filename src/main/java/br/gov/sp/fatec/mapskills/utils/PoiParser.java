@@ -46,7 +46,8 @@ public abstract class PoiParser {
 	}
 	/**
 	 * O método <code>objectListBuilder</code> auxilia o método <code>objectListFactory<code> na conversão
-	 * de um arquivo em uma lista de objeto, iterando nas linhas do documento.
+	 * de um arquivo em uma lista de objeto, iterando nas linhas do documento, sem pegar a primeira linha que
+	 * são os titulos das colunas.
 	 * 
 	 * @param rowIterator
 	 * @return
@@ -57,7 +58,8 @@ public abstract class PoiParser {
 		Row row;
 		while (rowIterator.hasNext()) {
 			row = rowIterator.next();
-			final Iterator<Cell> cellIterator = row.cellIterator();
+			if(row.getRowNum() == 0) continue;
+			final Iterator<Cell> cellIterator = row.cellIterator(); 
 			objectList.add(build(cellIterator));
 		}
 		return objectList;

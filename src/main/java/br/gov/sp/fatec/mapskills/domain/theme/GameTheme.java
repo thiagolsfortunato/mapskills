@@ -25,6 +25,8 @@ public class GameTheme {
 	@Column(name = "gth_description", nullable = false)
 	private String description;
 	
+	//private List<Integer> questions; 
+	
 	@Column(name = "gth_isActive", nullable = false)
 	private boolean active = false;
 	
