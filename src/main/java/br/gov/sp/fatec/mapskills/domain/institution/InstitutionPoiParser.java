@@ -33,7 +33,7 @@ public class InstitutionPoiParser extends PoiParser {
 	@Override
 	protected Institution build(final Iterator<Cell> cellIterator) {
 		final List<String> args = super.objectArgs(cellIterator);
-		return new Institution(new Integer(args.get(0)), args.get(1), args.get(2), args.get(3), new Mentor(args.get(4), args.get(5), args.get(6)));
+		return new Institution(new Integer(args.get(0)), args.get(1), args.get(2), args.get(3), new Mentor(args.get(4), args.get(5), "mudar@123"));
 	}
 
 }
