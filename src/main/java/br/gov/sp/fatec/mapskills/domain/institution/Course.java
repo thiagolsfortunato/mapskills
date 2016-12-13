@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,14 +28,19 @@ public class Course implements Serializable {
 	@Column(name = "crs_name")
 	private String name;
 	
+	@Column(name = "crs_period")
+	@Enumerated(value = EnumType.STRING)
+	private CoursePeriod period;
+	
 	@Column(name = "ins_code")
 	private int institutionCode;
 	
 	public Course() {}
 	
-	public Course(final int code, final String name, final int institutionCode) {
+	public Course(final int code, final String name, final CoursePeriod period, final int institutionCode) {
 		this.code = code;
 		this.name = name;
+		this.period = period;
 		this.institutionCode = institutionCode;
 	}
 	
@@ -47,6 +54,10 @@ public class Course implements Serializable {
 	
 	public String name() {
 		return name;
+	}
+	
+	public String period() {
+		return period.name();
 	}
 	
 	public int institutionCode() {

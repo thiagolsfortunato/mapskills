@@ -21,6 +21,14 @@
 	</developers>
 
 	<properties>
+		<build.warname>teste</build.warname>
+		<!-- Liquidbase properties -->
+		<liquibase-maven-plugin.version>3.4.1</liquibase-maven-plugin.version>
+		<liquibase.verbose>true</liquibase.verbose>
+		<liquibase.driver>com.mysql.jdbc.Driver</liquibase.driver>
+		<liquibase.dropFirst>true</liquibase.dropFirst>
+		<liquibase.promptOnNonLocalDatabase>false</liquibase.promptOnNonLocalDatabase>
+		<!-- DEPENDENCIES -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version>4.3.3.RELEASE</org.springframework.version>
 		<org.springframework.data.version>1.10.4.RELEASE</org.springframework.data.version>
@@ -86,7 +94,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<!-- SPRING SECURITY -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -110,7 +118,7 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${org.springframework.data.version}</version>
 		</dependency>
-		
+
 		<!-- formatador JSON -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -163,9 +171,47 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
-
 	</dependencies>
-
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<finalName>${build.warname}</finalName>
+				<resources>
+					<resource>
+						<directory>${basedir}/src/main/resources</directory>
+						<filtering>true</filtering>
+						<excludes>
+							<exclude>db-scripts/**</exclude>
+						</excludes>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>properties-maven-plugin</artifactId>
+						<version>1.0-alpha-2</version>
+						<executions>
+							<execution>
+								<phase>initialize</phase>
+								<goals>
+									<goal>read-project-properties</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<files>
+								<file>src/main/resources/db.local.properties</file>
+							</files>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -199,6 +245,51 @@
 					<showWarnings>true</showWarnings>
 					<optimize>true</optimize>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>${liquibase-maven-plugin.version}</version>
+				<configuration>
+					<changeLogFile>src/main/java/br/gov/sp/fatec/mapskills/db/changelog/db.master.xml</changeLogFile>
+					<verbose>${liquibase.verbose}</verbose>
+					<dropFirst>${liquibase.dropFirst}</dropFirst>
+					<promptOnNonLocalDatabase>${liquibase.promptOnNonLocalDatabase}</promptOnNonLocalDatabase>
+					<driver>${liquibase.driver}</driver>
+					<databaseChangeLogTableName>DATABASECHANGELOG</databaseChangeLogTableName>
+					<databaseChangeLogLockTableName>DATABASECHANGELOGLOCK</databaseChangeLogLockTableName>
+					<skip>${liquibase.skip}</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>liquibase-install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>update</goal>
+						</goals>
+						<configuration>
+							<url>${liquibase.url}</url>
+							<username>${liquibase.username}</username>
+							<password>${liquibase.password}</password>
+							<contexts>${liquibase.contexts}</contexts>
+							<skip>${liquibase.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

@@ -14,6 +14,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.config.SpringContextConfigurationTest;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
+import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
@@ -63,10 +64,10 @@ public class InstitutionTest implements ApplicationTest {
 	@Test
 	public void saveCourses() {
 		final List<Course> coursesList = new ArrayList<>();
-		final Course courseA = new Course(28, "Banco de dados", 146);
-		final Course courseB = new Course(29, "Logistica", 146);
-		final Course courseC = new Course(30, "Estruturas Leves", 146);
-		final Course courseD = new Course(31, "Manutenção de Aeronaves", 146);
+		final Course courseA = new Course(28, "Banco de dados", CoursePeriod.NOTURNO,146);
+		final Course courseB = new Course(29, "Logistica", CoursePeriod.NOTURNO,146);
+		final Course courseC = new Course(30, "Estruturas Leves", CoursePeriod.NOTURNO,146);
+		final Course courseD = new Course(31, "Manutenção de Aeronaves", CoursePeriod.NOTURNO,146);
 		coursesList.add(courseA);
 		coursesList.add(courseB);
 		coursesList.add(courseC);
@@ -79,7 +80,7 @@ public class InstitutionTest implements ApplicationTest {
 	
 	@Test
 	public void findAllCoursesByInstitution() {
-		service.saveCourse(new Course(28, "Banco de dados", 146));
+		service.saveCourse(new Course(28, "Banco de dados", CoursePeriod.NOTURNO, 146));
 		
 		final List<Course> courses = new ArrayList<>(); 
 		courses.addAll(service.findAllCoursesByInstitution(146));
