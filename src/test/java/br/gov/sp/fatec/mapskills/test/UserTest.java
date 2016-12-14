@@ -66,6 +66,7 @@ public class UserTest implements ApplicationTest {
 	
 	@Test
 	public void findAllStudentsByInstitution() {
+		
 		assertEquals(4, institutionService.findAllStudentsByInstitution(146).size());
 	}
 	
