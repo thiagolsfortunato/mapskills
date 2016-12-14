@@ -21,7 +21,7 @@
 	</developers>
 
 	<properties>
-		<build.warname>teste</build.warname>
+		<build.warname>mapskills</build.warname>
 		<!-- Liquidbase properties -->
 		<liquibase-maven-plugin.version>3.4.1</liquibase-maven-plugin.version>
 		<liquibase.verbose>true</liquibase.verbose>
@@ -196,7 +196,7 @@
 						<version>1.0-alpha-2</version>
 						<executions>
 							<execution>
-								<phase>initialize</phase>
+								<phase>default</phase>
 								<goals>
 									<goal>read-project-properties</goal>
 								</goals>

@@ -9,7 +9,6 @@ package br.gov.sp.fatec.mapskills.domain.question;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
@@ -34,6 +33,12 @@ public class QuestionService implements RepositoryService<Question> {
 		questionRepository.save(question);
 	}
 	
+	public void create(final List<Question> questions) {
+		for(final Question question : questions) {
+			this.create(question);
+		}
+	}
+	
 	public void update(final Question question) {
 		questionRepository.save(question);
 	}
@@ -46,8 +51,8 @@ public class QuestionService implements RepositoryService<Question> {
 		return questionRepository.questionList();
 	}
 	
-	@Autowired(required = true)
-	public void setQuestionRespository(final @Qualifier("questionRepository") QuestionRepository repository) {
+	@Autowired
+	public void setQuestionRespository(final QuestionRepository repository) {
 		this.questionRepository = repository;
 	}
 
