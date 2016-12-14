@@ -23,45 +23,34 @@ public class AcademicRegistry {
 	
 	public AcademicRegistry() {}
 	
-	public AcademicRegistry(final String ra) throws MapSkillsException {
-		validate(ra);
+	public AcademicRegistry(final String ra, final String institutionCode, final String courseCode) throws MapSkillsException {
 		this.ra = ra;
-		this.institutionCode = ra.substring(0, 3);
-		this.courseCode = ra.substring(3, 6);
+		this.institutionCode = institutionCode;
+		this.courseCode = courseCode;
 	}
 	
 	public String ra() {
 		return ra;
 	}
 	
-	public String institutionCode() {
+	public String getInstitutionCode() {
 		return institutionCode;
 	}
 	
-	public String year() {
+	public String getYear() {
 		return ra.substring(6, 8);
 	}
 	
-	public String semester() {
+	public String getSemester() {
 		return ra.substring(8, 9);
 	}
 	
-	public String studentCode() {
+	public String getStudentCode() {
 		return ra.substring(9);
 	}
 
-	public String courseCode() {
+	public String getCourseCode() {
 		return courseCode;
 	}
-	
-	//verificar o ra se nao ha nenhuma divergencia e se atente todos requisitos necessarios
-	//ver lista de verify de JWT do prof
-	private void validate(final String ra) throws MapSkillsException {
-		try {
-			Long.parseLong(ra);
-			if(ra.length() < 13) throw new RAInvalidException(ra);
-		} catch (final NumberFormatException e) {
-			throw new RAInvalidException(ra);
-		}
-	}
+
 }

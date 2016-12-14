@@ -19,9 +19,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 			+ "INNER JOIN Institution i ON c.institutionCode = i.code WHERE c.code = ?1 AND i.code = ?2")
 	public Collection<Student> findAllStudentByCourse(final int courseCode, final int institutionCode);
 
-	@Query("SELECT s FROM Student s INNER JOIN Institution i ON i.code = ?1")
-	public Collection<Student> findAllStudentByInstitution(final int institutionCode);
-
 	public User findByLogin(final Login login);
 	
 

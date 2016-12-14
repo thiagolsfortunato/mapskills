@@ -6,6 +6,8 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,14 @@ public class UserService implements RepositoryService<User> {
 	@Autowired(required = true)
 	@Qualifier("userRepository")
 	private UserRepository repository;
+	
+	public Collection<User> findAll() {
+		final List<User> users = new ArrayList<>();
+		for(final User user : repository.findAll()) {
+			users.add(user);
+		}
+		return users;
+	}
 
 	public void save(final Student user) {
 		repository.save(user);

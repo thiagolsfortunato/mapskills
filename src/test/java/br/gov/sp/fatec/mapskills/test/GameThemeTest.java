@@ -13,14 +13,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import br.gov.sp.fatec.mapskills.config.SpringContextConfigurationTest;
 import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
+import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
-public class GameThemeTest implements ApplicationTest {
+public class GameThemeTest {
 
 	@Autowired
 	private GameThemeService service;

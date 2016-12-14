@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
 @Configuration
 @PropertySource("classpath:application.properties")
 @Import({DataBaseHsqldbConfig.class, MapSkillsBeans.class, SerializersConfig.class})

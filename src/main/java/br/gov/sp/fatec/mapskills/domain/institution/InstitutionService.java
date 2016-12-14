@@ -24,6 +24,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
 	private UserRepository userRepository;
+	private StudentRepository studentRepository;
 
 	public void saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
@@ -86,14 +87,12 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return courses;
 	}
 	
-	public Collection<Student> findAllStudentsByInstitution(final int institutionCode) {
-		final List<Student> courses = new ArrayList<>();
-		for(final Student student : userRepository.findAllStudentByInstitution(institutionCode)) {
-			courses.add(student);
-		}
-		return courses;
+	public Collection<Student> findAllStudentsByInstitution(final String institutionCode) {
+		return studentRepository.findAllStudentByInstitutionCode(institutionCode);
 	}
 	
+	
+	//===== Dependence Inject =====//
 	@Autowired
 	@Qualifier("institutionRepository")
 	public void setInstitutionRepository(final InstitutionRepository repository) {
@@ -110,6 +109,12 @@ public class InstitutionService implements RepositoryService<Institution> {
 	@Qualifier("userRepository")
 	public void setUserRepository(final UserRepository repository) {
 		userRepository = repository;
+	}
+	
+	@Autowired
+	@Qualifier("studentRepository")
+	public void setStudentRepository(final StudentRepository repository) {
+		studentRepository = repository;
 	}
 
 }

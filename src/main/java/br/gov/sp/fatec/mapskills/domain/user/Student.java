@@ -30,11 +30,11 @@ public class Student extends User {
 		
 	public Student() { }
 	
-	public Student(final String ra, final String name, final String phone, final String username,
+	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
 			final String password) throws MapSkillsException {
 		
 		super(name, new Login(username, password), ProfileType.STUDENT);
-		this.ra = new AcademicRegistry(ra);
+		this.ra = ra;
 		this.phone = phone;
 	}
 	
@@ -42,15 +42,15 @@ public class Student extends User {
 		return ra.ra();
 	}
 	
-	public String courseCode() {
-		return ra.courseCode();
+	public String getCourseCode() {
+		return ra.getCourseCode();
 	}
 	
-	public String institutionCode() {
-		return ra.institutionCode();
+	public String getInstitutionCode() {
+		return ra.getInstitutionCode();
 	}
 	
-	public String phone() {
+	public String getPhone() {
 		return phone;
 	}
 	
