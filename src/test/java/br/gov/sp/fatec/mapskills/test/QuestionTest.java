@@ -13,30 +13,50 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import br.gov.sp.fatec.mapskills.config.SpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.domain.question.Alternative;
 import br.gov.sp.fatec.mapskills.domain.question.Multimedia;
 import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
 import br.gov.sp.fatec.mapskills.domain.question.Text;
+import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
 public class QuestionTest {
 	
 	@Autowired
-	QuestionService service;
+	private QuestionService service;
 
 	@Test
 	public void save() {
-		final int THEME = 1;
-		final int SKILL = 1;
+		final int THEME_ID = 1;
+		final int SKILL_ID = 1;
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final List<Text> texts = buildMockTexts();
-		final Question question = new Question("Questao003 Mock", alternatives, texts, SKILL, THEME);
+		final Question question = new Question("Questao003 Mock", alternatives, texts, SKILL_ID, THEME_ID);
 		service.create(question);
 		
 		assertEquals("Questao003 Mock", service.findById(question.id()).description());
+	}
+	
+	@Test
+	public void saveList() {
+		final int THEME_ID = 1;
+		final int SKILL_ID = 1;
+		final List<Alternative> alternatives = builderMockAlternatives();
+		final List<Text> texts = buildMockTexts();
+		final Question questionA = new Question("Questao001 Mock", alternatives, texts, SKILL_ID, THEME_ID);
+		final Question questionB = new Question("Questao002 Mock", alternatives, texts, SKILL_ID, THEME_ID);
+		final Question questionC = new Question("Questao003 Mock", alternatives, texts, SKILL_ID, THEME_ID);
+		final List<Question> questions = new ArrayList<>();
+		questions.add(questionA);
+		questions.add(questionB);
+		questions.add(questionC);
+		service.create(questionA);
+		service.create(questionB);
+		service.create(questionC);
+			
+		assertEquals(3, service.questionList().size());
 	}
 	
 	@Test

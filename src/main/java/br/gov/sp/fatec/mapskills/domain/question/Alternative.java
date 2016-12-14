@@ -39,6 +39,10 @@ public class Alternative implements Serializable{
 		this.skillValue = skillValue;
 	}
 	
+	public int id() {
+		return id;
+	}
+	
 	public String description() {
 		return description;
 	}

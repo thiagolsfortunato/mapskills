@@ -82,6 +82,10 @@ public class Question implements Serializable, Comparable<Question> {
 	public String description() {
 		return description;
 	}
+	
+	public List<Alternative> alternatives() {
+		return alternatives;
+	}
 
 	public void putIndex(final int index) {
 		this.index = index;
