@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+
 @Entity
 @Table(name = "student")
 @PrimaryKeyJoinColumn(name = "use_id")

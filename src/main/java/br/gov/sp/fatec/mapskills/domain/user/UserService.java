@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
@@ -18,7 +19,12 @@ public class UserService implements RepositoryService<User> {
 	@Autowired(required = true)
 	@Qualifier("userRepository")
 	private UserRepository repository;
-	
+
+	@Override
+	public void deleteAll() {
+		repository.deleteAll();
+		
+	}
 	
 	public void save(final Administrator admin) {
 		repository.save(admin);
@@ -31,5 +37,6 @@ public class UserService implements RepositoryService<User> {
 		}
 		return user;
 	}
+
 
 }

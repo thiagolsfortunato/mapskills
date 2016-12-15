@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,15 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
-public class GameThemeTest {
+public class GameThemeTest extends MapSkillsTest {
 
 	@Autowired
 	private GameThemeService service;
+	
+	@After
+	public void cleanTables() {
+		super.cleanTables(service);
+	}
 	
 	@Test
 	public void saveTheme() {

@@ -24,36 +24,40 @@ public class InstitutionService implements RepositoryService<Institution> {
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
 	private StudentRepository studentRepository;
-
-	public void saveInstitution(final Institution institution) {
-		institutionRepository.save(institution);
-	}
 	
+
+	@Override
+	public void deleteAll() {
+		institutionRepository.deleteAll();
+		courseRepository.deleteAll();
+		studentRepository.deleteAll();
+	}
+
 	public void saveInstitutions(final List<Institution> institutions) {
 		institutionRepository.save(institutions);
 	}
 	
-	public void saveCourse(final Course course) {
-		courseRepository.save(course);
+	public void saveInstitution(final Institution institution) {
+		institutionRepository.save(institution);
 	}
 	
 	public void saveCourses(final List<Course> courses) {
 		courseRepository.save(courses);
 	}
 	
-	public void saveStudent(final Student student) {
-		studentRepository.save(student);
+	public void saveCourse(final Course course) {
+		courseRepository.save(course);
 	}
 	
 	public void saveStudents(final List<Student> students) {
 		studentRepository.save(students);
 	}
 	
-	public void updateInstitution(final Institution institution) {
-		institutionRepository.save(institution);
+	public void saveStudent(final Student student) {
+		studentRepository.save(student);
 	}
 
-	public Institution findByCode(final String code) {
+	public Institution findInstitutionByCode(final String code) {
 		return institutionRepository.findByCode(code);
 	}
 	
@@ -83,9 +87,9 @@ public class InstitutionService implements RepositoryService<Institution> {
 	 * @param institutionCode
 	 * @return
 	 */
-	public Collection<Student> findAllStudentsByCourse(final String courseCode, final String institutionCode) {
+	public Collection<Student> findAllStudentsByCourseAndInstitution(final String courseCode, final String institutionCode) {
 		final List<Student> courses = new ArrayList<>();
-		for(final Student student : studentRepository.findAllByCourse(courseCode, institutionCode)) {
+		for(final Student student : studentRepository.findAllByCourseAndInstitution(courseCode, institutionCode)) {
 			courses.add(student);
 		}
 		return courses;
@@ -114,5 +118,6 @@ public class InstitutionService implements RepositoryService<Institution> {
 	public void setStudentRepository(final StudentRepository repository) {
 		studentRepository = repository;
 	}
+
 
 }

@@ -9,6 +9,8 @@ package br.gov.sp.fatec.mapskills.domain.user;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+
 @Embeddable
 public class AcademicRegistry {
 	

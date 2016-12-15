@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import br.gov.sp.fatec.mapskills.domain.user.MapSkillsException;
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
  * A classe <code>UserXLSXParser</code> tem objetivo de converter arquivo xlsx em objetos
  * para serem persistidos no banco de dados.

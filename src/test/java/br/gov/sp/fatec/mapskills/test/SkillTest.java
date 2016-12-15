@@ -1,9 +1,9 @@
 package br.gov.sp.fatec.mapskills.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Test;
@@ -20,18 +20,15 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
-public class SkillTest {
+public class SkillTest extends MapSkillsTest {
 	
 	@Autowired(required = true)
 	@Qualifier("skillService")
 	private SkillService service;
 	
-	@PersistenceContext
-	private EntityManager entityManager;
-		
 	@After
-	public void downDataBase() {
-		System.out.println("desce o banco");
+	public void cleanTables() {
+		super.cleanTables(service);
 	}
 	
 	@Test
@@ -42,8 +39,15 @@ public class SkillTest {
 		assertEquals("Liderança", service.findById(skill.getId()).getType());
 		
 	}
-
+	
 	@Test
+	public void testClean() {
+		final Collection<Skill> skillList = service.findAll();
+		assertTrue(skillList.isEmpty());
+		
+	}
+
+	//@Test
 	public void update() {
 		final Skill skillSave = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skillSave);

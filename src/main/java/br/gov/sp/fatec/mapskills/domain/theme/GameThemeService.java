@@ -20,20 +20,26 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 @Service
 public class GameThemeService implements RepositoryService<GameTheme> {
 	
-	private GameThemeRepository repository;
+	private GameThemeRepository themeRepo;
 	private QuestionRepository questionRepo;
+	
+	@Override
+	public void deleteAll() {
+		themeRepo.deleteAll();
+		questionRepo.deleteAll();
+	}
 
 	public GameTheme findById(final long id) {
-		return repository.findById(id);
+		return themeRepo.findById(id);
 	}
 	
 	public void save(final GameTheme theme) {
-		repository.save(theme);
+		themeRepo.save(theme);
 	}	
 
 	public Collection<GameTheme> findAllThemes() {
 		final List<GameTheme> themes = new ArrayList<>();
-		for(final GameTheme theme : repository.findAll()) {
+		for(final GameTheme theme : themeRepo.findAll()) {
 			themes.add(theme);
 		}
 		return themes;
@@ -49,7 +55,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 
 	@Autowired
 	public void setGameThemeRepository(final GameThemeRepository repository) {
-		this.repository = repository;
+		this.themeRepo = repository;
 	}
 	
 	@Autowired

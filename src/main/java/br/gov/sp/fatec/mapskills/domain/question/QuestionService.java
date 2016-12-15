@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.question;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class QuestionService implements RepositoryService<Question> {
 
 	private QuestionRepository questionRepository;
 	
+	@Override
+	public void deleteAll() {
+		questionRepository.deleteAll();
+	}
+	
 	/**
 	 * Método que recupera o próximo index da questão valida, de determinado tema 
 	 * @param themeId
@@ -27,16 +33,13 @@ public class QuestionService implements RepositoryService<Question> {
 		return questionRepository.findNextIndex(themeId);
 	}
 	
-	public void create(final Question question) {
-		final int nextIndex = questionRepository.findNextIndex(question.getThemeId()); 
-		question.putIndex(nextIndex);
-		questionRepository.save(question);
-	}
-	
-	public void create(final List<Question> questions) {
+	public void create(final Question... questions) {
+		int index;
 		for(final Question question : questions) {
-			this.create(question);
+			index = questionRepository.findNextIndex(question.getThemeId());
+			question.putIndex(index);
 		}
+		questionRepository.save(Arrays.asList(questions));
 	}
 	
 	public void update(final Question question) {
@@ -51,9 +54,14 @@ public class QuestionService implements RepositoryService<Question> {
 		return questionRepository.questionList();
 	}
 	
+	public List<Question> findAllByThemeAndEnable(final long themeId) {
+		return questionRepository.findAllByThemeIdAndEnable(themeId, true);
+	}
+	
 	@Autowired
 	public void setQuestionRespository(final QuestionRepository repository) {
 		this.questionRepository = repository;
 	}
+
 
 }

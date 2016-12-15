@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>StudentPoiParser</code> converte um arquivo xlsx em objetos do tipo Student

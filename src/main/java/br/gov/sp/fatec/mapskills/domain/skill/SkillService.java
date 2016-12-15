@@ -6,6 +6,10 @@
  */
 package br.gov.sp.fatec.mapskills.domain.skill;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,10 @@ public class SkillService implements RepositoryService<Skill>{
 	@Autowired(required = true)
 	@Qualifier("skillRepository")
 	private SkillRepository repository;
+	
+	public void deleteAll() {
+		repository.deleteAll();
+	}
 
 	public void save(final Skill skill) {
 		repository.save(skill);
@@ -25,6 +33,12 @@ public class SkillService implements RepositoryService<Skill>{
 	
 	public void update(final Skill skill) {
 		repository.save(skill);
+	}
+	
+	public Collection<Skill> findAll() {
+		final List<Skill> skills = new ArrayList<>();
+		repository.findAll().forEach(skill -> skills.add(skill));
+		return skills;
 	}
 
 	public Skill findById(final long id) {

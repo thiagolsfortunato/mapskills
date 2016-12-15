@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,16 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
-public class QuestionTest {
+public class QuestionTest extends MapSkillsTest {
 	
 	@Autowired
 	private QuestionService service;
 
+	@After
+	public void cleanTables() {
+		super.cleanTables(service);
+	}
+	
 	@Test
 	public void save() {
 		final int THEME_ID = 1;
@@ -52,9 +58,7 @@ public class QuestionTest {
 		questions.add(questionA);
 		questions.add(questionB);
 		questions.add(questionC);
-		service.create(questionA);
-		service.create(questionB);
-		service.create(questionC);
+		service.create(questionA, questionB, questionC);
 			
 		assertEquals(3, service.questionList().size());
 	}
@@ -63,26 +67,33 @@ public class QuestionTest {
 	public void nextIndex() {
 		final int index = service.nextIndex(1);
 		
-		assertEquals(2, index);
+		assertEquals(1, index);
 	}
 
 	@Test
 	public void update() {
-		final int ID = 4;
-		final Question question = service.findById(ID);
-		question.changeDescription("Questao002 Mock deprecated");
+		final int THEME_ID = 1;
+		final int SKILL_ID = 1;
+		final List<Alternative> alternatives = builderMockAlternatives();
+		final List<Text> texts = buildMockTexts();
+		final Question questionA = new Question("Questao001 Mock", alternatives, texts, SKILL_ID, THEME_ID);
+		service.create(questionA);
+		
+		final Question question = service.findById(questionA.getId());
+		question.changeDescription("Questao001 Mock");
 		question.disable();
 		service.update(question);
 		
-		assertEquals("Questao002 Mock deprecated", service.findById(ID).getDescription());
-		assertFalse(service.findById(ID).isEnable());
+		final Question questionUpdate = service.findById(questionA.getId());
+		assertEquals("Questao001 Mock", questionUpdate.getDescription());
+		assertFalse(questionUpdate.isEnable());
 	}
 	
 	@Test
 	public void desc() {
 		List<Question> questions = service.questionList();
 		
-		assertEquals(3, questions.size());
+		assertEquals(0, questions.size());
 	}
 	
 	private List<Alternative> builderMockAlternatives() {

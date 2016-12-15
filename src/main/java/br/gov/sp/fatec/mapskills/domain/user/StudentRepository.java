@@ -12,7 +12,7 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	//public Student findStudentByAcademicRegistryRa(final String ra);
 	@Query("SELECT s FROM Student s INNER JOIN Course c ON s.courseCode() = c.code "
 			+ "INNER JOIN Institution i ON c.institutionCode = i.code WHERE c.code = ?1 AND i.code = ?2")
-	public List<Student> findAllByCourse(final String courseCode, final String institutionCode);
+	public List<Student> findAllByCourseAndInstitution(final String courseCode, final String institutionCode);
 	
 	public List<Student> findAll();
 	

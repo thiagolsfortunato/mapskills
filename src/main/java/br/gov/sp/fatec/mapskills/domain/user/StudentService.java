@@ -12,6 +12,11 @@ public class StudentService implements RepositoryService<Student> {
 	
 	@Autowired
 	private StudentRepository repository;
+
+	@Override
+	public void deleteAll() {
+		repository.deleteAll();
+	}
 	
 	public void save(final Student student) {
 		repository.save(student);
@@ -20,6 +25,7 @@ public class StudentService implements RepositoryService<Student> {
 	public void save(final Collection<Student> student) {
 		repository.save(student);
 	}
+
 
 
 }
