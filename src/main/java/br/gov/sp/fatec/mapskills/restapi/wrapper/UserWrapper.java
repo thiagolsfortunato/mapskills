@@ -22,7 +22,7 @@ public class UserWrapper {
 	}
 	
 	public ProfileType getProfile() {
-		return user.profile();
+		return user.getProfile();
 	}
 	
 	public User getUser() {

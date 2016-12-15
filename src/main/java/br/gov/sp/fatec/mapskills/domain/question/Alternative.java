@@ -24,7 +24,7 @@ public class Alternative implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "alt_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "alt_description", nullable = false)
 	private String description;
@@ -39,15 +39,15 @@ public class Alternative implements Serializable{
 		this.skillValue = skillValue;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String description() {
+	public String getDescription() {
 		return description;
 	}
 	
-	public int skillValue() {
+	public int getSkillValue() {
 		return skillValue;
 	}
 	

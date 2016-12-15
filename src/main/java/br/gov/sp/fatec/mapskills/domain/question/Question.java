@@ -29,10 +29,10 @@ public class Question implements Serializable, Comparable<Question> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "que_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "gth_id", nullable = false)
-	private int themeId;
+	private long themeId;
 	
 	@Column(name = "que_index", nullable = false)
 	private int index;
@@ -45,7 +45,7 @@ public class Question implements Serializable, Comparable<Question> {
 	private List<Alternative> alternatives;
 	
 	@Column(name = "ski_id", nullable = false)
-	private int skillId;
+	private long skillId;
 	
 	@Column(name = "que_isActive", nullable = false)
 	private boolean enable;
@@ -57,7 +57,7 @@ public class Question implements Serializable, Comparable<Question> {
 	public Question() {}
 	
 	public Question(final String description, final List<Alternative> alternatives, final List<Text> texts,
-			final int skillId, final int themeId) {
+			final long skillId, final long themeId) {
 		
 		this.description = description;
 		this.alternatives = alternatives;
@@ -67,23 +67,23 @@ public class Question implements Serializable, Comparable<Question> {
 		this.enable = true;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public int themeId() {
+	public long getThemeId() {
 		return themeId;
 	}
 	
-	public int index() {
+	public int getIndex() {
 		return index;
 	}
 	
-	public String description() {
+	public String getDescription() {
 		return description;
 	}
 	
-	public List<Alternative> alternatives() {
+	public List<Alternative> getAlternatives() {
 		return alternatives;
 	}
 
@@ -98,8 +98,8 @@ public class Question implements Serializable, Comparable<Question> {
 	public void changeAlternatives(final List<Alternative> newAlternatives) {
 		final int size = alternatives.size();
 		for(int i = 0; i < size; i++) {
-			this.alternatives.get(i).changeDescription(newAlternatives.get(i).description());
-			this.alternatives.get(i).changeSkillValue(newAlternatives.get(i).skillValue());
+			this.alternatives.get(i).changeDescription(newAlternatives.get(i).getDescription());
+			this.alternatives.get(i).changeSkillValue(newAlternatives.get(i).getSkillValue());
 		}
 	}
 
@@ -120,7 +120,7 @@ public class Question implements Serializable, Comparable<Question> {
 	 */
 	@Override
 	public int compareTo(final Question question) {
-		return this.index < question.index() ? -1 : (this.index == question.index ? 0 : 1);
+		return this.index < question.getIndex() ? -1 : (this.index == question.index ? 0 : 1);
 	}
 
 }

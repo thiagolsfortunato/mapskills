@@ -10,8 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SkillRepository extends CrudRepository<Skill, Integer> {
+public interface SkillRepository extends CrudRepository<Skill, Long> {
 	
-	public Skill findById(final int id);
+	public Skill findById(final long id);
 
 }

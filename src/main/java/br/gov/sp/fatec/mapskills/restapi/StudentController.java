@@ -48,7 +48,7 @@ public class StudentController {
 	public ResponseEntity<?> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws Exception {
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		userService.save(students);
+		institutionService.saveStudents(students);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

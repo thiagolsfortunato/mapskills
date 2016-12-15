@@ -20,7 +20,7 @@ public class GameTheme {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "gth_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "gth_description", nullable = false)
 	private String description;
@@ -36,19 +36,19 @@ public class GameTheme {
 		this.description = description;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String description() {
+	public String getDescription() {
 		return description;
 	}
 	
-	public void off() {
+	public void disable() {
 		active = false;
 	}
 	
-	public void on() {
+	public void enable() {
 		active = true;
 	}
 	

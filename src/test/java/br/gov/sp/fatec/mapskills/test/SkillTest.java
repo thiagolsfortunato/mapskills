@@ -2,6 +2,10 @@ package br.gov.sp.fatec.mapskills.test;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +25,21 @@ public class SkillTest {
 	@Autowired(required = true)
 	@Qualifier("skillService")
 	private SkillService service;
-
+	
+	@PersistenceContext
+	private EntityManager entityManager;
+		
+	@After
+	public void downDataBase() {
+		System.out.println("desce o banco");
+	}
+	
 	@Test
 	public void save() {
 		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skill);
 		
-		assertEquals("Liderança", service.findById(skill.id()).getType());
+		assertEquals("Liderança", service.findById(skill.getId()).getType());
 		
 	}
 

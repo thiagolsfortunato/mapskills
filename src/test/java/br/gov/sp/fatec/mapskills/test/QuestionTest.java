@@ -36,7 +36,7 @@ public class QuestionTest {
 		final Question question = new Question("Questao003 Mock", alternatives, texts, SKILL_ID, THEME_ID);
 		service.create(question);
 		
-		assertEquals("Questao003 Mock", service.findById(question.id()).description());
+		assertEquals("Questao003 Mock", service.findById(question.getId()).getDescription());
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class QuestionTest {
 		question.disable();
 		service.update(question);
 		
-		assertEquals("Questao002 Mock deprecated", service.findById(ID).description());
+		assertEquals("Questao002 Mock deprecated", service.findById(ID).getDescription());
 		assertFalse(service.findById(ID).isEnable());
 	}
 	

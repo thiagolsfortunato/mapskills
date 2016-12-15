@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
+import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
@@ -23,7 +23,6 @@ public class InstitutionService implements RepositoryService<Institution> {
 		
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
-	private UserRepository userRepository;
 	private StudentRepository studentRepository;
 
 	public void saveInstitution(final Institution institution) {
@@ -42,11 +41,19 @@ public class InstitutionService implements RepositoryService<Institution> {
 		courseRepository.save(courses);
 	}
 	
+	public void saveStudent(final Student student) {
+		studentRepository.save(student);
+	}
+	
+	public void saveStudents(final List<Student> students) {
+		studentRepository.save(students);
+	}
+	
 	public void updateInstitution(final Institution institution) {
 		institutionRepository.save(institution);
 	}
 
-	public Institution findByCode(final int code) {
+	public Institution findByCode(final String code) {
 		return institutionRepository.findByCode(code);
 	}
 	
@@ -58,37 +65,34 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return institutions;
 	}
 	
-	public Collection<Course> findAllCourses() {
-		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAll()) {
-			courses.add(course);
-		}
-		return courses;
-	}
-
 	/**
 	 * Método que recupera todos os cursos de uma determinada instituição
 	 * @param code
 	 * @return
 	 */
-	public Collection<Course> findAllCoursesByInstitution(final int code) {
+	public Collection<Course> findAllCoursesByInstitution(final String institutionCode) {
 		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAllByInstitutionCode(code)) {
+		for(final Course course : courseRepository.findAllByInstitutionCode(institutionCode)) {
 			courses.add(course);
 		}
 		return courses;
 	}
-	
-	public Collection<Student> findAllStudentsByCourse(final int courseCode, final int institutionCode) {
+	/**
+	 * Método que recupera todos alunos de um curso de uma determinada instituição
+	 * @param courseCode
+	 * @param institutionCode
+	 * @return
+	 */
+	public Collection<Student> findAllStudentsByCourse(final String courseCode, final String institutionCode) {
 		final List<Student> courses = new ArrayList<>();
-		for(final Student student : userRepository.findAllStudentByCourse(courseCode, institutionCode)) {
+		for(final Student student : studentRepository.findAllByCourse(courseCode, institutionCode)) {
 			courses.add(student);
 		}
 		return courses;
 	}
 	
 	public Collection<Student> findAllStudentsByInstitution(final String institutionCode) {
-		return studentRepository.findAllStudentByInstitutionCode(institutionCode);
+		return studentRepository.findAllByRaInstitutionCode(institutionCode);
 	}
 	
 	
@@ -103,12 +107,6 @@ public class InstitutionService implements RepositoryService<Institution> {
 	@Qualifier("courseRepository")
 	public void setCourseRepository(final CourseRepository repository) {
 		courseRepository = repository;
-	}
-	
-	@Autowired
-	@Qualifier("userRepository")
-	public void setUserRepository(final UserRepository repository) {
-		userRepository = repository;
 	}
 	
 	@Autowired

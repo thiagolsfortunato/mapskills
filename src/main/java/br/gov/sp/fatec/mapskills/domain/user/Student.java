@@ -38,8 +38,8 @@ public class Student extends User {
 		this.phone = phone;
 	}
 	
-	public String ra() {
-		return ra.ra();
+	public String getRa() {
+		return ra.getRa();
 	}
 	
 	public String getCourseCode() {

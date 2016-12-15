@@ -20,10 +20,10 @@ public class Course implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "crs_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "crs_code")
-	private int code;
+	private String code;
 	
 	@Column(name = "crs_name")
 	private String name;
@@ -33,34 +33,34 @@ public class Course implements Serializable {
 	private CoursePeriod period;
 	
 	@Column(name = "ins_code")
-	private int institutionCode;
+	private String institutionCode;
 	
 	public Course() {}
 	
-	public Course(final int code, final String name, final CoursePeriod period, final int institutionCode) {
+	public Course(final String code, final String name, final CoursePeriod period, final String institutionCode) {
 		this.code = code;
 		this.name = name;
 		this.period = period;
 		this.institutionCode = institutionCode;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public int code() {
+	public String getCode() {
 		return code;
 	}
 	
-	public String name() {
+	public String getName() {
 		return name;
 	}
 	
-	public String period() {
+	public String getPeriod() {
 		return period.name();
 	}
 	
-	public int institutionCode() {
+	public String getInstitutionCode() {
 		return institutionCode;
 	}
 

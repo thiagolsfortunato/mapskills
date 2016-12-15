@@ -20,7 +20,7 @@ public class Multimedia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "mid_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "mid_url")
 	private String url;
@@ -31,12 +31,16 @@ public class Multimedia {
 		this.url = url;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String url() {
+	public String getUrl() {
 		return url;
+	}
+	
+	public void changeUrl(final String newUrl) {
+		url = newUrl;
 	}
 
 }

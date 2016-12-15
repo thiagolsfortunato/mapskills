@@ -24,7 +24,7 @@ public class Skill implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ski_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "ski_type", nullable = false)
 	private String type;
@@ -39,7 +39,7 @@ public class Skill implements Serializable {
 		this.description = description;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	

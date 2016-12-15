@@ -30,8 +30,8 @@ public class GameThemeTest {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
 		service.save(theme);
 		
-		assertEquals("pizzaria, aplicado em 2016/2", service.findById(theme.id()).description());
-		assertFalse(service.findById(theme.id()).isActive());
+		assertEquals("pizzaria, aplicado em 2016/2", service.findById(theme.getId()).getDescription());
+		assertFalse(service.findById(theme.getId()).isActive());
 	}
 	
 	@Test

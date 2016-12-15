@@ -23,12 +23,12 @@ public class QuestionService implements RepositoryService<Question> {
 	 * @param themeId
 	 * @return
 	 */
-	public int nextIndex(final int themeId) {
+	public int nextIndex(final long themeId) {
 		return questionRepository.findNextIndex(themeId);
 	}
 	
 	public void create(final Question question) {
-		final int nextIndex = questionRepository.findNextIndex(question.themeId()); 
+		final int nextIndex = questionRepository.findNextIndex(question.getThemeId()); 
 		question.putIndex(nextIndex);
 		questionRepository.save(question);
 	}
@@ -43,7 +43,7 @@ public class QuestionService implements RepositoryService<Question> {
 		questionRepository.save(question);
 	}
 
-	public Question findById(final int id) {
+	public Question findById(final long id) {
 		return questionRepository.findById(id);
 	}
 	

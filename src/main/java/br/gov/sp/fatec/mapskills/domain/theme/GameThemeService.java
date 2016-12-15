@@ -23,7 +23,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	private GameThemeRepository repository;
 	private QuestionRepository questionRepo;
 
-	public GameTheme findById(final int id) {
+	public GameTheme findById(final long id) {
 		return repository.findById(id);
 	}
 	
@@ -43,7 +43,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	 * @param id
 	 * @return
 	 */
-	public Collection<Question> findAllQuestionsIsEnableByThemeId(final int id) {
+	public Collection<Question> findAllQuestionsIsEnableByThemeId(final long id) {
 		return questionRepo.findAllByThemeIdAndEnable(id, true);
 	}
 

@@ -27,7 +27,7 @@ public class SkillService implements RepositoryService<Skill>{
 		repository.save(skill);
 	}
 
-	public Skill findById(final int id) {
+	public Skill findById(final long id) {
 		return repository.findById(id);
 	}
 

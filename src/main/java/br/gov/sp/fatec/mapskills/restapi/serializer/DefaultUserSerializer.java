@@ -18,9 +18,9 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
 public class DefaultUserSerializer implements UserSerilizerStrategy {
 	
 	protected void serializeDefaultValues(final User user, final JsonGenerator generator) throws IOException {
-		generator.writeNumberField("id", user.id());
-		generator.writeStringField("name", user.name());
-		generator.writeStringField("profile", user.profile().name());
+		generator.writeNumberField("id", user.getId());
+		generator.writeStringField("name", user.getName());
+		generator.writeStringField("profile", user.getProfile().name());
 	}
 
 	@Override

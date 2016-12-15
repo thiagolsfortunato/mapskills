@@ -29,7 +29,7 @@ public class AcademicRegistry {
 		this.courseCode = courseCode;
 	}
 	
-	public String ra() {
+	public String getRa() {
 		return ra;
 	}
 	

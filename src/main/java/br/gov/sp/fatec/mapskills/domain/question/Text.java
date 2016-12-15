@@ -24,7 +24,7 @@ public class Text {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "txt_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "txt_text")
 	private String text;
@@ -40,15 +40,15 @@ public class Text {
 		this.multimedia = multimedia;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String text() {
+	public String getText() {
 		return text;
 	}
 	
-	public Multimedia multimedia() {
+	public Multimedia getMultimedia() {
 		return multimedia;
 	}
 

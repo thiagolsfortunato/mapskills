@@ -8,7 +8,11 @@ package br.gov.sp.fatec.mapskills.domain.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
+/**
+ * Exception lançada quando falha ao tentar uma autenticação por um usuário
+ * @author Marcelo
+ *
+ */
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class UserNotFoundException extends MapSkillsException {
 

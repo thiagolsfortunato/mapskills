@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.gov.sp.fatec.mapskills.domain.institution.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component

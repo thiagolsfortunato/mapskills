@@ -30,7 +30,7 @@
 	<changeSet author="marcelo-inacio" id="400">
 		<createTable tableName="INSTITUTION">
 			<column name="INS_ID" type="java.sql.Types.BIGINT" />
-			<column name="INS_CODE" type="java.sql.Types.NUMBER" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 			<column name="INS_CNPJ" type="java.sql.Types.VARCHAR(20)" />
 			<column name="INS_COMPANY" type="java.sql.Types.VARCHAR(100)" />
 			<column name="INS_CITY" type="java.sql.Types.VARCHAR(100)" />
@@ -41,10 +41,10 @@
 	<changeSet author="marcelo-inacio" id="500">
 		<createTable tableName="COURSE">
 			<column name="CRS_ID" type="java.sql.Types.BIGINT" />
-			<column name="CRS_CODE" type="java.sql.Types.NUMBER" />
+			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(10)" />
 			<column name="CRS_NAME" type="java.sql.Types.VARCHAR(50)" />
 			<column name="CRS_PERIOD" type="java.sql.Types.VARCHAR(50)" />
-			<column name="INS_CODE" type="java.sql.Types.NUMBER" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 		</createTable>
 	</changeSet>
 	
@@ -53,9 +53,9 @@
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
 			<column name="STU_RA" type="java.sql.Types.VARCHAR(20)" />
 			<column name="STU_PHONE" type="java.sql.Types.VARCHAR(15)" />
-			<column name="STU_ISCOMPLETED" type="java.sql.Types.BOOLEAN" />
-			<column name="CRS_CODE" type="java.sql.Types.NUMBER" />
-			<column name="INS_CODE" type="java.sql.Types.NUMBER" />
+			<column name="STU_IS_COMPLETED" type="java.sql.Types.BOOLEAN" />
+			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 		</createTable>
 	</changeSet>
 	
@@ -77,7 +77,7 @@
 		<createTable tableName="GAME_THEME">
 			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 			<column name="GTH_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
-			<column name="GTH_ISACTIVE" type="java.sql.Types.BOOLEAN" />
+			<column name="GTH_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 		</createTable>
 	</changeSet>
 	
@@ -86,7 +86,7 @@
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 			<column name="QUE_INDEX" type="java.sql.Types.NUMBER" />
 			<column name="QUE_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
-			<column name="QUE_ISACTIVE" type="java.sql.Types.BOOLEAN" />
+			<column name="QUE_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 			<column name="SKI_ID" type="java.sql.Types.BIGINT" />
 			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
@@ -96,7 +96,7 @@
 		<createTable tableName="ALTERNATIVE">
 			<column name="ALT_ID" type="java.sql.Types.BIGINT" />
 			<column name="ALT_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
-			<column name="ALT_SKILLVALUE" type="java.sql.Types.NUMBER" />
+			<column name="ALT_SKILL_VALUE" type="java.sql.Types.NUMBER" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
@@ -121,7 +121,7 @@
 		<createTable tableName="STUDENT_QUESTION_EVENT">
 			<column name="SQE_ID" type="java.sql.Types.BIGINT" />
 			<column name="SQE_DATE" type="java.sql.Types.TIMESTAMP" />
-			<column name="SQE_VALUESKILL" type="java.sql.Types.NUMBER" />
+			<column name="SQE_SKILL_VALUE" type="java.sql.Types.NUMBER" />
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 			<column name="ALT_ID" type="java.sql.Types.BIGINT" />

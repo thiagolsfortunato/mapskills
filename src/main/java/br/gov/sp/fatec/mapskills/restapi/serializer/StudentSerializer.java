@@ -23,7 +23,7 @@ public class StudentSerializer extends DefaultUserSerializer {
 		generator.writeStartObject();
 		serializeDefaultValues(user, generator);
 		final Student student = (Student) user;
-		generator.writeStringField("ra", student.ra());
+		generator.writeStringField("ra", student.getRa());
 		generator.writeStringField("institutionCode", student.getInstitutionCode());
 		generator.writeStringField("courseCode", student.getCourseCode());
 		generator.writeStringField("phone", student.getPhone());
