@@ -74,19 +74,12 @@
 	            constraintName="PK_ALTERNATIVE"
 	            tableName="ALTERNATIVE"/>
 	</changeSet>
-
+	
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-text-midia">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="MID_ID"
 	            constraintName="PK_TEXT-MIDIA"
 	            tableName="TEXT_MIDIA"/>
-	</changeSet>
-
-	<changeSet author="marcelo-inacio" id="addPrimaryKey-question-text">
-	    <addPrimaryKey catalogName="MAPSKILLS"
-	            columnNames="TXT_ID"
-	            constraintName="PK_QUESTION-TEXT"
-	            tableName="QUESTION_TEXT"/>
 	</changeSet>
 
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-student-question-event">
@@ -101,6 +94,13 @@
 	            columnNames="GTH_ID"
 	            constraintName="PK_GAME-THEME"
 	            tableName="GAME_THEME"/>
+	</changeSet>
+	
+	<changeSet author="marcelo-inacio" id="addPrimaryKey-question-text">
+	    <addPrimaryKey catalogName="MAPSKILLS"
+	            columnNames="TXT_ID"
+	            constraintName="PK_QUESTION-TEXT"
+	            tableName="QUESTION_TEXT"/>
 	</changeSet>
 	
 

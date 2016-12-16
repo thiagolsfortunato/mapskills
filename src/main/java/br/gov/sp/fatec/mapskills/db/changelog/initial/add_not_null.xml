@@ -8,7 +8,7 @@
 <!-- terminar de editar  -->
 	<changeSet author="marcelo-inacio" id="addNotNullConstraint-user">
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="VARCHAR(20)"
+	            columnDataType="VARCHAR(50)"
 	            columnName="USE_PASSWORD"
 	            defaultNullValue="Mudar@123"
 	            tableName="USER"/>
@@ -23,30 +23,30 @@
 	
 	<changeSet author="marcelo-inacio" id="addNotNullConstraint-question">
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
+	            columnDataType="NUMERIC"
 	            columnName="QUE_INDEX"
 	            tableName="QUESTION"/>
 	</changeSet>
 	
 	<changeSet author="marcelo-inacio" id="addNotNullConstraint-student-question-event">
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
-	            columnName="SQE_VALUESKILL"
+	            columnDataType="NUMERIC"
+	            columnName="SQE_SKILL_VALUE"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
+	            columnDataType="BIGINT"
 	            columnName="USE_ID"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
+	            columnDataType="BIGINT"
 	            columnName="QUE_ID"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
+	            columnDataType="BIGINT"
 	            columnName="ALT_ID"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="NUMBER"
+	            columnDataType="BIGINT"
 	            columnName="SKI_ID"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	</changeSet>
