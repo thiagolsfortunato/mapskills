@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.question.Alternative;
-import br.gov.sp.fatec.mapskills.domain.question.Multimedia;
 import br.gov.sp.fatec.mapskills.domain.question.Question;
 import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
 import br.gov.sp.fatec.mapskills.domain.question.Text;
@@ -96,25 +95,5 @@ public class QuestionTest extends MapSkillsTest {
 		assertEquals(0, questions.size());
 	}
 	
-	private List<Alternative> builderMockAlternatives() {
-		final List<Alternative> alternatives = new ArrayList<>();
-		final Alternative a = new Alternative("AlternativaMockA", 8);
-		final Alternative b = new Alternative("AlternativaMockB", 5);
-		final Alternative c = new Alternative("AlternativaMockC", 6);
-		final Alternative d = new Alternative("AlternativaMockD", 4);
-		alternatives.add(a);
-		alternatives.add(b);
-		alternatives.add(c);
-		alternatives.add(d);
-		return alternatives;
-	}
-	
-	private List<Text> buildMockTexts() {
-		final List<Text> texts = new ArrayList<>();
-		texts.add(new Text("TextoMock001", new Multimedia("http://site/img/001")));
-		texts.add(new Text("TextoMock002", new Multimedia("http://site/img/002")));
-		texts.add(new Text("TextoMock003", new Multimedia("http://site/img/003")));
-		return texts;
-	}
 
 }

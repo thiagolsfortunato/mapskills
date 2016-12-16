@@ -42,28 +42,28 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@After
 	public void cleanTables() {
-		super.cleanTables(userService, institutionService);
+		super.cleanTables(institutionService, userService);
 	}
 	
 	@Test
-	public void findUserByUsernamePassword() throws MapSkillsException {
-		final String EXPECTED = "1460281423023"; 
+	public void findUserByUsernamePasswords() throws MapSkillsException {
+		final String EXPECTED_RA = "2000281423023"; 
 		
-		final Mentor mentorSave = new Mentor("Mentor Fatec GRU","marquinho@fatec.sp.gov.br","mudar@123");
-		final Institution institutionSave = new Institution("200", "22238846000105","FATEC GRU","Guarulhos", mentorSave);
-		institutionService.saveInstitution(institutionSave);
+		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec.sp.gov.br", "Mudar@123");
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentorSave);
+		institutionService.saveInstitution(fatec);
 		
-		final Student studentSave = new Student(new AcademicRegistry("1460281423023", "146", "028"), "Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
+		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentSave);
 		
 		final User studentUser = userService.findUserByUsernamePassword("studentA@fatec.sp.gov.br", "mudar@123");
-		final User mentorUser = userService.findUserByUsernamePassword("marquinho@fatec.sp.gov.br", "mudar@123");
+		final User mentorUser = userService.findUserByUsernamePassword("marquinhos@fatec.sp.gov.br", "Mudar@123");
 		
 		final Student student = userFactory.get(studentUser.getProfile()).create(studentUser);
 		final Mentor mentor = userFactory.get(mentorUser.getProfile()).create(mentorUser);
 		
-		assertEquals(EXPECTED, student.getRa());
-		assertEquals("Mentor Fatec GRU", mentor.getName());
+		assertEquals(EXPECTED_RA, student.getRa());
+		assertEquals("Mentor Responsavel Teste", mentor.getName());
 	}
 	
 	@Test

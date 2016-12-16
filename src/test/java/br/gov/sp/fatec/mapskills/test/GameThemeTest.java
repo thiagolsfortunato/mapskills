@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.question.Question;
+import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
@@ -24,36 +25,61 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 public class GameThemeTest extends MapSkillsTest {
 
 	@Autowired
-	private GameThemeService service;
+	private GameThemeService themeService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	@After
 	public void cleanTables() {
-		super.cleanTables(service);
+		super.cleanTables(themeService);
+		super.cleanTables(questionService);
 	}
 	
 	@Test
 	public void saveTheme() {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
-		service.save(theme);
+		themeService.save(theme);
 		
-		assertEquals("pizzaria, aplicado em 2016/2", service.findById(theme.getId()).getDescription());
-		assertFalse(service.findById(theme.getId()).isActive());
+		assertEquals("pizzaria, aplicado em 2016/2", themeService.findById(theme.getId()).getDescription());
+		assertFalse(themeService.findById(theme.getId()).isActive());
 	}
 	
 	@Test
-	public void findAllQustionsIsEnableByThemeId() {
-		final int THEME = 1;
-		final List<Question> questions = new ArrayList<>();
-		questions.addAll(service.findAllQuestionsIsEnableByThemeId(THEME));
+	public void findAllQustionsEnableByThemeId() {
+		final long THEME_ID = 1;
+		questionService.create(buildMockQuestions(THEME_ID));
 		
-		assertEquals(2, questions.size());
+		final Question questionI = new Question("Questao009 Mock", builderMockAlternatives(), buildMockTexts(), 9, THEME_ID);
+		questionI.disable();
+		questionService.create(questionI);
+		
+		final List<Question> questions = new ArrayList<>();
+		questions.addAll(themeService.findAllQuestionsEnableByThemeId(THEME_ID));
+		
+		assertEquals(8, questions.size());
 	}
 	
 	@Test
 	public void findAllThemes() {
+		themeService.save(buildMockThemes());
 		final List<GameTheme> themes = new ArrayList<>();
-		themes.addAll(service.findAllThemes());
+		themes.addAll(themeService.findAllThemes());
 		
-		assertEquals(1, themes.size());
+		assertEquals(4, themes.size());
 	}
+	
+	private List<GameTheme> buildMockThemes() {
+		final GameTheme themeA = new GameTheme("pizzaria, aplicado em 2016/2");
+		final GameTheme themeB = new GameTheme("pizzaria, aplicado em 2016/2");
+		final GameTheme themeC = new GameTheme("pizzaria, aplicado em 2016/2");
+		final GameTheme themeD = new GameTheme("pizzaria, aplicado em 2016/2");
+		final List<GameTheme> themes = new ArrayList<>(4);
+		themes.add(themeA);
+		themes.add(themeB);
+		themes.add(themeC);
+		themes.add(themeD);
+		return themes;
+	}
+	
 }

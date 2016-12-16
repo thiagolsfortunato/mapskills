@@ -61,13 +61,6 @@
 	            tableName="SKILL"/>
 	</changeSet>
 
-	<changeSet author="marcelo-inacio" id="addPrimaryKey-game-theme">
-	    <addPrimaryKey catalogName="MAPSKILLS"
-	            columnNames="GTH_ID"
-	            constraintName="PK_GAME-THEME"
-	            tableName="GAME_THEME"/>
-	</changeSet>
-
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-question">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="QUE_ID"
@@ -101,6 +94,13 @@
 	            columnNames="SQE_ID"
 	            constraintName="PK_STUDENT-QUESTION-EVENT"
 	            tableName="STUDENT_QUESTION_EVENT"/>
+	</changeSet>
+	
+	<changeSet author="marcelo-inacio" id="addPrimaryKey-game-theme">
+	    <addPrimaryKey catalogName="MAPSKILLS"
+	            columnNames="GTH_ID"
+	            constraintName="PK_GAME-THEME"
+	            tableName="GAME_THEME"/>
 	</changeSet>
 	
 

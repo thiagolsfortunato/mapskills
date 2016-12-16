@@ -190,10 +190,22 @@
 			</properties>
 		</profile>
 		<profile>
+            <id>qa</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <liquibase.url>jdbc:hsqldb:mem:mapskills</liquibase.url>
+                <liquibase.driver>org.hsqldb.jdbcDriver</liquibase.driver>
+                <liquibase.username>sa</liquibase.username>
+                <liquibase.password>sa</liquibase.password>
+            </properties>
+        </profile>
+		<profile>
 			<id>dev</id>
-<!-- 			<activation> -->
-<!-- 				<activeByDefault>true</activeByDefault> -->
-<!-- 			</activation> -->
+			<!-- <activation> -->
+			<!-- <activeByDefault>true</activeByDefault> -->
+			<!-- </activation> -->
 			<build>
 				<finalName>${build.warname}</finalName>
 				<resources>
@@ -228,7 +240,10 @@
 			</build>
 		</profile>
 		<profile>
-			<id>qa</id>
+			<id>qa_err</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
 				<finalName>${build.warname}</finalName>
 				<resources>
@@ -255,6 +270,7 @@
 							</execution>
 						</executions>
 						<configuration>
+							<propertyFile>src/main/resources/db.test.properties</propertyFile>
 							<files>
 								<file>src/main/resources/db.test.properties</file>
 							</files>
@@ -265,6 +281,12 @@
 		</profile>
 	</profiles>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<!-- <plugin> -->
 			<!-- <groupId>org.apache.maven.plugins</groupId> -->
@@ -310,6 +332,7 @@
 				<artifactId>liquibase-maven-plugin</artifactId>
 				<version>${liquibase-maven-plugin.version}</version>
 				<configuration>
+					<propertyFile>src/main/resources/db.test.properties</propertyFile>
 					<changeLogFile>src/main/java/br/gov/sp/fatec/mapskills/db/changelog/db.master.xml</changeLogFile>
 					<verbose>${liquibase.verbose}</verbose>
 					<dropFirst>${liquibase.dropFirst}</dropFirst>

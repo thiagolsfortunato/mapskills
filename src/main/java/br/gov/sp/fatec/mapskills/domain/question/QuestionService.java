@@ -42,6 +42,15 @@ public class QuestionService implements RepositoryService<Question> {
 		questionRepository.save(Arrays.asList(questions));
 	}
 	
+	public void create(final List<Question> questions) {
+		int index;
+		for(final Question question : questions) {
+			index = questionRepository.findNextIndex(question.getThemeId());
+			question.putIndex(index);
+		}
+		questionRepository.save(questions);
+	}
+	
 	public void update(final Question question) {
 		questionRepository.save(question);
 	}

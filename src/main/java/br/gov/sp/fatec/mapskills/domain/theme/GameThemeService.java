@@ -35,7 +35,11 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	
 	public void save(final GameTheme theme) {
 		themeRepo.save(theme);
-	}	
+	}
+	
+	public void save(final List<GameTheme> themes) {
+		themeRepo.save(themes);
+	}
 
 	public Collection<GameTheme> findAllThemes() {
 		final List<GameTheme> themes = new ArrayList<>();
@@ -49,7 +53,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	 * @param id
 	 * @return
 	 */
-	public Collection<Question> findAllQuestionsIsEnableByThemeId(final long id) {
+	public Collection<Question> findAllQuestionsEnableByThemeId(final long id) {
 		return questionRepo.findAllByThemeIdAndEnable(id, true);
 	}
 

@@ -84,7 +84,7 @@
 	<changeSet author="marcelo-inacio" id="1000">
 		<createTable tableName="QUESTION">
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
-			<column name="QUE_INDEX" type="java.sql.Types.NUMBER" />
+			<column name="QUE_INDEX" type="java.sql.Types.NUMERIC" />
 			<column name="QUE_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
 			<column name="QUE_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 			<column name="SKI_ID" type="java.sql.Types.BIGINT" />
@@ -96,7 +96,7 @@
 		<createTable tableName="ALTERNATIVE">
 			<column name="ALT_ID" type="java.sql.Types.BIGINT" />
 			<column name="ALT_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
-			<column name="ALT_SKILL_VALUE" type="java.sql.Types.NUMBER" />
+			<column name="ALT_SKILL_VALUE" type="java.sql.Types.NUMERIC" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
@@ -112,8 +112,8 @@
 		<createTable tableName="QUESTION_TEXT">
 			<column name="TXT_ID" type="java.sql.Types.BIGINT" />
 			<column name="TXT_TEXT" type="java.sql.Types.VARCHAR(250)" />
-			<column name="MID_ID" type="java.sql.Types.NUMBER" />
-			<column name="QUE_ID" type="java.sql.Types.NUMBER" />
+			<column name="MID_ID" type="java.sql.Types.NUMERIC" />
+			<column name="QUE_ID" type="java.sql.Types.NUMERIC" />
 		</createTable>
 	</changeSet>
 	
@@ -121,7 +121,7 @@
 		<createTable tableName="STUDENT_QUESTION_EVENT">
 			<column name="SQE_ID" type="java.sql.Types.BIGINT" />
 			<column name="SQE_DATE" type="java.sql.Types.TIMESTAMP" />
-			<column name="SQE_SKILL_VALUE" type="java.sql.Types.NUMBER" />
+			<column name="SQE_SKILL_VALUE" type="java.sql.Types.NUMERIC" />
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 			<column name="ALT_ID" type="java.sql.Types.BIGINT" />

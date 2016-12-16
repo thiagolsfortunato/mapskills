@@ -81,17 +81,18 @@ public class InstitutionTest extends MapSkillsTest {
 		assertEquals(4, institutionService.findAllCoursesByInstitution("146").size());
 	}
 		
-	@Test /** TERMINAR OS TESTES */
-	public void findAllStudentsByCourseByInstitution() throws MapSkillsException {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "victor@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("146", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
-		institutionService.saveInstitution(fatecOURINHOS);
-		
+	@Test
+	public void findAllStudentsByCourseAndInstitution() throws MapSkillsException {
 		institutionService.saveStudents(mockStudents());
+		final Student studentE = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
+		final Student studentF = new Student(new AcademicRegistry("1460281423073", "146", "038"), "Student MockF", "1289003400", "studentF@fatec.sp.gov.br", "mudar@123");
+		institutionService.saveStudent(studentE);
+		institutionService.saveStudent(studentF);
+		
 		final List<Student> students = new ArrayList<>();
 		students.addAll(institutionService.findAllStudentsByCourseAndInstitution("028", "146"));
 		
-		assertEquals(4, students.size());
+		assertEquals(5, students.size());
 	}
 	
 	@Test
