@@ -78,28 +78,28 @@
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-text-midia">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="MID_ID"
-	            constraintName="PK_TEXT-MIDIA"
+	            constraintName="PK_TEXT_MIDIA"
 	            tableName="TEXT_MIDIA"/>
 	</changeSet>
 
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-student-question-event">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="SQE_ID"
-	            constraintName="PK_STUDENT-QUESTION-EVENT"
+	            constraintName="PK_STUDENT_QUESTION_EVENT"
 	            tableName="STUDENT_QUESTION_EVENT"/>
 	</changeSet>
 	
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-game-theme">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="GTH_ID"
-	            constraintName="PK_GAME-THEME"
+	            constraintName="PK_GAME_THEME"
 	            tableName="GAME_THEME"/>
 	</changeSet>
 	
 	<changeSet author="marcelo-inacio" id="addPrimaryKey-question-text">
 	    <addPrimaryKey catalogName="MAPSKILLS"
 	            columnNames="TXT_ID"
-	            constraintName="PK_QUESTION-TEXT"
+	            constraintName="PK_QUESTION_TEXT"
 	            tableName="QUESTION_TEXT"/>
 	</changeSet>
 	

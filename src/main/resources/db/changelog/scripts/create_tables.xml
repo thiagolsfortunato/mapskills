@@ -112,8 +112,8 @@
 		<createTable tableName="QUESTION_TEXT">
 			<column name="TXT_ID" type="java.sql.Types.BIGINT" />
 			<column name="TXT_TEXT" type="java.sql.Types.VARCHAR(250)" />
-			<column name="MID_ID" type="java.sql.Types.NUMERIC" />
-			<column name="QUE_ID" type="java.sql.Types.NUMERIC" />
+			<column name="MID_ID" type="java.sql.Types.BIGINT" />
+			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
 	

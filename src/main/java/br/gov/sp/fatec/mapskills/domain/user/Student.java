@@ -27,7 +27,7 @@ public class Student extends User {
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
 	
-	@Column(name = "stu_isCompleted")
+	@Column(name = "stu_is_completed")
 	private boolean completed = false;
 		
 	public Student() { }

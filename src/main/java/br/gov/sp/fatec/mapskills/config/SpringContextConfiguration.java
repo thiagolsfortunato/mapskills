@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@Import({DataBaseHsqldbConfig.class, MapSkillsBeans.class, SerializersConfig.class})
+@Import({DataBaseConfig.class, MapSkillsBeans.class, SerializersConfig.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",

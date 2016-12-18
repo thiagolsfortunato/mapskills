@@ -22,8 +22,12 @@
 
 	<changeSet author="marcelo-inacio" id="addUniqueConstraint-institution">
 	    <addUniqueConstraint catalogName="MAPSKILLS"
-	            columnNames="INS_CODE, INS_CNPJ"
-	            constraintName="UK_INSTITUTION"
+	            columnNames="INS_CODE"
+	            constraintName="UK_INSTITUTION_CODE"
+	            tableName="INSTITUTION"/>
+	    <addUniqueConstraint catalogName="MAPSKILLS"
+	            columnNames="INS_CNPJ"
+	            constraintName="UK_INSTITUTION_CNPJ"
 	            tableName="INSTITUTION"/>
 	</changeSet>
 
