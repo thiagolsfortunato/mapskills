@@ -1,3 +1,9 @@
+/*
+ * @(#)GameThemeTest.java 1.0 29/12/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.test;
 
 import static org.junit.Assert.assertEquals;
@@ -14,8 +20,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import br.gov.sp.fatec.mapskills.domain.question.Question;
-import br.gov.sp.fatec.mapskills.domain.question.QuestionService;
+import br.gov.sp.fatec.mapskills.domain.scene.Question;
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
+import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
@@ -28,12 +35,12 @@ public class GameThemeTest extends MapSkillsTest {
 	private GameThemeService themeService;
 	
 	@Autowired
-	private QuestionService questionService;
+	private SceneService sceneService;
 	
 	@After
 	public void cleanTables() {
 		super.cleanTables(themeService);
-		super.cleanTables(questionService);
+		super.cleanTables(sceneService);
 	}
 	
 	@Test
@@ -48,16 +55,16 @@ public class GameThemeTest extends MapSkillsTest {
 	@Test
 	public void findAllQustionsEnableByThemeId() {
 		final long THEME_ID = 1;
-		questionService.create(buildMockQuestions(THEME_ID));
+		sceneService.save(buildMockScenes(THEME_ID));
 		
-		final Question questionI = new Question("Questao009 Mock", builderMockAlternatives(), buildMockTexts(), 9, THEME_ID);
-		questionI.disable();
-		questionService.create(questionI);
+		final Scene scene7 = new Scene("e agora, o que fazer?", "/scenes/img007.png", new Question(builderMockAlternatives(), 4), THEME_ID);
+		scene7.disable();
+		sceneService.save(scene7);
 		
-		final List<Question> questions = new ArrayList<>();
-		questions.addAll(themeService.findAllQuestionsEnableByThemeId(THEME_ID));
+		final List<Scene> scenes = new ArrayList<>();
+		scenes.addAll(themeService.findAllSceneEnabledByThemeId(THEME_ID));
 		
-		assertEquals(8, questions.size());
+		assertEquals(6, scenes.size());
 	}
 	
 	@Test

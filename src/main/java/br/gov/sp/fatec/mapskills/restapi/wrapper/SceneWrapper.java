@@ -8,9 +8,9 @@ package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import br.gov.sp.fatec.mapskills.restapi.serializer.QuestionDeserializer;
+import br.gov.sp.fatec.mapskills.restapi.serializer.SceneDeserializer;
 
-@JsonDeserialize(using = QuestionDeserializer.class)
-public class QuestionWrapper {
+@JsonDeserialize(using = SceneDeserializer.class)
+public class SceneWrapper {
 
 }

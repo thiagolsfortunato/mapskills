@@ -16,7 +16,12 @@ import org.springframework.context.annotation.Configuration;
 
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
-
+/**
+ * A classe <code>SerializersConfig</code> possui um configuração de estrategia de serializaçao de perfil,
+ * onde cada perfil possui seu serializador.
+ * @author Marcelo
+ *
+ */
 @Configuration
 public class SerializersConfig {
 	

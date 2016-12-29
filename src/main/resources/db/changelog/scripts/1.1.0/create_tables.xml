@@ -35,6 +35,7 @@
 			<column name="INS_COMPANY" type="java.sql.Types.VARCHAR(100)" />
 			<column name="INS_CITY" type="java.sql.Types.VARCHAR(100)" />
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
+			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
 	
@@ -84,11 +85,7 @@
 	<changeSet author="marcelo-inacio" id="1000">
 		<createTable tableName="QUESTION">
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
-			<column name="QUE_INDEX" type="java.sql.Types.NUMERIC" />
-			<column name="QUE_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
-			<column name="QUE_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 			<column name="SKI_ID" type="java.sql.Types.BIGINT" />
-			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
 	
@@ -102,30 +99,25 @@
 	</changeSet>
 	
 	<changeSet author="marcelo-inacio" id="1200">
-		<createTable tableName="TEXT_MIDIA">
-			<column name="MID_ID" type="java.sql.Types.BIGINT" />
-			<column name="MID_URL" type="java.sql.Types.VARCHAR(250)" />
-		</createTable>
-	</changeSet>
-	
-	<changeSet author="marcelo-inacio" id="1300">
-		<createTable tableName="QUESTION_TEXT">
-			<column name="TXT_ID" type="java.sql.Types.BIGINT" />
-			<column name="TXT_TEXT" type="java.sql.Types.VARCHAR(250)" />
-			<column name="MID_ID" type="java.sql.Types.BIGINT" />
+		<createTable tableName="SCENE">
+			<column name="SCN_ID" type="java.sql.Types.BIGINT" />
+			<column name="SCN_INDEX" type="java.sql.Types.NUMERIC" />
+			<column name="SCN_TEXT" type="java.sql.Types.VARCHAR(250)" />
+			<column name="SCN_URL_BACKGROUND" type="java.sql.Types.VARCHAR(250)" />
+			<column name="SCN_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
+			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
-	
-	<changeSet author="marcelo-inacio" id="1400">
+		
+	<changeSet author="marcelo-inacio" id="1300">
 		<createTable tableName="STUDENT_QUESTION_EVENT">
 			<column name="SQE_ID" type="java.sql.Types.BIGINT" />
 			<column name="SQE_DATE" type="java.sql.Types.TIMESTAMP" />
 			<column name="SQE_SKILL_VALUE" type="java.sql.Types.NUMERIC" />
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
-			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
-			<column name="ALT_ID" type="java.sql.Types.BIGINT" />
 			<column name="SKI_ID" type="java.sql.Types.BIGINT" />
+			<column name="SCN_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
 

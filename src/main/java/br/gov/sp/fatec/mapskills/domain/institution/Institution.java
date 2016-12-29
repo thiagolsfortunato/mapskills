@@ -45,6 +45,9 @@ public class Institution implements Serializable {
 	@Column(name = "ins_city", nullable = true)
 	private String city;
 	
+	@Column(name = "ght_id")
+	private long gameThemeId;
+	
 	@Transient
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="ins_code")
@@ -82,6 +85,10 @@ public class Institution implements Serializable {
 		mentor.changeName(newName);
 	}
 	
+	public void changeGameTheme(final long gameThemeId) {
+		this.gameThemeId = gameThemeId;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -103,6 +110,10 @@ public class Institution implements Serializable {
 	
 	public String getMentor() {
 		return mentor.getName();
+	}
+	
+	public long getThemeId() {
+		return gameThemeId;
 	}
 	
 }

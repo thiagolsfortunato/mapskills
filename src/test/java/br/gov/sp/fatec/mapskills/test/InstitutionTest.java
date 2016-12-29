@@ -1,3 +1,9 @@
+/*
+ * @(#)InstitutionTest.java 1.0 29/12/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.test;
 
 import static org.junit.Assert.assertEquals;
@@ -132,6 +138,20 @@ public class InstitutionTest extends MapSkillsTest {
 		institutionService.saveCourses(courses);
 		
 		assertEquals(3, institutionService.findAllCoursesByInstitution("144").size());
+	}
+	
+	@Test
+	public void saveThemeInstitution() {
+		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "victor@fatec", "Mudar@123");
+		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
+		institutionService.saveInstitution(fatecOURINHOS);
+		
+		assertEquals(0, institutionService.findInstitutionByCode("144").getThemeId());
+		
+		fatecOURINHOS.changeGameTheme(1);
+		institutionService.saveInstitution(fatecOURINHOS);
+		
+		assertEquals(1, institutionService.findInstitutionByCode("144").getThemeId());
 	}
 	
 	private List<Student> mockStudents() throws MapSkillsException {

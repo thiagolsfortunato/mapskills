@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.question;
+package br.gov.sp.fatec.mapskills.domain.scene;
 
 import java.io.Serializable;
 

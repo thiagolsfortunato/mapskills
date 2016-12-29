@@ -13,20 +13,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.gov.sp.fatec.mapskills.domain.question.Question;
-import br.gov.sp.fatec.mapskills.domain.question.QuestionRepository;
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
+import br.gov.sp.fatec.mapskills.domain.scene.SceneRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
 public class GameThemeService implements RepositoryService<GameTheme> {
 	
 	private GameThemeRepository themeRepo;
-	private QuestionRepository questionRepo;
+	private SceneRepository sceneRepo;
 	
 	@Override
 	public void deleteAll() {
 		themeRepo.deleteAll();
-		questionRepo.deleteAll();
 	}
 
 	public GameTheme findById(final long id) {
@@ -40,7 +39,11 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	public void save(final List<GameTheme> themes) {
 		themeRepo.save(themes);
 	}
-
+	
+	/**
+	 * Metodo que retorna todos temas cadastrados na aplicacao
+	 * @return
+	 */
 	public Collection<GameTheme> findAllThemes() {
 		final List<GameTheme> themes = new ArrayList<>();
 		for(final GameTheme theme : themeRepo.findAll()) {
@@ -49,13 +52,17 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 		return themes;
 	}
 	/**
-	 * Método que retorna todas as questões que estão ativas de um determinado tema
-	 * @param id
+	 * Método que retorna todas as cenas que estão ativas de um determinado tema
+	 * de uma determinada instituicao.
+	 * @param themeId
 	 * @return
 	 */
-	public Collection<Question> findAllQuestionsEnableByThemeId(final long id) {
-		return questionRepo.findAllByThemeIdAndEnable(id, true);
+	public Collection<Scene> findAllSceneEnabledByThemeId(final long themeId) {
+		return sceneRepo.findAllByGameThemeIdAndEnabled(themeId, true);
 	}
+	
+	
+	//=== Dependecy Inject ===
 
 	@Autowired
 	public void setGameThemeRepository(final GameThemeRepository repository) {
@@ -63,8 +70,8 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	}
 	
 	@Autowired
-	public void setQuestionRepository(final QuestionRepository repository) {
-		this.questionRepo = repository;
+	public void setSceneRepository(final SceneRepository repository) {
+		this.sceneRepo = repository;
 	}
 	
 }

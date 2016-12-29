@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.domain.question;
+package br.gov.sp.fatec.mapskills.domain.answerevent;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -23,7 +23,6 @@ public class UserService implements RepositoryService<User> {
 	@Override
 	public void deleteAll() {
 		repository.deleteAll();
-		
 	}
 	
 	public void save(final Administrator admin) {

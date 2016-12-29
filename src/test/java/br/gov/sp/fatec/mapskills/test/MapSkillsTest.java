@@ -1,12 +1,17 @@
+/*
+ * @(#)MapSkillsTest.java 1.0 29/12/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.gov.sp.fatec.mapskills.domain.question.Alternative;
-import br.gov.sp.fatec.mapskills.domain.question.Multimedia;
-import br.gov.sp.fatec.mapskills.domain.question.Question;
-import br.gov.sp.fatec.mapskills.domain.question.Text;
+import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
+import br.gov.sp.fatec.mapskills.domain.scene.Question;
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 public abstract class MapSkillsTest {
@@ -19,27 +24,22 @@ public abstract class MapSkillsTest {
 		}
 	}
 	
-	protected List<Question> buildMockQuestions(final long themeId) {
-		final List<Text> texts = buildMockTexts();
+	protected List<Scene> buildMockScenes(final long themeId) {
 		final List<Alternative> alternatives = builderMockAlternatives(); 
-		final Question questionA = new Question("Questao001 Mock", alternatives, texts, 1, themeId);
-		final Question questionB = new Question("Questao002 Mock", alternatives, texts, 2, themeId);
-		final Question questionC = new Question("Questao003 Mock", alternatives, texts, 3, themeId);
-		final Question questionD = new Question("Questao004 Mock", alternatives, texts, 4, themeId);
-		final Question questionE = new Question("Questao005 Mock", alternatives, texts, 5, themeId);
-		final Question questionF = new Question("Questao006 Mock", alternatives, texts, 6, themeId);
-		final Question questionG = new Question("Questao007 Mock", alternatives, texts, 7, themeId);
-		final Question questionH = new Question("Questao008 Mock", alternatives, texts, 8, themeId);
-		final List<Question> questions = new ArrayList<>(8);
-		questions.add(questionA);
-		questions.add(questionB);
-		questions.add(questionC);
-		questions.add(questionD);
-		questions.add(questionE);
-		questions.add(questionF);
-		questions.add(questionG);
-		questions.add(questionH);
-		return questions;
+		final List<Scene> scenes = new ArrayList<>(6);
+		final Scene scena1 = new Scene("olá sente-se", "/scenes/bg001.png", null, themeId);
+		final Scene scena2 = new Scene("me diga um qualidade", "/scenes/bg002.png", new Question(alternatives, 1), themeId);
+		final Scene scena3 = new Scene("muito bom", "/scenes/bg003.png", null, themeId);
+		final Scene scena4 = new Scene("você será o novo gerente", "/scenes/bg004.png", null, themeId);
+		final Scene scena5 = new Scene("qual sua primeira atitude?", "/scenes/bg005.png", new Question(alternatives, 2), themeId);
+		final Scene scena6 = new Scene("bem pensado!", "/scenes/bg006.png", null, themeId);
+		scenes.add(scena1);
+		scenes.add(scena2);
+		scenes.add(scena3);
+		scenes.add(scena4);
+		scenes.add(scena5);
+		scenes.add(scena6);
+		return scenes;
 	}
 	
 	protected List<Alternative> builderMockAlternatives() {
@@ -53,14 +53,6 @@ public abstract class MapSkillsTest {
 		alternatives.add(c);
 		alternatives.add(d);
 		return alternatives;
-	}
-	
-	protected List<Text> buildMockTexts() {
-		final List<Text> texts = new ArrayList<>();
-		texts.add(new Text("TextoMock001", new Multimedia("http://site/img/001")));
-		texts.add(new Text("TextoMock002", new Multimedia("http://site/img/002")));
-		texts.add(new Text("TextoMock003", new Multimedia("http://site/img/003")));
-		return texts;
 	}
 
 }
