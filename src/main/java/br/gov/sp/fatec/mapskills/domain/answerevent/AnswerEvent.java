@@ -25,10 +25,10 @@ public class AnswerEvent implements Serializable {
 	@Column(name = "sqe_id")
 	private long id;
 	
-	@Column(name = "sqe_skill_value", nullable = false)
+	@Column(name = "sqe_skill_value")
 	private int skillValue;
 	
-	@Column(name = "ski_id", nullable = false)
+	@Column(name = "ski_id")
 	private long skillId;
 
 	@Column(name = "use_id", nullable = false)

@@ -43,7 +43,7 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveInstitution() {
-		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec", "Mudar@123");
+		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123");
 		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentor);
 		institutionService.saveInstitution(fatec);
 		
@@ -53,13 +53,13 @@ public class InstitutionTest extends MapSkillsTest {
 	@Test
 	public void saveInstitutions() {
 		final List<Institution> fatecList = new ArrayList<>();
-		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "valdez@fatec", "Mudar@123");
+		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123");
 		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", "São José", mentorA);
 		
-		final Mentor mentorB = new Mentor("Mentor Responsavel PINDA", "paulo@fatec", "Mudar@123");
+		final Mentor mentorB = new Mentor("Mentor Responsavel PINDA", "148", "paulo@fatec", "Mudar@123");
 		final Institution fatecPINDA = new Institution("148", "123456789002", "Fatec Pinda", "Pindamonhangaba", mentorB);
 		
-		final Mentor mentorC = new Mentor("Mentor Responsavel SP", "fagundez@fatec", "Mudar@123");
+		final Mentor mentorC = new Mentor("Mentor Responsavel SP", "149", "fagundez@fatec", "Mudar@123");
 		final Institution fatecSP = new Institution("149", "123456789003", "Fatec SP", "São Paulo", mentorC);
 		
 		fatecList.add(fatecOURINHOS);
@@ -103,9 +103,9 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void updateInstitution() {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "victor@fatec", "Mudar@123");
+		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "200", "victor@fatec", "Mudar@123");
 		final Institution fatecOURINHOS = new Institution("200", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
-		final Mentor mentorB = new Mentor("Regina", "regina@fatec", "Mudar@123");
+		final Mentor mentorB = new Mentor("Regina", "156", "regina@fatec", "Mudar@123");
 		final Institution fatecSAMPA = new Institution("156", "123445789001", "Fatec Sampa", "São Paulo", mentorB);
 		final List<Institution> institutions = new ArrayList<>(2);
 		institutions.add(fatecSAMPA);
@@ -124,7 +124,7 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveCourses() throws MapSkillsException {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "victor@fatec", "Mudar@123");
+		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123");
 		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
 		institutionService.saveInstitution(fatecOURINHOS);
 		
@@ -142,7 +142,7 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveThemeInstitution() {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "victor@fatec", "Mudar@123");
+		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123");
 		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
 		institutionService.saveInstitution(fatecOURINHOS);
 		

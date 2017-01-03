@@ -20,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "institution")
@@ -48,8 +47,7 @@ public class Institution implements Serializable {
 	@Column(name = "ght_id")
 	private long gameThemeId;
 	
-	@Transient
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name="ins_code")
 	private List<Course> courses;
 	

@@ -44,6 +44,13 @@
 	            constraintName="UK_STUDENT"
 	            tableName="STUDENT"/>
 	</changeSet>
+	
+	<changeSet author="marcelo-inacio" id="addUniqueConstraint-mentor">
+	    <addUniqueConstraint catalogName="MAPSKILLS"
+	            columnNames="INS_CODE"
+	            constraintName="UK_INSTITUTION"
+	            tableName="MENTOR"/>
+	</changeSet>
 
 	
 </databaseChangeLog>

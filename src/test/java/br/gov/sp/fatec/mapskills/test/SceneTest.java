@@ -45,7 +45,7 @@ public class SceneTest extends MapSkillsTest {
 		final int SKILL_ID = 1;
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final Question question = new Question(alternatives, SKILL_ID);
-		final Scene scene = new Scene("", "", question, THEME_ID);
+		final Scene scene = new Scene("intro", "url:site", question, THEME_ID);
 		service.save(scene);
 	}
 	
@@ -71,7 +71,7 @@ public class SceneTest extends MapSkillsTest {
 	public void nextIndex() {
 		final int index = service.nextIndex(1);
 		
-		assertEquals(1, index);
+		assertEquals(0, index);
 	}
 
 	@Test

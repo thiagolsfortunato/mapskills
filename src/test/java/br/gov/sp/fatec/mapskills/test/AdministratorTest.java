@@ -55,7 +55,7 @@ public class AdministratorTest extends MapSkillsTest {
 	public void findUserByUsernamePasswords() throws MapSkillsException {
 		final String EXPECTED_RA = "2000281423023"; 
 		
-		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "marquinhos@fatec.sp.gov.br", "Mudar@123");
+		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123");
 		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentorSave);
 		institutionService.saveInstitution(fatec);
 		

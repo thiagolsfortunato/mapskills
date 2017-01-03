@@ -12,6 +12,6 @@ package br.gov.sp.fatec.mapskills.domain.institution;
  */
 public enum CoursePeriod {
 	
-	MATUTINO, VESPERTINO, NOTURNO;
+	MATUTINO, VESPERTINO, NOTURNO, EaD;
 	
 }

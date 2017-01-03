@@ -21,6 +21,13 @@
 	            tableName="STUDENT"/>
 	</changeSet>
 	
+	<changeSet author="marcelo-inacio" id="addNotNullConstraint-mentor">
+	    <addNotNullConstraint catalogName="MAPSKILLS"
+	            columnDataType="VARCHAR(10)"
+	            columnName="INS_CODE"
+	            tableName="MENTOR"/>
+	</changeSet>
+	
 	<changeSet author="marcelo-inacio" id="addNotNullConstraint-scene">
 	    <addNotNullConstraint catalogName="MAPSKILLS"
 	            columnDataType="NUMERIC"

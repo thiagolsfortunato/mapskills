@@ -58,5 +58,9 @@ public class Skill implements Serializable {
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
 	}
+	
+	public void setId(final long id) {
+		this.id = id;
+	}
 
 }

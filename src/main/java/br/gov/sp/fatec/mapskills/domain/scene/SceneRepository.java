@@ -12,7 +12,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	 * @param themeId
 	 * @return
 	 */
-	@Query("SELECT (COUNT(*) + 1) FROM Scene s INNER JOIN GameTheme t ON s.gameThemeId = t.id WHERE t.id = ?1")
+	@Query("SELECT (COUNT(*)) FROM Scene s INNER JOIN GameTheme t ON s.gameThemeId = t.id WHERE t.id = ?1")
 	public int findNextIndex(final long themeId);
 	
 	/**

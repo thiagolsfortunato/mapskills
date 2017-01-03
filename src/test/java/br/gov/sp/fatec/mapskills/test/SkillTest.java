@@ -53,15 +53,16 @@ public class SkillTest extends MapSkillsTest {
 		
 	}
 
-	//@Test
+	@Test
 	public void update() {
 		final Skill skillSave = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skillSave);
-		Skill skill = service.findById(1);
-		skill.changeType("Trabalho em Equipe");
-		service.update(skill);
 		
-		assertEquals("Trabalho em Equipe", service.findById(1).getType());
+		final Skill skillUpdate = new Skill("força", "Breve descrição da habilidade");
+		skillUpdate.setId(1);
+		service.update(skillUpdate);
+		
+		assertEquals("força", service.findById(1).getType());
 		
 	}
 

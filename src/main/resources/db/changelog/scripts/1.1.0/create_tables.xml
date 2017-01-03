@@ -24,6 +24,7 @@
 	<changeSet author="marcelo-inacio" id="300">
 		<createTable tableName="MENTOR">
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 		</createTable>
 	</changeSet>
 	

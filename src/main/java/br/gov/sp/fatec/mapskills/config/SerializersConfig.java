@@ -27,11 +27,12 @@ public class SerializersConfig {
 	
 	@Bean
 	public Map<ProfileType, UserSerilizerStrategy> mapSerializerStrategy(@Autowired @Qualifier("defaultUserSerializer") final UserSerilizerStrategy defaultSerializer,
-			@Autowired @Qualifier("studentSerializer") final UserSerilizerStrategy studentSerializer) {
+			@Autowired @Qualifier("studentSerializer") final UserSerilizerStrategy studentSerializer,
+			@Autowired @Qualifier("mentorSerializer") final UserSerilizerStrategy mentorSerializer) {
 		
 		final Map<ProfileType, UserSerilizerStrategy> map = new EnumMap<>(ProfileType.class);
 		map.put(ProfileType.ADMINISTRATOR, defaultSerializer);
-		map.put(ProfileType.MENTOR, defaultSerializer);
+		map.put(ProfileType.MENTOR, mentorSerializer);
 		map.put(ProfileType.STUDENT, studentSerializer);
 		
 		return map;
