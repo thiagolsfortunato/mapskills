@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEvent;
+import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
@@ -13,10 +15,14 @@ public class SceneService implements RepositoryService<Scene> {
 	
 	@Autowired
 	private SceneRepository sceneRepo;
+	
+	@Autowired
+	private AnswerEventRepository answerRepo;
 
 	@Override
 	public void deleteAll() {
 		sceneRepo.deleteAll();
+		answerRepo.deleteAll();
 	}
 	
 	public void save(final Scene scene) {
@@ -48,6 +54,14 @@ public class SceneService implements RepositoryService<Scene> {
 	 */
 	public int nextIndex(final long themeId) {
 		return sceneRepo.findNextIndex(themeId);
+	}
+	
+	public void saveAnswer(final AnswerEvent answerContext) {
+		answerRepo.save(answerContext);
+	}
+	
+	public List<Object[]> getResultByStudentId(final long studentId) {
+		return answerRepo.findResultByStudentId(studentId);
 	}
 
 }
