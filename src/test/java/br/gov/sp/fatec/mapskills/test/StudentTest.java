@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEvent;
+import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
@@ -22,6 +23,9 @@ public class StudentTest extends MapSkillsTest {
 	
 	@Autowired
 	private SceneService sceneService;
+	
+	@Autowired
+	private AnswerEventRepository repo;
 	
 	@Autowired
 	private SkillService skillService;
@@ -47,6 +51,17 @@ public class StudentTest extends MapSkillsTest {
 		}
 		System.err.println("]");
 
+	}
+	
+	@Test
+	public void testResultSkill() {
+		prepareAnswerContext();
+		repo.findResultSkillByStudentId(1);
+	}
+	
+	@Test
+	public void testResultView() {
+		repo.findResultViewByStudentId(1);
 	}
 	
 	private void prepareAnswerContext() {

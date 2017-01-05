@@ -13,6 +13,7 @@
 	<include file="scripts/1.1.0/add_unique_key.xml" relativeToChangelogFile="true" />
 	<include file="scripts/1.1.0/add_not_null.xml" relativeToChangelogFile="true" />
 	<include file="scripts/1.1.0/add_foreing_key.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.1.0/create_views.xml" relativeToChangelogFile="true" />
 	<include file="scripts/1.1.0/insert_data.xml" relativeToChangelogFile="true" />
 
 

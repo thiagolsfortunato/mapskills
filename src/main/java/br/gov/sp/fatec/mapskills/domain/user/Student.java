@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-
 @Entity
 @Table(name = "student")
 @PrimaryKeyJoinColumn(name = "use_id")
@@ -33,7 +31,7 @@ public class Student extends User {
 	public Student() { }
 	
 	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
-			final String password) throws MapSkillsException {
+			final String password) {
 		
 		super(name, new Login(username, password), ProfileType.STUDENT);
 		this.ra = ra;

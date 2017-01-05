@@ -19,19 +19,13 @@ public class InputStreamWrapper {
 	
 	private Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	private final InputStream inputStream;
-	private final int institutionId;
 	
-	public InputStreamWrapper(final String charSequence, final int institutionId) {
+	public InputStreamWrapper(final String charSequence) {
 		this.inputStream = parser.toInputStream(charSequence);
-		this.institutionId = institutionId;
 	}
 	
 	public InputStream getInputStream() {
 		return inputStream;
-	}
-	
-	public int getInstitutionId() {
-		return institutionId;
 	}
 
 }

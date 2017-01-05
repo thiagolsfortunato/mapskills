@@ -8,9 +8,20 @@ package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.serializer.SceneDeserializer;
 
 @JsonDeserialize(using = SceneDeserializer.class)
 public class SceneWrapper {
+	
+	private final Scene scene;
+	
+	public SceneWrapper(final Scene scene) {
+		this.scene = scene;
+	}
+	
+	public Scene getScene() {
+		return scene;
+	}
 
 }

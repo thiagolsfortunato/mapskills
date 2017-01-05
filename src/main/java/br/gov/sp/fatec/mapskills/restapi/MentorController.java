@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
@@ -30,6 +31,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
  * @author Marcelo
  *
  */
+@RestController
 public class MentorController {
 	
 	@Autowired

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base64Parser {
 	/**
-	 * O método <code>toInputStream</code> converte uma String em base 64 para um objeto
+	 * O método <code>toInputStream</code> converte uma String de base 64 para um objeto
 	 * do tipo InputStream.
 	 * 
 	 * @param charSequence

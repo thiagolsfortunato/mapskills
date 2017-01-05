@@ -28,6 +28,10 @@ public class Main {
 		
 		final Student studentE = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentE);
+		
+		final String ra = "1460281423023";
+		System.out.println("fatec: " + ra.substring(0, 3));
+		System.out.println("curso: " + ra.substring(3, 6));
 
 	}
 

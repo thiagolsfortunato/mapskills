@@ -32,7 +32,7 @@ public class Course implements Serializable {
 	@Enumerated(value = EnumType.STRING)
 	private CoursePeriod period;
 	
-	@Column(name = "ins_code")
+	@Column(name = "ins_code", length = 10)
 	private String institutionCode;
 	
 	public Course() {}

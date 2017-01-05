@@ -16,6 +16,6 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @PropertySource("classpath:application.properties")
-@Import({DataBaseConfig.class})
+@Import({DataBaseHsqldbConfig.class})
 public class SpringContextConfiguration extends AbstractSpringContextConfiguration {
 }

@@ -32,7 +32,7 @@ public class Institution implements Serializable {
 	@Column(name = "ins_id")
 	private long id;
 	
-	@Column(name = "ins_code", nullable = false, unique = true)
+	@Column(name = "ins_code", nullable = false, unique = true, length = 10)
 	private String code;
 	
 	@Column(name = "ins_cnpj", nullable = true, unique = true)

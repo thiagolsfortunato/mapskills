@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.domain.user;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-
 @Embeddable
 public class AcademicRegistry {
 	
@@ -25,7 +23,7 @@ public class AcademicRegistry {
 	
 	public AcademicRegistry() {}
 	
-	public AcademicRegistry(final String ra, final String institutionCode, final String courseCode) throws MapSkillsException {
+	public AcademicRegistry(final String ra, final String institutionCode, final String courseCode) {
 		this.ra = ra;
 		this.institutionCode = institutionCode;
 		this.courseCode = courseCode;

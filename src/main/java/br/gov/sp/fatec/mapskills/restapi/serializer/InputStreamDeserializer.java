@@ -22,8 +22,7 @@ public class InputStreamDeserializer extends JsonDeserializer<InputStreamWrapper
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
         
-		return new InputStreamWrapper(node.get("fileBase64").asText(),
-				node.get("institutionId").asInt());
+		return new InputStreamWrapper(node.get("base64").asText());
 	}
 
 

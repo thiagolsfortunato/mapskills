@@ -21,7 +21,7 @@ import br.gov.sp.fatec.mapskills.domain.user.UserFactory;
 public class MapSkillsBeans {
 	
 	/**
-	 * Bean responsável por cônter todos perfis da aplicação e devolver a classe que realiza
+	 * Bean responsável por conter todos perfis da aplicação e devolver a classe que realiza
 	 * o cast do <code>User</code>(Perfil) correspondente.
 	 * @param administrator
 	 * @param mentor

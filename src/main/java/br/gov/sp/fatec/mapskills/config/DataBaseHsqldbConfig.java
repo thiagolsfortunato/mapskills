@@ -33,7 +33,7 @@ public class DataBaseHsqldbConfig {
 		dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
 		dataSource.setUrl("jdbc:hsqldb:mem:mapskills");
 		dataSource.setUsername("sa");
-		dataSource.setPassword("");
+		dataSource.setPassword("sa");
 
 		return dataSource;
 	}
