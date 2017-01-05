@@ -30,7 +30,6 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 @RestController
 public class AuthenticationController {
 	
-	
 	@Autowired
 	private UserService userService;
 	

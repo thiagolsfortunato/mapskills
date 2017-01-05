@@ -32,5 +32,13 @@ public class Base64Parser {
 		final ByteArrayInputStream bis = new ByteArrayInputStream(decoded);
 		return bis;
 	}
+	/**
+	 * Método que converte uma String base64 em um array de bytes
+	 * @param charSequence
+	 * @return
+	 */
+	public byte[] toByteArray(final String charSequence) {
+		return Base64.getDecoder().decode(charSequence);
+	}
 
 }

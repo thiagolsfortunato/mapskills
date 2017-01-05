@@ -6,9 +6,16 @@
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +38,9 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
 public class StudentController {
 	
 	@Autowired
+    private ServletContext servletContext;
+	
+	@Autowired
 	private SceneService sceneService;
 	
 	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
@@ -44,6 +54,16 @@ public class StudentController {
 		final List<Object[]> context = sceneService.getResultByStudentId(studentID);
 		final StudentResultWrapper result = new StudentResultWrapper(context);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/game/image/{filename}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImageByFilename(@PathVariable("filename") final String filename) throws IOException {
+		HttpHeaders headers = new HttpHeaders();
+	    InputStream in = servletContext.getResourceAsStream("/WEB-INF/images/image-example.jpg");
+	    byte[] media = IOUtils.toByteArray(in);
+	    headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		
+		return new ResponseEntity<>(media, headers, HttpStatus.OK);
 	}
 
 }
