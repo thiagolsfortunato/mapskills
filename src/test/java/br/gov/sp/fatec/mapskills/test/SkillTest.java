@@ -15,7 +15,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -28,8 +27,7 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
 public class SkillTest extends MapSkillsTest {
 	
-	@Autowired(required = true)
-	@Qualifier("skillService")
+	@Autowired
 	private SkillService service;
 	
 	@After
@@ -59,10 +57,10 @@ public class SkillTest extends MapSkillsTest {
 		service.save(skillSave);
 		
 		final Skill skillUpdate = new Skill("força", "Breve descrição da habilidade");
-		skillUpdate.setId(1);
+		skillUpdate.setId(skillSave.getId());
 		service.update(skillUpdate);
 		
-		assertEquals("força", service.findById(1).getType());
+		assertEquals("força", service.findById(skillSave.getId()).getType());
 		
 	}
 

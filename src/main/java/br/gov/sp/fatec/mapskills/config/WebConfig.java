@@ -11,23 +11,41 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.http.MediaType;
+import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Configuration
 @EnableWebMvc
-@Import(SerializersConfig.class)
-@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi",
-		"br.gov.sp.fatec.mapskills.restapi.serializer"})
+@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Resource
     private Environment env;
+	
+	@Override
+    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
+        configurer.defaultContentType(MediaType.APPLICATION_JSON);
+    }
+	
+	@Bean
+    public ContentNegotiatingViewResolver contentViewResolver() throws Exception {
+        final ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
+        contentNegotiationManager.addMediaType("json", MediaType.APPLICATION_JSON);
+        final MappingJackson2JsonView defaultJsonView = new MappingJackson2JsonView();
+        defaultJsonView.setExtractValueFromSingleKeyModel(true);
+        final ContentNegotiatingViewResolver contentViewResolver = new ContentNegotiatingViewResolver();
+        contentViewResolver.setContentNegotiationManager(contentNegotiationManager.getObject());
+        return contentViewResolver;
+    }
+	
 	
 	@Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -37,11 +55,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-	
-	@Bean
-    public CommonsMultipartResolver multipartResolver() {
-        return new CommonsMultipartResolver();
     }
 
 }

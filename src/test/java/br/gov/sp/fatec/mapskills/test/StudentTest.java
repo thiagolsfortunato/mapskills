@@ -59,8 +59,9 @@ public class StudentTest extends MapSkillsTest {
 		repo.findResultSkillByStudentId(1);
 	}
 	
-	@Test
+	//@Test
 	public void testResultView() {
+		prepareAnswerContext();
 		repo.findResultViewByStudentId(1);
 	}
 	

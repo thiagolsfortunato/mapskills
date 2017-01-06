@@ -15,7 +15,7 @@ public class SaveImageService {
 	
 	public String save(final String base64, final String filename) {
 		
-		try (final OutputStream stream = new FileOutputStream("src/main/resources/images/"+filename)) {
+		try (final OutputStream stream = new FileOutputStream("src/main/resources/images/" + filename)) {
 		    stream.write(parser.toByteArray(base64));
 		    stream.close();
 		} catch (final IOException e) {

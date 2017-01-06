@@ -18,16 +18,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  *
  */
 @Configuration
-@Import({MapSkillsBeans.class, SerializersConfig.class})
+@Import({MapSkillsBeans.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",
 		"br.gov.sp.fatec.mapskills.domain.theme",
 		"br.gov.sp.fatec.mapskills.domain.scene",
 		"br.gov.sp.fatec.mapskills.domain.answerevent",
-		"br.gov.sp.fatec.mapskills.utils",
-		"br.gov.sp.fatec.mapskills.restapi",
-		"br.gov.sp.fatec.mapskills.restapi.serializer"})
+		"br.gov.sp.fatec.mapskills.utils"})
 @EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",
