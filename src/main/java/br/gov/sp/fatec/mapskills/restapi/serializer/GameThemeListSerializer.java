@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 /**
  * A classe <code>GameThemeListSerializer<code> serializa uma lista de objetos
@@ -24,7 +25,16 @@ public class GameThemeListSerializer extends JsonSerializer<GameThemeListWrapper
 	@Override
 	public void serialize(final GameThemeListWrapper gameThemes, final JsonGenerator generator, final SerializerProvider arg2)
 			throws IOException {
-		// TODO Auto-generated method stub
+
+		generator.writeStartArray();
+		for(final GameTheme theme : gameThemes.getGameThemes()) {
+			generator.writeStartObject();
+			generator.writeNumberField("id", theme.getId());
+			generator.writeStringField("description", theme.getDescription());
+			generator.writeBooleanField("active", theme.isActive());
+			generator.writeEndObject();
+		}
+		generator.writeEndArray();
 		
 	}
 

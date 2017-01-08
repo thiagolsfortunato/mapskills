@@ -11,11 +11,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
@@ -23,8 +25,10 @@ import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionListWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
 
 /**
  * A classe <code>AdminController</code> é responsável por conter todas
@@ -65,7 +69,7 @@ public class AdminController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/institution", method = RequestMethod.POST)
-	public ResponseEntity<?> saveInstitution(@RequestBody final InstitutionWrapper institutionWrapper) throws Exception {
+	public ResponseEntity<?> saveInstitution(@RequestBody final InstitutionDetailsWrapper institutionWrapper) throws Exception {
 		institutionService.saveInstitution(institutionWrapper.getInstitution());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -79,6 +83,18 @@ public class AdminController {
 	public ResponseEntity<InstitutionListWrapper> getAllInstitution() {
 		final InstitutionListWrapper institutions = new InstitutionListWrapper(institutionService.findAllInstitutions());
 		return new ResponseEntity<>(institutions, HttpStatus.OK);
+	}
+	/**
+	 * Método que recupera um instituição em detalhes
+	 * @param institutionId
+	 * @return
+	 * @throws MapSkillsException 
+	 */
+	@RequestMapping(value = "/institution/{institutionId}", method = RequestMethod.GET)
+	public ResponseEntity<InstitutionDetailsWrapper> getInstitutionDetail(@PathVariable("institutionId") final long institutionId) throws MapSkillsException {
+		final Institution institution = institutionService.findInstitutionDetailsById(institutionId);
+		final InstitutionDetailsWrapper institutionDetail = new InstitutionDetailsWrapper(institution);
+		return new ResponseEntity<>(institutionDetail, HttpStatus.OK);
 	}
 	
 	/**
@@ -97,10 +113,30 @@ public class AdminController {
 	 * Método que retorna todos temas cadastrados na aplicação
 	 * @return
 	 */
-	@RequestMapping(value = "/game/theme", method = RequestMethod.GET)
+	@RequestMapping(value = "/game/themes", method = RequestMethod.GET)
 	public ResponseEntity<GameThemeListWrapper> getAllThemes() {
 		final GameThemeListWrapper gameThemes = new GameThemeListWrapper(themeService.findAllThemes()); 
 		return new ResponseEntity<>(gameThemes, HttpStatus.OK);
+	}
+	/**
+	 * Método que salva uma cena de um tema do jogo na aplicação
+	 * @param sceneWrapper
+	 * @return
+	 */
+	@RequestMapping(value = "/game/scene", method = RequestMethod.POST)
+	public ResponseEntity<?> saveScene(@RequestBody final SceneWrapper sceneWrapper) {
+		themeService.saveScene(sceneWrapper.getScene());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	/**
+	 * Método que retorna todas as cenas de um tema da aplicação
+	 * @param themeId
+	 * @return
+	 */
+	@RequestMapping(value = "/game/theme/{themeId}", method = RequestMethod.GET)
+	public ResponseEntity<SceneListWrapper> getAllScenesByThemeId(@PathVariable("themeId") final long themeId) {
+		final SceneListWrapper scenesListWrapper = new SceneListWrapper(themeService.findAllScenesByThemeId(themeId));
+		return new ResponseEntity<>(scenesListWrapper, HttpStatus.OK);
 	}
 
 }

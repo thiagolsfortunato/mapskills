@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.test.config;
+package br.gov.sp.fatec.mapskills.test.unit.config;
 
 import org.springframework.context.annotation.Import;
 

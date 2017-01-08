@@ -21,7 +21,7 @@ public class StudentSerializer extends DefaultUserSerializer {
 	@Override
 	public void serialize(final User user, final JsonGenerator generator) throws IOException {
 		generator.writeStartObject();
-		serializeDefaultValues(user, generator);
+		super.serializeDefaultValues(user, generator);
 		final Student student = (Student) user;
 		generator.writeStringField("ra", student.getRa());
 		generator.writeStringField("institutionCode", student.getInstitutionCode());

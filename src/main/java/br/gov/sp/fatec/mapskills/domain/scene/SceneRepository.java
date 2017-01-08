@@ -1,6 +1,6 @@
 package br.gov.sp.fatec.mapskills.domain.scene;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,11 +12,11 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	 * @param themeId
 	 * @return
 	 */
-	@Query("SELECT (COUNT(*)) FROM Scene s INNER JOIN GameTheme t ON s.gameThemeId = t.id WHERE t.id = ?1")
+	@Query("SELECT (COUNT(*)) FROM Scene s WHERE s.gameThemeId = ?1")
 	public int findNextIndex(final long themeId);
 	
 	/**
-	 * BUSCAR TODAS CENAS HABILITADAS, ORDENADAS E AINDA NÃO RESPONDIDAS POR UM
+	 * BUSCAR TODAS CENAS ORDENADAS E AINDA NÃO RESPONDIDAS POR UM
 	 * DETERMINADO ALUNO DE UMA INSTITUIÇÃO QUE TEM UM TEMA ATIVO
 	 * @param id
 	 * @return
@@ -28,7 +28,12 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 			+ "INNER JOIN Student st ON ae.studentId = st.id WHERE st.id = ?1) ORDER BY s.index")
 	public List<Scene> findAllByEnableAndNotAnaswerByStudent(final long studentId);
 	*/
-	public List<Scene> findAllByGameThemeIdAndEnabled(final long gameThemeId, final boolean enabled);
+	/**
+	 * Método que recupera todas cenas por um determinado id
+	 * @param gameThemeId
+	 * @return
+	 */
+	public Collection<Scene> findAllByGameThemeId(final long gameThemeId);
 
 	
 }

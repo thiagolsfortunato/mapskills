@@ -49,6 +49,10 @@ public class Question implements Serializable {
 	public long getId() {
 		return id;
 	}
+	
+	public long getSkillId() {
+		return skillId;
+	}
 			
 	public List<Alternative> getAlternatives() {
 		return alternatives;

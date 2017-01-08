@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.mapskills.test;
+package br.gov.sp.fatec.mapskills.test.unit;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)

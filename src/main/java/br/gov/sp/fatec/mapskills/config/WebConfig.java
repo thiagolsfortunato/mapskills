@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -29,6 +30,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Resource
     private Environment env;
+	
+	@Override
+    public void addCorsMappings(final CorsRegistry registry) {
+        registry.addMapping("/rest/**")
+        .allowedOrigins("*")
+        .allowedMethods("POST", "GET", "OPTIONS")
+        .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept")
+        .allowCredentials(true).maxAge(3600);
+    }
 	
 	@Override
     public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {

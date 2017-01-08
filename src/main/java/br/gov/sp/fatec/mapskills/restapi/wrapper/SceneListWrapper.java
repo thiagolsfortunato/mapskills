@@ -21,12 +21,11 @@ public class SceneListWrapper {
 	private final Collection<Scene> scenes = new ArrayList<>();
 
 	public SceneListWrapper(final Collection<Scene> scenes) {
-		scenes.addAll(scenes);
+		this.scenes.addAll(scenes);
 	}
 	
 	public Collection<Scene> getScenes() {
 		return Collections.unmodifiableCollection(scenes);
 	}
-
 
 }

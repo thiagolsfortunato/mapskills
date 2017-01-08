@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.test;
+package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,7 +31,7 @@ import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserFactory;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)

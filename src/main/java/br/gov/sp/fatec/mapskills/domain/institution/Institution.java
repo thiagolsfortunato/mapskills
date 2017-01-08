@@ -7,7 +7,9 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +19,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "institution")
@@ -47,9 +49,8 @@ public class Institution implements Serializable {
 	@Column(name = "ght_id")
 	private long gameThemeId;
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinColumn(name="ins_code")
-	private List<Course> courses;
+	@Transient
+	private Collection<Course> courses = new ArrayList<>();
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "use_id")
@@ -87,6 +88,10 @@ public class Institution implements Serializable {
 		this.gameThemeId = gameThemeId;
 	}
 	
+	public void setCourses(final Collection<Course> courses) {
+		this.courses.addAll(courses);
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -106,12 +111,16 @@ public class Institution implements Serializable {
 		return city;
 	}
 	
-	public String getMentor() {
-		return mentor.getName();
+	public Mentor getMentor() {
+		return mentor;
 	}
 	
 	public long getThemeId() {
 		return gameThemeId;
 	}
+	
+	public Collection<Course> getCourses() {
+		return Collections.unmodifiableCollection(courses);
+	};
 	
 }

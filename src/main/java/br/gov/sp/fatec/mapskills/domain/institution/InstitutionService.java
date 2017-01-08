@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
@@ -33,7 +34,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 		studentRepository.deleteAll();
 	}
 
-	public void saveInstitutions(final List<Institution> institutions) {
+	public void saveInstitutions(final Collection<Institution> institutions) {
 		institutionRepository.save(institutions);
 	}
 	
@@ -41,7 +42,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 		institutionRepository.save(institution);
 	}
 	
-	public void saveCourses(final List<Course> courses) {
+	public void saveCourses(final Collection<Course> courses) {
 		courseRepository.save(courses);
 	}
 	
@@ -49,7 +50,7 @@ public class InstitutionService implements RepositoryService<Institution> {
 		courseRepository.save(course);
 	}
 	
-	public void saveStudents(final List<Student> students) {
+	public void saveStudents(final Collection<Student> students) {
 		studentRepository.save(students);
 	}
 	
@@ -57,8 +58,8 @@ public class InstitutionService implements RepositoryService<Institution> {
 		studentRepository.save(student);
 	}
 
-	public Institution findInstitutionByCode(final String code) {
-		return institutionRepository.findByCode(code);
+	public Institution findInstitutionById(final long id) {
+		return institutionRepository.findById(id);
 	}
 	
 	public Collection<Institution> findAllInstitutions() {
@@ -69,12 +70,19 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return institutions;
 	}
 	
+	public Institution findInstitutionDetailsById(final long id) throws MapSkillsException {
+		final Institution institution = institutionRepository.findById(id);
+		if(institution == null) throw new InstitutionNotFoundException(id);
+		institution.setCourses(courseRepository.findAllByInstitutionCode(institution.getCode()));
+		return institution;
+	}
+	
 	/**
 	 * Método que recupera todos os cursos de uma determinada instituição
 	 * @param code
 	 * @return
 	 */
-	public Collection<Course> findAllCoursesByInstitution(final String institutionCode) {
+	public Collection<Course> findAllCoursesByInstitutionCode(final String institutionCode) {
 		final List<Course> courses = new ArrayList<>();
 		for(final Course course : courseRepository.findAllByInstitutionCode(institutionCode)) {
 			courses.add(course);

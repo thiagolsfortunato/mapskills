@@ -105,7 +105,6 @@
 			<column name="SCN_INDEX" type="java.sql.Types.NUMERIC" />
 			<column name="SCN_TEXT" type="java.sql.Types.VARCHAR(250)" />
 			<column name="SCN_URL_BACKGROUND" type="java.sql.Types.VARCHAR(250)" />
-			<column name="SCN_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 			<column name="QUE_ID" type="java.sql.Types.BIGINT" />
 		</createTable>

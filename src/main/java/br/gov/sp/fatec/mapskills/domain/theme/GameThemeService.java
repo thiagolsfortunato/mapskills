@@ -40,6 +40,10 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 		themeRepo.save(themes);
 	}
 	
+	public void saveScene(final Scene scene) {
+		sceneRepo.save(scene);
+	}
+	
 	/**
 	 * Metodo que retorna todos temas cadastrados na aplicacao
 	 * @return
@@ -57,8 +61,8 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	 * @param themeId
 	 * @return
 	 */
-	public Collection<Scene> findAllSceneEnabledByThemeId(final long themeId) {
-		return sceneRepo.findAllByGameThemeIdAndEnabled(themeId, true);
+	public Collection<Scene> findAllScenesByThemeId(final long themeId) {
+		return sceneRepo.findAllByGameThemeId(themeId);
 	}
 	
 	

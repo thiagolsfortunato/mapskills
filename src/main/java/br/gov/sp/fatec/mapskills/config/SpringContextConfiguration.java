@@ -17,7 +17,7 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @PropertySource("classpath:application.properties")
-@Import({DataBaseConfig.class, SerializersConfig.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.restapi.serializer"})
+@Import({DataBaseHsqldbConfig.class, SerializersConfig.class, SecurityConfig.class, MapSkillsMockBeans.class})
 public class SpringContextConfiguration extends AbstractSpringContextConfiguration {
 }

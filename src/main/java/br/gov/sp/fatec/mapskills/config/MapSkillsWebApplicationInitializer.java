@@ -10,16 +10,15 @@ import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 /**
  * A classe <code>MapSkillsWebApplicationInitializer</code> representa a inicialização
  * do contexto do Spring na aplicação.
  *
  */
-public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer 
-		implements WebApplicationInitializer {
+public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	/** {@inheritDoc} */
 	@Override
@@ -52,7 +51,7 @@ public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfig
 	@Override
     public void onStartup(final ServletContext context) throws ServletException {
         super.onStartup(context);
-        //context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/*");
+        context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/rest/*");
     }
 
 }

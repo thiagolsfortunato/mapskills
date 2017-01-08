@@ -10,12 +10,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 
-public class InstitutionDeserializer extends JsonDeserializer<InstitutionWrapper> {
+public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetailsWrapper> {
 
 	@Override
-	public InstitutionWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
+	public InstitutionDetailsWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
 			throws IOException {
 		
 		final ObjectCodec oc = jsonParser.getCodec();
@@ -27,7 +27,7 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionWrapper
 		final Institution institution =  new Institution(node.get("code").asText(), node.get("cnpj").asText(),
 				node.get("company").asText(), node.get("city").asText(), mentor);
 		
-		return new InstitutionWrapper(institution);
+		return new InstitutionDetailsWrapper(institution);
 	}
 
 }

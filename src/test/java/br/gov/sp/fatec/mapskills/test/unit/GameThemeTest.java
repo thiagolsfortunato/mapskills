@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.test;
+package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,12 +20,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import br.gov.sp.fatec.mapskills.domain.scene.Question;
-import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
@@ -52,20 +50,6 @@ public class GameThemeTest extends MapSkillsTest {
 		assertFalse(themeService.findById(theme.getId()).isActive());
 	}
 	
-	@Test
-	public void findAllQustionsEnableByThemeId() {
-		final long THEME_ID = 1;
-		sceneService.save(buildMockScenes(THEME_ID));
-		
-		final Scene scene7 = new Scene("e agora, o que fazer?", "/scenes/img007.png", new Question(builderMockAlternatives(), 4), THEME_ID);
-		scene7.disable();
-		sceneService.save(scene7);
-		
-		final List<Scene> scenes = new ArrayList<>();
-		scenes.addAll(themeService.findAllSceneEnabledByThemeId(THEME_ID));
-		
-		assertEquals(6, scenes.size());
-	}
 	
 	@Test
 	public void findAllThemes() {

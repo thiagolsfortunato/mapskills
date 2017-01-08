@@ -4,13 +4,11 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.test;
+package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
@@ -21,11 +19,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,14 +64,20 @@ public class SceneTest extends MapSkillsTest {
 		scenes.add(scene3);
 		service.save(scenes);
 			
-		assertEquals(3, service.findAllByGameThemeIdAndEnabled(THEME_ID).size());
+		assertEquals(3, service.findAllByGameThemeId(THEME_ID).size());
 	}
 	
 	@Test
-	public void nextIndex() {
+	public void nextIndex() {		
 		final int index = service.nextIndex(1);
-		
 		assertEquals(0, index);
+		
+		final Scene scene = new Scene("intro", "url:site", null, 1);
+		service.save(scene);
+		
+		final int nextIndex = service.nextIndex(1);
+		
+		assertEquals(1, nextIndex);
 	}
 
 	@Test
@@ -81,27 +86,20 @@ public class SceneTest extends MapSkillsTest {
 		final int SKILL_ID = 1;
 		final List<Alternative> alternatives = builderMockAlternatives();
 		final Question question = new Question(alternatives, SKILL_ID);
-		final Scene sceneSave1 = new Scene("textoA", "/scenes/img004.png", null, THEME_ID);
 		final Scene sceneSave2 = new Scene("textoB", "/scenes/img005.png", question, THEME_ID);
-		service.save(sceneSave1);
 		service.save(sceneSave2);
 		
-		final LinkedList<Scene> scenesResponse = new LinkedList<>(); 
-		scenesResponse.addAll(service.findAllByGameThemeIdAndEnabled(THEME_ID));
-		final Scene sceneUpdate = scenesResponse.getFirst();
-		sceneUpdate.disable();
+		final Scene sceneUpdate = new Scene("TextoA", "/images/img001.png", null, THEME_ID);
+		sceneUpdate.setId(sceneSave2.getId());
 		service.save(sceneUpdate);
-		
-		final List<Scene> scenes = new ArrayList<>(); 
-		scenes.addAll(service.findAllByGameThemeIdAndEnabled(THEME_ID));
-		assertTrue(scenes.get(0).isEnabled());
+
 	}
 	
 	@Autowired
 	private SaveImageService saveImage;
-	
+		
 	@Test
-	public void saveImage() {
+	public void saveImage() throws MapSkillsException {
 		final String base64 = getFileBase64();
 		final String filename = "IMAGE_SAVED.png";
 		saveImage.save(base64, filename);

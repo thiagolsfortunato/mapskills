@@ -33,9 +33,6 @@ public class Scene implements Serializable, Comparable<Scene> {
 	@Column(name = "scn_url_background", nullable = false)
 	private String urlBackground;
 	
-	@Column(name = "scn_enabled", nullable = false)
-	private boolean enabled;
-	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="que_id")
 	private Question question;
@@ -50,7 +47,6 @@ public class Scene implements Serializable, Comparable<Scene> {
 		this.urlBackground = urlBackground;
 		this.question = question;
 		this.gameThemeId = gameThemeId;
-		this.enabled = true;
 	}
 
 	public long getId() {
@@ -77,20 +73,12 @@ public class Scene implements Serializable, Comparable<Scene> {
 		return gameThemeId;
 	}
 	
-	public boolean isEnabled() {
-		return enabled;
-	}
-	
-	public void disable() {
-		enabled = false;
-	}
-	
-	public void enable() {
-		enabled = true;
-	}
-	
 	public void putIndex(final int index) {
 		this.index = index;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 	
 	/**

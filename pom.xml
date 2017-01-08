@@ -114,6 +114,13 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+		
+		<!-- JWT -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>4.27</version>
+		</dependency>
 
 		<!-- SPRING DATA -->
 		<dependency>

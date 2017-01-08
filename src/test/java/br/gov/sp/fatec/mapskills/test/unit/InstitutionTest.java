@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.test;
+package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +27,7 @@ import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
@@ -47,7 +47,28 @@ public class InstitutionTest extends MapSkillsTest {
 		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentor);
 		institutionService.saveInstitution(fatec);
 		
-		assertEquals("123456789000", institutionService.findInstitutionByCode(fatec.getCode()).getCnpj());
+		assertEquals("123456789000", institutionService.findInstitutionById(fatec.getId()).getCnpj());
+	}
+	
+	@Test
+	public void findInstitutionDetails() throws MapSkillsException {
+		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123");
+		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", "São José", mentor);
+		institutionService.saveInstitution(fatec);
+		
+		final List<Course> coursesList = new ArrayList<>();
+		final Course courseA = new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147");
+		final Course courseB = new Course("29", "Logistica", CoursePeriod.NOTURNO, "147");
+		final Course courseC = new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147");
+		final Course courseD = new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147");
+		coursesList.add(courseA);
+		coursesList.add(courseB);
+		coursesList.add(courseC);
+		coursesList.add(courseD);
+		institutionService.saveCourses(coursesList);
+		
+		final Institution institutionDetails = institutionService.findInstitutionDetailsById(fatec.getId());
+		assertEquals(4, institutionDetails.getCourses().size());
 	}
 	
 	@Test
@@ -73,10 +94,14 @@ public class InstitutionTest extends MapSkillsTest {
 	@Test
 	public void saveAndFindAllCoursesByInstitution() {
 		final List<Course> coursesList = new ArrayList<>();
-		final Course courseA = new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "146");
-		final Course courseB = new Course("29", "Logistica", CoursePeriod.NOTURNO, "146");
-		final Course courseC = new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "146");
-		final Course courseD = new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "146");
+		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123");
+		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", "São José", mentorA);
+		institutionService.saveInstitution(fatecOURINHOS);
+		
+		final Course courseA = new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147");
+		final Course courseB = new Course("29", "Logistica", CoursePeriod.NOTURNO, "147");
+		final Course courseC = new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147");
+		final Course courseD = new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147");
 		coursesList.add(courseA);
 		coursesList.add(courseB);
 		coursesList.add(courseC);
@@ -84,7 +109,7 @@ public class InstitutionTest extends MapSkillsTest {
 		
 		institutionService.saveCourses(coursesList);
 		
-		assertEquals(4, institutionService.findAllCoursesByInstitution("146").size());
+		assertEquals(4, institutionService.findAllCoursesByInstitutionCode("147").size());
 	}
 		
 	@Test
@@ -112,14 +137,14 @@ public class InstitutionTest extends MapSkillsTest {
 		institutions.add(fatecOURINHOS);
 		institutionService.saveInstitutions(institutions);
 		
-		final Institution institution = institutionService.findInstitutionByCode("156");
+		final Institution institution = institutionService.findInstitutionById(fatecSAMPA.getId());
 		institution.changeMentorName("Ragina_Simiões");
 		institution.changeCnpj("71461173000155");
 		institution.changeCity("Jacarei");
 		institution.changeCompany("Fatec Jacarei");
 		institutionService.saveInstitution(institution);
 		
-		assertEquals("Ragina_Simiões", institutionService.findInstitutionByCode(institution.getCode()).getMentor());
+		assertEquals("Ragina_Simiões", institutionService.findInstitutionById(institution.getId()).getMentor());
 	}
 	
 	@Test
@@ -137,7 +162,7 @@ public class InstitutionTest extends MapSkillsTest {
 		courses.add(courseC);
 		institutionService.saveCourses(courses);
 		
-		assertEquals(3, institutionService.findAllCoursesByInstitution("144").size());
+		assertEquals(3, institutionService.findAllCoursesByInstitutionCode("144").size());
 	}
 	
 	@Test
@@ -146,12 +171,12 @@ public class InstitutionTest extends MapSkillsTest {
 		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
 		institutionService.saveInstitution(fatecOURINHOS);
 		
-		assertEquals(0, institutionService.findInstitutionByCode("144").getThemeId());
+		assertEquals(0, institutionService.findInstitutionById(fatecOURINHOS.getId()).getThemeId());
 		
 		fatecOURINHOS.changeGameTheme(1);
 		institutionService.saveInstitution(fatecOURINHOS);
 		
-		assertEquals(1, institutionService.findInstitutionByCode("144").getThemeId());
+		assertEquals(1, institutionService.findInstitutionById(fatecOURINHOS.getId()).getThemeId());
 	}
 	
 	private List<Student> mockStudents() throws MapSkillsException {

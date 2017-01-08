@@ -43,8 +43,8 @@ public class SceneService implements RepositoryService<Scene> {
 	 * Método que recupera todas as cenas habilitadas de um tema
 	 * @return
 	 */
-	public Collection<Scene> findAllByGameThemeIdAndEnabled(final long gameThemeId) {
-		return sceneRepo.findAllByGameThemeIdAndEnabled(gameThemeId, true);
+	public Collection<Scene> findAllByGameThemeId(final long gameThemeId) {
+		return sceneRepo.findAllByGameThemeId(gameThemeId);
 	}
 	
 	/**
