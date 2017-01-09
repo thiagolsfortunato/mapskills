@@ -48,13 +48,10 @@ public class MapSkillsMockBeans {
 	
 	@Bean
 	public String saveInstitution() {
-		final Collection<Institution> institutions = new ArrayList<>(2);
+		final Collection<Institution> institutions = new ArrayList<>(1);
 		final Mentor mentorA = new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123");
 		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", "São José", mentorA);
 		institutions.add(fatecA);
-		final Mentor mentorB = new Mentor("Dona Violeta", "147", "violeta@cps.sp.gov.br", "mudar@123");
-		final Institution fatecB = new Institution("147", "64533377000199", "Fatec Pinda", "Pindamonhangaba", mentorB);
-		institutions.add(fatecB);
 		institutionService.saveInstitutions(institutions);
 		
 		return MESSAGE;

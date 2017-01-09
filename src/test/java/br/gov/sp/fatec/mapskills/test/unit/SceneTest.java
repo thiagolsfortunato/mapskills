@@ -24,6 +24,8 @@ import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
+import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
+import br.gov.sp.fatec.mapskills.domain.theme.GameThemeRepository;
 import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
@@ -33,6 +35,8 @@ public class SceneTest extends MapSkillsTest {
 	
 	@Autowired
 	private SceneService service;
+	@Autowired
+	private GameThemeRepository themeRepo;
 
 	@After
 	public void cleanTables() {
@@ -68,14 +72,20 @@ public class SceneTest extends MapSkillsTest {
 	}
 	
 	@Test
-	public void nextIndex() {		
-		final int index = service.nextIndex(1);
+	public void nextIndex() {
+		final GameTheme themeA = new GameTheme("descrição tema 001");
+		themeRepo.save(themeA);
+		
+		final GameTheme themeB = new GameTheme("descrição tema 002");
+		themeRepo.save(themeB);
+		
+		final int index = service.nextIndex(themeA.getId());
 		assertEquals(0, index);
 		
-		final Scene scene = new Scene("intro", "url:site", null, 1);
+		final Scene scene = new Scene("intro", "url:site", null, themeB.getId());
 		service.save(scene);
 		
-		final int nextIndex = service.nextIndex(1);
+		final int nextIndex = service.nextIndex(themeB.getId());
 		
 		assertEquals(1, nextIndex);
 	}
@@ -95,7 +105,7 @@ public class SceneTest extends MapSkillsTest {
 
 	}
 	
-	@Autowired
+	//@Autowired
 	private SaveImageService saveImage;
 		
 	@Test

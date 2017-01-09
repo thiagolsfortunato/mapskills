@@ -40,10 +40,6 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 		themeRepo.save(themes);
 	}
 	
-	public void saveScene(final Scene scene) {
-		sceneRepo.save(scene);
-	}
-	
 	/**
 	 * Metodo que retorna todos temas cadastrados na aplicacao
 	 * @return

@@ -16,18 +16,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
-import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 	
-	private static final String IP_SERVER = "localhost:8080/mapskills/";
-	private final SaveImageService saveImage = BeanRetriever.getBean("saveImageService", SaveImageService.class);
+	private static final String IP_SERVER = "http://localhost:8080/mapskills/";
 
 	@Override
 	public SceneWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
@@ -37,20 +33,17 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
         final JsonNode node = oc.readTree(jsonParser);
         
         final String fileImageBase64 = node.get("background").get("base64").asText();
-        final String filenameImage = node.get("background").get("filename").asText();
-        try {
-			saveImage.save(fileImageBase64, filenameImage);
-		} catch (final MapSkillsException e) {
-		}
+        final String filename = node.get("background").get("filename").asText();
+		
         final Question question = this.buildQuestion(node.get("question"));
         final long gameThemeId = node.get("gameThemeId").asLong();
-        final Scene scene = new Scene(node.get("text").asText(), IP_SERVER + "images/" + filenameImage, question, gameThemeId);
+        final Scene scene = new Scene(node.get("text").asText(), IP_SERVER + "images/" + filename, question, gameThemeId);
         
-		return new SceneWrapper(scene);
+		return new SceneWrapper(scene, fileImageBase64, filename);
 	}
 	
 	private Question buildQuestion(final JsonNode node) {
-		if(node == null) return null;
+		if(node.isNull()) return null;
 		final List<Alternative> alternatives = buildAlternatives(node.get("alternatives"));
 		final Question question = new Question(alternatives, node.get("skillId").asLong());
 		return question;

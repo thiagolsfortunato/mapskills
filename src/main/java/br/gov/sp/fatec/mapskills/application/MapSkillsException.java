@@ -14,6 +14,10 @@ public class MapSkillsException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
+	public MapSkillsException(final String message) {
+		super(message);
+	}
+	
 	public MapSkillsException() {
 		super();
 	}

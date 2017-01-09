@@ -15,13 +15,25 @@ import br.gov.sp.fatec.mapskills.restapi.serializer.SceneDeserializer;
 public class SceneWrapper {
 	
 	private final Scene scene;
+	private final String base64;
+	private final String filename;
 	
-	public SceneWrapper(final Scene scene) {
+	public SceneWrapper(final Scene scene, final String base64, final String filename) {
 		this.scene = scene;
+		this.base64 = base64;
+		this.filename = filename;
 	}
 	
 	public Scene getScene() {
 		return scene;
+	}
+	
+	public String getFileName() {
+		return filename;
+	}
+	
+	public String getBase64() {
+		return base64;
 	}
 
 }

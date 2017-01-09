@@ -21,6 +21,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeWrapper;
@@ -29,6 +30,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
+import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
  * A classe <code>AdminController</code> é responsável por conter todas
@@ -44,7 +46,13 @@ public class AdminController {
 	private GameThemeService themeService;
 	
 	@Autowired
+	private SceneService sceneService;
+	
+	@Autowired
 	private InstitutionService institutionService;
+	
+	@Autowired
+	private SaveImageService imageService;
 	
 	/**
 	 * Método que realiza a persistencia de lista de instituições por meio de um arquivo
@@ -122,10 +130,12 @@ public class AdminController {
 	 * Método que salva uma cena de um tema do jogo na aplicação
 	 * @param sceneWrapper
 	 * @return
+	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/game/scene", method = RequestMethod.POST)
-	public ResponseEntity<?> saveScene(@RequestBody final SceneWrapper sceneWrapper) {
-		themeService.saveScene(sceneWrapper.getScene());
+	public ResponseEntity<?> saveScene(@RequestBody final SceneWrapper sceneWrapper) throws MapSkillsException {
+		imageService.save(sceneWrapper.getBase64(), sceneWrapper.getFileName());
+		sceneService.save(sceneWrapper.getScene());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/**

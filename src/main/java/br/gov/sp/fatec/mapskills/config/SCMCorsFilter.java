@@ -24,6 +24,7 @@ public class SCMCorsFilter extends OncePerRequestFilter {
 			final FilterChain chain) throws ServletException, IOException {
 
 		log.info("== Adicionando Access Control Response Headers ==");
+		
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, OPTIONS, DELETE");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");

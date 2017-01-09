@@ -14,9 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * A classe <code>SecurityConfig</code> representa a configuracao de seguranca
@@ -33,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class).csrf().disable();
-		http.addFilter(new CorsFilter(configurationSource()));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.csrf().disable();
 	}
@@ -42,22 +38,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SCMCorsFilter corsFilter() {
         return new SCMCorsFilter();
     }
-	
-	/**
-	 * Método que representa a configuração dos CORS Filter para acesso fora do servidor com
-	 * Spring Security configurado.
-	 * @return
-	 */
-	@Bean
-	public UrlBasedCorsConfigurationSource configurationSource() {
-		final CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/rest/**", config);
-		return source;
-	}
 
 }

@@ -6,13 +6,17 @@
  */
 package br.gov.sp.fatec.mapskills.utils;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
- * A classe <code>SaveImageException</code. gera uma exceção quando é
- * encontrada um problema ao salvar a imagem na aplicação
+ * A classe <code>SaveImageException</code> lançada quando é
+ * encontrada um problema ao salvar a imagem no servidor aplicação 
  * @author Marcelo
  *
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class SaveImageException extends MapSkillsException {
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +24,7 @@ public class SaveImageException extends MapSkillsException {
 	private final String filename;
 	
 	public SaveImageException(final String filename) {
-		super();
+		super("Problema ao salvar ".concat(filename));
 		this.filename = filename;
 	}
 	

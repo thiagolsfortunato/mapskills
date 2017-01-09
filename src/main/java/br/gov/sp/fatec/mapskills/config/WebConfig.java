@@ -16,7 +16,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -30,16 +29,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Resource
     private Environment env;
-	
-	@Override
-    public void addCorsMappings(final CorsRegistry registry) {
-        registry.addMapping("/rest/**")
-        .allowedOrigins("*")
-        .allowedMethods("POST", "GET", "OPTIONS")
-        .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept")
-        .allowCredentials(true).maxAge(3600);
-    }
-	
+
 	@Override
     public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
@@ -54,8 +44,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         final ContentNegotiatingViewResolver contentViewResolver = new ContentNegotiatingViewResolver();
         contentViewResolver.setContentNegotiationManager(contentNegotiationManager.getObject());
         return contentViewResolver;
-    }
-	
+    }	
 	
 	@Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -63,7 +52,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
      
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
