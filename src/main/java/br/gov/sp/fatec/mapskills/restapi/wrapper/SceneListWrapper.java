@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
+import br.gov.sp.fatec.mapskills.restapi.serializer.SceneListDeserializer;
 import br.gov.sp.fatec.mapskills.restapi.serializer.SceneListSerializer;
 
 @JsonSerialize(using = SceneListSerializer.class)
+@JsonDeserialize(using = SceneListDeserializer.class)
 public class SceneListWrapper {
 	
 	private final Collection<Scene> scenes = new ArrayList<>();

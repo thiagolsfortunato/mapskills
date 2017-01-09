@@ -31,7 +31,11 @@ public class SceneService implements RepositoryService<Scene> {
 		sceneRepo.save(scene);
 	}
 	
-	public void save(final List<Scene> scenes) {
+	public void updateIndex(final Collection<Scene> scenes) {
+		sceneRepo.save(scenes);
+	}
+	
+	public void save(final Collection<Scene> scenes) {
 		int index;
 		for(final Scene scene : scenes) {
 			index = nextIndex(scene.getGameThemeId());

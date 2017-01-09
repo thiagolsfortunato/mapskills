@@ -7,7 +7,9 @@
 package br.gov.sp.fatec.mapskills.domain.scene;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,17 +35,20 @@ public class Question implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="que_id")
-	private List<Alternative> alternatives;
+	private Collection<Alternative> alternatives = new ArrayList<>(4);
 	
 	@Column(name = "ski_id", nullable = false)
 	private long skillId;
 			
 	public Question() {}
 	
-	public Question(final List<Alternative> alternatives, final long skillId) {
-		
-		this.alternatives = alternatives;
+	public Question(final Collection<Alternative> alternatives, final long skillId) {
+		this.alternatives.addAll(alternatives);
 		this.skillId = skillId;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 	
 	public long getId() {
@@ -54,16 +59,9 @@ public class Question implements Serializable {
 		return skillId;
 	}
 			
-	public List<Alternative> getAlternatives() {
-		return alternatives;
+	public Collection<Alternative> getAlternatives() {
+		return Collections.unmodifiableCollection(alternatives);
 	}
-		
-	public void changeAlternatives(final List<Alternative> newAlternatives) {
-		final int size = alternatives.size();
-		for(int i = 0; i < size; i++) {
-			this.alternatives.get(i).changeDescription(newAlternatives.get(i).getDescription());
-			this.alternatives.get(i).changeSkillValue(newAlternatives.get(i).getSkillValue());
-		}
-	}
+
 
 }

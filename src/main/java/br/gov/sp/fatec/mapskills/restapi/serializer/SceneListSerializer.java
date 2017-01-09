@@ -47,6 +47,7 @@ public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 		generator.writeNumberField("id", scene.getId());
 		generator.writeNumberField("index", scene.getIndex());
 		generator.writeStringField("text", scene.getText());
+		generator.writeNumberField("gameThemeId", scene.getGameThemeId());
 		generator.writeObjectFieldStart("background");
 		generator.writeStringField("filename", scene.getUrlBackground());
 		generator.writeEndObject();

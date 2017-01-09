@@ -2,7 +2,6 @@ package br.gov.sp.fatec.mapskills.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +14,8 @@ import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
+import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
@@ -38,6 +39,9 @@ public class MapSkillsMockBeans {
 	
 	@Autowired
 	private SceneService sceneService;
+	
+	@Autowired
+	private SkillService skillService;
 	
 	@Bean
 	public String saveAdmin() {
@@ -77,7 +81,8 @@ public class MapSkillsMockBeans {
 	public String saveScenes() {
 		final int THEME_ID = 1;
 		final int SKILL_ID = 1;
-		final List<Alternative> alternatives = builderMockAlternatives();
+		final Collection<Alternative> alternatives = new ArrayList<>(4);
+		alternatives.addAll(builderMockAlternatives());
 		final Question question = new Question(alternatives, SKILL_ID);
 		
 		final Scene scene0 = new Scene("introdução", "url://site/img001.png", null, THEME_ID);
@@ -92,8 +97,20 @@ public class MapSkillsMockBeans {
 		return MESSAGE;
 	}
 	
-	private List<Alternative> builderMockAlternatives() {
-		final List<Alternative> alternatives = new ArrayList<>();
+	@Bean
+	public String saveSkills() {
+		final Skill comunicacao = new Skill("Comunicação", "Avalia a dicção do aluno");
+		final Skill lideranca = new Skill("Liderança", "Avalia a liderança do aluno");
+		final Skill tempo = new Skill("Gestão de Tempo", "Avalia a gestão de tempo do aluno");
+		skillService.save(comunicacao);
+		skillService.save(lideranca);
+		skillService.save(tempo);
+		
+		return MESSAGE;
+	}
+	
+	private Collection<Alternative> builderMockAlternatives() {
+		final Collection<Alternative> alternatives = new ArrayList<>(4);
 		final Alternative a = new Alternative("AlternativaMockA", 8);
 		final Alternative b = new Alternative("AlternativaMockB", 5);
 		final Alternative c = new Alternative("AlternativaMockC", 6);

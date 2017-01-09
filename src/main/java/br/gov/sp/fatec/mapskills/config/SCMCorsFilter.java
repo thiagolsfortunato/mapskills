@@ -26,7 +26,7 @@ public class SCMCorsFilter extends OncePerRequestFilter {
 		log.info("== Adicionando Access Control Response Headers ==");
 		
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, OPTIONS, DELETE");
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, OPTIONS, DELETE");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Origin, X-Requested-With, Content-Type, Accept, Fatec-Account-Token");
         

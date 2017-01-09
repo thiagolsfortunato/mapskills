@@ -39,6 +39,11 @@ public class Alternative implements Serializable{
 		this.skillValue = skillValue;
 	}
 	
+	public Alternative setId(final long id) {
+		this.id = id;
+		return this;
+	}
+	
 	public long getId() {
 		return id;
 	}
