@@ -53,6 +53,7 @@ public class SetupApplicationToInitializeGame {
 	
 	@Bean
 	public String generateScenes() {
+		//trocar a collection por persistence direto
 		final Collection<Scene> allScenes = new LinkedList<>();
 		allScenes.add(new Scene(getText(1), URL_SERVER.concat("scene1.jpg"), null, GAME_THEME_ID));
 		allScenes.add(new Scene(getText(2), URL_SERVER.concat("scene1.jpg"), getQuestion(1), GAME_THEME_ID));
@@ -194,6 +195,18 @@ public class SetupApplicationToInitializeGame {
 				
 		for(int i = 1; i < 26; i++) {
 			this.mapAlternatives.put(i, new ArrayList<>(4));
+		}
+		
+		ler todas linhas do arquivo.		
+		instancia mapa guardar questoes
+		while(em cada linha) {
+			instancia lista de alternativas
+			for(int i = 0; i < 4; i++) {
+				add linha na lista alternative(linha, randon)
+				pula linha
+			}
+			add lista no mapa
+			pula linhas em branco(prox bloco)
 		}
 		
 		final Alternative question1a = new Alternative("Me tornar presidente desta Rede.", 3);
@@ -446,6 +459,9 @@ public class SetupApplicationToInitializeGame {
 	}
 	
 	private void generateText() {
+		//ler cada linha do arquivo e inserir na lista
+		List<String> l = new LinkedList<>();
+		l.ad
 		mapText.put(1, "sente-se.");
 		mapText.put(2, "Me diga!<br /> O que planeja daqui a 3 anos?");
 		mapText.put(3, "Hum... Interessante<br/>(o grupo conversa entre si)<br />Você é exatamente o tipo de pessoa que precisamos no momento. O cargo de Gerente é seu. Você pode começar amanhã mesmo."); 
