@@ -1,3 +1,9 @@
+/*
+ * @(#)SceneService.java 1.0 09/01/2017
+ *
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.scene;
 
 import java.util.Collection;
@@ -36,12 +42,12 @@ public class SceneService implements RepositoryService<Scene> {
 	}
 	
 	public void save(final Collection<Scene> scenes) {
-		int index;
+		//int index;
 		for(final Scene scene : scenes) {
-			index = nextIndex(scene.getGameThemeId());
-			scene.putIndex(index);
+			//index = nextIndex(scene.getGameThemeId());
+			//scene.putIndex(index);
+			this.save(scene);
 		}
-		sceneRepo.save(scenes);
 	}
 	/**
 	 * Método que recupera todas as cenas habilitadas de um tema
