@@ -30,7 +30,10 @@ public class SceneService implements RepositoryService<Scene> {
 		sceneRepo.deleteAll();
 		answerRepo.deleteAll();
 	}
-	
+	/**
+	 * salva a cena gerando um index válido, para aquele tema
+	 * @param scene
+	 */
 	public void save(final Scene scene) {
 		final int index = nextIndex(scene.getGameThemeId());
 		scene.putIndex(index);
@@ -42,10 +45,7 @@ public class SceneService implements RepositoryService<Scene> {
 	}
 	
 	public void save(final Collection<Scene> scenes) {
-		//int index;
 		for(final Scene scene : scenes) {
-			//index = nextIndex(scene.getGameThemeId());
-			//scene.putIndex(index);
 			this.save(scene);
 		}
 	}
