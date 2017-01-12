@@ -67,7 +67,7 @@ public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 		generator.writeObjectFieldStart("question");
 		generator.writeNumberField("id", question.getId());
 		generator.writeNumberField("skillId", question.getSkillId());
-		generator.writeArrayFieldStart("alternaives");
+		generator.writeArrayFieldStart("alternatives");
 		for(final Alternative alternative : question.getAlternatives()) {
 			generator.writeStartObject();
 			alternativeGenerator(generator, alternative);
