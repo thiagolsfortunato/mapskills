@@ -24,14 +24,11 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
  */
 @Component
 public class SaveImageService {
-		
-	private final String PATH;
+
+	private ServletContext context;
+	private String PATH;
 	private Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	
-	@Autowired
-	public SaveImageService(final ServletContext context) {
-		this.PATH = context.getRealPath("/images");
-	}
 	/**
 	 * Método que salva a imagem no diretorio do servidor definido como padrão
 	 * @param base64
@@ -40,6 +37,7 @@ public class SaveImageService {
 	 * @throws MapSkillsException 
 	 */
 	public String save(final String base64, final String filename) throws MapSkillsException {
+		this.PATH = context.getRealPath("/images");
 		try (final OutputStream stream = new FileOutputStream(PATH.concat("/").concat(filename))) {
 		    stream.write(parser.toByteArray(base64));
 		    stream.close();
@@ -47,8 +45,12 @@ public class SaveImageService {
 			e.printStackTrace();
 			throw new SaveImageException(filename);
 		}
-
 		return filename;
+	}
+	
+	@Autowired
+	public void setServletContext(final ServletContext servletContext) {
+		this.context = servletContext;
 	}
 
 

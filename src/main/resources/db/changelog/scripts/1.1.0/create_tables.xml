@@ -118,6 +118,7 @@
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
 			<column name="SKI_ID" type="java.sql.Types.BIGINT" />
 			<column name="SCN_ID" type="java.sql.Types.BIGINT" />
+			<column name="SCN_INDEX" type="java.sql.Types.NUMERIC" />
 		</createTable>
 	</changeSet>
 

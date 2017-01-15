@@ -29,7 +29,7 @@ public class Alternative implements Serializable{
 	@Column(name = "alt_description", nullable = false)
 	private String description;
 	
-	@Column(name = "alt_skillValue", nullable = false)
+	@Column(name = "alt_skill_value", nullable = false)
 	private int skillValue;
 		
 	public Alternative() {}

@@ -6,7 +6,7 @@
 	<changeSet author="liquibase-docs" id="createView-radar-result">
 	    <createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
-	            viewName="RADAR_RESULT">SELECT sqe.use_id AS use_id,
+	            viewName="RADAR_RESULT_VIEW">SELECT sqe.use_id AS use_id,
 		            s.ski_type AS ski_type,
 		            s.ski_description AS ski_description,
 		            SUM(sqe.sqe_skill_value) AS total

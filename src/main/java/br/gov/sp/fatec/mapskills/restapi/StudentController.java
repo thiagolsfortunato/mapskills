@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.AnswerWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
@@ -33,17 +34,34 @@ public class StudentController {
 	@Autowired
 	private SceneService sceneService;
 	
+	/**
+	 * realiza a persistencia de um contexto de resposta feita pelo aluno
+	 * durante a realização do jogo, ou seja cada click de uma alternativa
+	 * dispara este post.
+	 * @param answerWrapper contexto de id's da alternativa respondida
+	 * @return success ao concluir o post
+	 */
 	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
 	public ResponseEntity<?> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
 		sceneService.saveAnswer(answerWrapper.getAnswerContext());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+	/**
+	 * recupera os resultados do aluno ao finalizar o jogo.
+	 * @param studentID
+	 * @return
+	 */
 	@RequestMapping(value = "/game/result/{studentID}", method = RequestMethod.GET)
 	public ResponseEntity<StudentResultWrapper> getResult(@PathVariable("studentID") final long studentID) {
 		final List<Object[]> context = sceneService.getResultByStudentId(studentID);
 		final StudentResultWrapper result = new StudentResultWrapper(context);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/game/{studentID}", method = RequestMethod.GET)
+	public ResponseEntity<SceneListWrapper> findAllByEnableAndNotAnaswerByStudent(@PathVariable("studentID") final long studentID) {
+		final SceneListWrapper scenesListWrapper = new SceneListWrapper(sceneService.findAllNotAnsweredByStudent(studentID));
+		return new ResponseEntity<>(scenesListWrapper, HttpStatus.OK);
 	}
 
 

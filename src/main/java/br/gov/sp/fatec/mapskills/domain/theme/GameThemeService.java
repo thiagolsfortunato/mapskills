@@ -27,19 +27,28 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	public void deleteAll() {
 		themeRepo.deleteAll();
 	}
-
+	/**
+	 * Realiza busca de um tema por id
+	 * @param id
+	 * @return
+	 */
 	public GameTheme findById(final long id) {
 		return themeRepo.findById(id);
 	}
-	
+	/**
+	 * Realiza persistencia de um tema
+	 * @param theme
+	 */
 	public void save(final GameTheme theme) {
 		themeRepo.save(theme);
 	}
-	
-	public void save(final List<GameTheme> themes) {
+	/**
+	 * Realiza persistencia de uma lista de temas
+	 * @param themes
+	 */
+	public void save(final Collection<GameTheme> themes) {
 		themeRepo.save(themes);
 	}
-	
 	/**
 	 * Metodo que retorna todos temas cadastrados na aplicacao
 	 * @return

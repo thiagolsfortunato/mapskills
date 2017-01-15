@@ -13,6 +13,8 @@ import java.util.Random;
 
 import org.springframework.context.annotation.Configuration;
 
+import br.gov.sp.fatec.mapskills.domain.institution.Course;
+import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
@@ -24,6 +26,8 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillRepository;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
+import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
 @Configuration
@@ -43,22 +47,44 @@ public class SetupApplicationToInitializeGame {
 	private InstitutionService institutionService = BeanRetriever.getBean("institutionService", InstitutionService.class);
 	
 	public SetupApplicationToInitializeGame() throws IOException {
-		this.createInstitution();
+		/*this.createInstitution();
+		System.err.println("=== institution save success ===".toUpperCase());
+		this.createCourses();
+		System.err.println("=== courses save success ===".toUpperCase());
+		this.creatStudent();
+		System.err.println("=== student save success ===".toUpperCase());
 		this.createGameTheme();
+		System.err.println("=== themes save success ===".toUpperCase());
 		this.createSkills();
+		System.err.println("=== skills save success ===".toUpperCase());
 		this.buildTextFromFile();
 		this.generateAlternativesFromFile();
 		this.generateQuestions();
 		this.createScenesFromFile();
+		System.err.println("=== scenes save success ===".toUpperCase());*/
 	}
-	
+	/**
+	 * cria uma nova instituição persistindo-a na base de dados
+	 */
 	private void createInstitution() {
 		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123");
 		final Institution fatec = new Institution("146", "66726505000146", "Jessen Vidal", "São José", mentor);
 		institutionService.saveInstitution(fatec);
 	}
 	/**
-	 * cria tema no base de dados
+	 * adiciona cursos a instituição
+	 */
+	private void createCourses() {
+		institutionService.saveCourse(new Course("029", "Logistica", CoursePeriod.NOTURNO, "146"));
+		institutionService.saveCourse(new Course("030", "Estruturas Leves", CoursePeriod.NOTURNO, "146"));
+		institutionService.saveCourse(new Course("031", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "146"));
+	}
+	
+	private void creatStudent() {
+		institutionService.saveStudent(new Student(new AcademicRegistry("1460291713000", "146", "029"), "Student User", "1289003400", "student@fatec.sp.gov.br", "mudar@123"));
+	}
+	/**
+	 * cria um tema e persiste-a na base de dados
 	 */
 	private void createGameTheme() {
 		themeService.save(new GameTheme("PIZZARIA"));

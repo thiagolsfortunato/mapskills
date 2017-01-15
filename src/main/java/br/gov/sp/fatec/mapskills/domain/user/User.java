@@ -79,5 +79,9 @@ public abstract class User implements Serializable {
 	public void changeName(final String newName) {
 		name = newName;
 	}
+	
+	public void setId(final long id) {
+		this.id = id;
+	}
 
 }

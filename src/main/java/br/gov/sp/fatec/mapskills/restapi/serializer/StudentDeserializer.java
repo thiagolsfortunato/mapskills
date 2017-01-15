@@ -34,7 +34,9 @@ public class StudentDeserializer extends JsonDeserializer<StudentWrapper> {
         final AcademicRegistry registry = new AcademicRegistry(ra, institutionCode, courseCode);
         
         final Student student = new Student(registry, node.get("name").asText(), node.get("phone").asText(),
-        		node.get("username").asText(), "Mudar@123");
+        		node.get("username").asText(), node.get("password").asText());
+        
+        if(node.has("id")) student.setId(node.get("id").asLong());
         
 		return new StudentWrapper(student);
 	}

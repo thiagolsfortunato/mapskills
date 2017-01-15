@@ -123,6 +123,12 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/game/themes", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateThemes(@RequestBody final GameThemeListWrapper themeWrapper) {
+		themeService.save(themeWrapper.getGameThemes());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	/***
 	 * Método que retorna todos temas cadastrados na aplicação
 	 * @return

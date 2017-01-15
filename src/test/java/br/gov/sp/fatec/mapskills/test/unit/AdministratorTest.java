@@ -8,10 +8,6 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
-import javax.annotation.Resource;
-
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,12 +22,10 @@ import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
-import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.User;
-import br.gov.sp.fatec.mapskills.domain.user.UserFactory;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
-import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
@@ -42,9 +36,7 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@Autowired
 	private InstitutionService institutionService;
-	
-	@Resource
-	private Map<ProfileType, UserFactory> userFactory;
+
 	
 	@After
 	public void cleanTables() {
@@ -53,7 +45,7 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@Test
 	public void findUserByUsernamePasswords() throws MapSkillsException {
-		final String EXPECTED_RA = "2000281423023"; 
+		final String EXPECTED_RA = "Student MockA"; 
 		
 		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123");
 		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentorSave);
@@ -65,11 +57,8 @@ public class AdministratorTest extends MapSkillsTest {
 		final User studentUser = userService.findUserByUsernamePassword("studentA@fatec.sp.gov.br", "mudar@123");
 		final User mentorUser = userService.findUserByUsernamePassword("marquinhos@fatec.sp.gov.br", "Mudar@123");
 		
-		final Student student = userFactory.get(studentUser.getProfile()).create(studentUser);
-		final Mentor mentor = userFactory.get(mentorUser.getProfile()).create(mentorUser);
-		
-		assertEquals(EXPECTED_RA, student.getRa());
-		assertEquals("Mentor Responsavel Teste", mentor.getName());
+		assertEquals(EXPECTED_RA, studentUser.getName());
+		assertEquals("Mentor Responsavel Teste", mentorUser.getName());
 	}
 	
 	@Test

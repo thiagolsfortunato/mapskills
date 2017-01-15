@@ -27,7 +27,7 @@ import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.test.unit.config.SpringContextConfigurationTest;
+import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextConfigurationTest.class, loader = AnnotationConfigContextLoader.class)
@@ -144,7 +144,7 @@ public class InstitutionTest extends MapSkillsTest {
 		institution.changeCompany("Fatec Jacarei");
 		institutionService.saveInstitution(institution);
 		
-		assertEquals("Ragina_Simiões", institutionService.findInstitutionById(institution.getId()).getMentor());
+		assertEquals("Ragina_Simiões", institutionService.findInstitutionById(institution.getId()).getMentor().getName());
 	}
 	
 	@Test

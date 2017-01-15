@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
+import br.gov.sp.fatec.mapskills.restapi.serializer.GameThemeListDeserializer;
 import br.gov.sp.fatec.mapskills.restapi.serializer.GameThemeListSerializer;
 /**
  * A classe <code>GameThemeListWrapper</code> contem todos temas criados
@@ -21,6 +23,7 @@ import br.gov.sp.fatec.mapskills.restapi.serializer.GameThemeListSerializer;
  *
  */
 @JsonSerialize(using = GameThemeListSerializer.class)
+@JsonDeserialize(using = GameThemeListDeserializer.class)
 public class GameThemeListWrapper {
 
 	final private Collection<GameTheme> gameThemes = new ArrayList<>();

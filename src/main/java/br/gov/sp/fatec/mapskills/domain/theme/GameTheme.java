@@ -25,7 +25,7 @@ public class GameTheme {
 	@Column(name = "gth_description", nullable = false)
 	private String description;
 		
-	@Column(name = "gth_isActive", nullable = false)
+	@Column(name = "gth_is_active", nullable = false)
 	private boolean active = false;
 	
 	public GameTheme() {}
@@ -36,6 +36,10 @@ public class GameTheme {
 	
 	public long getId() {
 		return id;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 	
 	public String getDescription() {

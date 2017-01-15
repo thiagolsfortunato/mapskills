@@ -36,6 +36,9 @@ public class AnswerEvent implements Serializable {
 	
 	@Column(name = "scn_id", nullable = false)
 	private long sceneId;
+	
+	@Column(name = "scn_index", nullable = false)
+	private int sceneIndex;
 			
 	@Column(name = "sqe_date", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -43,8 +46,8 @@ public class AnswerEvent implements Serializable {
 	
 	public AnswerEvent() {}
 	
-	public AnswerEvent(final long sceneId, final long studentId, final long skillId, final int skillValue) {
-		
+	public AnswerEvent(final int sceneIndex, final long sceneId, final long studentId, final long skillId, final int skillValue) {
+		this.sceneIndex = sceneIndex;
 		this.sceneId = sceneId;
 		this.studentId = studentId;
 		this.skillId = skillId;
@@ -54,6 +57,10 @@ public class AnswerEvent implements Serializable {
 	
 	public long getSceneId() {
 		return sceneId;
+	}
+	
+	public int getSceneIndex() {
+		return sceneIndex;
 	}
 	
 	public long getStudentId() {

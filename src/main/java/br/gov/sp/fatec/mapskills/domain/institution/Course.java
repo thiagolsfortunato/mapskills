@@ -63,5 +63,9 @@ public class Course implements Serializable {
 	public String getInstitutionCode() {
 		return institutionCode;
 	}
+	
+	public void setId(final long id) {
+		this.id = id;
+	}
 
 }

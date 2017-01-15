@@ -29,7 +29,7 @@ public abstract class PoiParser {
 	
 	protected abstract List<?> toObjectList(final InputStream inputStream) throws Exception;
 
-	protected abstract Object build(final Iterator<Cell> cellIterator) throws MapSkillsException;
+	protected abstract Object buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException;
 	/**
 	 * O método <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
 	 * 
@@ -59,8 +59,8 @@ public abstract class PoiParser {
 		while (rowIterator.hasNext()) {
 			row = rowIterator.next();
 			if(row.getRowNum() == 0) continue;
-			final Iterator<Cell> cellIterator = row.cellIterator(); 
-			objectList.add(build(cellIterator));
+			final Iterator<Cell> cellIterator = row.cellIterator();
+			objectList.add(buildObject(cellIterator));
 		}
 		return objectList;
 	}
@@ -71,7 +71,7 @@ public abstract class PoiParser {
 	 * @param cellIterator
 	 * @return
 	 */
-	protected List<String> objectArgs(final Iterator<Cell> cellIterator) {
+	protected List<String> getObjectArgs(final Iterator<Cell> cellIterator) {
 		final List<String> args = new LinkedList<>();
 		Cell cell;
 		while (cellIterator.hasNext()) {

@@ -24,16 +24,16 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	/**
 	 * BUSCAR TODAS CENAS ORDENADAS E AINDA NÃO RESPONDIDAS POR UM
 	 * DETERMINADO ALUNO DE UMA INSTITUIÇÃO QUE TEM UM TEMA ATIVO
-	 * @param id
-	 * @return
+	 * @param studentId
+	 * @return lista de cenas
 	 */
-	/*@Query("SELECT s FROM Scene s INNER JOIN GameTheme t ON s.gameThemeId = t.id "
-			+ "INNER JOIN institution i ON t.id = i.gameThemeId"
-			+ "INNER JOIN student st ON st.ra.institutionCode = i.code WHERE st.id = ?1"
-			+ "AND NOT EXISTS (SELECT s FROM Scene s INNER JOIN AnswerEvent ae ON s.id = ae.sceneId "
-			+ "INNER JOIN Student st ON ae.studentId = st.id WHERE st.id = ?1) ORDER BY s.index")
-	public List<Scene> findAllByEnableAndNotAnaswerByStudent(final long studentId);
-	*/
+	@Query("SELECT s FROM Scene s WHERE s.id NOT IN "
+			+ "(SELECT event.sceneId FROM AnswerEvent event "
+			+ "INNER JOIN Scene sce ON event.sceneId = sce.id "
+			+ "INNER JOIN Institution inst ON sce.gameThemeId = inst.gameThemeId "
+			+ "WHERE event.studentId = ?1) ORDER BY s.index")
+	public Collection<Scene> findAllNotAnsweredByStudent(final long studentId);
+	
 	/**
 	 * Método que recupera todas cenas por um determinado id
 	 * @param gameThemeId

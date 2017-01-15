@@ -51,10 +51,11 @@ public class InstitutionDetailsSerializer extends JsonSerializer<InstitutionDeta
 		generator.writeNumberField("id", course.getId());
 		generator.writeStringField("code", course.getCode());
 		generator.writeStringField("name", course.getName());
-		generator.writeStringField("periodo", course.getPeriod());
+		generator.writeStringField("period", course.getPeriod());
 	}
 	
 	private void mentorSerializer(final Mentor mentor, final JsonGenerator generator) throws IOException {
+		generator.writeNumberField("id", mentor.getId());
 		generator.writeStringField("name", mentor.getName());
 		generator.writeStringField("username", mentor.getUsername());
 		generator.writeStringField("password", mentor.getPassword());

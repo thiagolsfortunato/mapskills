@@ -39,7 +39,10 @@ public class SceneService implements RepositoryService<Scene> {
 		scene.putIndex(index);
 		sceneRepo.save(scene);
 	}
-	
+	/**
+	 * realiza uma atualização da ordem das cenas
+	 * @param scenes
+	 */
 	public void updateIndex(final Collection<Scene> scenes) {
 		sceneRepo.save(scenes);
 	}
@@ -50,7 +53,7 @@ public class SceneService implements RepositoryService<Scene> {
 		}
 	}
 	/**
-	 * Método que recupera todas as cenas habilitadas de um tema
+	 * Método que recupera todas as cenas de um tema
 	 * @return
 	 */
 	public Collection<Scene> findAllByGameThemeId(final long gameThemeId) {
@@ -69,9 +72,18 @@ public class SceneService implements RepositoryService<Scene> {
 	public void saveAnswer(final AnswerEvent answerContext) {
 		answerRepo.save(answerContext);
 	}
-	
+	/**
+	 * Método que retorna um resultset da base de dados com os resultados
+	 * de uma aluno.
+	 * @param studentId
+	 * @return
+	 */
 	public List<Object[]> getResultByStudentId(final long studentId) {
-		return answerRepo.findResultByStudentId(studentId);
+		return answerRepo.findResultViewByStudentId(studentId);
 	}
-
+	
+	public Collection<Scene> findAllNotAnsweredByStudent(final long studentId) {
+		return sceneRepo.findAllNotAnsweredByStudent(studentId);
+	}
+	
 }

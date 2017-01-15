@@ -28,9 +28,13 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
 
         final Mentor mentor = new Mentor(node.get("mentor").get("name").asText(), node.get("code").asText(),
         		node.get("mentor").get("username").asText(), node.get("mentor").get("password").asText());
+
+        if(node.get("mentor").has("id")) mentor.setId(node.get("mentor").get("id").asLong());
         
 		final Institution institution =  new Institution(node.get("code").asText(), node.get("cnpj").asText(),
 				node.get("company").asText(), node.get("city").asText(), mentor);
+ 
+        if(node.has("id")) institution.setId(node.get("id").asLong());
 		
 		return new InstitutionDetailsWrapper(institution);
 	}

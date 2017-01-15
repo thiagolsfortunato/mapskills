@@ -46,7 +46,7 @@ public class Institution implements Serializable {
 	@Column(name = "ins_city", nullable = true)
 	private String city;
 	
-	@Column(name = "ght_id")
+	@Column(name = "gth_id")
 	private long gameThemeId;
 	
 	@Transient
@@ -90,6 +90,10 @@ public class Institution implements Serializable {
 	
 	public void setCourses(final Collection<Course> courses) {
 		this.courses.addAll(courses);
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 	
 	public long getId() {

@@ -20,11 +20,6 @@
 	            constraintName="FK_MENTOR_USER"
 	            referencedColumnNames="USE_ID"
 	            referencedTableName="USER"/>
-        <addForeignKeyConstraint baseColumnNames="INS_CODE"
-	            baseTableName="MENTOR"
-	            constraintName="FK_MENTOR_INSTITUTION"
-	            referencedColumnNames="INS_CODE"
-	            referencedTableName="INSTITUTION"/>
 	</changeSet>
 
 	<changeSet author="marcelo-inacio" id="addForeignKeyConstraint-institution">
@@ -33,11 +28,6 @@
 	            constraintName="FK_INSTITUTION_MENTOR"
 	            referencedColumnNames="USE_ID"
 	            referencedTableName="MENTOR"/>
-	   <addForeignKeyConstraint baseColumnNames="GTH_ID"
-	            baseTableName="INSTITUTION"
-	            constraintName="FK_INSTITUTION_THEME"
-	            referencedColumnNames="GTH_ID"
-	            referencedTableName="GAME_THEME"/>
 	</changeSet>
 
 	<changeSet author="marcelo-inacio" id="addForeignKeyConstraint-course">

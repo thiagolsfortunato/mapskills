@@ -18,7 +18,11 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	public List<Student> findAll();
 	
 	public Student findByRaRa(final String ra); 
-	
+	/**
+	 * recupera todos alunos em detalhes de uma instituição
+	 * @param institutionCode
+	 * @return
+	 */
 	public List<Student> findAllByRaInstitutionCode(final String institutionCode);
 
 }
