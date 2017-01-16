@@ -27,11 +27,16 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	 * @param studentId
 	 * @return lista de cenas
 	 */
-	@Query("SELECT s FROM Scene s WHERE s.id NOT IN "
-			+ "(SELECT event.sceneId FROM AnswerEvent event "
-			+ "INNER JOIN Scene sce ON event.sceneId = sce.id "
-			+ "INNER JOIN Institution inst ON sce.gameThemeId = inst.gameThemeId "
-			+ "WHERE event.studentId = ?1) ORDER BY s.index")
+	@Query("SELECT scene FROM Scene scene "
+			+ "INNER JOIN Institution ins ON scene.gameThemeId = ins.gameThemeId "
+			+ "INNER JOIN Student stu ON stu.ra.institutionCode = ins.code "
+			+ "WHERE scene.id > "
+			+ "	(SELECT COALESCE(MAX(event.sceneIndex + 1), 0) FROM AnswerEvent event "
+			+ "		INNER JOIN Student stud ON event.studentId = stud.id "
+			+ "		WHERE event.studentId = ?1) "
+			+ "AND stu.completed = false "
+			+ "AND stu.id = ?1 "
+			+ "ORDER BY scene.index ASC")
 	public Collection<Scene> findAllNotAnsweredByStudent(final long studentId);
 	
 	/**

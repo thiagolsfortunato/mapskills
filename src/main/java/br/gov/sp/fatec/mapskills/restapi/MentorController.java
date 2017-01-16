@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
+import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.StudentPoiParser;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
@@ -41,6 +44,9 @@ public class MentorController {
 	
 	@Autowired
 	private InstitutionService institutionService;
+	
+	@Autowired
+	private GameThemeService themeService;
 	
 	/**
 	 * Metodo que realiza o cadastro de uma lista de alunos por meio de um aquivio
@@ -67,7 +73,11 @@ public class MentorController {
 		institutionService.saveStudent(studentWrapper.getStudent());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+	/**
+	 * Realiza persistencia de um novo curso em um instituição
+	 * @param courseWrapper
+	 * @return
+	 */
 	@RequestMapping(value = "/course", method = RequestMethod.POST)
 	public ResponseEntity<?> saveCourse(@RequestBody final CourseWrapper courseWrapper) {
 		institutionService.saveCourse(courseWrapper.getCourse());
@@ -91,7 +101,11 @@ public class MentorController {
 		final StudentListWrapper studentsWrapper = new StudentListWrapper(students, courses);
 		return new ResponseEntity<>(studentsWrapper, HttpStatus.OK);
 	}
-	
+	/**
+	 * retorna todos os cursos de uma instituição
+	 * @param institutionCode
+	 * @return
+	 */
 	@RequestMapping(value = "/institution/{institutionCode}/courses", method = RequestMethod.GET)
 	public ResponseEntity<CourseListWrapper> getAllCoursesByInstitution(
 			@PathVariable("institutionCode") final String institutionCode) {
@@ -100,6 +114,37 @@ public class MentorController {
 		allCourses.addAll(institutionService.findAllCoursesByInstitutionCode(institutionCode));
 		final CourseListWrapper coursesWrapper = new CourseListWrapper(allCourses);
 		return new ResponseEntity<>(coursesWrapper, HttpStatus.OK);
+	}
+	/**
+	 * retorna todos temas ativados, para que o mentor escolha um, e os alunos
+	 * joguem no semestre.
+	 * @return
+	 */
+	@RequestMapping(value = "/themes", method = RequestMethod.GET)
+	public ResponseEntity<GameThemeListWrapper> getAllThemes() {
+		final GameThemeListWrapper gameThemes = new GameThemeListWrapper(themeService.findAllThemesActivated()); 
+		return new ResponseEntity<>(gameThemes, HttpStatus.OK);
+	}
+	/**
+	 * recupera o id do tema atual da instituição pelo codigo da instituição.
+	 * @param institutionCode
+	 * @return
+	 */
+	@RequestMapping(value = "/institution/{institutionCode}/theme/current", method = RequestMethod.GET)
+	public ResponseEntity<Long> getThemeCurrent(@PathVariable("institutionCode") final String institutionCode) {
+		final Long themeIdCurrent = institutionService.findThemeCuurent(institutionCode);
+		return new ResponseEntity<>(themeIdCurrent, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/institution/{institutionCode}/theme/{themeId}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateThemeCurrent(
+			@PathVariable("institutionCode") final String institutionCode,
+			@PathVariable("themeId") final long themeId) {
+		
+		final Institution institution = institutionService.findInstitutionById(institutionCode);
+		institution.changeGameTheme(themeId);
+		institutionService.saveInstitution(institution);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

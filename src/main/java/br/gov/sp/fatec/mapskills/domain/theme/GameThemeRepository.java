@@ -6,10 +6,13 @@
  */
 package br.gov.sp.fatec.mapskills.domain.theme;
 
+import java.util.Collection;
+
 import org.springframework.data.repository.CrudRepository;
 
 public interface GameThemeRepository extends CrudRepository<GameTheme, Long> {
 	
 	public GameTheme findById(final long id);
+	public Collection<GameTheme> findAllByActive(final boolean active);
 
 }

@@ -70,6 +70,10 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 		return sceneRepo.findAllByGameThemeId(themeId);
 	}
 	
+	public Collection<GameTheme> findAllThemesActivated() {
+		return themeRepo.findAllByActive(true);
+	}
+		
 	
 	//=== Dependecy Inject ===
 

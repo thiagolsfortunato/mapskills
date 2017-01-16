@@ -150,7 +150,11 @@ public class AdminController {
 		sceneService.save(sceneWrapper.getScene());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+	/**
+	 * Realiza atualização de uma lista de cenas, (i.e. a ordem de exibição)
+	 * @param sceneListWrapper
+	 * @return
+	 */
 	@RequestMapping(value = "/game/scenes", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateIndexScenes(@RequestBody final SceneListWrapper sceneListWrapper) {
 		sceneService.updateIndex(sceneListWrapper.getScenes());

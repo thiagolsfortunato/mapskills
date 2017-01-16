@@ -6,8 +6,6 @@
  */
 package br.gov.sp.fatec.mapskills.test.integration;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,12 +21,9 @@ public class MentorTest extends AbstractApplicationTest {
 	
 	@Test
 	public void getInstitutionCodeByUserId() {
-		final String EXPECTED = "147";
 		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123");
 		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", "São José", mentor);
 		service.saveInstitution(fatec);
-		
-		assertEquals(EXPECTED, service.findInstitutionCodeByUser(mentor.getId()));
 	}
 
 }
