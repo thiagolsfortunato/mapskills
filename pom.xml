@@ -265,8 +265,8 @@
 				<version>3.3</version>
 				<configuration>
 					<encoding>ISO-8859-1</encoding>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<executable>${env.JAVA_HOME}/bin/javac</executable>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
