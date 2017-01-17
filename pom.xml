@@ -203,9 +203,6 @@
 		</profile>
 		<profile>
             <id>qa</id>
-            <activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
             <properties>
                 <datasource.url>jdbc:hsqldb:mem:mapskills</datasource.url>
                 <datasource.driver>org.hsqldb.jdbcDriver</datasource.driver>
@@ -229,6 +226,9 @@
             </properties>
         </profile>
         <profile>
+        	<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
             <id>openshift</id>
             <properties>
                 <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
