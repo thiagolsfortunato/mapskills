@@ -34,7 +34,7 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 public class SetupApplicationToInitializeGame {
 	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-	private static final String URL_SERVER = "http://localhost:8080/mapskills/images/";
+	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills/images/";
 	private static final long GAME_THEME_ID = 1;
 	
 	private final Map<Integer, Question> mapQuestion = new HashMap<>(26);
@@ -47,7 +47,7 @@ public class SetupApplicationToInitializeGame {
 	private InstitutionService institutionService = BeanRetriever.getBean("institutionService", InstitutionService.class);
 	
 	public SetupApplicationToInitializeGame() throws IOException {
-		/*this.createInstitution();
+		this.createInstitution();
 		System.err.println("=== institution save success ===".toUpperCase());
 		this.createCourses();
 		System.err.println("=== courses save success ===".toUpperCase());
@@ -61,7 +61,7 @@ public class SetupApplicationToInitializeGame {
 		this.generateAlternativesFromFile();
 		this.generateQuestions();
 		this.createScenesFromFile();
-		System.err.println("=== scenes save success ===".toUpperCase());*/
+		System.err.println("=== scenes save success ===".toUpperCase());
 	}
 	/**
 	 * cria uma nova instituição persistindo-a na base de dados

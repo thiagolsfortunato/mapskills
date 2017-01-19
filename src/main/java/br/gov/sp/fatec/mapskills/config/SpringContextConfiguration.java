@@ -16,6 +16,6 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @PropertySource("classpath:application.properties")
-@Import({DataBaseConfig.class, SecurityConfig.class/*, SetupApplicationToInitializeGame.class*/})
+@Import({DataBaseConfig.class, SecurityConfig.class, SetupApplicationToInitializeGame.class})
 public class SpringContextConfiguration extends AbstractSpringContextConfiguration {	
 }

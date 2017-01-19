@@ -232,6 +232,7 @@
             <id>openshift</id>
             <properties>
                 <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
+<!-- 				<datasource.url>jdbc:mysql://127.0.0.1:48341/mapskills</datasource.url> -->
                 <datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
                 <datasource.username>mapskills</datasource.username>
                 <datasource.password>mapskills</datasource.password>
