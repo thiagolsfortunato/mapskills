@@ -202,7 +202,7 @@
 			</properties>
 		</profile>
 		<profile>
-            <id>qa</id>
+            <id>test</id>
             <properties>
                 <datasource.url>jdbc:hsqldb:mem:mapskills</datasource.url>
                 <datasource.driver>org.hsqldb.jdbcDriver</datasource.driver>
@@ -233,8 +233,8 @@
             <properties>
                 <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
                 <datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-                <datasource.username>admin94Z9g9m</datasource.username>
-                <datasource.password>sRi3QRUta2S7</datasource.password>
+                <datasource.username>mapskills</datasource.username>
+                <datasource.password>mapskills</datasource.password>
                 <datasource.dropAll>true</datasource.dropAll>
                 <liquibase.skip>false</liquibase.skip>
                 <datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
