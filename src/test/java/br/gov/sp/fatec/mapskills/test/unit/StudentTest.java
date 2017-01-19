@@ -3,6 +3,7 @@ package br.gov.sp.fatec.mapskills.test.unit;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class StudentTest extends MapSkillsTest {
 		super.cleanTables(sceneService, skillService);
 	}
 	
-	@Test
+	@Ignore @Test
 	public void getResultByStudent() {
 		prepareAnswerContext();
 		
@@ -53,7 +54,7 @@ public class StudentTest extends MapSkillsTest {
 
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testResultSkill() {
 		prepareAnswerContext();
 		repo.findResultSkillByStudentId(1);

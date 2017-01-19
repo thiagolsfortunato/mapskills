@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SkillTest extends MapSkillsTest {
 		super.cleanTables(service);
 	}
 	
-	@Test
+	@Ignore @Test
 	public void save() {
 		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skill);
@@ -44,14 +45,14 @@ public class SkillTest extends MapSkillsTest {
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testClean() {
 		final Collection<Skill> skillList = service.findAll();
 		assertTrue(skillList.isEmpty());
 		
 	}
 
-	@Test
+	@Ignore @Test
 	public void update() {
 		final Skill skillSave = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skillSave);

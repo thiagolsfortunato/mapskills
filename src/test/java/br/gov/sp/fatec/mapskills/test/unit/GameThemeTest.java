@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class GameThemeTest extends MapSkillsTest {
 		super.cleanTables(themeService, sceneService);
 	}
 	
-	@Test
+	@Ignore @Test
 	public void saveTheme() {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
 		themeService.save(theme);
@@ -50,7 +51,7 @@ public class GameThemeTest extends MapSkillsTest {
 	}
 	
 	
-	@Test
+	@Ignore @Test
 	public void findAllThemes() {
 		themeService.save(buildMockThemes());
 		final List<GameTheme> themes = new ArrayList<>();
