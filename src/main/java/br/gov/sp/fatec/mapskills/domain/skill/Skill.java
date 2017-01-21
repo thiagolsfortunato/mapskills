@@ -24,7 +24,7 @@ public class Skill implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ski_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "ski_type", nullable = false)
 	private String type;
@@ -32,14 +32,16 @@ public class Skill implements Serializable {
 	@Column(name = "ski_description")
 	private String description;
 	
-	public Skill() {}
+	public Skill() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Skill(final String type, final String description) {
 		this.type = type;
 		this.description = description;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
@@ -57,6 +59,10 @@ public class Skill implements Serializable {
 	
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 
 }

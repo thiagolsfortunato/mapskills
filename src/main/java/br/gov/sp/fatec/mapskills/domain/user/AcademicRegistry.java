@@ -6,12 +6,16 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class AcademicRegistry {
+public class AcademicRegistry implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "stu_ra")
 	private String ra;
 	
@@ -21,47 +25,38 @@ public class AcademicRegistry {
 	@Column(name = "crs_code", nullable = false)
 	private String courseCode;
 	
-	public AcademicRegistry() {}
-	
-	public AcademicRegistry(final String ra) throws MapSkillsException {
-		validate(ra);
-		this.ra = ra;
-		this.institutionCode = ra.substring(0, 3);
-		this.courseCode = ra.substring(3, 6);
+	public AcademicRegistry() {
+		// CONSTRUCTOR DEFAULT
 	}
 	
-	public String ra() {
+	public AcademicRegistry(final String ra, final String institutionCode, final String courseCode) {
+		this.ra = ra;
+		this.institutionCode = institutionCode;
+		this.courseCode = courseCode;
+	}
+	
+	public String getRa() {
 		return ra;
 	}
 	
-	public String institutionCode() {
+	public String getInstitutionCode() {
 		return institutionCode;
 	}
 	
-	public String year() {
+	public String getYear() {
 		return ra.substring(6, 8);
 	}
 	
-	public String semester() {
+	public String getSemester() {
 		return ra.substring(8, 9);
 	}
 	
-	public String studentCode() {
+	public String getStudentCode() {
 		return ra.substring(9);
 	}
 
-	public String courseCode() {
+	public String getCourseCode() {
 		return courseCode;
 	}
-	
-	//verificar o ra se nao ha nenhuma divergencia e se atente todos requisitos necessarios
-	//ver lista de verify de JWT do prof
-	private void validate(final String ra) throws MapSkillsException {
-		try {
-			Long.parseLong(ra);
-			if(ra.length() < 13) throw new RAInvalidException(ra);
-		} catch (final NumberFormatException e) {
-			throw new RAInvalidException(ra);
-		}
-	}
+
 }

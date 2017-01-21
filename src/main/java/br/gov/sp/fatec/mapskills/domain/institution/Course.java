@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,39 +20,54 @@ public class Course implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "crs_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "crs_code")
-	private int code;
+	private String code;
 	
 	@Column(name = "crs_name")
 	private String name;
 	
-	@Column(name = "ins_code")
-	private int institutionCode;
+	@Column(name = "crs_period")
+	@Enumerated(value = EnumType.STRING)
+	private CoursePeriod period;
 	
-	public Course() {}
+	@Column(name = "ins_code", length = 10)
+	private String institutionCode;
 	
-	public Course(final int code, final String name, final int institutionCode) {
+	public Course() {
+		// CONSTRUCTOR DEFAULT
+	}
+	
+	public Course(final String code, final String name, final CoursePeriod period, final String institutionCode) {
 		this.code = code;
 		this.name = name;
+		this.period = period;
 		this.institutionCode = institutionCode;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public int code() {
+	public String getCode() {
 		return code;
 	}
 	
-	public String name() {
+	public String getName() {
 		return name;
 	}
 	
-	public int institutionCode() {
+	public String getPeriod() {
+		return period.name();
+	}
+	
+	public String getInstitutionCode() {
 		return institutionCode;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 
 }

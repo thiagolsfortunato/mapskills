@@ -6,10 +6,19 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+/**
+ * A classe RAInvalidException lança uma exception caso encontre uma mal formação no RA
+ * @author Marcelo Inácio
+ *
+ */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class RAInvalidException extends MapSkillsException {
 
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	private final String ra;
 	
 	public RAInvalidException(final String ra) {

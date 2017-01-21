@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
@@ -20,20 +21,19 @@ import br.gov.sp.fatec.mapskills.utils.PoiParser;
  * @author Marcelo
  *
  */
-public class InstitutionPoiParser extends PoiParser {
+public class InstitutionPoiParser extends PoiParser<Institution> {
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<Institution> toObjectList(final InputStream inputStream) throws Exception {
+	public List<Institution> toObjectList(final InputStream inputStream) throws MapSkillsException {
 		List<Institution> objectList = new ArrayList<>();
-		objectList.addAll((List<Institution>) super.objectListFactory(inputStream));
+		objectList.addAll(super.objectListFactory(inputStream));
 		return objectList;
 	}
 
 	@Override
-	protected Institution build(final Iterator<Cell> cellIterator) {
-		final List<String> args = super.objectArgs(cellIterator);
-		return new Institution(new Integer(args.get(0)), args.get(1), args.get(2), args.get(3), new Mentor(args.get(4), args.get(5), args.get(6)));
+	protected Institution buildObject(final Iterator<Cell> cellIterator) {
+		final List<String> args = super.getObjectArgs(cellIterator);
+		return new Institution(args.get(0), args.get(1), args.get(2), args.get(3), new Mentor(args.get(4), args.get(0), args.get(5), "mudar@123"));
 	}
 
 }

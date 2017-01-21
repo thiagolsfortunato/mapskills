@@ -8,9 +8,20 @@ package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.serializer.SkillDeserializer;
 
 @JsonDeserialize(using = SkillDeserializer.class)
 public class SkillWrapper {
+	
+	private final Skill skill;
+	
+	public SkillWrapper(final Skill skill) {
+		this.skill = skill;
+	}
+	
+	public Skill getSkill() {
+		return skill;
+	}
 
 }

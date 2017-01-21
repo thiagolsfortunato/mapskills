@@ -23,7 +23,7 @@ public enum ProfileType {
 		this.id = id;
 	}
 	
-	public int id() {
+	public int getId() {
 		return id;
 	}
 

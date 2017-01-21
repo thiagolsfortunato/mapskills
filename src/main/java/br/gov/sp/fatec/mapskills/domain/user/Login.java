@@ -6,6 +6,8 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 /**
@@ -15,26 +17,30 @@ import javax.persistence.Embeddable;
  *
  */
 @Embeddable
-public class Login {
-	
+public class Login implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "use_username", nullable = false, unique = true)
 	private String username;
 	
 	@Column(name = "use_password", nullable = false)
 	private String password;
 	
-	public Login() {}
+	public Login() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Login(final String username, final String password) {
 		this.username = username;
 		this.password = password;
 	}
 	
-	public String username() {
+	public String getUsername() {
 		return username;
 	}
 	
-	public String password() {
+	public String getPassword() {
 		return password;
 	}
 

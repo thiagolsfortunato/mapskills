@@ -6,39 +6,27 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
-public class UserService implements RepositoryService<User> {
+public class UserService implements RepositoryService {
 	
 	@Autowired(required = true)
 	@Qualifier("userRepository")
 	private UserRepository repository;
 
-	public void save(final Student user) {
-		repository.save(user);
+	@Override
+	public void deleteAll() {
+		repository.deleteAll();
 	}
 	
-	public void save(final List<Student> user) {
-		repository.save(user);
-	}
-	
-	public void save(final Administrator user) {
-		repository.save(user);
-	}
-
-	public User findById(final int id) throws MapSkillsException {
-		final User user = repository.findById(id);
-		if (user == null) {
-			throw new UserNotFoundException(String.valueOf(id));
-		}
-		return user; 
+	public void save(final Administrator admin) {
+		repository.save(admin);
 	}
 
 	public User findUserByUsernamePassword(final String username, final String password) throws MapSkillsException {
@@ -48,5 +36,6 @@ public class UserService implements RepositoryService<User> {
 		}
 		return user;
 	}
+
 
 }

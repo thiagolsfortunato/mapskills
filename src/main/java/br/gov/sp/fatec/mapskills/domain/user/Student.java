@@ -25,33 +25,34 @@ public class Student extends User {
 	@Column(name = "stu_phone", nullable = false)
 	private String phone;
 	
-	@Column(name = "stu_isCompleted")
+	@Column(name = "stu_is_completed")
 	private boolean completed = false;
+		
+	public Student() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
-	
-	public Student() { }
-	
-	public Student(final String ra, final String name, final String phone, final String username,
-			final String password) throws MapSkillsException {
+	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
+			final String password) {
 		
 		super(name, new Login(username, password), ProfileType.STUDENT);
-		this.ra = new AcademicRegistry(ra);
+		this.ra = ra;
 		this.phone = phone;
 	}
 	
-	public String ra() {
-		return ra.ra();
+	public String getRa() {
+		return ra.getRa();
 	}
 	
-	public String courseCode() {
-		return ra.courseCode();
+	public String getCourseCode() {
+		return ra.getCourseCode();
 	}
 	
-	public String institutionCode() {
-		return ra.institutionCode();
+	public String getInstitutionCode() {
+		return ra.getInstitutionCode();
 	}
 	
-	public String phone() {
+	public String getPhone() {
 		return phone;
 	}
 	

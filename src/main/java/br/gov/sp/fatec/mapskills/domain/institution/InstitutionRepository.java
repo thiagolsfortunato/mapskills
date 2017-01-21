@@ -6,15 +6,20 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
-public interface InstitutionRepository extends CrudRepository<Institution, Integer> {
+/**
+ * A classe <code>InstitutionRepository</code> é responsável por realizar as
+ * transacionalidades referentes as institutições
+ * @author Marcelo
+ *
+ */
+public interface InstitutionRepository extends CrudRepository<Institution, Long> {
 	
-	public Institution findByCode(final int code);
+	public Institution findById(final long id);
+	public Institution findByCode(final String code);
 	
-	//public Institution save(final Institution institution);
-	
-	//public void save(final List<Course> course);
-
+	@Query("SELECT ins.gameThemeId FROM Institution ins WHERE ins.code = ?1")
+	public Long findGameThemeIdByCode(final String code);
 
 }

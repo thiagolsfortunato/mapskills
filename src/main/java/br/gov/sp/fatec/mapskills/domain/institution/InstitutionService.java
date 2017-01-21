@@ -11,46 +11,58 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
+import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
-public class InstitutionService implements RepositoryService<Institution> {
+public class InstitutionService implements RepositoryService {
 		
-	@Autowired
 	private InstitutionRepository institutionRepository;
-	
-	@Autowired
 	private CourseRepository courseRepository;
+	private StudentRepository studentRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
 
+	@Override
+	public void deleteAll() {
+		institutionRepository.deleteAll();
+		courseRepository.deleteAll();
+		studentRepository.deleteAll();
+	}
+
+	public void saveInstitutions(final Collection<Institution> institutions) {
+		institutionRepository.save(institutions);
+	}
+	
 	public void saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
 	}
 	
-	public void saveInstitutions(final List<Institution> institutions) {
-		institutionRepository.save(institutions);
-	}
-	
-	public void saveCourses(final List<Course> courses) {
+	public void saveCourses(final Collection<Course> courses) {
 		courseRepository.save(courses);
 	}
 	
 	public void saveCourse(final Course course) {
 		courseRepository.save(course);
-		
 	}
 	
-	public void update(final Institution institution) {
-		institutionRepository.save(institution);
+	public void saveStudents(final Collection<Student> students) {
+		studentRepository.save(students);
+	}
+	
+	public void saveStudent(final Student student) {
+		studentRepository.save(student);
 	}
 
-	public Institution findByCode(final int code) {
+	public Institution findInstitutionById(final long id) {
+		return institutionRepository.findById(id);
+	}
+	
+	public Institution findInstitutionById(final String code) {
 		return institutionRepository.findByCode(code);
 	}
 	
@@ -62,36 +74,68 @@ public class InstitutionService implements RepositoryService<Institution> {
 		return institutions;
 	}
 	
-	public Collection<Course> findAllCourses() {
+	public Institution findInstitutionDetailsById(final long id) throws MapSkillsException {
+		final Institution institution = institutionRepository.findById(id);
+		if(institution == null) {
+			throw new InstitutionNotFoundException(id);
+		}
+		institution.setCourses(courseRepository.findAllByInstitutionCode(institution.getCode()));
+		return institution;
+	}
+	
+	/**
+	 * Método que recupera todos os cursos de uma determinada instituição
+	 * @param code
+	 * @return
+	 */
+	public Collection<Course> findAllCoursesByInstitutionCode(final String institutionCode) {
 		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAll()) {
+		for(final Course course : courseRepository.findAllByInstitutionCode(institutionCode)) {
 			courses.add(course);
 		}
 		return courses;
+	}
+	/**
+	 * Método que recupera todos alunos de um curso de uma determinada instituição
+	 * @param courseCode
+	 * @param institutionCode
+	 * @return
+	 */
+	public Collection<Student> findAllStudentsByCourseAndInstitution(final String courseCode, final String institutionCode) {
+		final List<Student> courses = new ArrayList<>();
+		for(final Student student : studentRepository.findAllByCourseAndInstitution(courseCode, institutionCode)) {
+			courses.add(student);
+		}
+		return courses;
+	}
+	
+	public Collection<Student> findAllStudentsByInstitution(final String institutionCode) {
+		return studentRepository.findAllByRaInstitutionCode(institutionCode);
+	}
+	
+	public long findThemeCuurent(final String institutionCode) {
+		return institutionRepository.findGameThemeIdByCode(institutionCode);
+	}
+	
+	
+	//===== Dependence Inject =====//
+	@Autowired
+	@Qualifier("institutionRepository")
+	public void setInstitutionRepository(final InstitutionRepository repository) {
+		institutionRepository = repository;
+	}
+	
+	@Autowired
+	@Qualifier("courseRepository")
+	public void setCourseRepository(final CourseRepository repository) {
+		courseRepository = repository;
+	}
+	
+	@Autowired
+	@Qualifier("studentRepository")
+	public void setStudentRepository(final StudentRepository repository) {
+		studentRepository = repository;
 	}
 
-	public Collection<Course> findAllCoursesByInstitution(final int code) {
-		final List<Course> courses = new ArrayList<>();
-		for(final Course course : courseRepository.findAllByInstitutionCode(code)) {
-			courses.add(course);
-		}
-		return courses;
-	}
-	
-	public Collection<Student> findAllStudentsByCourse(final int courseCode, final int institutionCode) {
-		final List<Student> courses = new ArrayList<>();
-		for(final Student student : userRepository.findAllStudentByCourse(courseCode, institutionCode)) {
-			courses.add(student);
-		}
-		return courses;
-	}
-	
-	public Collection<Student> findAllStudentsByInstitution(final int institutionCode) {
-		final List<Student> courses = new ArrayList<>();
-		for(final Student student : userRepository.findAllStudentByInstitution(institutionCode)) {
-			courses.add(student);
-		}
-		return courses;
-	}
 
 }

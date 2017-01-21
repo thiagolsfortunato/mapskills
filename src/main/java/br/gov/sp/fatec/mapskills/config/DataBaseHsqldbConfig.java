@@ -33,7 +33,7 @@ public class DataBaseHsqldbConfig {
 		dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
 		dataSource.setUrl("jdbc:hsqldb:mem:mapskills");
 		dataSource.setUsername("sa");
-		dataSource.setPassword("");
+		dataSource.setPassword("sa");
 
 		return dataSource;
 	}
@@ -56,7 +56,7 @@ public class DataBaseHsqldbConfig {
 		properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.connection.shutdown", "true");
-		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.hbm2ddl.auto", "update");
 		return properties;
 	}
 

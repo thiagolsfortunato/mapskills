@@ -1,0 +1,18 @@
+ReGex
+
+(.*")(.*)("\);)
+
+Os grupos são divididos em colchetes.
+O conteudo de cada colchete define um grupo.
+
+ex.: acima para localizar
+grupo 1 = pega tudo até a aspas
+grupo 2 = pega tudo
+grupo 3 = pega tudo apartir da aspas
+
+ex.: acima para substituir
+\ barra representa o grupo no notepad++. $ cifrão representa o grupo no atom
+
+\2 = mantém somente o segundo grupo
+
+\palavra1\palavra2\palavra3 = substituirá o primeiro grupo por palavra1, o segundo por palavra3, o terceiro por palavra3

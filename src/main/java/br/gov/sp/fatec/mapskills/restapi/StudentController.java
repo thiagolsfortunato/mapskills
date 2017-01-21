@@ -11,20 +11,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.sp.fatec.mapskills.domain.user.MapSkillsException;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.domain.user.StudentPoiParser;
-import br.gov.sp.fatec.mapskills.domain.user.User;
-import br.gov.sp.fatec.mapskills.domain.user.UserService;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.LoginWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
-
+import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.AnswerWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
  * de controle da aplicação.
@@ -36,22 +32,36 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 public class StudentController {
 	
 	@Autowired
-	private UserService service;
-
-	@RequestMapping(value = "/upload/students", method = RequestMethod.POST)
-	public ResponseEntity<?> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws Exception {
-		
-		final StudentPoiParser studentPoi = new StudentPoiParser();
-		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		service.save(students);
+	private SceneService sceneService;
+	
+	/**
+	 * realiza a persistencia de um contexto de resposta feita pelo aluno
+	 * durante a realização do jogo, ou seja cada click de uma alternativa
+	 * dispara este post.
+	 * @param answerWrapper contexto de id's da alternativa respondida
+	 * @return success ao concluir o post
+	 */
+	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
+	public ResponseEntity<?> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
+		sceneService.saveAnswer(answerWrapper.getAnswerContext());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	/**
+	 * recupera os resultados do aluno ao finalizar o jogo.
+	 * @param studentID
+	 * @return
+	 */
+	@RequestMapping(value = "/game/result/{studentID}", method = RequestMethod.GET)
+	public ResponseEntity<StudentResultWrapper> getResult(@PathVariable("studentID") final long studentID) {
+		final List<Object[]> context = sceneService.getResultByStudentId(studentID);
+		final StudentResultWrapper result = new StudentResultWrapper(context);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<UserWrapper> login(@RequestBody final LoginWrapper loginWrapper) throws MapSkillsException {
-		final User user = service.findUserByUsernamePassword(loginWrapper.username(), loginWrapper.password());
-		final UserWrapper userWrapper = new UserWrapper(user);
-		return new ResponseEntity<>(userWrapper, HttpStatus.OK);
+	@RequestMapping(value = "/game/{studentID}", method = RequestMethod.GET)
+	public ResponseEntity<SceneListWrapper> findAllByEnableAndNotAnaswerByStudent(@PathVariable("studentID") final long studentID) {
+		final SceneListWrapper scenesListWrapper = new SceneListWrapper(sceneService.findAllNotAnsweredByStudent(studentID));
+		return new ResponseEntity<>(scenesListWrapper, HttpStatus.OK);
 	}
 
 

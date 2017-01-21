@@ -13,5 +13,7 @@ package br.gov.sp.fatec.mapskills.infrastructure;
  *
  * @param <T>
  */
-public interface RepositoryService<T> {
+@FunctionalInterface
+public interface RepositoryService {
+	public void deleteAll();
 }

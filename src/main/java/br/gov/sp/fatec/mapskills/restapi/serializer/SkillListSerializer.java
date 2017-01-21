@@ -12,14 +12,29 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
-
-public class SkillListSerializer extends JsonSerializer<SkillWrapper> {
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
+/**
+ * A classe <code>SkillListSerializer</code> serializa uma array
+ * de competencias.
+ * @author Marcelo
+ *
+ */
+public class SkillListSerializer extends JsonSerializer<SkillListWrapper> {
 
 	@Override
-	public void serialize(final SkillWrapper arg0, final JsonGenerator arg1, final SerializerProvider arg2)
+	public void serialize(final SkillListWrapper skillList, final JsonGenerator generator, final SerializerProvider arg2)
 			throws IOException {
-		// TODO Auto-generated method stub
+		
+		generator.writeStartArray();
+		for(final Skill skill : skillList.getAllSkills()) {
+			generator.writeStartObject();
+			generator.writeNumberField("id", skill.getId());
+			generator.writeStringField("type", skill.getType());
+			generator.writeStringField("description", skill.getDescription());
+			generator.writeEndObject();
+		}
+		generator.writeEndArray();
 		
 	}
 

@@ -20,33 +20,39 @@ public class GameTheme {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "gth_id")
-	private int id;
+	private long id;
 	
 	@Column(name = "gth_description", nullable = false)
 	private String description;
-	
-	@Column(name = "gth_isActive", nullable = false)
+		
+	@Column(name = "gth_is_active", nullable = false)
 	private boolean active = false;
 	
-	public GameTheme() {}
+	public GameTheme() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public GameTheme(final String description) {
 		this.description = description;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String description() {
+	public void setId(final long id) {
+		this.id = id;
+	}
+	
+	public String getDescription() {
 		return description;
 	}
 	
-	public void off() {
+	public void disable() {
 		active = false;
 	}
 	
-	public void on() {
+	public void enable() {
 		active = true;
 	}
 	

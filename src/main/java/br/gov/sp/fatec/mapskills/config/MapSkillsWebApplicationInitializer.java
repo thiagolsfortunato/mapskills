@@ -7,31 +7,38 @@
 package br.gov.sp.fatec.mapskills.config;
 
 import javax.servlet.Filter;
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
+/**
+ * A classe <code>MapSkillsWebApplicationInitializer</code> representa a inicialização
+ * do contexto do Spring na aplicação.
+ *
+ */
 public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+	/** {@inheritDoc} */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class[] {SpringContextConfiguration.class};
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		return new Class[] {WebConfig.class};
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] {"/*"};
+		return new String[] {"/rest/*"};
 	}
 	
+	/** {@inheritDoc} */
 	@Override
     protected Filter[] getServletFilters() {
         final CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
@@ -42,19 +49,9 @@ public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfig
     }
 	
 	@Override
-    protected void customizeRegistration(final ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(multipartConfigElement());
-    }
-	
-	@Override
     public void onStartup(final ServletContext context) throws ServletException {
         super.onStartup(context);
-        //context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/*");
-    }
-	
-	private MultipartConfigElement multipartConfigElement() {
-        final String tempDir = System.getProperty("java.io.tmpdir");
-        return new MultipartConfigElement(tempDir, 1024 * 1024 * 5, 1024 * 1024 * 5 * 5, 1024 * 1024);
+        context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/rest/*");
     }
 
 }

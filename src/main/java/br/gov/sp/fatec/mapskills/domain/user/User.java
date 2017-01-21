@@ -36,7 +36,7 @@ public abstract class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "use_id")
-	private int id;
+	protected long id;
 	
 	@Column(name = "use_name")
 	private String name;
@@ -48,7 +48,9 @@ public abstract class User implements Serializable {
 	@Column(name = "pro_id")
 	private ProfileType profile;
 		
-	public User() {}
+	public User() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public User(final String name, final Login login, final ProfileType profile) {
 		this.name = name;
@@ -56,28 +58,32 @@ public abstract class User implements Serializable {
 		this.profile = profile;
 	}
 	
-	public ProfileType profile() {
+	public ProfileType getProfile() {
 		return profile;
 	}
 	
-	public int id() {
+	public long getId() {
 		return id;
 	}
 	
-	public String name() {
+	public String getName() {
 		return name;
 	}
 	
-	public String username() {
-		return login.username();
+	public String getUsername() {
+		return login.getUsername();
 	}
 	
-	public String password() {
-		return login.password();
+	public String getPassword() {
+		return login.getPassword();
 	}
 	
 	public void changeName(final String newName) {
 		name = newName;
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
 	}
 
 }

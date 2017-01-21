@@ -7,6 +7,9 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "institution")
@@ -28,10 +32,10 @@ public class Institution implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ins_id")
-	private int id;
+	private long id;
 	
-	@Column(name = "ins_code", nullable = false, unique = true)
-	private int code;
+	@Column(name = "ins_code", nullable = false, unique = true, length = 10)
+	private String code;
 	
 	@Column(name = "ins_cnpj", nullable = true, unique = true)
 	private String cnpj;
@@ -42,17 +46,21 @@ public class Institution implements Serializable {
 	@Column(name = "ins_city", nullable = true)
 	private String city;
 	
-	/*@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="ins_id")
-	private List<Course> courses;*/
+	@Column(name = "gth_id")
+	private long gameThemeId;
+	
+	@Transient
+	private Collection<Course> courses = new ArrayList<>();
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "use_id")
 	private Mentor mentor;
 
-	public Institution() {}
+	public Institution() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
-	public Institution(final int code, final String cnpj, final String company,
+	public Institution(final String code, final String cnpj, final String company,
 			final String city, final Mentor mentor) {
 		
 		this.code = code;
@@ -78,27 +86,47 @@ public class Institution implements Serializable {
 		mentor.changeName(newName);
 	}
 	
-	public int id() {
+	public void changeGameTheme(final long gameThemeId) {
+		this.gameThemeId = gameThemeId;
+	}
+	
+	public void setCourses(final Collection<Course> courses) {
+		this.courses.addAll(courses);
+	}
+	
+	public void setId(final long id) {
+		this.id = id;
+	}
+	
+	public long getId() {
 		return id;
 	}
-	public int code() {
+	public String getCode() {
 		return code;
 	}
 	
-	public String cnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 	
-	public String company() {
+	public String getCompany() {
 		return company;
 	}
 	
-	public String city() {
+	public String getCity() {
 		return city;
 	}
 	
-	public String mentor() {
-		return mentor.name();
+	public Mentor getMentor() {
+		return mentor;
+	}
+	
+	public long getThemeId() {
+		return gameThemeId;
+	}
+	
+	public Collection<Course> getCourses() {
+		return Collections.unmodifiableCollection(courses);
 	}
 	
 }
