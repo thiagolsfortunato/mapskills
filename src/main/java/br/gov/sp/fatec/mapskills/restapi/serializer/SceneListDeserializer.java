@@ -43,7 +43,9 @@ public class SceneListDeserializer extends JsonDeserializer<SceneListWrapper> {
 	}
 	
 	private Question buildQuestion(final JsonNode node) {
-		if(node.isNull()) return null;
+		if(node.isNull()) {
+			return null;
+		}
 		final Question question = new Question(buildAlternatives(node.get("alternatives")), node.get("skillId").asLong());
 		question.setId(node.get("id").asLong());
 		return question;

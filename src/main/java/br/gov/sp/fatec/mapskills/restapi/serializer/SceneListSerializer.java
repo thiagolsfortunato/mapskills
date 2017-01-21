@@ -17,7 +17,7 @@ import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 /**
- * A classe <code>SceneListSerializer</code> é responsavel por serializar todo um contexto
+ * A classe <code>SceneListSerializer</code> eh responsavel por serializar todo um contexto
  * de cenas que o jogo possui.
  * @author Marcelo
  *
@@ -38,7 +38,7 @@ public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 		
 	}
 	/**
-	 * Método responsavel por serializar a cena do jogo
+	 * Metodo responsavel por serializar a cena do jogo
 	 * @param generator
 	 * @param scene
 	 * @throws IOException
@@ -58,7 +58,7 @@ public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 		}
 	}
 	/**
-	 * Método responsavel por serializar a questão da cena
+	 * Metodo responsavel por serializar a questão da cena
 	 * @param generator
 	 * @param question
 	 * @throws IOException
@@ -77,7 +77,7 @@ public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 		generator.writeEndObject();
 	}
 	/**
-	 * Método responsavel por serializar as alternativas da questão.
+	 * Metodo responsavel por serializar as alternativas da questao.
 	 * @param generator
 	 * @param alternatives
 	 * @throws IOException

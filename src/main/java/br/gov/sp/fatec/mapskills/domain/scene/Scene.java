@@ -46,7 +46,9 @@ public class Scene implements Serializable, Comparable<Scene> {
 	@Column(name = "gth_id", nullable = false)
 	private long gameThemeId;
 	
-	public Scene() {}
+	public Scene() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Scene(final String text, final String urlBackground, final Question question, final long gameThemeId) {
 		this.text = text;
@@ -94,5 +96,15 @@ public class Scene implements Serializable, Comparable<Scene> {
 	public int compareTo(final Scene scene) {
 		return this.index < scene.getIndex() ? -1 : (this.index == scene.index ? 0 : 1);
 	}
+	
+	@Override
+	public boolean equals(final Object scene) {
+		return this.equals(scene);
+	}
+	
+	@Override
+    public int hashCode() {
+        return Integer.parseInt(String.valueOf(this.id)) ;
+    }
 
 }

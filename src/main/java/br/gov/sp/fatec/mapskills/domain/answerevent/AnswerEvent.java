@@ -44,7 +44,9 @@ public class AnswerEvent implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar date;
 	
-	public AnswerEvent() {}
+	public AnswerEvent() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public AnswerEvent(final int sceneIndex, final long sceneId, final long studentId, final long skillId, final int skillValue) {
 		this.sceneIndex = sceneIndex;
@@ -84,13 +86,6 @@ public class AnswerEvent implements Serializable {
 	 * @param date
 	 * @return
 	 */
-	/* Método que formata com a classe LocalDateTime
-	 * private String dateFormatterPtBr(final LocalDateTime date) {
-		final DateTimeFormatter formatter = DateTimeFormatter
-				.ofLocalizedDateTime(FormatStyle.SHORT)
-				.withLocale(new Locale("pt", "br"));
-		return date.format(formatter);
-	}*/
 	private String calendarDateFormatterPtBr(final Calendar date) {
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return dateFormat.format(date);

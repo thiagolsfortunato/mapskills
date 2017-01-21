@@ -17,7 +17,7 @@ import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
-public class SceneService implements RepositoryService<Scene> {
+public class SceneService implements RepositoryService {
 	
 	@Autowired
 	private SceneRepository sceneRepo;

@@ -42,7 +42,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	/**
 	 * Método que recupera todas cenas por um determinado id
 	 * @param gameThemeId
-	 * @return
+	 * @return lista
 	 */
 	public Collection<Scene> findAllByGameThemeId(final long gameThemeId);
 

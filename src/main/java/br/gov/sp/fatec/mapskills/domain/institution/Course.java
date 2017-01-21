@@ -35,7 +35,9 @@ public class Course implements Serializable {
 	@Column(name = "ins_code", length = 10)
 	private String institutionCode;
 	
-	public Course() {}
+	public Course() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Course(final String code, final String name, final CoursePeriod period, final String institutionCode) {
 		this.code = code;

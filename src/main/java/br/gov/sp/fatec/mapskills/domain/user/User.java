@@ -48,7 +48,9 @@ public abstract class User implements Serializable {
 	@Column(name = "pro_id")
 	private ProfileType profile;
 		
-	public User() {}
+	public User() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public User(final String name, final Login login, final ProfileType profile) {
 		this.name = name;

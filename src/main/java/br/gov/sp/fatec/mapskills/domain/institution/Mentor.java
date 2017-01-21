@@ -25,7 +25,9 @@ public class Mentor extends User {
 	@Column(name = "ins_code")
 	private String institutionCode;
 
-	public Mentor() {}
+	public Mentor() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Mentor(final String name, final String institutionCode, final String username, final String password) {
 		super(name, new Login(username, password), ProfileType.MENTOR);

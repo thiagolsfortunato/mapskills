@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.gov.sp.fatec</groupId>
-	<artifactId>mapskills</artifactId>
+	<artifactId>mapskills-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>plataforma de avaliação de competências</name>
-	<description>versão com hybernate</description>
+	<description>projeto mapskills, parte do dev do TG</description>
 	<developers>
 		<developer>
 			<name>Marcelo Inacio</name>
@@ -23,7 +23,7 @@
 	</developers>
 
 	<properties>
-		<build.warname>mapskills</build.warname>
+		<build.warname>mapskills-server</build.warname>
 		<!-- LIQUIBASE BASE PROPERTIES -->
 		<liquibase-maven-plugin.version>3.4.1</liquibase-maven-plugin.version>
 		<liquibase.verbose>true</liquibase.verbose>
@@ -204,7 +204,7 @@
 		<profile>
             <id>test</id>
             <properties>
-                <datasource.url>jdbc:hsqldb:mem:mapskills</datasource.url>
+                <datasource.url>jdbc:hsqldb:mem:mapskills-server</datasource.url>
                 <datasource.driver>org.hsqldb.jdbcDriver</datasource.driver>
                 <datasource.username>sa</datasource.username>
                 <datasource.password>sa</datasource.password>
@@ -216,7 +216,7 @@
         <profile>
             <id>local</id>
             <properties>
-                <datasource.url>jdbc:mysql://127.0.0.1:3306/mapskills</datasource.url>
+                <datasource.url>jdbc:mysql://127.0.0.1:3306/mapskills-server</datasource.url>
                 <datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
                 <datasource.username>mapskills</datasource.username>
                 <datasource.password>mapskills</datasource.password>
@@ -231,7 +231,7 @@
 			</activation>
             <id>openshift</id>
             <properties>
-                <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
+                <datasource.url>jdbc:mysql://localhost:3306/mapskills</datasource.url>
 <!-- 				<datasource.url>jdbc:mysql://127.0.0.1:48341/mapskills</datasource.url> -->
                 <datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
                 <datasource.username>mapskills</datasource.username>

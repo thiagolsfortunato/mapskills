@@ -32,7 +32,9 @@ public class Skill implements Serializable {
 	@Column(name = "ski_description")
 	private String description;
 	
-	public Skill() {}
+	public Skill() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Skill(final String type, final String description) {
 		this.type = type;

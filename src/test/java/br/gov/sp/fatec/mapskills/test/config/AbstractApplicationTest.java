@@ -26,7 +26,7 @@ import br.gov.sp.fatec.mapskills.config.WebConfig;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {SpringContextConfigurationTest.class, WebConfig.class})
+@ContextConfiguration(classes = {SpringContextTestConfiguration.class, WebConfig.class})
 public abstract class AbstractApplicationTest {
 	
 	@Autowired

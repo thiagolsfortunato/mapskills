@@ -32,7 +32,9 @@ public class Alternative implements Serializable{
 	@Column(name = "alt_skill_value", nullable = false)
 	private int skillValue;
 		
-	public Alternative() {}
+	public Alternative() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Alternative(final String description, final int skillValue) {
 		this.description = description;

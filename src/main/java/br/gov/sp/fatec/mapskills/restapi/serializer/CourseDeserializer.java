@@ -30,7 +30,9 @@ public class CourseDeserializer extends JsonDeserializer<CourseWrapper> {
         final Course course = new Course(node.get("code").asText(), node.get("name").asText()
         		, CoursePeriod.valueOf(node.get("period").asText()), node.get("institutionCode").asText());
         
-        if(node.has("id")) course.setId(node.get("id").asLong());
+        if(node.has("id")) {
+        	course.setId(node.get("id").asLong());
+        }
         
 		return new CourseWrapper(course);
 	}

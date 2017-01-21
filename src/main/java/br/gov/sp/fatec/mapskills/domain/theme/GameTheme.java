@@ -28,7 +28,9 @@ public class GameTheme {
 	@Column(name = "gth_is_active", nullable = false)
 	private boolean active = false;
 	
-	public GameTheme() {}
+	public GameTheme() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public GameTheme(final String description) {
 		this.description = description;

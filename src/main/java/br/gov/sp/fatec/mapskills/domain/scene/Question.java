@@ -40,7 +40,9 @@ public class Question implements Serializable {
 	@Column(name = "ski_id", nullable = false)
 	private long skillId;
 			
-	public Question() {}
+	public Question() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Question(final Collection<Alternative> alternatives, final long skillId) {
 		this.alternatives.addAll(alternatives);

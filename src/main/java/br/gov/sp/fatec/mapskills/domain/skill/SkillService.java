@@ -17,12 +17,13 @@ import org.springframework.stereotype.Service;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
-public class SkillService implements RepositoryService<Skill>{
+public class SkillService implements RepositoryService {
 
 	@Autowired(required = true)
 	@Qualifier("skillRepository")
 	private SkillRepository repository;
 	
+	@Override
 	public void deleteAll() {
 		repository.deleteAll();
 	}
@@ -37,7 +38,9 @@ public class SkillService implements RepositoryService<Skill>{
 	
 	public Collection<Skill> findAll() {
 		final List<Skill> skills = new ArrayList<>();
-		repository.findAll().forEach(skill -> skills.add(skill));
+		for(final Skill skill : repository.findAll()) {
+			skills.add(skill);
+		}
 		return skills;
 	}
 

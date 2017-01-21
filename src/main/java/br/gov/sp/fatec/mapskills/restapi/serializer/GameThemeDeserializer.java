@@ -27,12 +27,18 @@ public class GameThemeDeserializer extends JsonDeserializer<GameThemeWrapper> {
         
         final GameTheme theme = new GameTheme(node.get("description").asText());
         
-        if(node.has("id")) theme.setId(node.get("id").asLong());
-        if(node.has("active")) {
-        	if(node.get("active").asBoolean())	theme.enable();
+        if(node.has("id")) {
+        	theme.setId(node.get("id").asLong());
+        }
+        if(node.has("active") && isActiveNode(node)) {
+        	theme.enable();
         }
 		
 		return new GameThemeWrapper(theme);
+	}
+	
+	private boolean isActiveNode (final JsonNode node) {
+		return node.get("active").asBoolean();
 	}
 
 }

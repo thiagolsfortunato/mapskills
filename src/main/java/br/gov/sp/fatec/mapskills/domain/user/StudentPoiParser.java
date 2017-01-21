@@ -21,30 +21,30 @@ import br.gov.sp.fatec.mapskills.utils.PoiParser;
  * @author Marcelo
  *
  */
-public class StudentPoiParser extends PoiParser {
+public class StudentPoiParser extends PoiParser<Student> {
 	/**
-	 * O método <code>toObjectList</code> converte um arqiuvo do tipo excel xlsx em uma
+	 * O metodo <code>toObjectList</code> converte um arqiuvo do tipo excel xlsx em uma
 	 * lista de objetos do tipo Student.
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<Student> toObjectList(final InputStream inputStream) throws Exception {
+	public List<Student> toObjectList(final InputStream inputStream) throws MapSkillsException {
 		final List<Student> studentList = new ArrayList<>();
-		studentList.addAll((List<Student>) super.objectListFactory(inputStream));
+		studentList.addAll(super.objectListFactory(inputStream));
 		return studentList;
 	}
 	/**
-	 * O método <code>build</code> constroi um objeto do tipo Student a partir de uma lista de
+	 * O metodo <code>build</code> constroi um objeto do tipo Student a partir de uma lista de
 	 * String devolvida da chamada do método <code>objectArgs</code>.
 	 * @throws MapSkillsException 
 	 */
+	@Override
 	protected Student buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException {
 		final List<String> args = super.getObjectArgs(cellIterator);
 		return new Student(academicRegistry(args.get(0)), args.get(1), args.get(2), args.get(3), "mudar@123");
 	}
 	
 	/**
-	 * método <code>academicRegistry</code> que retorna uma instancia de ra para o aluno.
+	 * metodo <code>academicRegistry</code> que retorna uma instancia de ra para o aluno.
 	 * @param ra
 	 * @return
 	 * @throws MapSkillsException
@@ -59,14 +59,16 @@ public class StudentPoiParser extends PoiParser {
 	//verificar o ra se nao ha nenhuma divergencia e se atente todos requisitos necessarios
 	//ver lista de verify de JWT do prof
 	/**
-	 * Método que válida o ra contido no documento xlsx
+	 * metodo que valida o ra contido no documento xlsx
 	 * @param ra
 	 * @throws MapSkillsException
 	 */
 	private void raValidator(final String ra) throws MapSkillsException {
 		try {
 			Long.parseLong(ra);
-			if(ra.length() < 13) throw new RAInvalidException(ra);
+			if(ra.length() < 13) {
+				throw new RAInvalidException(ra);
+			}
 		} catch (final NumberFormatException e) {
 			throw new RAInvalidException(ra);
 		}

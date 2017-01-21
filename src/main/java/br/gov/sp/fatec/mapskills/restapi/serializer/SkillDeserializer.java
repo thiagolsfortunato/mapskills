@@ -27,7 +27,9 @@ public class SkillDeserializer extends JsonDeserializer<SkillWrapper> {
         final JsonNode node = oc.readTree(jsonParser);
         
         final Skill skill = new Skill(node.get("type").asText(), node.get("description").asText());
-        if(node.has("id")) skill.setId(node.get("id").asLong());
+        if(node.has("id")) {
+        	skill.setId(node.get("id").asLong());
+        }
         
 		return new SkillWrapper(skill);
 	}

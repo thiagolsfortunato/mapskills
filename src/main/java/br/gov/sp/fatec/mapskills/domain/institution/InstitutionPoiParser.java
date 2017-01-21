@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
@@ -20,13 +21,12 @@ import br.gov.sp.fatec.mapskills.utils.PoiParser;
  * @author Marcelo
  *
  */
-public class InstitutionPoiParser extends PoiParser {
+public class InstitutionPoiParser extends PoiParser<Institution> {
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<Institution> toObjectList(final InputStream inputStream) throws Exception {
+	public List<Institution> toObjectList(final InputStream inputStream) throws MapSkillsException {
 		List<Institution> objectList = new ArrayList<>();
-		objectList.addAll((List<Institution>) super.objectListFactory(inputStream));
+		objectList.addAll(super.objectListFactory(inputStream));
 		return objectList;
 	}
 

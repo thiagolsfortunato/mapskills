@@ -6,12 +6,16 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class AcademicRegistry {
+public class AcademicRegistry implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "stu_ra")
 	private String ra;
 	
@@ -21,7 +25,9 @@ public class AcademicRegistry {
 	@Column(name = "crs_code", nullable = false)
 	private String courseCode;
 	
-	public AcademicRegistry() {}
+	public AcademicRegistry() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public AcademicRegistry(final String ra, final String institutionCode, final String courseCode) {
 		this.ra = ra;

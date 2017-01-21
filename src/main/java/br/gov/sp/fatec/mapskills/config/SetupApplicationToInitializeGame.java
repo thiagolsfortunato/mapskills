@@ -1,15 +1,25 @@
+/*
+ * @(#)SetupApplicationToInitializeGame.java 1.0 20/01/2017
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.config;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -33,8 +43,10 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 @Configuration
 public class SetupApplicationToInitializeGame {
 	
+	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
+	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills/images/";
+	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills-server/images/";
 	private static final long GAME_THEME_ID = 1;
 	
 	private final Map<Integer, Question> mapQuestion = new HashMap<>(26);
@@ -48,20 +60,20 @@ public class SetupApplicationToInitializeGame {
 	
 	public SetupApplicationToInitializeGame() throws IOException {
 		this.createInstitution();
-		System.err.println("=== institution save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 		this.createCourses();
-		System.err.println("=== courses save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 		this.creatStudent();
-		System.err.println("=== student save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");
 		this.createGameTheme();
-		System.err.println("=== themes save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== THEMES SAVE SUCCESS ===");
 		this.createSkills();
-		System.err.println("=== skills save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 		this.buildTextFromFile();
-		this.generateAlternativesFromFile();
+		this.generateAlternatives();
 		this.generateQuestions();
 		this.createScenesFromFile();
-		System.err.println("=== scenes save success ===".toUpperCase());
+		LOGGER.log(Level.INFO, "=== SCENES SAVE SUCCESS ===");
 	}
 	/**
 	 * cria uma nova instituição persistindo-a na base de dados
@@ -96,32 +108,24 @@ public class SetupApplicationToInitializeGame {
 	 * @throws IOException caso ocorra um problema de leitura do arquivo
 	 * 			texto com os nomes das imagens de cada cena (i.e. scene01.jpg)
 	 */
-	@SuppressWarnings("resource")
-	public void createScenesFromFile() throws IOException {
+	private void createScenesFromFile() throws IOException {
 		final String filePath = PATH_TXT.concat("sequenciaImagensCenasTemaPizzaria.txt");
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(filePath)));
 		
 		int idQuestion = 1;
-		int cont = 0;
-		String linha = null;
-		while((linha = reader.readLine()) != null) {
-			if(cont % 3 == 1) {
-				sceneService.save(new Scene(textList.get(cont), URL_SERVER.concat(linha), mapQuestion.get(idQuestion), GAME_THEME_ID));
-				idQuestion++;
-				cont++;
+		int imageIndex = 0;
+		for(final String line : this.buildReaderFromFile(filePath)) {
+			if(imageIndex % 3 == 1) {
+				sceneService.save(new Scene(textList.get(imageIndex++), URL_SERVER.concat(line), mapQuestion.get(idQuestion++), GAME_THEME_ID));
 				continue;
 			}
-			sceneService.save(new Scene(textList.get(cont), URL_SERVER.concat(linha), null, GAME_THEME_ID));
-			cont++;
+			sceneService.save(new Scene(textList.get(imageIndex++), URL_SERVER.concat(line), null, GAME_THEME_ID));
 		}
-		
 	}
 	
 	/**
 	 * cria competencias persistindo-as na base de dados
 	 */
-	public void createSkills() {
+	private void createSkills() {
 		skillRepository.save(new Skill("Visão do futuro", "Avalia projeção de perspectiva."));
 		skillRepository.save(new Skill("Comunicação", "Avalia dicção dos assuntos em grupo."));
 		skillRepository.save(new Skill("Gestão do tempo", "Avaliação a situação sob pressão no trabalho."));
@@ -146,16 +150,9 @@ public class SetupApplicationToInitializeGame {
 	 * os texto das cenas.
 	 * @throws IOException
 	 */
-	@SuppressWarnings("resource")
 	private void buildTextFromFile() throws IOException {
 		final String filePath = PATH_TXT.concat("textosTemaPizzaria.txt");
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(filePath)));
-		
-		String linha = null;
-		while((linha = reader.readLine()) != null) {
-			this.textList.add(linha);
-		}
+		this.textList.addAll(this.buildReaderFromFile(filePath));
 	}
 	/**
 	 * realizando leitura do arquivo contendo as alternativas de cada questão e
@@ -164,26 +161,40 @@ public class SetupApplicationToInitializeGame {
 	 * @throws IOException caso haja algum problema I/O
 	 * 
 	 */
-	@SuppressWarnings("resource")
-	private void generateAlternativesFromFile() throws IOException {
+	private void generateAlternatives() throws IOException {
 		this.mapAlternatives.clear();
 		final String filePath = PATH_TXT.concat("alternativasTemaPizzaria.txt");
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(filePath)));
 		
 		final Random gerador = new Random();
-		String linha = null;
 		int idQuestion = 1;
-		while((linha = reader.readLine()) != null) {
+
+		final List<String> list = new ArrayList<>();
+		list.addAll(this.buildReaderFromFile(filePath));
+		final int sizeList = list.size();
+		for(int i = 0; i < sizeList; i++) {
 			final List<Alternative> alternatives = new LinkedList<>();
-			for(int i = 0; i < 4; i++) {
-				alternatives.add(new Alternative(linha, gerador.nextInt(7)));
-				linha = reader.readLine();
+			for(int j = 0; j < 4; j++) {
+				alternatives.add(new Alternative(list.get(i++), gerador.nextInt(7)));
 			}
-			mapAlternatives.put(idQuestion, alternatives);
-			idQuestion++;
+			mapAlternatives.put(idQuestion++, alternatives);
 		}
-		
+	}
+	/**
+	 * cria uma lista de string, apartir do caminho de um arquivo txt.
+	 * @param filePath
+	 * @return
+	 * @throws IOException
+	 */
+	private Collection<String> buildReaderFromFile(final String filePath) throws IOException {
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(
+				new FileInputStream(filePath)));
+		final Collection<String> lineList = new ArrayList<>();
+		String lineTmp;
+		while((lineTmp = reader.readLine()) != null) {
+			lineList.add(lineTmp);
+		}
+		reader.close();
+		return Collections.unmodifiableCollection(lineList);
 	}
 	
 }

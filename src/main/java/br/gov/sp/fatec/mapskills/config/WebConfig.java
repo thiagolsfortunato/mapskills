@@ -36,7 +36,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 	
 	@Bean
-    public ContentNegotiatingViewResolver contentViewResolver() throws Exception {
+    public ContentNegotiatingViewResolver contentViewResolver() {
         final ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
         contentNegotiationManager.addMediaType("json", MediaType.APPLICATION_JSON);
         final MappingJackson2JsonView defaultJsonView = new MappingJackson2JsonView();

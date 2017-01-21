@@ -28,7 +28,9 @@ public class GameThemeListDeserializer extends JsonDeserializer<GameThemeListWra
         	final JsonNode nodeCurrent = node.get(i);
         	final GameTheme theme = new GameTheme(nodeCurrent.get("description").asText());
         	theme.setId(nodeCurrent.get("id").asLong());
-        	if(nodeCurrent.get("active").asBoolean()) theme.enable();
+        	if(nodeCurrent.get("active").asBoolean()) {
+        		theme.enable();
+        	}
         	gameThemes.add(theme);
         }
         

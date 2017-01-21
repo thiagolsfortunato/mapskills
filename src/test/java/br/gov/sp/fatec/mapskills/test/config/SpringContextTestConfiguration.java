@@ -18,5 +18,5 @@ import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
  *
  */
 @Import({DataBaseHsqldbConfig.class})
-public class SpringContextConfigurationTest extends AbstractSpringContextConfiguration {
+public class SpringContextTestConfiguration extends AbstractSpringContextConfiguration {
 }

@@ -6,11 +6,13 @@
  */
 package br.gov.sp.fatec.mapskills.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,49 +25,62 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
  * para serem persistidos no banco de dados.
  * 
  * @author Marcelo
+ * @param <T>
  *
  */
-public abstract class PoiParser {
+public abstract class PoiParser<T> {
 	
-	protected abstract List<?> toObjectList(final InputStream inputStream) throws Exception;
+	private static final Logger LOGGER = Logger.getLogger( PoiParser.class.getName() );
+	
+	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;
 
-	protected abstract Object buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException;
+	protected abstract T buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException;
 	/**
-	 * O método <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
+	 * O metodo <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
 	 * 
 	 * @param inputStream
 	 * @return
+	 * @throws IOException 
+	 * @throws MapSkillsException 
 	 * @throws Exception
 	 */
-	protected List<?> objectListFactory(final InputStream inputStream) throws Exception {
-		final XSSFWorkbook workbook = new XSSFWorkbook(inputStream); 
-		final XSSFSheet sheet = workbook.getSheetAt(0);
-		final Iterator<Row> rowIterator = sheet.iterator(); 
-		workbook.close();
-		return objectListBuilder(rowIterator);
+	protected List<T> objectListFactory(final InputStream inputStream) throws MapSkillsException {
+		XSSFWorkbook workbook;
+		try {
+			workbook = new XSSFWorkbook(inputStream);
+			final XSSFSheet sheet = workbook.getSheetAt(0);
+			final Iterator<Row> rowIterator = sheet.iterator(); 
+			workbook.close();
+			return objectListBuilder(rowIterator);
+		} catch (final Exception e) {
+			LOGGER.info(e.getMessage());
+			throw new ReadFileException(e);
+		}
 	}
 	/**
-	 * O método <code>objectListBuilder</code> auxilia o método <code>objectListFactory<code> na conversão
+	 * O metodo <code>objectListBuilder</code> auxilia o metodo <code>objectListFactory<code> na conversao
 	 * de um arquivo em uma lista de objeto, iterando nas linhas do documento, sem pegar a primeira linha que
-	 * são os titulos das colunas.
+	 * sao os titulos das colunas.
 	 * 
 	 * @param rowIterator
 	 * @return
 	 * @throws MapSkillsException 
 	 */
-	private List<?> objectListBuilder(final Iterator<Row> rowIterator) throws MapSkillsException {
-		final List<Object> objectList = new ArrayList<>();
+	private List<T> objectListBuilder(final Iterator<Row> rowIterator) throws MapSkillsException {
+		final List<T> objectList = new ArrayList<>();
 		Row row;
 		while (rowIterator.hasNext()) {
 			row = rowIterator.next();
-			if(row.getRowNum() == 0) continue;
+			if(row.getRowNum() == 0) {
+				continue;
+			}
 			final Iterator<Cell> cellIterator = row.cellIterator();
 			objectList.add(buildObject(cellIterator));
 		}
 		return objectList;
 	}
 	/**
-	 * O método <code>objectArgs</code> perrcorre nas celulas da linha do arquivo e retorna uma lista de String,
+	 * O metodo <code>objectArgs</code> perrcorre nas celulas da linha do arquivo e retorna uma lista de String,
 	 * para ser usado como parametro em quem a chamou.
 	 * 
 	 * @param cellIterator

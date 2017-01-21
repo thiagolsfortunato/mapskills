@@ -23,7 +23,7 @@ public class SaveImageException extends MapSkillsException {
 	
 	private final String filename;
 	
-	public SaveImageException(final String filename) {
+	public SaveImageException(final String filename, final Exception e) {
 		super("Problema ao salvar ".concat(filename));
 		this.filename = filename;
 	}

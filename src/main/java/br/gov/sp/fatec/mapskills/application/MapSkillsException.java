@@ -13,13 +13,24 @@ package br.gov.sp.fatec.mapskills.application;
 public class MapSkillsException extends Exception {
 
 	private static final long serialVersionUID = 1L;
+	private Exception exception;
+	
+	public MapSkillsException() {
+		super();
+	}
 	
 	public MapSkillsException(final String message) {
 		super(message);
 	}
 	
-	public MapSkillsException() {
-		super();
+	
+	public MapSkillsException(final String message, final Exception e) {
+		super(message);
+		this.exception = e;
+	}
+	
+	public Exception getException() {
+		return exception;
 	}
 
 }

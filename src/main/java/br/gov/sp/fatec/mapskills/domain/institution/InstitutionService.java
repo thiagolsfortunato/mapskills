@@ -20,7 +20,7 @@ import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
-public class InstitutionService implements RepositoryService<Institution> {
+public class InstitutionService implements RepositoryService {
 		
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
@@ -76,7 +76,9 @@ public class InstitutionService implements RepositoryService<Institution> {
 	
 	public Institution findInstitutionDetailsById(final long id) throws MapSkillsException {
 		final Institution institution = institutionRepository.findById(id);
-		if(institution == null) throw new InstitutionNotFoundException(id);
+		if(institution == null) {
+			throw new InstitutionNotFoundException(id);
+		}
 		institution.setCourses(courseRepository.findAllByInstitutionCode(institution.getCode()));
 		return institution;
 	}

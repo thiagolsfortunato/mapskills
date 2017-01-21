@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 
+@FunctionalInterface
 public interface InstitutionSerializerStrategy {
 	
 	public void serialize(final Institution institution, final JsonGenerator generator) throws IOException;

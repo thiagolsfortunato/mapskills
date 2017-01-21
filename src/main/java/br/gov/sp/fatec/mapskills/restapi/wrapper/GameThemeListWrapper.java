@@ -26,7 +26,7 @@ import br.gov.sp.fatec.mapskills.restapi.serializer.GameThemeListSerializer;
 @JsonDeserialize(using = GameThemeListDeserializer.class)
 public class GameThemeListWrapper {
 
-	final private Collection<GameTheme> gameThemes = new ArrayList<>();
+	private final Collection<GameTheme> gameThemes = new ArrayList<>();
 	
 	public GameThemeListWrapper(final Collection<GameTheme> gameThemes) {
 		this.gameThemes.addAll(gameThemes);

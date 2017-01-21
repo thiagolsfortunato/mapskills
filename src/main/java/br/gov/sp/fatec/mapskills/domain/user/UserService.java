@@ -14,7 +14,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Component
-public class UserService implements RepositoryService<User> {
+public class UserService implements RepositoryService {
 	
 	@Autowired(required = true)
 	@Qualifier("userRepository")

@@ -28,7 +28,9 @@ public class Student extends User {
 	@Column(name = "stu_is_completed")
 	private boolean completed = false;
 		
-	public Student() { }
+	public Student() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
 			final String password) {

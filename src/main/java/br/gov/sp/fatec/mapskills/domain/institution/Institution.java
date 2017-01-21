@@ -56,7 +56,9 @@ public class Institution implements Serializable {
 	@JoinColumn(name = "use_id")
 	private Mentor mentor;
 
-	public Institution() {}
+	public Institution() {
+		// CONSTRUCTOR DEFAULT
+	}
 	
 	public Institution(final String code, final String cnpj, final String company,
 			final String city, final Mentor mentor) {
@@ -125,6 +127,6 @@ public class Institution implements Serializable {
 	
 	public Collection<Course> getCourses() {
 		return Collections.unmodifiableCollection(courses);
-	};
+	}
 	
 }

@@ -36,8 +36,8 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
- * A classe <code>AdminController</code> é responsável por conter todas
- * rotas (uri's) do perfil administrador da aplicação.
+ * A classe <code>AdminController</code> eh responsavel por conter todas
+ * rotas (uri's) do perfil administrador da aplicacao.
  * 
  * @author Marcelo
  *
@@ -61,14 +61,14 @@ public class AdminController {
 	private SaveImageService imageService;
 	
 	/**
-	 * Método que realiza a persistencia de lista de instituições por meio de um arquivo
+	 * Metodo que realiza a persistencia de lista de instituicoes por meio de um arquivo
 	 * excel .(xlsx) feito pelo perfil <code>ADMINISTRATOR</code>
 	 * @param inputStreamWrapper
 	 * @return
-	 * @throws Exception
+	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/upload/institutions", method = RequestMethod.POST)
-	public ResponseEntity<?> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws Exception {
+	public ResponseEntity<?> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
 		final InstitutionPoiParser institutionPoi = new InstitutionPoiParser();
 		final List<Institution> institutions = institutionPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveInstitutions(institutions);
@@ -76,20 +76,20 @@ public class AdminController {
 	}
 	
 	/**
-	 * Método que realiza a persistencia de uma unica instituição
+	 * Metodo que realiza a persistencia de uma unica instituicao
 	 * realizado pelo perfil <code>ADMINISTRATOR</code>
 	 * @param inputStreamWrapper
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/institution", method = RequestMethod.POST)
-	public ResponseEntity<?> saveInstitution(@RequestBody final InstitutionDetailsWrapper institutionWrapper) throws Exception {
+	public ResponseEntity<?> saveInstitution(@RequestBody final InstitutionDetailsWrapper institutionWrapper) {
 		institutionService.saveInstitution(institutionWrapper.getInstitution());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	/**
-	 * Método que recuepra todas instituicoes cadastradas na aplicacao
+	 * Metodo que recuepra todas instituicoes cadastradas na aplicacao
 	 * realizado pelo perfil <code>ADMINISTRATOR</code>
 	 * @return
 	 */
@@ -99,7 +99,7 @@ public class AdminController {
 		return new ResponseEntity<>(institutions, HttpStatus.OK);
 	}
 	/**
-	 * Método que recupera um instituição em detalhes
+	 * Metodo que recupera um instituicao em detalhes
 	 * @param institutionId
 	 * @return
 	 * @throws MapSkillsException 
@@ -112,7 +112,7 @@ public class AdminController {
 	}
 	
 	/**
-	 * Método que realiza a persistencia de um tema na aplicação feito
+	 * Metodo que realiza a persistencia de um tema na aplicacao feito
 	 * pelo perfil <code>ADMINISTRATOR</code>
 	 * @param themeWrapper
 	 * @return
@@ -130,7 +130,7 @@ public class AdminController {
 	}
 	
 	/***
-	 * Método que retorna todos temas cadastrados na aplicação
+	 * Metodo que retorna todos temas cadastrados na aplicacao
 	 * @return
 	 */
 	@RequestMapping(value = "/game/themes", method = RequestMethod.GET)
@@ -139,7 +139,7 @@ public class AdminController {
 		return new ResponseEntity<>(gameThemes, HttpStatus.OK);
 	}
 	/**
-	 * Método que salva uma cena de um tema do jogo na aplicação
+	 * Metodo que salva uma cena de um tema do jogo na aplicacao
 	 * @param sceneWrapper
 	 * @return
 	 * @throws MapSkillsException 
@@ -151,7 +151,7 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/**
-	 * Realiza atualização de uma lista de cenas, (i.e. a ordem de exibição)
+	 * Realiza atualizacao de uma lista de cenas, (i.e. a ordem de exibicao)
 	 * @param sceneListWrapper
 	 * @return
 	 */
@@ -161,7 +161,7 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/**
-	 * Método que retorna todas as cenas de um tema da aplicação
+	 * Metodo que retorna todas as cenas de um tema da aplicacao
 	 * @param themeId
 	 * @return
 	 */
@@ -171,7 +171,7 @@ public class AdminController {
 		return new ResponseEntity<>(scenesListWrapper, HttpStatus.OK);
 	}
 	/**
-	 * Salva uma nova competência na aplicação
+	 * Salva uma nova competência na aplicacao
 	 * @param skillWrapper
 	 * @return
 	 */
@@ -181,7 +181,7 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/**
-	 * Retorna uma array serializado com todas competencias cadastradas na aplicação.
+	 * Retorna uma array serializado com todas competencias cadastradas na aplicacao.
 	 * @return
 	 */
 	@RequestMapping(value = "/skills", method = RequestMethod.GET)

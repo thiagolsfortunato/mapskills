@@ -18,7 +18,7 @@ import br.gov.sp.fatec.mapskills.domain.scene.SceneRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 @Service
-public class GameThemeService implements RepositoryService<GameTheme> {
+public class GameThemeService implements RepositoryService {
 	
 	private GameThemeRepository themeRepo;
 	private SceneRepository sceneRepo;
@@ -51,7 +51,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	}
 	/**
 	 * Metodo que retorna todos temas cadastrados na aplicacao
-	 * @return
+	 * @return lista
 	 */
 	public Collection<GameTheme> findAllThemes() {
 		final List<GameTheme> themes = new ArrayList<>();
@@ -64,7 +64,7 @@ public class GameThemeService implements RepositoryService<GameTheme> {
 	 * Método que retorna todas as cenas que estão ativas de um determinado tema
 	 * de uma determinada instituicao.
 	 * @param themeId
-	 * @return
+	 * @return lista
 	 */
 	public Collection<Scene> findAllScenesByThemeId(final long themeId) {
 		return sceneRepo.findAllByGameThemeId(themeId);

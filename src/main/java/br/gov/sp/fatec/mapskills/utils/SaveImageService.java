@@ -9,6 +9,7 @@ package br.gov.sp.fatec.mapskills.utils;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
@@ -17,35 +18,36 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
- * A classe <code>SaveImageService</code> é responsavel por salvar as
- * images feitas por upload pela aplicação.
+ * A classe <code>SaveImageService</code> eh responsavel por salvar as
+ * images feitas por upload pela aplicacao.
  * @author Marcelo
  *
  */
 @Component
 public class SaveImageService {
-
+	
+	private static final Logger LOGGER = Logger.getLogger( SaveImageService.class.getName() );
+	
 	private ServletContext context;
-	private String PATH;
 	private Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	
 	/**
-	 * Método que salva a imagem no diretorio do servidor definido como padrão
+	 * Metodo que salva a imagem no diretorio do servidor definido como padrao
 	 * @param base64
 	 * @param filename
 	 * @return
 	 * @throws MapSkillsException 
 	 */
 	public String save(final String base64, final String filename) throws MapSkillsException {
-		this.PATH = context.getRealPath("/images");
-		try (final OutputStream stream = new FileOutputStream(PATH.concat("/").concat(filename))) {
+		final String path = context.getRealPath("/images");
+		try (final OutputStream stream = new FileOutputStream(path.concat("/").concat(filename))) {
 		    stream.write(parser.toByteArray(base64));
 		    stream.close();
+		    return filename;
 		} catch (final IOException e) {
-			e.printStackTrace();
-			throw new SaveImageException(filename);
+			LOGGER.info(e.getMessage());
+			throw new SaveImageException(filename, e);
 		}
-		return filename;
 	}
 	
 	@Autowired
