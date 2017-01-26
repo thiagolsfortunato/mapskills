@@ -62,8 +62,12 @@ public class InstitutionService implements RepositoryService {
 		return institutionRepository.findById(id);
 	}
 	
-	public Institution findInstitutionById(final String code) {
+	public Institution findInstitutionByCode(final String code) {
 		return institutionRepository.findByCode(code);
+	}
+	
+	public Student findStudentByRa(final String ra) {
+		return studentRepository.findByRaRa(ra);
 	}
 	
 	public Collection<Institution> findAllInstitutions() {
@@ -113,7 +117,7 @@ public class InstitutionService implements RepositoryService {
 		return studentRepository.findAllByRaInstitutionCode(institutionCode);
 	}
 	
-	public long findThemeCuurent(final String institutionCode) {
+	public long findThemeCurrent(final String institutionCode) {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	

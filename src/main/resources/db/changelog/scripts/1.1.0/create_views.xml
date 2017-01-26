@@ -5,7 +5,7 @@
 
 	<changeSet author="marcelo-inacio" id="createView-radar-result">
 	    <createView catalogName="MAPSKILLS"
-	            replaceIfExists="true"
+	            replaceIfExists="false"
 	            viewName="RADAR_RESULT_VIEW">SELECT sqe.use_id AS use_id,
 		            s.ski_type AS ski_type,
 		            s.ski_description AS ski_description,

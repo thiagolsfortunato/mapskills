@@ -202,6 +202,9 @@
 			</properties>
 		</profile>
 		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
             <id>test</id>
             <properties>
                 <datasource.url>jdbc:hsqldb:mem:mapskills</datasource.url>
@@ -214,6 +217,9 @@
             </properties>
         </profile>
         <profile>
+<!--         	<activation> -->
+<!--  				<activeByDefault>true</activeByDefault> -->
+<!--  			</activation> -->
             <id>local</id>
             <properties>
                 <datasource.url>jdbc:mysql://127.0.0.1:3306/mapskills</datasource.url>
@@ -226,16 +232,16 @@
             </properties>
         </profile>
         <profile>
-        	<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+<!--         	<activation> -->
+<!-- 				<activeByDefault>true</activeByDefault> -->
+<!-- 			</activation> -->
             <id>openshift</id>
             <properties>
-                <datasource.url>jdbc:mysql://${$OPENSHIFT_MYSQL_DB_HOST}:${$OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url>
-<!-- 				<datasource.url>jdbc:mysql://127.0.0.1:48341/mapskills</datasource.url> -->
+<!--                 <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url> -->
+				<datasource.url>jdbc:mysql://localhost:3307/mapskills</datasource.url>
                 <datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-                <datasource.username>mapskills</datasource.username>
-                <datasource.password>mapskills</datasource.password>
+                <datasource.username>adminJY8iyP2</datasource.username>
+                <datasource.password>eHl1s_eG2ELW</datasource.password>
                 <datasource.dropAll>true</datasource.dropAll>
                 <liquibase.skip>false</liquibase.skip>
                 <datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
