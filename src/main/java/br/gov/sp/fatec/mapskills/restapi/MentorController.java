@@ -133,7 +133,7 @@ public class MentorController {
 	 */
 	@RequestMapping(value = "/institution/{institutionCode}/theme/current", method = RequestMethod.GET)
 	public ResponseEntity<Long> getThemeCurrent(@PathVariable("institutionCode") final String institutionCode) {
-		final Long themeIdCurrent = institutionService.findThemeCuurent(institutionCode);
+		final Long themeIdCurrent = institutionService.findThemeCurrent(institutionCode);
 		return new ResponseEntity<>(themeIdCurrent, HttpStatus.OK);
 	}
 	
@@ -142,7 +142,7 @@ public class MentorController {
 			@PathVariable("institutionCode") final String institutionCode,
 			@PathVariable("themeId") final long themeId) {
 		
-		final Institution institution = institutionService.findInstitutionById(institutionCode);
+		final Institution institution = institutionService.findInstitutionByCode(institutionCode);
 		institution.changeGameTheme(themeId);
 		institutionService.saveInstitution(institution);
 		return new ResponseEntity<>(HttpStatus.OK);

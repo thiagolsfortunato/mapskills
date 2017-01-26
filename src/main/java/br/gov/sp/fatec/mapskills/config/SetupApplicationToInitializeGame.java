@@ -46,8 +46,10 @@ public class SetupApplicationToInitializeGame {
 	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
 	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills-server/images/";
+//	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills/images/";
+	private static final String URL_SERVER = "http://localhost:8585/mapskills/images/";
 	private static final long GAME_THEME_ID = 1;
+	private static final String INSTITUTION_CODE = "147";
 	
 	private final Map<Integer, Question> mapQuestion = new HashMap<>(26);
 	private final Map<Integer, Collection<Alternative>> mapAlternatives = new HashMap<>(26);
@@ -79,21 +81,24 @@ public class SetupApplicationToInitializeGame {
 	 * cria uma nova instituição persistindo-a na base de dados
 	 */
 	private void createInstitution() {
-		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123");
-		final Institution fatec = new Institution("146", "66726505000146", "Jessen Vidal", "São José", mentor);
+		institutionService.deleteAll();
+		final Mentor mentor = new Mentor("Sidney", INSTITUTION_CODE, "sidney@fatec.sp.gov.br", "Mudar@123");
+		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", "São José", mentor);
 		institutionService.saveInstitution(fatec);
 	}
 	/**
 	 * adiciona cursos a instituição
 	 */
 	private void createCourses() {
-		institutionService.saveCourse(new Course("029", "Logistica", CoursePeriod.NOTURNO, "146"));
-		institutionService.saveCourse(new Course("030", "Estruturas Leves", CoursePeriod.NOTURNO, "146"));
-		institutionService.saveCourse(new Course("031", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "146"));
+		institutionService.saveCourse(new Course("050", "Logistica", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("060", "Estruturas Leves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("070", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
 	}
 	
 	private void creatStudent() {
-		institutionService.saveStudent(new Student(new AcademicRegistry("1460291713000", "146", "029"), "Student User", "1289003400", "student@fatec.sp.gov.br", "mudar@123"));
+		if(institutionService.findStudentByRa(INSTITUTION_CODE+"0501713000") != null) {
+			institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0501713000", INSTITUTION_CODE, "050"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "mudar@123"));			
+		}
 	}
 	/**
 	 * cria um tema e persiste-a na base de dados
