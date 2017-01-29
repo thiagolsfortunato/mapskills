@@ -12,4 +12,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 	public User findByLogin(final Login login);
 	
+	public User findByLoginUsername(final String username);
+	
 }

@@ -18,7 +18,12 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-
+/**
+ * A classe <code>InstitutionService</code> contem todos metodos necessários para realizacao
+ * de tudo que esta relacionado ha instituicao.
+ * @author Marcelo
+ *
+ */
 @Service
 public class InstitutionService implements RepositoryService {
 		
@@ -26,7 +31,6 @@ public class InstitutionService implements RepositoryService {
 	private CourseRepository courseRepository;
 	private StudentRepository studentRepository;
 	
-
 	@Override
 	public void deleteAll() {
 		institutionRepository.deleteAll();
@@ -37,7 +41,7 @@ public class InstitutionService implements RepositoryService {
 	public void saveInstitutions(final Collection<Institution> institutions) {
 		institutionRepository.save(institutions);
 	}
-	
+
 	public void saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
 	}

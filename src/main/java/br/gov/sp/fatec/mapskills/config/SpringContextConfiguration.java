@@ -7,7 +7,6 @@
 package br.gov.sp.fatec.mapskills.config;
 
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
 /**
  * A classe <code>SpringContextConfiguration</code> representa as configurações
  * necessárias para o uso da aplicação em produção.
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.PropertySource;
  * @author Marcelo
  *
  */
-@PropertySource("classpath:application.properties")
-@Import({DataBaseHsqldbConfig.class, SecurityConfig.class, SetupApplicationToInitializeGame.class})
+@Import({DataBaseConfig.class})
 public class SpringContextConfiguration extends AbstractSpringContextConfiguration {	
 }

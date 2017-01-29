@@ -30,6 +30,8 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
  */
 public abstract class PoiParser<T> {
 	
+	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
+	
 	private static final Logger LOGGER = Logger.getLogger( PoiParser.class.getName() );
 	
 	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;

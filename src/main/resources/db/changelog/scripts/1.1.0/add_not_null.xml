@@ -5,12 +5,10 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-<!-- terminar de editar  -->
 	<changeSet author="marcelo-inacio" id="addNotNullConstraint-user">
 	    <addNotNullConstraint catalogName="MAPSKILLS"
-	            columnDataType="VARCHAR(50)"
+	            columnDataType="VARCHAR(255)"
 	            columnName="USE_PASSWORD"
-	            defaultNullValue="Mudar@123"
 	            tableName="USER"/>
 	</changeSet>
 	

@@ -40,7 +40,7 @@ public class StudentPoiParser extends PoiParser<Student> {
 	@Override
 	protected Student buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException {
 		final List<String> args = super.getObjectArgs(cellIterator);
-		return new Student(academicRegistry(args.get(0)), args.get(1), args.get(2), args.get(3), "mudar@123");
+		return new Student(academicRegistry(args.get(0)), args.get(1), args.get(2), args.get(3), ENCRYPTED_DEFAULT_PASSWORD);
 	}
 	
 	/**

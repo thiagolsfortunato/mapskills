@@ -26,6 +26,7 @@ import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class GameThemeTest extends MapSkillsTest {
@@ -41,7 +42,7 @@ public class GameThemeTest extends MapSkillsTest {
 		super.cleanTables(themeService, sceneService);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveTheme() {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
 		themeService.save(theme);
@@ -51,7 +52,7 @@ public class GameThemeTest extends MapSkillsTest {
 	}
 	
 	
-	@Ignore @Test
+	@Test
 	public void findAllThemes() {
 		themeService.save(buildMockThemes());
 		final List<GameTheme> themes = new ArrayList<>();

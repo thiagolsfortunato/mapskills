@@ -35,7 +35,7 @@ public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfig
 	/** {@inheritDoc} */
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] {"/rest/*"};
+		return new String[] {"/*"};
 	}
 	
 	/** {@inheritDoc} */
@@ -51,7 +51,7 @@ public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfig
 	@Override
     public void onStartup(final ServletContext context) throws ServletException {
         super.onStartup(context);
-        context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/rest/*");
+        context.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class).addMappingForUrlPatterns(null, false, "/*");
     }
 
 }

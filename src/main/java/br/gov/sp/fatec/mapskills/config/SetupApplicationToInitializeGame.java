@@ -37,7 +37,9 @@ import br.gov.sp.fatec.mapskills.domain.skill.SkillRepository;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
 @Configuration
@@ -49,7 +51,7 @@ public class SetupApplicationToInitializeGame {
 //	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills/images/";
 	private static final String URL_SERVER = "http://localhost:8585/mapskills/images/";
 	private static final long GAME_THEME_ID = 1;
-	private static final String INSTITUTION_CODE = "147";
+	private static final String INSTITUTION_CODE = "146";
 	
 	private final Map<Integer, Question> mapQuestion = new HashMap<>(26);
 	private final Map<Integer, Collection<Alternative>> mapAlternatives = new HashMap<>(26);
@@ -59,32 +61,34 @@ public class SetupApplicationToInitializeGame {
 	private SceneService sceneService = BeanRetriever.getBean("sceneService", SceneService.class);
 	private GameThemeService themeService = BeanRetriever.getBean("gameThemeService", GameThemeService.class);
 	private InstitutionService institutionService = BeanRetriever.getBean("institutionService", InstitutionService.class);
+	private UserService userService = BeanRetriever.getBean("userService", UserService.class);
 	
 	public SetupApplicationToInitializeGame() throws IOException {
+		this.createAdmin();
 		this.createInstitution();
-		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 		this.createCourses();
-		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 		this.creatStudent();
-		LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");
 		this.createGameTheme();
-		LOGGER.log(Level.INFO, "=== THEMES SAVE SUCCESS ===");
 		this.createSkills();
-		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 		this.buildTextFromFile();
 		this.generateAlternatives();
 		this.generateQuestions();
 		this.createScenesFromFile();
-		LOGGER.log(Level.INFO, "=== SCENES SAVE SUCCESS ===");
+	}
+	
+	private void createAdmin() {
+		userService.save(new Administrator("AdministradorCPS", "admin@cps.sp.gov.br", "$2a$10$q9jtl3BMIBxnpPZJm1hy5.7xDwKgUlfL93c0CbrzagZZUpyfRncVC"));
+		LOGGER.log(Level.INFO, "=== ADMINISTATOR SAVE SUCCESS ===");
 	}
 	/**
 	 * cria uma nova instituição persistindo-a na base de dados
 	 */
 	private void createInstitution() {
 		institutionService.deleteAll();
-		final Mentor mentor = new Mentor("Sidney", INSTITUTION_CODE, "sidney@fatec.sp.gov.br", "Mudar@123");
+		final Mentor mentor = new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy");
 		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", "São José", mentor);
 		institutionService.saveInstitution(fatec);
+		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 	}
 	/**
 	 * adiciona cursos a instituição
@@ -93,11 +97,13 @@ public class SetupApplicationToInitializeGame {
 		institutionService.saveCourse(new Course("050", "Logistica", CoursePeriod.NOTURNO, INSTITUTION_CODE));
 		institutionService.saveCourse(new Course("060", "Estruturas Leves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
 		institutionService.saveCourse(new Course("070", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 	}
 	
 	private void creatStudent() {
-		if(institutionService.findStudentByRa(INSTITUTION_CODE+"0501713000") != null) {
-			institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0501713000", INSTITUTION_CODE, "050"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "mudar@123"));			
+		if(institutionService.findStudentByRa(INSTITUTION_CODE+"0501713000") == null) {
+			institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0501713000", INSTITUTION_CODE, "050"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "$2a$10$MfkKiDmLJohCjQ45Kb7vnOAeALBR1SV0OTqkkB6IfcMDA87iOrgmG"));
+			LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");
 		}
 	}
 	/**
@@ -105,6 +111,7 @@ public class SetupApplicationToInitializeGame {
 	 */
 	private void createGameTheme() {
 		themeService.save(new GameTheme("PIZZARIA"));
+		LOGGER.log(Level.INFO, "=== THEMES SAVE SUCCESS ===");
 	}
 	/**
 	 * cria uma carga inicial das cenas persistindo-as na base de dados,
@@ -125,6 +132,7 @@ public class SetupApplicationToInitializeGame {
 			}
 			sceneService.save(new Scene(textList.get(imageIndex++), URL_SERVER.concat(line), null, GAME_THEME_ID));
 		}
+		LOGGER.log(Level.INFO, "=== SCENES SAVE SUCCESS ===");
 	}
 	
 	/**
@@ -137,6 +145,7 @@ public class SetupApplicationToInitializeGame {
 		skillRepository.save(new Skill("Equilibrio emocional", "Avalia o comportamento em situação de stress."));
 		skillRepository.save(new Skill("Trabalho em equipe", "Avalia a gestão do trablho em equipe."));
 		skillRepository.save(new Skill("Resiliencia", "Avalia a facilidade de se adaptar às mudanças."));
+		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 	}
 	/**
 	 * popula mapa de questões, sendo a lista de alternativas recuperada

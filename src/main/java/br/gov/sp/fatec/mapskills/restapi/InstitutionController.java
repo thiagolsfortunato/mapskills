@@ -41,7 +41,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
  *
  */
 @RestController
-public class MentorController {
+public class InstitutionController {
 	
 	@Autowired
 	private InstitutionService institutionService;

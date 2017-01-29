@@ -8,7 +8,7 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +28,7 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class AdministratorTest extends MapSkillsTest {
@@ -39,12 +40,12 @@ public class AdministratorTest extends MapSkillsTest {
 	private InstitutionService institutionService;
 
 	
-	@After
+	@Before
 	public void cleanTables() {
 		super.cleanTables(institutionService, userService);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void findUserByUsernamePasswords() throws MapSkillsException {
 		final String EXPECTED_RA = "Student MockA"; 
 		
@@ -62,7 +63,7 @@ public class AdministratorTest extends MapSkillsTest {
 		assertEquals("Mentor Responsavel Teste", mentorUser.getName());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveAdministrator() {
 		final Administrator admin = new Administrator("Administrador", "admin", "admin");
 		userService.save(admin);

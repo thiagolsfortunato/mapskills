@@ -2,7 +2,7 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import java.util.List;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +18,7 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class StudentTest extends MapSkillsTest {
@@ -31,12 +32,12 @@ public class StudentTest extends MapSkillsTest {
 	@Autowired
 	private SkillService skillService;
 	
-	@After
+	@Before
 	public void cleanTables() {
 		super.cleanTables(sceneService, skillService);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void getResultByStudent() {
 		prepareAnswerContext();
 		
@@ -54,13 +55,13 @@ public class StudentTest extends MapSkillsTest {
 
 	}
 	
-	@Ignore @Test
+	@Test
 	public void testResultSkill() {
 		prepareAnswerContext();
 		repo.findResultSkillByStudentId(1);
 	}
 	
-	//@Test
+	@Test
 	public void testResultView() {
 		prepareAnswerContext();
 		repo.findResultViewByStudentId(1);
