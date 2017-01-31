@@ -24,13 +24,15 @@ import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 
 public class AdminTest extends AbstractApplicationTest {
 	
+	private static final String BASE_PATH = "/admin";
+	
 	@Autowired
 	private SkillService skillService;
 	
 	@Test
 	public void adminGetInstitutionsTest() throws Exception {
 		
-		this.mockMvc.perform(get("/institutions")
+		this.mockMvc.perform(get(BASE_PATH + "/institutions")
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 				.andExpect(content().contentType("application/json;charset=UTF-8"))
 				.andExpect(status().isOk());
@@ -41,7 +43,7 @@ public class AdminTest extends AbstractApplicationTest {
 		final Skill skill = new Skill("liderança", "avalia...");
 		final ObjectMapper objectMapper = new ObjectMapper();
 		final String bodyInput = objectMapper.writeValueAsString(skill);
-		this.mockMvc.perform(post("/skill")
+		this.mockMvc.perform(post(BASE_PATH + "/skill")
 				.content(bodyInput)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk());

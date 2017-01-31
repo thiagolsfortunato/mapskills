@@ -28,7 +28,7 @@ public class DefaultUserDetails implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) {
-		final br.gov.sp.fatec.mapskills.domain.user.User user = repository.findByLoginUsername(username);
+		final br.gov.sp.fatec.mapskills.domain.user.User user = repository.findByUsername(username);
 		
 		if(user == null) {
 			throw new UsernameNotFoundException("No user present with username: " + username);

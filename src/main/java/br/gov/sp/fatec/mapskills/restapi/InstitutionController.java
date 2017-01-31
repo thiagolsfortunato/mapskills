@@ -41,7 +41,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
  *
  */
 @RestController
+@RequestMapping(InstitutionController.BASE_PATH)
 public class InstitutionController {
+	
+	public static final String BASE_PATH = "/institution";
 	
 	@Autowired
 	private InstitutionService institutionService;
@@ -91,7 +94,7 @@ public class InstitutionController {
 	 * @param institutionCode
 	 * @return
 	 */
-	@RequestMapping(value = "/institution/{institutionCode}/students", method = RequestMethod.GET)
+	@RequestMapping(value = "/{institutionCode}/students", method = RequestMethod.GET)
 	public ResponseEntity<StudentListWrapper> getAllStudentsByInstitution(
 			@PathVariable("institutionCode") final String institutionCode) {
 		
@@ -107,7 +110,7 @@ public class InstitutionController {
 	 * @param institutionCode
 	 * @return
 	 */
-	@RequestMapping(value = "/institution/{institutionCode}/courses", method = RequestMethod.GET)
+	@RequestMapping(value = "/{institutionCode}/courses", method = RequestMethod.GET)
 	public ResponseEntity<CourseListWrapper> getAllCoursesByInstitution(
 			@PathVariable("institutionCode") final String institutionCode) {
 		
@@ -131,13 +134,13 @@ public class InstitutionController {
 	 * @param institutionCode
 	 * @return
 	 */
-	@RequestMapping(value = "/institution/{institutionCode}/theme/current", method = RequestMethod.GET)
+	@RequestMapping(value = "/{institutionCode}/theme/current", method = RequestMethod.GET)
 	public ResponseEntity<Long> getThemeCurrent(@PathVariable("institutionCode") final String institutionCode) {
 		final Long themeIdCurrent = institutionService.findThemeCurrent(institutionCode);
 		return new ResponseEntity<>(themeIdCurrent, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/institution/{institutionCode}/theme/{themeId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{institutionCode}/theme/{themeId}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateThemeCurrent(
 			@PathVariable("institutionCode") final String institutionCode,
 			@PathVariable("themeId") final long themeId) {

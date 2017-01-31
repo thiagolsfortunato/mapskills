@@ -33,7 +33,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 		final ObjectMapper objectMapper = new ObjectMapper();
 		final String body = objectMapper.writeValueAsString(student);
 		
-		this.mockMvc.perform(post("/student")
+		this.mockMvc.perform(post("/institution/student")
 				.content(body)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk());

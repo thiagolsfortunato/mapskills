@@ -9,6 +9,7 @@ package br.gov.sp.fatec.mapskills.authentication.jwt;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 
@@ -28,6 +29,8 @@ import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
 
 @Component
 public class JwtAuthenticationManager implements AuthenticationManager {
+	
+	private static final Logger LOGGER = Logger.getLogger(JwtAuthenticationManager.class.getName());
 	
 	private final UserRepository repository;
     private final List<JwtVerifier> verifiersList = new ArrayList<>();
@@ -55,13 +58,18 @@ public class JwtAuthenticationManager implements AuthenticationManager {
             verifier.verify(jwt);
         }
 
-        final String username = claims.getSubject();
+        String username = null;
+		try {
+			username = claims.getStringClaim("username");
+		} catch (final ParseException e) {
+			LOGGER.warning(e.getMessage());
+			throw new JwtTokenException("The user from jwt not found.");
+		}
         
-        final User user = repository.findByLoginUsername(username);
+        final User user = repository.findByUsername(username);
 		
         return new PreAuthenticatedAuthentication(user);
 	}
-	
 	
 	@Resource
     public void setVerifiersList(final List<JwtVerifier> verifiersList) {

@@ -23,6 +23,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -67,19 +68,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("providerManager")
     private AuthenticationManager providerManager;
 	/**
-	 * configuração de seguranca em nivel de uri 
+	 * configuracao de seguranca em nivel de URI
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
+		http.csrf().disable();
 		http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class).csrf().disable();
 		http.addFilter(preAuthenticationFilter());
 		http.addFilter(loginFilter());
-		http.authorizeRequests().antMatchers("/login").permitAll()
-		.anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/login").permitAll();
+		// For ADMIN only.
+        http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMINISTRATOR')");
+        //For MENTOR only.
+        http.authorizeRequests().antMatchers("/institution/**").access("hasRole('ROLE_MENTOR')");
+        //For STUDENT only.
+        http.authorizeRequests().antMatchers("/student/**").access("hasRole('ROLE_STUDENT')");
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.csrf().disable();
 	}
-	
+	/**
+	 * permite acesso as imagens do jogo com spring security
+	 */
+	@Override
+    public void configure(final WebSecurity web) throws Exception {
+        web
+        .ignoring()
+        .antMatchers("/images/**");
+    }
+		
 	@Bean
     public SCMCorsFilter corsFilter() {
         return new SCMCorsFilter();

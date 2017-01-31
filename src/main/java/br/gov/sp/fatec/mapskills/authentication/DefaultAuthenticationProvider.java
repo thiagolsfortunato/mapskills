@@ -30,7 +30,7 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 		
-		final User user = repository.findByLoginUsername(authentication.getName());
+		final User user = repository.findByUsername(authentication.getName());
 		
 		if(this.userVerify(user, authentication.getCredentials().toString())) {
 			try {

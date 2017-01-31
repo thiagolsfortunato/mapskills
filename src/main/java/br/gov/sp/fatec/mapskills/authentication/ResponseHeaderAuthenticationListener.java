@@ -42,6 +42,7 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
 		final long now = System.currentTimeMillis();
 		final JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
 				.subject(event.getUsername())
+				.claim("username", event.getUserDomain().getUsername())
 				.claim("name", event.getUserDomain().getName())
 				.claim("profile", event.getUserDomain().getProfile())
 				.issueTime(new Date(now))

@@ -28,5 +28,10 @@ public class AuthenticationTest extends AbstractApplicationTest {
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED))
 				.andExpect(status().isOk());
 	}
+	
+	//@Test
+	public void jwtTest() throws Exception {
+		
+	}
 
 }

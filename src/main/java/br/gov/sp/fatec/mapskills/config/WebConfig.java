@@ -50,10 +50,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-     
+    /**
+     * configuracao que permite acesso a pasta images da aplicacao sem restricao,
+     * com spring security configurado 
+     */
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+            registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(31556926);
     }
+
 
 }

@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -20,7 +21,7 @@ public class PreAuthenticatedAuthentication extends PreAuthenticatedAuthenticati
 	private static final long serialVersionUID = 1L;
 
     public PreAuthenticatedAuthentication(final User user) {
-        super(user, new DefaultGrantedAuthority(user.getProfile()));
+        super(user, new DefaultGrantedAuthority(user.getProfile()), buildAuthorities(user));
         setAuthenticated(true);
     }
 
@@ -40,5 +41,15 @@ public class PreAuthenticatedAuthentication extends PreAuthenticatedAuthenticati
         }
         return false;
     }
+    /**
+     * retorna a autorizacao que o usuario logado possue
+     * @param user
+     * @return
+     */
+    private static Collection<GrantedAuthority> buildAuthorities(final User user) {
+		final Collection<GrantedAuthority> authorities = new ArrayList<>(1);
+		authorities.add(new DefaultGrantedAuthority(user.getProfile()));
+		return authorities;
+	}
 
 }

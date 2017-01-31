@@ -43,7 +43,10 @@ import br.gov.sp.fatec.mapskills.utils.SaveImageService;
  *
  */
 @RestController
+@RequestMapping(AdminController.BASE_PATH)
 public class AdminController {
+	
+	public static final String BASE_PATH = "/admin";
 	
 	@Autowired
 	private SkillService skillService;

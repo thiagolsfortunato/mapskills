@@ -29,7 +29,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
  *
  */
 @RestController
+@RequestMapping(StudentController.BASE_PATH)
 public class StudentController {
+	
+	public static final String BASE_PATH = "/student";
 	
 	@Autowired
 	private SceneService sceneService;
