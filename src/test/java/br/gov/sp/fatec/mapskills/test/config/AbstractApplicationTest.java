@@ -6,6 +6,8 @@
  */
 package br.gov.sp.fatec.mapskills.test.config;
 
+import javax.servlet.Filter;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -31,14 +32,22 @@ public abstract class AbstractApplicationTest {
 	
 	@Autowired
     protected WebApplicationContext wac;
+	
+	@Autowired
+    private Filter springSecurityFilterChain;
+	
 	protected MockMvc mockMvc;
 	/**
 	 * configuração inicial para mockar os teste de integração
 	 */
 	@Before
     public void setup() {
-        final DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
-        this.mockMvc = builder.build();
+        //final DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
+        //this.mockMvc = builder.build();
+		mockMvc = MockMvcBuilders
+                .webAppContextSetup(wac)
+                .addFilters(springSecurityFilterChain)
+                .build();
     }
 
 }

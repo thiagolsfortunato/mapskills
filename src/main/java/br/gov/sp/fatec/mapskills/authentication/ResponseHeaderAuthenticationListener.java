@@ -61,7 +61,7 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
 
         final HttpServletResponse resp = event.getResponse();
         resp.setHeader("Authorization", String.format("Bearer %s", signedJWT.serialize()));
-        resp.setHeader("User", String.format("%s %s", event.getUserDomain().getName(), event.getUserDomain().getProfile()));
+        //resp.setHeader("User", String.format("%s %s", event.getUserDomain().getName(), event.getUserDomain().getProfile()));
 	}
 
 }

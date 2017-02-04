@@ -45,7 +45,6 @@ public class PreAuthenticatedUserFilter extends AbstractPreAuthenticatedProcessi
             if (session != null) {
                 session.removeAttribute("SPRING_SECURITY_CONTEXT");
             }
-            //TokenRepository.clear();
         }
     }
 

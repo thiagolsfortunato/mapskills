@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilter(preAuthenticationFilter());
 		http.addFilter(loginFilter());
 		http.authorizeRequests().antMatchers("/login").permitAll();
+		http.authorizeRequests().antMatchers("/user/details").authenticated();
 		// For ADMIN only.
         http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMINISTRATOR')");
         //For MENTOR only.
