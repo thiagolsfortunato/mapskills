@@ -87,7 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	/**
-	 * permite acesso as imagens do jogo com spring security
+	 * permite acesso as imagens do jogo com spring security,
+	 * liberando essa rota para que não seje filtrada pelo spring security
 	 */
 	@Override
     public void configure(final WebSecurity web) throws Exception {
@@ -95,19 +96,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .ignoring()
         .antMatchers("/images/**");
     }
-		
+	/**
+	 * configuracao do Cross-Origin Resource Sharing (CORS) da aplicacao.
+	 * @return
+	 */
 	@Bean
     public SCMCorsFilter corsFilter() {
         return new SCMCorsFilter();
     }
-	
+	/**
+	 * filtro de pre-autenticacao que verifica a preseca
+	 * do token no cabecalho.
+	 * @return
+	 */
 	@Bean
 	public Filter preAuthenticationFilter() {
 		final PreAuthenticatedUserFilter filter = new PreAuthenticatedUserFilter();
 		filter.setAuthenticationManager(jwtAuthenticationManager);
 		return filter;
 	}
-	
+	/**
+	 * filtro que realiza o login do usuario na aplicacao
+	 * passando pela rota padrao de login do spring security
+	 * @return
+	 */
 	@Bean
 	public Filter loginFilter() {
 		final UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
@@ -121,7 +133,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager providerManager(@Qualifier("defaultAuthenticationProvider") final AuthenticationProvider provider) {
 		return new ProviderManager(Arrays.asList(provider));
 	}
-	
+	/**
+	 * define um encriptador de senha para aplicacao
+	 * @return
+	 */
 	@Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(5);

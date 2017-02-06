@@ -8,7 +8,6 @@ package br.gov.sp.fatec.mapskills.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +31,7 @@ public abstract class PoiParser<T> {
 	
 	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
 	
-	private static final Logger LOGGER = Logger.getLogger( PoiParser.class.getName() );
+	private static final Logger LOGGER = Logger.getLogger(PoiParser.class.getName());
 	
 	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;
 
@@ -47,16 +46,15 @@ public abstract class PoiParser<T> {
 	 * @throws Exception
 	 */
 	protected List<T> objectListFactory(final InputStream inputStream) throws MapSkillsException {
-		XSSFWorkbook workbook;
 		try {
-			workbook = new XSSFWorkbook(inputStream);
+			final XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 			final XSSFSheet sheet = workbook.getSheetAt(0);
-			final Iterator<Row> rowIterator = sheet.iterator(); 
+			final Iterator<Row> rowIterator = sheet.iterator();
 			workbook.close();
 			return objectListBuilder(rowIterator);
-		} catch (final Exception e) {
+		} catch (final MapSkillsException | IOException e) {
 			LOGGER.info(e.getMessage());
-			throw new ReadFileException(e);
+			throw new ReadFileException(e.getMessage());
 		}
 	}
 	/**
@@ -69,15 +67,12 @@ public abstract class PoiParser<T> {
 	 * @throws MapSkillsException 
 	 */
 	private List<T> objectListBuilder(final Iterator<Row> rowIterator) throws MapSkillsException {
-		final List<T> objectList = new ArrayList<>();
-		Row row;
+		final List<T> objectList = new LinkedList<>();
+		rowIterator.next();
 		while (rowIterator.hasNext()) {
-			row = rowIterator.next();
-			if(row.getRowNum() == 0) {
-				continue;
-			}
+			final Row row = rowIterator.next();
 			final Iterator<Cell> cellIterator = row.cellIterator();
-			objectList.add(buildObject(cellIterator));
+			objectList.add(buildObject(cellIterator));				
 		}
 		return objectList;
 	}
@@ -86,13 +81,16 @@ public abstract class PoiParser<T> {
 	 * para ser usado como parametro em quem a chamou.
 	 * 
 	 * @param cellIterator
-	 * @return
+	 * @return lista de strings que sao os atributos do objeto user em questao.
+	 * @throws CellBlankException 
 	 */
-	protected List<String> getObjectArgs(final Iterator<Cell> cellIterator) {
+	protected List<String> getObjectArgs(final Iterator<Cell> cellIterator) throws MapSkillsException {
 		final List<String> args = new LinkedList<>();
-		Cell cell;
 		while (cellIterator.hasNext()) {
-			cell = cellIterator.next();
+			final Cell cell = cellIterator.next();
+			if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+				throw new CellBlankException(cell.getRowIndex(), cell.getColumnIndex());
+			}
 			cell.setCellType(Cell.CELL_TYPE_STRING);
 			args.add(cell.getStringCellValue());
 		}

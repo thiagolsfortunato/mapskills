@@ -37,7 +37,7 @@ public abstract class User implements Principal, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "use_id")
-	protected long id;
+	private long id;
 	
 	@Column(name = "use_name")
 	private String name;

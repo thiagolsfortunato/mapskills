@@ -6,7 +6,10 @@
  */
 package br.gov.sp.fatec.mapskills.test.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.config.AbstractSpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
@@ -19,4 +22,9 @@ import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
  */
 @Import({DataBaseHsqldbConfig.class})
 public class SpringContextTestConfiguration extends AbstractSpringContextConfiguration {
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
 }

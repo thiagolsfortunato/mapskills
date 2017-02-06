@@ -11,14 +11,9 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 public class ReadFileException extends MapSkillsException {
 	
 	private static final long serialVersionUID = 1L;
-	private final Exception exception;
 	
-	public ReadFileException(final Exception e) {
-		exception = e;
-	}
-	
-	public Exception getException() {
-		return exception;
+	public ReadFileException(final String message) {
+		super(message);
 	}
 
 }

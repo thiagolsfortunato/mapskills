@@ -6,8 +6,8 @@
 package br.gov.sp.fatec.mapskills.domain.user;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,7 +28,7 @@ public class StudentPoiParser extends PoiParser<Student> {
 	 */
 	@Override
 	public List<Student> toObjectList(final InputStream inputStream) throws MapSkillsException {
-		final List<Student> studentList = new ArrayList<>();
+		final List<Student> studentList = new LinkedList<>();
 		studentList.addAll(super.objectListFactory(inputStream));
 		return studentList;
 	}
@@ -42,7 +42,6 @@ public class StudentPoiParser extends PoiParser<Student> {
 		final List<String> args = super.getObjectArgs(cellIterator);
 		return new Student(academicRegistry(args.get(0)), args.get(1), args.get(2), args.get(3), ENCRYPTED_DEFAULT_PASSWORD);
 	}
-	
 	/**
 	 * metodo <code>academicRegistry</code> que retorna uma instancia de ra para o aluno.
 	 * @param ra
@@ -55,9 +54,6 @@ public class StudentPoiParser extends PoiParser<Student> {
 		final String courseCode = ra.substring(3, 6);
 		return new AcademicRegistry(ra, institutionCode, courseCode);
 	}
-
-	//verificar o ra se nao ha nenhuma divergencia e se atente todos requisitos necessarios
-	//ver lista de verify de JWT do prof
 	/**
 	 * metodo que valida o ra contido no documento xlsx
 	 * @param ra
