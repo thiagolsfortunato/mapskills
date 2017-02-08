@@ -10,7 +10,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-
+/**
+ * a classe <code>AcademicRegistry</code> eh
+ * um Value Object que representa a RA do aluno,
+ * que eh utilizada para recuperar algumas informacoes
+ * do mesmo.
+ * 
+ * @author Marcelo
+ *
+ */
 @Embeddable
 public class AcademicRegistry implements Serializable {
 	

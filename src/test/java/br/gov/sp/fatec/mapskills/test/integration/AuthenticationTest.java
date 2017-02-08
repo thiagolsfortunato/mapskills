@@ -1,37 +1,52 @@
 package br.gov.sp.fatec.mapskills.test.integration;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Date;
+
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationServiceException;
+
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 
 public class AuthenticationTest extends AbstractApplicationTest {
 		
 	@Autowired
 	private InstitutionService institutionService;
+		
+	@Before
+	public void setUp() {
+		super.setUpContext();
+	}
 	/**
 	 * sempre depois de realizar um teste, ira limpar os
 	 * registros do banco em memoria.
 	 */
 	@After
 	public void down() {
-		institutionService.deleteAll();
+		super.cleanTables(institutionService);
 	}
 	
 	@Test
-	public void loginTest() throws Exception {
-		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), 
-				"Student MockE", "1289003400", "aluno@fatec.sp.gov.br", encoder.encode("mudar@123"));
-		
-		institutionService.saveStudent(student);
+	public void login() throws Exception {
+		institutionService.saveStudent(getOneStudent());
 		
 		mockMvc.perform(post("/login")
 			.param("username", "aluno@fatec.sp.gov.br")
@@ -41,19 +56,81 @@ public class AuthenticationTest extends AbstractApplicationTest {
 	}
 	
 	@Test
-	public void jwtTest() throws Exception {
-		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), 
-				"Student MockE", "1289003400", "aluno@fatec.sp.gov.br", encoder.encode("mudar@123"));
+	public void jwtReturn() throws Exception {
+		institutionService.saveStudent(getOneStudent());
 		
-		institutionService.saveStudent(student);
-
-		mockMvc.perform(post("/login")
-			.param("username", "aluno@fatec.sp.gov.br")
-			.param("password", "mudar@123")
-			.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+		super.mockMvcPerformLogin("aluno@fatec.sp.gov.br", "mudar@123")
 			.andReturn()
 			.getResponse()
 			.containsHeader(AUTHORIZATION);
+	}
+	
+	@Test
+	public void jwtUnauthorized() throws Exception {
+		super.mockMvcPerformLogin("aluno@fatec.sp.gov.br", "mudar@123")
+			.andExpect(status().isUnauthorized());
+	}
+	
+	@Test
+	@Ignore
+	public void jwtVerify() throws Exception {
+		/*
+		 * desativar mockito nessa etapa, para que não pegue o
+		 * mock do jwtAuthenticationManager.
+		 */
+		
+		institutionService.saveStudent(getOneStudent());		
+		
+		final String token = super.mockMvcPerformLogin("aluno@fatec.sp.gov.br", "mudar@123")
+									.andReturn()
+									.getResponse()
+									.getHeader(AUTHORIZATION);
+
+		System.err.println(token);
+		mockMvc.perform(get("/student/game/3")
+			.header(AUTHORIZATION, token)
+			.accept(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void jwtException() throws Exception {
+		mockMvc.perform(get("/student/game/3")
+				.header(AUTHORIZATION, generateJwt(getOneStudent()))
+				.accept(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)))
+				.andExpect(status().isForbidden());
+	}
+	
+	/**
+	 * metodo que gera um token modficado, para que na verifucacao
+	 * do jwt ocorra uma exception.
+	 * 
+	 * @param user
+	 * @return String do token
+	 * @throws JOSEException
+	 */
+	private String generateJwt(final User user) throws JOSEException {
+		final long FIVE_HOURS_IN_MILLISECONDS = 60000 * 300;
+	    final JWSSigner signer = new MACSigner("9SyECk96oDsTmXfogIieDI0cD/8FpnojlYSUJT5U9I/FGVmBz5oskmjOR8cbXTvoPjX+Pq/T/b1PqpHX0lYm0oCBjXWICA==");
+		final long now = System.currentTimeMillis();
+		final JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+				.subject(user.getName())
+				.claim("username", user.getUsername())
+				.claim("profile", user.getProfile())
+				.issueTime(new Date(now))
+				.issuer("ssh:any.fatec.sp.gov.br")
+				.expirationTime(new Date(now + FIVE_HOURS_IN_MILLISECONDS))
+				.notBeforeTime(new Date(now))
+				.build();
+
+        final SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
+
+        try {
+            signedJWT.sign(signer);
+        } catch (final JOSEException e) {
+            throw new AuthenticationServiceException("The given JWT could not be signed.");
+        }
+        return String.format("Bearer %s", signedJWT.serialize());
 	}
 
 }

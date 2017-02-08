@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
- * A classe RAInvalidException lança uma exception caso encontre uma mal formação no RA
+ * A classe <code>RAInvalidException</code> eh lancada caso 
+ * encontre uma mal formação no RA informado.
+ * 
  * @author Marcelo Inácio
  *
  */
@@ -22,7 +24,7 @@ public class RAInvalidException extends MapSkillsException {
 	private final String ra;
 	
 	public RAInvalidException(final String ra) {
-		super();
+		super(String.format("O RA %s se encontra inválido!", ra));
 		this.ra = ra;
 	}
 	

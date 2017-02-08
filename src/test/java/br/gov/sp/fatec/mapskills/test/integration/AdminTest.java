@@ -8,15 +8,13 @@ package br.gov.sp.fatec.mapskills.test.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,35 +28,41 @@ import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 public class AdminTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/admin";
-	
+		
 	@Autowired
 	private SkillService skillService;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	@Test
-	public void getAllInstitutionsForbiddenTest() throws Exception {
+	@Before
+	public void setuUp() {
+		super.setUpContext();
+		super.setUpMockInitializer();
 		
-		this.mockMvc.perform(get(BASE_PATH + "/institutions")
-				.with(user("admin"))
-				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-				.andExpect(status().isForbidden());
+		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
+		.thenReturn(getAdminMock());
+	}
+	
+	@After
+	public void cleanTables() {
+		super.cleanTables(skillService);
+	}
+	
+	@Test
+	public void getAllInstitutionsForbidden() throws Exception {
+				
+		super.mockMvcPerformGet(BASE_PATH.concat("/institutions"))
+			.andExpect(status().isForbidden());
 	}
 	
 	@Test
 	public void postSkill() throws Exception {
 		final Skill skill = new Skill("liderança", "avalia...");
 		final String bodyInput = objectMapper.writeValueAsString(skill);
-		
-		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
-			.thenReturn(getAdminMock());
-		
-		this.mockMvc.perform(post(BASE_PATH + "/skill")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.content(bodyInput)
-				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk());
+
+		super.mockMvcPerformPost(BASE_PATH.concat("/skill"), bodyInput)
+			.andExpect(status().isOk());
 		
 		assertEquals(skillService.findById(1).getType(), skill.getType());
 	}

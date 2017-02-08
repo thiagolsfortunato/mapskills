@@ -6,11 +6,8 @@
 package br.gov.sp.fatec.mapskills.domain.user;
 
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
@@ -28,9 +25,7 @@ public class StudentPoiParser extends PoiParser<Student> {
 	 */
 	@Override
 	public List<Student> toObjectList(final InputStream inputStream) throws MapSkillsException {
-		final List<Student> studentList = new LinkedList<>();
-		studentList.addAll(super.objectListFactory(inputStream));
-		return studentList;
+		return Collections.unmodifiableList(super.objectListFactory(inputStream));
 	}
 	/**
 	 * O metodo <code>build</code> constroi um objeto do tipo Student a partir de uma lista de
@@ -38,9 +33,17 @@ public class StudentPoiParser extends PoiParser<Student> {
 	 * @throws MapSkillsException 
 	 */
 	@Override
-	protected Student buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException {
-		final List<String> args = super.getObjectArgs(cellIterator);
-		return new Student(academicRegistry(args.get(0)), args.get(1), args.get(2), args.get(3), ENCRYPTED_DEFAULT_PASSWORD);
+	protected Student buildObject(final List<String> attArgs) throws MapSkillsException {
+		return new Student(academicRegistry(attArgs.get(0)), attArgs.get(1),
+				attArgs.get(2), attArgs.get(3), ENCRYPTED_DEFAULT_PASSWORD);
+	}
+	/**
+	 * verifica se o numero de string da lista que servira como
+	 * parametro para a criacao do aluno eh diferente do necessario.
+	 */
+	@Override
+	protected boolean verifyListForObject(final List<String> argsToObj) {
+		return argsToObj.size() == 4;
 	}
 	/**
 	 * metodo <code>academicRegistry</code> que retorna uma instancia de ra para o aluno.

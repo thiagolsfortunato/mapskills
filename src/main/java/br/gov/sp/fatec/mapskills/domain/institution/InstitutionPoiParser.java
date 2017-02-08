@@ -6,11 +6,8 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
@@ -25,17 +22,18 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 	
 	@Override
 	public List<Institution> toObjectList(final InputStream inputStream) throws MapSkillsException {
-		List<Institution> objectList = new ArrayList<>();
-		objectList.addAll(super.objectListFactory(inputStream));
-		return objectList;
+		return Collections.unmodifiableList(super.objectListFactory(inputStream));
 	}
 
 	@Override
-	protected Institution buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException {
-		final List<String> args = new ArrayList<>(6);
-		args.addAll(super.getObjectArgs(cellIterator));
-		return new Institution(args.get(0), args.get(1), args.get(2), args.get(3), 
-				new Mentor(args.get(4), args.get(0), args.get(5), ENCRYPTED_DEFAULT_PASSWORD));
+	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {
+		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), attArgs.get(3), 
+				new Mentor(attArgs.get(4), attArgs.get(0), attArgs.get(5), ENCRYPTED_DEFAULT_PASSWORD));
+	}
+
+	@Override
+	protected boolean verifyListForObject(final List<String> argsToObj) {
+		return argsToObj.size() == 6;
 	}
 
 }

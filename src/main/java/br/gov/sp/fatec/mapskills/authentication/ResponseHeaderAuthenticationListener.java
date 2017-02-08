@@ -43,7 +43,6 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
 		final JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
 				.subject(event.getUsername())
 				.claim("username", event.getUserDomain().getUsername())
-				.claim("name", event.getUserDomain().getName())
 				.claim("profile", event.getUserDomain().getProfile())
 				.issueTime(new Date(now))
 				.issuer("ssh:mapskills.fatec.sp.gov.br")
@@ -61,7 +60,6 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
 
         final HttpServletResponse resp = event.getResponse();
         resp.setHeader("Authorization", String.format("Bearer %s", signedJWT.serialize()));
-        //resp.setHeader("User", String.format("%s %s", event.getUserDomain().getName(), event.getUserDomain().getProfile()));
 	}
 
 }

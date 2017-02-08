@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.test.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.InputStream;
@@ -25,7 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -39,7 +36,6 @@ import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
-import br.gov.sp.fatec.mapskills.test.wrapper.StudentWithCourse;
 
 public class InstitutionTest extends AbstractApplicationTest {
 	
@@ -55,14 +51,17 @@ public class InstitutionTest extends AbstractApplicationTest {
 	 * spring security
 	 */
 	@Before
-	public void preparedAuthenticationMock() {
+	public void setUp() {
+		super.setUpContext();
+		super.setUpMockInitializer();
+		
 		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
 			.thenReturn(getMentorMock());
 	}
 	
 	@After
 	public void cleanTables() {
-		service.deleteAll();
+		super.cleanTables(service);
 	}
 	
 	@Test
@@ -72,11 +71,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 		
 		final String bodyJson = objectMapper.writeValueAsString(student);
 		
-		this.mockMvc.perform(post(BASE_PATH + "/student")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.content(bodyJson)
-				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk());
+		super.mockMvcPerformPost(BASE_PATH.concat("/student"), bodyJson)
+			.andExpect(status().isOk());
 		
 		assertTrue(service.findStudentByRa(student.getRa()).getName().equals(student.getName()));
 	}
@@ -88,11 +84,9 @@ public class InstitutionTest extends AbstractApplicationTest {
 		
 		final String obj = objectMapper.writeValueAsString(String.format("{ base64 : %s }", excelBase64));
 		final String json = obj.replace(" ", "\"").substring(1, obj.length()-1);
-		this.mockMvc.perform(post(BASE_PATH + "/upload/students")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.content(json)
-				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk());
+		
+		super.mockMvcPerformPost(BASE_PATH.concat("/upload/students"), json)
+			.andExpect(status().isOk());
 		
 		assertEquals(2, service.findAllStudentsByInstitution("146").size());
 	}
@@ -102,11 +96,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 		final Course course = new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146");
 		final String json = objectMapper.writeValueAsString(course);
 		
-		this.mockMvc.perform(post(BASE_PATH + "/course")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.content(json)
-				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk());
+		super.mockMvcPerformPost(BASE_PATH.concat("/course"), json)
+			.andExpect(status().isOk());
 		
 		assertEquals(1, service.findAllCoursesByInstitutionCode("146").size());
 	}
@@ -115,15 +106,12 @@ public class InstitutionTest extends AbstractApplicationTest {
 	public void findAllStudentsByInstitutionCode() throws Exception {
 		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
 		service.saveStudents(getStudentsMock());
-						
-		final MvcResult result = this.mockMvc.perform(get(BASE_PATH + "/146/students")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-				.andReturn();
+		
+		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/students")).andReturn();
 		
 		final String jsonResponse = result.getResponse().getContentAsString();
-		final StudentWithCourse[] allStudentsAsArray = objectMapper.readValue(jsonResponse, StudentWithCourse[].class);
-		final Collection<StudentWithCourse> allStudents = new ArrayList<>();
+		final Object[] allStudentsAsArray = objectMapper.readValue(jsonResponse, Object[].class);
+		final Collection<Object> allStudents = new ArrayList<>(4);
 		allStudents.addAll(Arrays.asList(allStudentsAsArray));
 		
 		assertEquals(4, allStudents.size());
@@ -135,10 +123,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 		service.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
 		service.saveCourses(getCoursesMock());
 		
-		final MvcResult result = this.mockMvc.perform(get(BASE_PATH + "/146/courses")
-				.header(AUTHORIZATION, Mockito.anyString())
-				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-				.andReturn();
+		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/courses")).andReturn();
 		
 		final String jsonResponse = result.getResponse().getContentAsString();
 		final Course[] allCourseAsArray = objectMapper.readValue(jsonResponse, Course[].class);
@@ -157,20 +142,6 @@ public class InstitutionTest extends AbstractApplicationTest {
 		courses.add(new Course("200", "logistica", CoursePeriod.NOTURNO, "146"));
 		courses.add(new Course("300", "analise de sistemas", CoursePeriod.NOTURNO, "146"));
 		return courses;
-	}
-	
-	private Collection<Student> getStudentsMock() {
-		final Collection<Student> students = new ArrayList<>(4);
-		students.add(new Student(new AcademicRegistry("1460281423010", "146", "028"), 
-						"Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123"));
-		students.add(new Student(new AcademicRegistry("1460281423020", "146", "028"), 
-				"Student MockB", "1289003400", "studentB@fatec.sp.gov.br", "mudar@123"));
-		students.add(new Student(new AcademicRegistry("1460281423030", "146", "028"), 
-				"Student MockC", "1289003400", "studentC@fatec.sp.gov.br", "mudar@123"));
-		students.add(new Student(new AcademicRegistry("1460281423040", "146", "028"), 
-				"Student MockD", "1289003400", "studentD@fatec.sp.gov.br", "mudar@123"));
-		
-		return students;
 	}
 
 }
