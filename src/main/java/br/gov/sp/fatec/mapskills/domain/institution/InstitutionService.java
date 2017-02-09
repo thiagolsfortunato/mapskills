@@ -42,8 +42,8 @@ public class InstitutionService implements RepositoryService {
 		institutionRepository.save(institutions);
 	}
 
-	public void saveInstitution(final Institution institution) {
-		institutionRepository.save(institution);
+	public Institution saveInstitution(final Institution institution) {
+		return institutionRepository.save(institution);
 	}
 	
 	public void saveCourses(final Collection<Course> courses) {

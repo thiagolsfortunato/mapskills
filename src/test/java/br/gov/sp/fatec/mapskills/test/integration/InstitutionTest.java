@@ -21,7 +21,9 @@ import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,6 +31,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.authentication.PreAuthenticatedAuthentication;
+import br.gov.sp.fatec.mapskills.authentication.jwt.JwtAuthenticationManager;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
@@ -40,6 +43,9 @@ import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 public class InstitutionTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/institution";
+	
+	@Mock
+	private JwtAuthenticationManager jwtAuthenticationManager;
 	
 	@Autowired
 	private InstitutionService service;
@@ -53,10 +59,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Before
 	public void setUp() {
 		super.setUpContext();
-		super.setUpMockInitializer();
-		
-		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
-			.thenReturn(getMentorMock());
+		MockitoAnnotations.initMocks(this);
+    	filter.setAuthenticationManager(jwtAuthenticationManager);
 	}
 	
 	@After
@@ -66,6 +70,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	
 	@Test
 	public void saveStudent() throws Exception {
+		mockMentorAuthentication();
+		
 		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), 
 						"Student MockE", "1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
 		
@@ -79,6 +85,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	
 	@Test
 	public void uploadStudentsFromExcel() throws Exception {
+		mockMentorAuthentication();
+		
 		final InputStream inputStream = getClass().getClassLoader().getResource("student.xlsx").openStream();
 		final String excelBase64 = Base64.getEncoder().encodeToString(IOUtils.toByteArray(inputStream));
 		
@@ -93,6 +101,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	
 	@Test
 	public void saveCourse() throws Exception {
+		mockMentorAuthentication();
+		
 		final Course course = new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146");
 		final String json = objectMapper.writeValueAsString(course);
 		
@@ -104,6 +114,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	
 	@Test
 	public void findAllStudentsByInstitutionCode() throws Exception {
+		mockMentorAuthentication();
+				
 		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
 		service.saveStudents(getStudentsMock());
 		
@@ -115,11 +127,12 @@ public class InstitutionTest extends AbstractApplicationTest {
 		allStudents.addAll(Arrays.asList(allStudentsAsArray));
 		
 		assertEquals(4, allStudents.size());
-				
 	}
 	
 	@Test
 	public void findAllCoursesByInstitution() throws Exception {
+		mockMentorAuthentication();
+		
 		service.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
 		service.saveCourses(getCoursesMock());
 		
@@ -130,6 +143,11 @@ public class InstitutionTest extends AbstractApplicationTest {
 		final Collection<Course> allCourses = Arrays.asList(allCourseAsArray);
 		
 		assertEquals(4, allCourses.size());
+	}
+	
+	private void mockMentorAuthentication() {
+		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
+			.thenReturn(getMentorMock());
 	}
 	
 	private Authentication getMentorMock() {

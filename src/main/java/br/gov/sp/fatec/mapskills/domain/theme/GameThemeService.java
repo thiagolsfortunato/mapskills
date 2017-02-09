@@ -28,7 +28,7 @@ public class GameThemeService implements RepositoryService {
 		themeRepo.deleteAll();
 	}
 	/**
-	 * Realiza busca de um tema por id
+	 * Realiza busca de um tema por seu id
 	 * @param id
 	 * @return
 	 */

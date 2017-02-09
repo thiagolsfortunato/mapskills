@@ -8,6 +8,7 @@ package br.gov.sp.fatec.mapskills.test.config;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,9 +16,7 @@ import java.util.Collection;
 import javax.servlet.Filter;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +29,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import br.gov.sp.fatec.mapskills.authentication.jwt.JwtAuthenticationManager;
 import br.gov.sp.fatec.mapskills.config.WebConfig;
+import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
@@ -48,10 +48,7 @@ public abstract class AbstractApplicationTest {
 	
 	protected static final String AUTHORIZATION = "Authorization";
 	protected static final String JSON_UTF8_MEDIA_TYPE = MediaType.APPLICATION_JSON_UTF8_VALUE;
-	
-	@Mock
-	protected JwtAuthenticationManager jwtAuthenticationManager;
-	
+		
 	@Autowired
 	protected AbstractPreAuthenticatedProcessingFilter filter;
 	
@@ -69,16 +66,11 @@ public abstract class AbstractApplicationTest {
 	/**
 	 * configuração inicial para mockar os teste de integração
 	 */
-    public void setUpContext() {
+    protected void setUpContext() {
 		mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
                 .addFilters(springSecurityFilterChain)
                 .build();
-    }
-    
-    public void setUpMockInitializer() {
-    	MockitoAnnotations.initMocks(this);
-    	filter.setAuthenticationManager(jwtAuthenticationManager);    	
     }
 	/**
 	 * metodo que limpa todas as tabelas da service,
@@ -109,6 +101,13 @@ public abstract class AbstractApplicationTest {
 				.accept(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)));
 	}
 	
+	protected ResultActions mockMvcPerformWithMockHeaderPut(final String request, final String body) throws Exception {
+		return mockMvc.perform(put(request)
+				.header(AUTHORIZATION, Mockito.anyString())
+				.content(body)
+				.contentType(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)));
+	}
+	
 	protected ResultActions mockMvcPerformLogin(final String username, final String password) throws Exception {
 		return mockMvc.perform(post("/login")
 				.param("username", username)
@@ -133,6 +132,11 @@ public abstract class AbstractApplicationTest {
 	protected Student getOneStudent() {
 		return  new Student(new AcademicRegistry("1460281423050", "146", "028"), 
 				"Student MockE", "1289003400", "aluno@fatec.sp.gov.br", encoder.encode("mudar@123"));
+	}
+	
+	protected Institution getOneInstitution() {
+		return new Institution("150", "33177625000182", "Fatec-Teste", "Cidade-Teste", 
+				new Mentor("Fabiola Vaz", "150", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
 	}
 
 }
