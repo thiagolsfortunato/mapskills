@@ -6,9 +6,10 @@
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 /**
  * A classe <code>StudentResultWrapper</code> contem os arrays necessários para
@@ -20,26 +21,34 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.serializer.StudentResultSerializer;
 @JsonSerialize(using = StudentResultSerializer.class)
 public class StudentResultWrapper {
 	
-	private final Collection<String> skills = new ArrayList<>();
-	private final Collection<Integer> values = new ArrayList<>();
+	private final Collection<String> skillsLabels = new LinkedList<>();
+	private final Collection<BigDecimal> values = new LinkedList<>();
+	private final Collection<Skill> skillsDeatils = new LinkedList<>();
 	
 	public StudentResultWrapper(final List<Object[]> context) {
 		for(final Object[] result : context) {
-			this.skills.add(String.valueOf(result[0]));
-			this.values.add((Integer) result[1]);
+			this.skillsLabels.add(String.valueOf(result[1]));
+			this.values.add((BigDecimal) result[3]);
+			this.skillsDeatils.add(new Skill(String.valueOf(result[1]), String.valueOf(result[2])));
 		}
+
 	}
 	
 	public Collection<String> getSkills() {
-		return Collections.unmodifiableCollection(skills);
+		return Collections.unmodifiableCollection(skillsLabels);
 	}
 	
-	public Collection<Integer> getValues() {
+	public Collection<BigDecimal> getValues() {
 		return Collections.unmodifiableCollection(values);
+	}
+	
+	public Collection<Skill> getSkillsDeatils() {
+		return Collections.unmodifiableCollection(skillsDeatils);
 	}
 
 }

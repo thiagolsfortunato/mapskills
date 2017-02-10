@@ -2,15 +2,14 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import br.gov.sp.fatec.mapskills.config.WebConfig;
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEvent;
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
@@ -18,9 +17,9 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = {SpringContextTestConfiguration.class, WebConfig.class})
 public class StudentTest extends MapSkillsTest {
 	
 	@Autowired
@@ -32,24 +31,24 @@ public class StudentTest extends MapSkillsTest {
 	@Autowired
 	private SkillService skillService;
 	
-	@Before
+	//@Before
 	public void cleanTables() {
 		super.cleanTables(sceneService, skillService);
 	}
 	
 	@Test
 	public void getResultByStudent() {
-		prepareAnswerContext();
+		//prepareAnswerContext();
 		
-		final List<Object[]> result = sceneService.getResultByStudentId(1);
+		final List<Object[]> result = sceneService.getResultByStudentId(3);
 		System.err.print("'label': [");
 		for(final Object[] r : result) {
-			System.err.print("'" + r[0] + "', ");
+			System.err.print("'" + r[1] + "', ");
 		}
 		System.err.println("]");
 		System.err.print("'datasets': [");
 		for(final Object[] r : result) {
-			System.err.print("'" + r[1] + "', ");
+			System.err.print("'" + r[3] + "', ");
 		}
 		System.err.println("]");
 
@@ -57,8 +56,8 @@ public class StudentTest extends MapSkillsTest {
 	
 	@Test
 	public void testResultSkill() {
-		prepareAnswerContext();
-		repo.findResultSkillByStudentId(1);
+		//prepareAnswerContext();
+		repo.findResultSkillByStudentId(3);
 	}
 	
 	@Test

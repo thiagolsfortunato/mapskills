@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.config.AbstractSpringContextConfiguration;
-import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
+import br.gov.sp.fatec.mapskills.config.DataBaseConfig;
 /**
  * A classe <code>SpringContextConfigurationTest</code> representa as configurações
  * necessárias para o realização dos testes da aplicação.
@@ -20,7 +20,7 @@ import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
  * @author Marcelo
  *
  */
-@Import({DataBaseHsqldbConfig.class})
+@Import({DataBaseConfig.class})
 public class SpringContextTestConfiguration extends AbstractSpringContextConfiguration {
 	
 	@Bean

@@ -19,7 +19,7 @@ public interface AnswerEventRepository extends CrudRepository<AnswerEvent, Long>
 	 * @param studentId
 	 * @return
 	 */
-	@Query(value="SELECT * FROM RADAR_RESULT_VIEW R WHERE R.USE_ID = ?1", nativeQuery = true)
+	@Query(value="SELECT * FROM RADAR_RESULT_VIEW RADAR WHERE RADAR.USE_ID = ?1", nativeQuery = true)
 	public List<Object[]> findResultViewByStudentId(final long studentId);
 	  
 }
