@@ -2,6 +2,7 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {SpringContextTestConfiguration.class, WebConfig.class})
+@Ignore
 public class StudentTest extends MapSkillsTest {
 	
 	@Autowired

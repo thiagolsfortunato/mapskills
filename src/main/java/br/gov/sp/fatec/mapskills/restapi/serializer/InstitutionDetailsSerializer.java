@@ -27,38 +27,43 @@ public class InstitutionDetailsSerializer extends JsonSerializer<InstitutionDeta
 	}
 	
 	@Override
-	public void serialize(final InstitutionDetailsWrapper detailsWrapper, final JsonGenerator generator, final SerializerProvider arg2)
-			throws IOException {
+	public void serialize(final InstitutionDetailsWrapper detailsWrapper, final JsonGenerator generator,
+			final SerializerProvider arg2)	throws IOException {
 
 		final Institution institution = detailsWrapper.getInstitution();
+		
 		generator.writeStartObject();
 		defaultSerializer.serializeDefaultValues(institution, generator);
-		generator.writeArrayFieldStart("courses");
-		for(final Course course : institution.getCourses()) {
-			generator.writeStartObject();
-			this.courseSerializer(course, generator);
-			generator.writeEndObject();
-		}
-		generator.writeEndArray();
-		generator.writeObjectFieldStart("mentor");
-		this.mentorSerializer(institution.getMentor(), generator);
-		generator.writeEndObject();
+		this.courseListSerialize(institution, generator);
+		this.mentorSerialize(institution.getMentor(), generator);
 		generator.writeEndObject();
 		
 	}
 	
-	private void courseSerializer(final Course course, final JsonGenerator generator) throws IOException {
+	private void courseListSerialize(final Institution institution, final JsonGenerator generator) throws IOException {
+		generator.writeArrayFieldStart("courses");
+		for(final Course course : institution.getCourses()) {
+			this.courseSerialize(course, generator);
+		}
+		generator.writeEndArray();
+	}
+	
+	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {
+		generator.writeStartObject();
 		generator.writeNumberField("id", course.getId());
 		generator.writeStringField("code", course.getCode());
 		generator.writeStringField("name", course.getName());
 		generator.writeStringField("period", course.getPeriod());
+		generator.writeEndObject();
 	}
 	
-	private void mentorSerializer(final Mentor mentor, final JsonGenerator generator) throws IOException {
+	private void mentorSerialize(final Mentor mentor, final JsonGenerator generator) throws IOException {
+		generator.writeObjectFieldStart("mentor");
 		generator.writeNumberField("id", mentor.getId());
 		generator.writeStringField("name", mentor.getName());
 		generator.writeStringField("username", mentor.getUsername());
-		generator.writeStringField("password", mentor.getPassword());
+		generator.writeStringField("password", "");
+		generator.writeEndObject();
 	}
 
 }

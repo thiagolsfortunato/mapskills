@@ -64,6 +64,12 @@ public class UserService implements RepositoryService {
 		}
 	}
 	
+	public void updatePassword(final String username, final String newPassword) {
+		final User user = repository.findByUsername(username);
+		user.setPassword(encoder.encode(newPassword));
+		repository.save(user);
+	}
+	
 	@Autowired
 	public void setPasswordEncoder(final PasswordEncoder encoder) {
 		this.encoder = encoder;

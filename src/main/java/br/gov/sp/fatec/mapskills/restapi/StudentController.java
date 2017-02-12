@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.sp.fatec.mapskills.domain.institution.Course;
+import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
+import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.AnswerWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
@@ -37,12 +42,16 @@ public class StudentController {
 	@Autowired
 	private SceneService sceneService;
 	
+	@Autowired
+	private InstitutionService institutionService;
+	
 	/**
 	 * realiza a persistencia de um contexto de resposta feita pelo aluno
 	 * durante a realização do jogo, ou seja cada click de uma alternativa
 	 * dispara este post.
 	 * @param answerWrapper contexto de id's da alternativa respondida
-	 * @return success ao concluir o post
+	 * @return 
+	 * 		HTTP 200 ao concluir o post com sucesso.
 	 */
 	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
 	public ResponseEntity<?> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
@@ -53,6 +62,7 @@ public class StudentController {
 	 * recupera os resultados do aluno ao finalizar o jogo.
 	 * @param studentID
 	 * @return
+	 * 		StudentResultWrapper
 	 */
 	@RequestMapping(value = "/game/result/{studentID}", method = RequestMethod.GET)
 	public ResponseEntity<StudentResultWrapper> getResult(@PathVariable("studentID") final long studentID) {
@@ -60,11 +70,31 @@ public class StudentController {
 		final StudentResultWrapper result = new StudentResultWrapper(context);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+	/**
+	 * recupera todas as cenas ainda nao jogadas pelo aluno.
+	 * @param studentID
+	 * @return
+	 * 		SceneListWrapper
+	 */
 	@RequestMapping(value = "/game/{studentID}", method = RequestMethod.GET)
 	public ResponseEntity<SceneListWrapper> findAllByEnableAndNotAnaswerByStudent(@PathVariable("studentID") final long studentID) {
 		final SceneListWrapper scenesListWrapper = new SceneListWrapper(sceneService.findAllNotAnsweredByStudent(studentID));
 		return new ResponseEntity<>(scenesListWrapper, HttpStatus.OK);
+	}
+	/**
+	 * recupera os detalhes de um aluno a partir do seu RA.
+	 * @param studentRA
+	 * @return
+	 * 		StudentDetailsWrapper
+	 */
+	@RequestMapping(value = "/details/{studentRA}", method = RequestMethod.GET)
+	public ResponseEntity<StudentDetailsWrapper> findStudentDetails(@PathVariable("studentRA") final String studentRA) {
+		final Student student = institutionService.findStudentByRa(studentRA);
+		final Course course = institutionService.findCourseByCode(student.getCourseCode());
+		final Institution institution = institutionService.findInstitutionByCode(student.getInstitutionCode());
+		final StudentDetailsWrapper studentDetailsWrapper = new StudentDetailsWrapper(student, course, institution);
+		
+		return new ResponseEntity<>(studentDetailsWrapper, HttpStatus.OK);
 	}
 
 

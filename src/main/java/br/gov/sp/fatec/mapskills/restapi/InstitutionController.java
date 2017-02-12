@@ -71,9 +71,10 @@ public class InstitutionController {
 	 * Metodo que realiza o cadastro de um aluno realizado pelo perfil <code>MENTOR</code>
 	 * @param studentWrapper
 	 * @return
+	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/student", method = RequestMethod.POST)
-	public ResponseEntity<?> saveStudent(@RequestBody final StudentWrapper studentWrapper) {
+	public ResponseEntity<?> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
 		institutionService.saveStudent(studentWrapper.getStudent());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

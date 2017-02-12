@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.StudentInvalidException;
 import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 /**
@@ -58,8 +59,12 @@ public class InstitutionService implements RepositoryService {
 		studentRepository.save(students);
 	}
 	
-	public void saveStudent(final Student student) {
-		studentRepository.save(student);
+	public void saveStudent(final Student student) throws MapSkillsException {
+		try {
+			studentRepository.save(student);
+		} catch (final Exception exc) {
+			throw new StudentInvalidException();
+		}
 	}
 
 	public Institution findInstitutionById(final long id) {
@@ -72,6 +77,10 @@ public class InstitutionService implements RepositoryService {
 	
 	public Student findStudentByRa(final String ra) {
 		return studentRepository.findByRaRa(ra);
+	}
+	
+	public Course findCourseByCode(final String code) {
+		return courseRepository.findByCode(code);
 	}
 	
 	public Collection<Institution> findAllInstitutions() {

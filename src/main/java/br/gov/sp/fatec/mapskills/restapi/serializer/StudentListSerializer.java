@@ -40,7 +40,7 @@ public class StudentListSerializer extends JsonSerializer<StudentListWrapper> {
 		generator.writeStringField("phone", student.getPhone());
 		generator.writeBooleanField("completed", student.isCompleted());
 		generator.writeStringField("username", student.getUsername());
-		generator.writeStringField("password", student.getPassword());
+		generator.writeStringField("password", "");
 	}
 	
 	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {

@@ -43,5 +43,18 @@ public class AuthenticationController {
 		final UserWrapper userWrapper = new UserWrapper(user);
 		return new ResponseEntity<>(userWrapper, HttpStatus.OK);
 	}
+	/**
+	 * Metodo que realiza a alteracao de senha do usuario
+	 * @param username
+	 * @param newPassword
+	 * @return
+	 */
+	@RequestMapping(value = "/user/change/password", method = RequestMethod.POST)
+	public ResponseEntity<?> changePassword(@RequestParam("username") String username,
+			@RequestParam("newPassword") String newPassword) {
+		
+		userService.updatePassword(username, newPassword);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }
