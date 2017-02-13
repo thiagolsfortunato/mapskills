@@ -15,7 +15,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.StudentListSerializer;
 /**
  * A classe <code>StudentListWrapper</code> cuida de serializar

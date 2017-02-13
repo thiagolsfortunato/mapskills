@@ -6,10 +6,13 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
@@ -27,8 +30,9 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 
 	@Override
 	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {
-		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), attArgs.get(3), 
-				new Mentor(attArgs.get(4), attArgs.get(0), attArgs.get(5), ENCRYPTED_DEFAULT_PASSWORD));
+		final Collection<Mentor> mentors = new ArrayList<>();
+		mentors.add(new Mentor(attArgs.get(4), attArgs.get(0), attArgs.get(5), ENCRYPTED_DEFAULT_PASSWORD));
+		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), attArgs.get(3),	mentors);
 	}
 
 	@Override

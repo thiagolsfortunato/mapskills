@@ -11,17 +11,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 
 @Entity
 @Table(name = "institution")
@@ -52,22 +50,21 @@ public class Institution implements Serializable {
 	@Transient
 	private Collection<Course> courses = new ArrayList<>();
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "use_id")
-	private Mentor mentor;
+	@Transient
+	private Collection<Mentor> mentors = new ArrayList<>();
 
 	public Institution() {
 		// CONSTRUCTOR DEFAULT
 	}
 	
 	public Institution(final String code, final String cnpj, final String company,
-			final String city, final Mentor mentor) {
+			final String city, final Collection<Mentor> mentors) {
 		
 		this.code = code;
 		this.cnpj = cnpj;
 		this.company = company;
 		this.city = city;
-		this.mentor = mentor;
+		this.mentors.addAll(mentors);
 	}
 	
 	public void changeCnpj(final String newCnpj) {
@@ -81,17 +78,18 @@ public class Institution implements Serializable {
 	public void changeCity(final String newCity) {
 		this.city = newCity;
 	}
-	
-	public void changeMentorName(final String newName) {
-		mentor.changeName(newName);
-	}
-	
+		
 	public void changeGameTheme(final long gameThemeId) {
 		this.gameThemeId = gameThemeId;
 	}
 	
 	public void setCourses(final Collection<Course> courses) {
 		this.courses.addAll(courses);
+	}
+	
+	public void setMentors(final Collection<Mentor> mentors) {
+		this.mentors.clear();
+		this.mentors.addAll(mentors);
 	}
 	
 	public void setId(final long id) {
@@ -117,8 +115,8 @@ public class Institution implements Serializable {
 		return city;
 	}
 	
-	public Mentor getMentor() {
-		return mentor;
+	public Collection<Mentor> getMentors() {
+		return Collections.unmodifiableCollection(mentors);
 	}
 	
 	public long getThemeId() {

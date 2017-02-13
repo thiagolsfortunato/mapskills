@@ -8,6 +8,9 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,12 +23,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
 @Ignore
@@ -48,12 +51,13 @@ public class AdministratorTest extends MapSkillsTest {
 	@Test
 	public void findUserByUsernamePasswords() throws MapSkillsException {
 		final String EXPECTED_RA = "Student MockA"; 
-		
-		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123");
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentorSave);
+		final Collection<Mentor> mentors = new ArrayList<>(1);
+		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		
-		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
+		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", 
+				"1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentSave);
 		
 		final User studentUser = userService.findUserByUsernamePassword("studentA@fatec.sp.gov.br", "mudar@123");

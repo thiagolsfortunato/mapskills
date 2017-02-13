@@ -30,8 +30,8 @@ public class SceneListDeserializer extends JsonDeserializer<SceneListWrapper> {
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
         
-        final Collection<Scene> scenes = new ArrayList<>();
         final int sizeArray = node.size();
+        final Collection<Scene> scenes = new ArrayList<>(sizeArray);
         for(int i = 0; i < sizeArray; i++) {
         	final JsonNode nodeCurrent = node.get(i);
         	scenes.add(new Scene(nodeCurrent.get("text").asText(), nodeCurrent.get("background").get("filename").asText(),

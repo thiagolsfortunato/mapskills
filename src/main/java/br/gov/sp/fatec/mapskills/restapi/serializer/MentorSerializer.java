@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.User;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 
 @Component
 public class MentorSerializer extends DefaultUserSerializer {

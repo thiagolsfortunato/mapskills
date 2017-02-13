@@ -8,7 +8,7 @@ package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.StudentDeserializer;
 
 @JsonDeserialize(using = StudentDeserializer.class)

@@ -35,9 +35,9 @@ import br.gov.sp.fatec.mapskills.authentication.jwt.JwtAuthenticationManager;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 
 public class InstitutionTest extends AbstractApplicationTest {

@@ -31,10 +31,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import br.gov.sp.fatec.mapskills.config.WebConfig;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+import br.gov.sp.fatec.mapskills.test.wrapper.InstitutionClientWrapper;
 /**
  * A classe <code>AbstractApplicationTest</code> representa as configurações
  * globais de teste, para todos outros testes.
@@ -134,9 +135,14 @@ public abstract class AbstractApplicationTest {
 				"Student MockE", "1289003400", "aluno@fatec.sp.gov.br", encoder.encode("mudar@123"));
 	}
 	
+	protected InstitutionClientWrapper getInstitutionClient() {
+		return new InstitutionClientWrapper(getOneInstitution());
+	}
+	
 	protected Institution getOneInstitution() {
-		return new Institution("150", "33177625000182", "Fatec-Teste", "Cidade-Teste", 
-				new Mentor("Fabiola Vaz", "150", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
+		final Collection<Mentor> mentors = new ArrayList<>(1);
+		mentors.add(new Mentor("Fabiola Vaz", "150", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
+		return new Institution("150", "33177625000182", "Fatec-Teste", "Cidade-Teste", mentors);
 	}
 
 }

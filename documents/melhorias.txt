@@ -16,5 +16,9 @@ mentor > alunos > trocar coluna de telefone por curso. OK
 
 aluno > funcionaidade editar perfil OK
 
+adm > cadastrar video nas cenas
+
+adm > possibilidade de cadastar novos mentores para as instituições
+
 ================================================================
-controle 
+controle de viaturas

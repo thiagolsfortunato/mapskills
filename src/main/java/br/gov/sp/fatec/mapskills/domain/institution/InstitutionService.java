@@ -13,11 +13,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.domain.user.StudentInvalidException;
-import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.MentorRepository;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
+import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 /**
  * A classe <code>InstitutionService</code> contem todos metodos necessários para realizacao
@@ -31,20 +34,37 @@ public class InstitutionService implements RepositoryService {
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
 	private StudentRepository studentRepository;
+	private MentorRepository mentorRepository;
 	
 	@Override
 	public void deleteAll() {
 		institutionRepository.deleteAll();
 		courseRepository.deleteAll();
 		studentRepository.deleteAll();
+		mentorRepository.deleteAll();
 	}
 
+	@Transactional
 	public void saveInstitutions(final Collection<Institution> institutions) {
 		institutionRepository.save(institutions);
+		for(final Institution institution : institutions) {
+			saveMentors(institution.getMentors());
+		}
+	}
+	
+	public void saveMentor(final Mentor mentor) {
+		mentorRepository.save(mentor);
+	}
+	
+	public void saveMentors(final Collection<Mentor> mentors) {
+		mentorRepository.save(mentors);
 	}
 
+	@Transactional
 	public Institution saveInstitution(final Institution institution) {
-		return institutionRepository.save(institution);
+		institutionRepository.save(institution);
+		saveMentors(institution.getMentors());
+		return institution;
 	}
 	
 	public void saveCourses(final Collection<Course> courses) {
@@ -72,7 +92,10 @@ public class InstitutionService implements RepositoryService {
 	}
 	
 	public Institution findInstitutionByCode(final String code) {
-		return institutionRepository.findByCode(code);
+		final Institution institution = institutionRepository.findByCode(code);
+		final Collection<Mentor> mentors = mentorRepository.findAllByInstitutionCode(code);
+		institution.setMentors(mentors);
+		return institution;
 	}
 	
 	public Student findStudentByRa(final String ra) {
@@ -97,6 +120,7 @@ public class InstitutionService implements RepositoryService {
 			throw new InstitutionNotFoundException(id);
 		}
 		institution.setCourses(courseRepository.findAllByInstitutionCode(institution.getCode()));
+		institution.setMentors(mentorRepository.findAllByInstitutionCode(institution.getCode()));
 		return institution;
 	}
 	
@@ -134,8 +158,7 @@ public class InstitutionService implements RepositoryService {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	
-	
-	//===== Dependence Inject =====//
+	/* = = = = = Dependence Inject = = = = = **/
 	@Autowired
 	@Qualifier("institutionRepository")
 	public void setInstitutionRepository(final InstitutionRepository repository) {
@@ -153,6 +176,12 @@ public class InstitutionService implements RepositoryService {
 	public void setStudentRepository(final StudentRepository repository) {
 		studentRepository = repository;
 	}
-
+	
+	@Autowired
+	@Qualifier("mentorRepository")
+	public void setMentorRepository(final MentorRepository repository) {
+		mentorRepository = repository;
+	}
+	
 
 }

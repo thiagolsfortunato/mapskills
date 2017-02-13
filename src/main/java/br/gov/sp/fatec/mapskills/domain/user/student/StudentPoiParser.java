@@ -3,7 +3,7 @@
  * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.user;
+package br.gov.sp.fatec.mapskills.domain.user.student;
 
 import java.io.InputStream;
 import java.util.Collections;

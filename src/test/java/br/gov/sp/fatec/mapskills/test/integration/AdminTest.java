@@ -137,12 +137,13 @@ public class AdminTest extends AbstractApplicationTest {
 	public void saveInstitution() throws Exception {
 		mockAdminAuthentication();
 		
-		final String bodyInput = objectMapper.writeValueAsString(getOneInstitution());
-		
+		final String bodyInput = objectMapper.writeValueAsString(getInstitutionClient());
+				
 		super.mockMvcPerformPost(BASE_PATH.concat("/institution"), bodyInput)
 			.andExpect(status().isOk());
 		
 		assertNotNull(institutionService.findInstitutionByCode("150"));
+		assertEquals(1, institutionService.findInstitutionByCode("150").getMentors().size());
 	}
 	
 	@Test
@@ -166,7 +167,7 @@ public class AdminTest extends AbstractApplicationTest {
 		mockAdminAuthentication();
 		
 		final Institution fatec = institutionService.saveInstitution(getOneInstitution());
-		institutionService.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "150"));
+		institutionService.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, fatec.getCode()));
 		
 		final String jsonResponse = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/institution/" + fatec.getId()))
 				.andReturn().getResponse().getContentAsString();
@@ -174,6 +175,7 @@ public class AdminTest extends AbstractApplicationTest {
 		final InstitutionDetailsWrapper institutionReturn = objectMapper.readValue(jsonResponse, InstitutionDetailsWrapper.class);
 		
 		assertEquals(fatec.getId(), institutionReturn.getInstitution().getId());
+		assertEquals(1, institutionReturn.getInstitution().getMentors().size());
 	}
 	
 	@Test

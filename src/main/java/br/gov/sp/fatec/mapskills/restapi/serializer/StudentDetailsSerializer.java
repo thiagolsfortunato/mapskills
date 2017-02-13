@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
 /**
  * A classe <code>StudentDetailsSerializer</code> representa o aluno em

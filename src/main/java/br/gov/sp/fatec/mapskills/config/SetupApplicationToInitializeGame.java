@@ -23,11 +23,11 @@ import java.util.logging.Logger;
 
 import org.springframework.context.annotation.Configuration;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
@@ -36,10 +36,11 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillRepository;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
 @Configuration
@@ -63,7 +64,7 @@ public class SetupApplicationToInitializeGame {
 	private InstitutionService institutionService = BeanRetriever.getBean("institutionService", InstitutionService.class);
 	private UserService userService = BeanRetriever.getBean("userService", UserService.class);
 	
-	public SetupApplicationToInitializeGame() throws IOException {
+	public SetupApplicationToInitializeGame() throws IOException, MapSkillsException {
 		this.createAdmin();
 		this.createInstitution();
 		this.createCourses();
@@ -85,8 +86,9 @@ public class SetupApplicationToInitializeGame {
 	 */
 	private void createInstitution() {
 		institutionService.deleteAll();
-		final Mentor mentor = new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy");
-		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", "São José", mentor);
+		final Collection<Mentor> mentors = new ArrayList<>();
+		mentors.add(new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy"));
+		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 	}
@@ -100,7 +102,7 @@ public class SetupApplicationToInitializeGame {
 		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 	}
 	
-	private void creatStudent() {
+	private void creatStudent() throws MapSkillsException {
 		if(institutionService.findStudentByRa(INSTITUTION_CODE+"0501713000") == null) {
 			institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0501713000", INSTITUTION_CODE, "050"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "$2a$10$MfkKiDmLJohCjQ45Kb7vnOAeALBR1SV0OTqkkB6IfcMDA87iOrgmG"));
 			LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");

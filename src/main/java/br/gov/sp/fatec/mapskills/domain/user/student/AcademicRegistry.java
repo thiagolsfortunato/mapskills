@@ -4,12 +4,13 @@
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.user;
+package br.gov.sp.fatec.mapskills.domain.user.student;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Size;
 /**
  * a classe <code>AcademicRegistry</code> eh
  * um Value Object que representa a RA do aluno,
@@ -25,6 +26,7 @@ public class AcademicRegistry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "stu_ra")
+	@Size(min=13, max=13)
 	private String ra;
 	
 	@Column(name = "ins_code", nullable = false)
