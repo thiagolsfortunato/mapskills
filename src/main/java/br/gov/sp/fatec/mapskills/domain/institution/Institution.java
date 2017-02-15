@@ -22,7 +22,7 @@ import javax.persistence.Transient;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 
 @Entity
-@Table(name = "institution")
+@Table(name = "INSTITUTION")
 public class Institution implements Serializable {
 
 	private static final long serialVersionUID = 1L;

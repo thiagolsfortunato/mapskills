@@ -253,28 +253,12 @@
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<id>remote</id>
+			<id>cloud</id>
 			<properties>
-				<datasource.url>jdbc:mysql://64.137.212.23:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://64.137.186.134:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-				<datasource.username>usermapskills</datasource.username>
-				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
-				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
-			</properties>
-		</profile>
-		<profile>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<id>openshift</id>
-			<properties>
-				<!-- <datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url> -->
-				<datasource.url>jdbc:mysql://localhost:3307/mapskills</datasource.url>
-				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-				<datasource.username>adminJY8iyP2</datasource.username>
-				<datasource.password>eHl1s_eG2ELW</datasource.password>
+				<datasource.username>mapsskills</datasource.username>
+				<datasource.password>mapsskills</datasource.password>
 				<datasource.dropAll>true</datasource.dropAll>
 				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>

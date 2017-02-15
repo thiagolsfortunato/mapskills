@@ -49,8 +49,7 @@ public class SetupApplicationToInitializeGame {
 	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
 	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-//	private static final String URL_SERVER = "http://webapp-inacio.rhcloud.com/mapskills/images/";
-	private static final String URL_SERVER = "http://localhost:8585/mapskills/images/";
+	private static final String URL_SERVER = "http://64.137.186.134:8080/mapskills/images/";
 	private static final long GAME_THEME_ID = 1;
 	private static final String INSTITUTION_CODE = "146";
 	

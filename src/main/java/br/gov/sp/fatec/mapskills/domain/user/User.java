@@ -28,7 +28,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements Principal, Serializable {
 

@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "skill")
+@Table(name = "SKILL")
 public class Skill implements Serializable {
 
 	private static final long serialVersionUID = 1L;

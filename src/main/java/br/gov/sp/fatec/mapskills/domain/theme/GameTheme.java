@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "game_theme")
+@Table(name = "GAME_THEME")
 public class GameTheme {
 	
 	@Id

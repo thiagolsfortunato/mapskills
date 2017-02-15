@@ -16,7 +16,7 @@ import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 
 @Entity
-@Table(name = "mentor")
+@Table(name = "MENTOR")
 @PrimaryKeyJoinColumn(name = "use_id")
 public class Mentor extends User {
 

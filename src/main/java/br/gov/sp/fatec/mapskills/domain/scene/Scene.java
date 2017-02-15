@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "scene")
+@Table(name = "SCENE")
 public class Scene implements Serializable, Comparable<Scene> {
 
 	private static final long serialVersionUID = 1L;
