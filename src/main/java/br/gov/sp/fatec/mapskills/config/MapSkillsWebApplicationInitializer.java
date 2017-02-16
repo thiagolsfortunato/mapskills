@@ -10,6 +10,7 @@ import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -18,7 +19,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * do contexto do Spring na aplicação.
  *
  */
-public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer implements 
+	WebApplicationInitializer {
 
 	/** {@inheritDoc} */
 	@Override
