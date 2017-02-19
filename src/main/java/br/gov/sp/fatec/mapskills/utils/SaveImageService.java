@@ -39,6 +39,9 @@ public class SaveImageService {
 	 * @throws MapSkillsException 
 	 */
 	public String save(final String base64, final String filename) throws MapSkillsException {
+		if(base64 == null) {
+			return null;
+		}
 		final String path = context.getRealPath("/images");
 		try (final OutputStream stream = new FileOutputStream(path.concat("/").concat(filename))) {
 		    stream.write(parser.toByteArray(base64));

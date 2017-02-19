@@ -21,6 +21,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
@@ -191,6 +192,20 @@ public class AdminController {
 	public ResponseEntity<SkillListWrapper> getAllSkills() {
 		final SkillListWrapper gameThemes = new SkillListWrapper(skillService.findAll()); 
 		return new ResponseEntity<>(gameThemes, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/scene/question/{sceneId}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteQuestion(@PathVariable("sceneId") final long sceneId) {
+		final Scene scene = sceneService.findById(sceneId);
+		scene.deleteQuestion();
+		sceneService.save(scene);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/scene/{sceneId}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteScene(@PathVariable("sceneId") final long sceneId) {
+		sceneService.delete(sceneId);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

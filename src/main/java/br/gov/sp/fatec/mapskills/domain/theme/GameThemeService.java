@@ -67,7 +67,7 @@ public class GameThemeService implements RepositoryService {
 	 * @return lista
 	 */
 	public Collection<Scene> findAllScenesByThemeId(final long themeId) {
-		return sceneRepo.findAllByGameThemeId(themeId);
+		return sceneRepo.findAllByGameThemeIdOrderByIndexAsc(themeId);
 	}
 	
 	public Collection<GameTheme> findAllThemesActivated() {

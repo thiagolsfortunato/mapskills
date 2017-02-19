@@ -34,8 +34,11 @@ public class SceneListDeserializer extends JsonDeserializer<SceneListWrapper> {
         final Collection<Scene> scenes = new ArrayList<>(sizeArray);
         for(int i = 0; i < sizeArray; i++) {
         	final JsonNode nodeCurrent = node.get(i);
-        	scenes.add(new Scene(nodeCurrent.get("text").asText(), nodeCurrent.get("background").get("filename").asText(),
-        			this.buildQuestion(nodeCurrent.get("question")), nodeCurrent.get("gameThemeId").asLong()));
+        	final Scene scene = new Scene(nodeCurrent.get("text").asText(), nodeCurrent.get("background").get("filename").asText(),
+        			this.buildQuestion(nodeCurrent.get("question")), nodeCurrent.get("gameThemeId").asLong());
+        	scene.setId(nodeCurrent.get("id").asLong());
+        	scene.putIndex(nodeCurrent.get("index").asInt());
+        	scenes.add(scene);
         }
 
         

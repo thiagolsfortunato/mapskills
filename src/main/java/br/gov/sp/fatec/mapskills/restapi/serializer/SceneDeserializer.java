@@ -32,18 +32,26 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
         
-        final String fileImageBase64 = node.get("background").get("base64").asText();
-        final String filename = node.get("background").get("filename").asText();
+        String fileImageBase64 = null;
+        String filename = null;
+        verifyBackground(node, fileImageBase64, filename);
+        
 		
         final Question question = this.buildQuestion(node.get("question"));
         final long gameThemeId = node.get("gameThemeId").asLong();
         final Scene scene = new Scene(node.get("text").asText(), IP_SERVER + "images/" + filename, question, gameThemeId);
+        if(node.has("id")) {
+        	scene.setId(node.get("id").asLong());
+        }
+        if(node.has("index")) {
+        	scene.putIndex(node.get("index").asInt());
+        }
         
 		return new SceneWrapper(scene, fileImageBase64, filename);
 	}
 	
 	private Question buildQuestion(final JsonNode node) {
-		if(node.isNull()) {
+		if(node == null || node.isNull()) {
 			return null;
 		}
 		final List<Alternative> alternatives = buildAlternatives(node.get("alternatives"));
@@ -53,10 +61,25 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 	private List<Alternative> buildAlternatives(final JsonNode node) {
 		final List<Alternative> alternatives = new ArrayList<>(4);
 		for(int i = 0; i < 4; i++ ) {
-			alternatives.add(new Alternative(node.get(i).get("description").asText(),
-					node.get(i).get("skillValue").asInt()));
+			final String position = String.valueOf(i);
+			alternatives.add(new Alternative(node.get(position).get("description").asText(),
+					node.get(position).get("skillValue").asInt()));
 		}
 		return alternatives;
+	}
+	
+	private void verifyBackground(final JsonNode node, String fileImageBase64, String filename) {
+		if(!node.has("background")) {
+			return;
+		}
+		if(node.get("background").has("base64")) {
+        	fileImageBase64 = node.get("background").get("base64").asText();
+        }
+        if(node.get("background").has("filename")) {
+        	filename = node.get("background").get("filename").asText();
+        	final int lastIndex = filename.lastIndexOf("/");
+        	filename = filename.substring(lastIndex + 1);
+        }
 	}
 
 }

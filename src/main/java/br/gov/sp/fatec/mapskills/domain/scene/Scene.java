@@ -31,7 +31,7 @@ public class Scene implements Serializable, Comparable<Scene> {
 	private long id;
 	
 	@Column(name = "scn_index", nullable = false)
-	private int index;
+	private int index = -1;
 	
 	@Column(name = "scn_text", nullable = false)
 	private String text;
@@ -87,6 +87,10 @@ public class Scene implements Serializable, Comparable<Scene> {
 	
 	public void setId(final long id) {
 		this.id = id;
+	}
+	
+	public void deleteQuestion() {
+		this.question = null;
 	}
 	
 	/**

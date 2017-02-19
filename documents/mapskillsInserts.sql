@@ -76,16 +76,6 @@ INSERT INTO `mentor` VALUES (2,'146',NULL);
 UNLOCK TABLES;
 
 --
--- Dumping data for table `profile`
---
-
-LOCK TABLES `profile` WRITE;
-/*!40000 ALTER TABLE `profile` DISABLE KEYS */;
-INSERT INTO `profile` VALUES (1,'ADMINISTRATOR'),(2,'MENTOR'),(3,'STUDENT');
-/*!40000 ALTER TABLE `profile` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `question`
 --
 
