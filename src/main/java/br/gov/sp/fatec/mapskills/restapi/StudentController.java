@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
@@ -63,9 +64,13 @@ public class StudentController {
 	 * @param studentID
 	 * @return
 	 * 		StudentResultWrapper
+	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/game/result/{studentID}", method = RequestMethod.GET)
-	public ResponseEntity<StudentResultWrapper> getResult(@PathVariable("studentID") final long studentID) {
+	public ResponseEntity<StudentResultWrapper> getResult(@PathVariable("studentID") final long studentID) throws MapSkillsException {
+		final Student student = institutionService.findStudentById(studentID);
+		student.completed();
+		institutionService.saveStudent(student);
 		final List<Object[]> context = sceneService.getResultByStudentId(studentID);
 		final StudentResultWrapper result = new StudentResultWrapper(context);
 		return new ResponseEntity<>(result, HttpStatus.OK);

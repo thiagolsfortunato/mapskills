@@ -46,9 +46,8 @@ public class InstitutionService implements RepositoryService {
 
 	@Transactional
 	public void saveInstitutions(final Collection<Institution> institutions) {
-		institutionRepository.save(institutions);
 		for(final Institution institution : institutions) {
-			saveMentors(institution.getMentors());
+			saveInstitution(institution);
 		}
 	}
 	
@@ -57,26 +56,34 @@ public class InstitutionService implements RepositoryService {
 	}
 	
 	public void saveMentors(final Collection<Mentor> mentors) {
-		mentorRepository.save(mentors);
+		for(final Mentor mentor : mentors) {
+			this.saveMentor(mentor);			
+		}
 	}
 
 	@Transactional
 	public Institution saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
-		saveMentors(institution.getMentors());
-		return institution;
+		this.saveMentors(institution.getMentors());
+		return institution;			
 	}
 	
 	public void saveCourses(final Collection<Course> courses) {
-		courseRepository.save(courses);
+		for(final Course course : courses) {
+			this.saveCourse(course);			
+		}
 	}
 	
 	public void saveCourse(final Course course) {
 		courseRepository.save(course);
 	}
 	
-	public void saveStudents(final Collection<Student> students) {
-		studentRepository.save(students);
+	public void saveStudents(final Collection<Student> students) throws MapSkillsException {
+		for(final Student student : students) {
+			if(studentRepository.findByRaRa(student.getRa()) == null) {
+				this.saveStudent(student);
+			}
+		}
 	}
 	
 	public void saveStudent(final Student student) throws MapSkillsException {
@@ -100,6 +107,10 @@ public class InstitutionService implements RepositoryService {
 	
 	public Student findStudentByRa(final String ra) {
 		return studentRepository.findByRaRa(ra);
+	}
+	
+	public Student findStudentById(final long id) {
+		return studentRepository.findOne(id);
 	}
 	
 	public Course findCourseByCode(final String code) {
@@ -182,6 +193,5 @@ public class InstitutionService implements RepositoryService {
 	public void setMentorRepository(final MentorRepository repository) {
 		mentorRepository = repository;
 	}
-	
 
 }

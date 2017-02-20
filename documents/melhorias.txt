@@ -7,8 +7,10 @@ dash adm, -fatecs e -etcs DOING
 export de excel dos graficos TODO
 
 mentor: grafico ver andamento de alunos por curso por periodo DOING
+--FAZER QUERY para que atenda
 
 somente semestre atual a visualização. [where date dentro do mes] TODO
+-FAZER QUERY para que atenda
 
 mentor: trocar senha aluno, colocar placeholde "mudar senha" OK
 

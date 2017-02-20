@@ -13,4 +13,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface MentorRepository extends CrudRepository<Mentor, Long> {
 	
 	public Collection<Mentor> findAllByInstitutionCode(final String institutionCode);
+	public Mentor findByLoginUsername(final String username);
 }

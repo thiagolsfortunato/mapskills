@@ -151,5 +151,15 @@ public class InstitutionController {
 		institutionService.saveInstitution(institution);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	/**
+	 * metodo que recupera os detlhes do perfil de um mentor
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/mentor/details/{userId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getMentorDetails(@PathVariable("userId") final long userId) {
+		//TODO Fazer método que recupere os detalhes do mentor
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }

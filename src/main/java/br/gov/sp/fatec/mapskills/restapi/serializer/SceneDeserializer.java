@@ -23,7 +23,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
 
 public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 	
-	private static final String IP_SERVER = "http://localhost:8080/mapskills/";
+	private static final String IP_SERVER = "http://localhost:8585/mapskills/";
 
 	@Override
 	public SceneWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
@@ -32,9 +32,9 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
         
-        String fileImageBase64 = null;
-        String filename = null;
-        verifyBackground(node, fileImageBase64, filename);
+        final String[] background = verifyBackground(node);    
+        final String fileImageBase64 = background[0];
+        final String filename = background[1];
         
 		
         final Question question = this.buildQuestion(node.get("question"));
@@ -68,18 +68,20 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		return alternatives;
 	}
 	
-	private void verifyBackground(final JsonNode node, String fileImageBase64, String filename) {
+	private String[] verifyBackground(final JsonNode node) {
+		final String[] background = new String[2];
 		if(!node.has("background")) {
-			return;
+			return null;
 		}
 		if(node.get("background").has("base64")) {
-        	fileImageBase64 = node.get("background").get("base64").asText();
+			background[0] = node.get("background").get("base64").asText();
         }
         if(node.get("background").has("filename")) {
-        	filename = node.get("background").get("filename").asText();
+        	final String filename = node.get("background").get("filename").asText();
         	final int lastIndex = filename.lastIndexOf("/");
-        	filename = filename.substring(lastIndex + 1);
+        	background[1] = filename.substring(lastIndex + 1);
         }
+        return background;
 	}
-
+	
 }
