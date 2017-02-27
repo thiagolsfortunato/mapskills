@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 
@@ -39,7 +40,7 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
         }
         
 		final Institution institution =  new Institution(node.get("code").asText(), node.get("cnpj").asText(),
-				node.get("company").asText(), node.get("city").asText(), mentors);
+				node.get("company").asText(), InstitutionLevel.valueOf(node.get("level").asText()), node.get("city").asText(), mentors);
  
         if(node.has("id")) {
         	institution.setId(node.get("id").asLong());

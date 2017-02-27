@@ -8,7 +8,7 @@
 
 	<changeSet author="marcelo-inacio" id="addUniqueConstraint-profile">
 	    <addUniqueConstraint catalogName="MAPSKILLS"
-	            columnNames="PRO_DESCRIPTION"
+	            columnNames="PRO_NAME"
 	            constraintName="UK_PROFILE"
 	            tableName="PROFILE"/>
 	</changeSet>

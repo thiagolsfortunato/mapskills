@@ -22,6 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.User;
@@ -53,7 +54,7 @@ public class AdministratorTest extends MapSkillsTest {
 		final String EXPECTED_RA = "Student MockA"; 
 		final Collection<Mentor> mentors = new ArrayList<>(1);
 		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentors);
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		
 		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", 

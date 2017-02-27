@@ -32,12 +32,13 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {
 		final Collection<Mentor> mentors = new ArrayList<>();
 		mentors.add(new Mentor(attArgs.get(4), attArgs.get(0), attArgs.get(5), ENCRYPTED_DEFAULT_PASSWORD));
-		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), attArgs.get(3),	mentors);
+		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), 
+				InstitutionLevel.valueOf(attArgs.get(3).toUpperCase()), attArgs.get(4), mentors);
 	}
 
 	@Override
 	protected boolean verifyListForObject(final List<String> argsToObj) {
-		return argsToObj.size() == 6;
+		return argsToObj.size() == 7;
 	}
 
 }

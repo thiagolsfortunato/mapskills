@@ -30,7 +30,7 @@ public class GameThemeListSerializer extends JsonSerializer<GameThemeListWrapper
 		for(final GameTheme theme : gameThemes.getGameThemes()) {
 			generator.writeStartObject();
 			generator.writeNumberField("id", theme.getId());
-			generator.writeStringField("description", theme.getDescription());
+			generator.writeStringField("description", theme.getName());
 			generator.writeBooleanField("active", theme.isActive());
 			generator.writeEndObject();
 		}

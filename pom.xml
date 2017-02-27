@@ -208,12 +208,6 @@
 			<version>3.14</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
-		</dependency>
-		
 	</dependencies>
 
 	<profiles>
@@ -266,6 +260,21 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapsskills</datasource.username>
 				<datasource.password>mapsskills</datasource.password>
+				<datasource.dropAll>true</datasource.dropAll>
+				<liquibase.skip>false</liquibase.skip>
+				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
+			</properties>
+		</profile>
+		<profile>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<id>openshift</id>
+			<properties>
+				<datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
+				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
+				<datasource.username>adminkk1RFrV</datasource.username>
+				<datasource.password>_bDUuxwqQUXy</datasource.password>
 				<datasource.dropAll>true</datasource.dropAll>
 				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>

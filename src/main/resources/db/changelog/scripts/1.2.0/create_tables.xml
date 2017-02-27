@@ -7,15 +7,15 @@
 	<changeSet author="marcelo-inacio" id="100">
 		<createTable tableName="PROFILE">
 			<column name="PRO_ID" type="java.sql.Types.BIGINT" />
-			<column name="PRO_DESCRIPTION" type="java.sql.Types.VARCHAR(50)" />
+			<column name="PRO_NAME" type="java.sql.Types.VARCHAR(50)" />
 		</createTable>
 	</changeSet>
 
 	<changeSet author="marcelo-inacio" id="200">
 		<createTable tableName="USER">
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
-			<column name="USE_NAME" type="java.sql.Types.VARCHAR(50)" />
-			<column name="USE_USERNAME" type="java.sql.Types.VARCHAR(50)" />
+			<column name="USE_NAME" type="java.sql.Types.VARCHAR(250)" />
+			<column name="USE_USERNAME" type="java.sql.Types.VARCHAR(100)" />
 			<column name="USE_PASSWORD" type="java.sql.Types.VARCHAR(255)" />
 			<column name="PRO_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
@@ -34,8 +34,9 @@
 			<column name="INS_ID" type="java.sql.Types.BIGINT" />
 			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 			<column name="INS_CNPJ" type="java.sql.Types.VARCHAR(20)" />
-			<column name="INS_COMPANY" type="java.sql.Types.VARCHAR(100)" />
-			<column name="INS_CITY" type="java.sql.Types.VARCHAR(100)" />
+			<column name="INS_COMPANY" type="java.sql.Types.VARCHAR(250)" />
+			<column name="INS_CITY" type="java.sql.Types.VARCHAR(250)" />
+			<column name="INS_LEVEL" type="java.sql.Types.VARCHAR(250)" />
 			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
@@ -44,7 +45,7 @@
 		<createTable tableName="COURSE">
 			<column name="CRS_ID" type="java.sql.Types.BIGINT" />
 			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(10)" />
-			<column name="CRS_NAME" type="java.sql.Types.VARCHAR(50)" />
+			<column name="CRS_NAME" type="java.sql.Types.VARCHAR(250)" />
 			<column name="CRS_PERIOD" type="java.sql.Types.VARCHAR(50)" />
 			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
 		</createTable>
@@ -78,7 +79,7 @@
 	<changeSet author="marcelo-inacio" id="900">
 		<createTable tableName="GAME_THEME">
 			<column name="GTH_ID" type="java.sql.Types.BIGINT" />
-			<column name="GTH_DESCRIPTION" type="java.sql.Types.VARCHAR(250)" />
+			<column name="GTH_NAME" type="java.sql.Types.VARCHAR(250)" />
 			<column name="GTH_IS_ACTIVE" type="java.sql.Types.BOOLEAN" />
 		</createTable>
 	</changeSet>

@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
@@ -62,7 +63,7 @@ public class MapSkillsMockBeans {
 		final Collection<Institution> institutions = new ArrayList<>(1);
 		final Collection<Mentor> mentors = new ArrayList<>();
 		mentors.add(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
-		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", "São José", mentors);
+		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
 		institutions.add(fatecA);
 		institutionService.saveInstitutions(institutions);
 		

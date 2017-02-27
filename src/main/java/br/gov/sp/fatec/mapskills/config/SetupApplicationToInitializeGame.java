@@ -27,6 +27,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
@@ -49,7 +50,7 @@ public class SetupApplicationToInitializeGame {
 	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
 	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-	private static final String URL_SERVER = "http://64.137.186.134:8080/mapskills/images/";
+	private static final String URL_SERVER = "http://127.0.0.1:8585/mapskills/images/";
 	private static final long GAME_THEME_ID = 1;
 	private static final String INSTITUTION_CODE = "146";
 	
@@ -84,10 +85,9 @@ public class SetupApplicationToInitializeGame {
 	 * cria uma nova instituição persistindo-a na base de dados
 	 */
 	private void createInstitution() {
-		institutionService.deleteAll();
 		final Collection<Mentor> mentors = new ArrayList<>();
 		mentors.add(new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy"));
-		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", "São José", mentors);
+		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
 		institutionService.saveInstitution(fatec);
 		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 	}
@@ -95,23 +95,26 @@ public class SetupApplicationToInitializeGame {
 	 * adiciona cursos a instituição
 	 */
 	private void createCourses() {
-		institutionService.saveCourse(new Course("050", "Logistica", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("060", "Estruturas Leves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("070", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("048", "Tecnologia em Análise e Desenvolvimento de Sistemas", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("114", "Tecnologia em Automação Manufatura Digital", CoursePeriod.MATUTINO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("028", "Tecnologia em Banco de Dados", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("077", "Tecnologia em Gestão da Produção Industrial", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("064", "Tecnologia em Gestão Empresarial", CoursePeriod.EaD, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("074", "Tecnologia em Logística", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("068", "Tecnologia em Manutenção de Aeronaves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(new Course("115", "Tecnologia em Projetos de Estruturas Aeronáuticas", CoursePeriod.NOTURNO, INSTITUTION_CODE));
 		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 	}
 	
 	private void creatStudent() throws MapSkillsException {
-		if(institutionService.findStudentByRa(INSTITUTION_CODE+"0501713000") == null) {
-			institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0501713000", INSTITUTION_CODE, "050"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "$2a$10$MfkKiDmLJohCjQ45Kb7vnOAeALBR1SV0OTqkkB6IfcMDA87iOrgmG"));
-			LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");
-		}
+		institutionService.saveStudent(new Student(new AcademicRegistry(INSTITUTION_CODE+"0481713000", INSTITUTION_CODE, "048"), "Student User", "1289003400", "aluno@fatec.sp.gov.br", "$2a$10$MfkKiDmLJohCjQ45Kb7vnOAeALBR1SV0OTqkkB6IfcMDA87iOrgmG"));
+		LOGGER.log(Level.INFO, "=== STUDENT SAVE SUCCESS ===");
 	}
 	/**
 	 * cria um tema e persiste-a na base de dados
 	 */
 	private void createGameTheme() {
-		themeService.save(new GameTheme("PIZZARIA"));
+		themeService.save(new GameTheme("GERÊNCIA DE PIZZARIA"));
 		LOGGER.log(Level.INFO, "=== THEMES SAVE SUCCESS ===");
 	}
 	/**
@@ -145,7 +148,7 @@ public class SetupApplicationToInitializeGame {
 		skillRepository.save(new Skill("Gestão do tempo", "Avaliação a situação sob pressão no trabalho."));
 		skillRepository.save(new Skill("Equilibrio emocional", "Avalia o comportamento em situação de stress."));
 		skillRepository.save(new Skill("Trabalho em equipe", "Avalia a gestão do trablho em equipe."));
-		skillRepository.save(new Skill("Resiliencia", "Avalia a facilidade de se adaptar às mudanças."));
+		skillRepository.save(new Skill("Resiliência", "Avalia a facilidade de se adaptar às mudanças."));
 		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 	}
 	/**
@@ -180,7 +183,7 @@ public class SetupApplicationToInitializeGame {
 		this.mapAlternatives.clear();
 		final String filePath = PATH_TXT.concat("alternativasTemaPizzaria.txt");
 		
-		final Random gerador = new Random();
+//		final Random gerador = new Random();
 		int idQuestion = 1;
 
 		final List<String> list = new ArrayList<>();
@@ -189,7 +192,9 @@ public class SetupApplicationToInitializeGame {
 		for(int i = 0; i < sizeList; i++) {
 			final List<Alternative> alternatives = new LinkedList<>();
 			for(int j = 0; j < 4; j++) {
-				alternatives.add(new Alternative(list.get(i++), gerador.nextInt(7)));
+				final String[] lineWithValue = list.get(i++).split(";");
+				alternatives.add(new Alternative(lineWithValue[0], Integer.valueOf(lineWithValue[1])));
+//				alternatives.add(new Alternative(list.get(i++), gerador.nextInt(7)));
 			}
 			mapAlternatives.put(idQuestion++, alternatives);
 		}
@@ -201,8 +206,7 @@ public class SetupApplicationToInitializeGame {
 	 * @throws IOException
 	 */
 	private Collection<String> buildReaderFromFile(final String filePath) throws IOException {
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(filePath)));
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 		final Collection<String> lineList = new ArrayList<>();
 		String lineTmp;
 		while((lineTmp = reader.readLine()) != null) {

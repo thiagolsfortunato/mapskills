@@ -22,6 +22,7 @@ public class DefaultInstitutionSerializer implements InstitutionSerializerStrate
 		generator.writeStringField("code", institution.getCode());
 		generator.writeStringField("cnpj", institution.getCnpj());
 		generator.writeStringField("company", institution.getCompany());
+		generator.writeStringField("level", institution.getLevel().name());
 		generator.writeStringField("city", institution.getCity());
 	}
 

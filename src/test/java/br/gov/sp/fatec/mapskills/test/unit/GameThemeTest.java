@@ -47,7 +47,7 @@ public class GameThemeTest extends MapSkillsTest {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
 		themeService.save(theme);
 		
-		assertEquals("pizzaria, aplicado em 2016/2", themeService.findById(theme.getId()).getDescription());
+		assertEquals("pizzaria, aplicado em 2016/2", themeService.findById(theme.getId()).getName());
 		assertFalse(themeService.findById(theme.getId()).isActive());
 	}
 	

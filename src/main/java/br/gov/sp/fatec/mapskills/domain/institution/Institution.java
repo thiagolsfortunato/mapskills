@@ -13,6 +13,8 @@ import java.util.Collections;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +43,10 @@ public class Institution implements Serializable {
 	@Column(name = "ins_company", nullable = true)
 	private String company;
 	
+	@Column(name = "ins_level", nullable = true)
+	@Enumerated(value = EnumType.STRING)
+	private InstitutionLevel level;
+	
 	@Column(name = "ins_city", nullable = true)
 	private String city;
 	
@@ -57,12 +63,13 @@ public class Institution implements Serializable {
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public Institution(final String code, final String cnpj, final String company,
+	public Institution(final String code, final String cnpj, final String company, final InstitutionLevel level,
 			final String city, final Collection<Mentor> mentors) {
 		
 		this.code = code;
 		this.cnpj = cnpj;
 		this.company = company;
+		this.level = level;
 		this.city = city;
 		this.mentors.addAll(mentors);
 	}
@@ -109,6 +116,10 @@ public class Institution implements Serializable {
 	
 	public String getCompany() {
 		return company;
+	}
+	
+	public InstitutionLevel getLevel() {
+		return level;
 	}
 	
 	public String getCity() {

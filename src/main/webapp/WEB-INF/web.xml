@@ -6,10 +6,6 @@
 	metadata-complete="true">
 	<display-name>mapskills</display-name>
 
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
-
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/resources/applicationContext*.xml</param-value>

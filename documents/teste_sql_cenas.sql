@@ -20,3 +20,5 @@ UPDATE institution SET gth_id = 1 WHERE ins_code = '146';
 SELECT COALESCE(MAX(event.scn_index), 0) FROM student_question_event event
 	INNER JOIN student stu ON event.use_id = stu.use_id
     WHERE event.use_id = 3;
+
+USE sonar;

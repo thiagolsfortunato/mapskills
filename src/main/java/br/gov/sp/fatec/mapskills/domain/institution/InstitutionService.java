@@ -38,10 +38,10 @@ public class InstitutionService implements RepositoryService {
 	
 	@Override
 	public void deleteAll() {
-		institutionRepository.deleteAll();
-		courseRepository.deleteAll();
-		studentRepository.deleteAll();
 		mentorRepository.deleteAll();
+		studentRepository.deleteAll();
+		courseRepository.deleteAll();
+		institutionRepository.deleteAll();
 	}
 
 	@Transactional
