@@ -44,7 +44,7 @@ import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
-@Configuration
+//@Configuration
 public class SetupApplicationToInitializeGame {
 	
 	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
