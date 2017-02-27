@@ -271,7 +271,7 @@
 			</activation>
 			<id>openshift</id>
 			<properties>
-				<datasource.url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>adminkk1RFrV</datasource.username>
 				<datasource.password>_bDUuxwqQUXy</datasource.password>
