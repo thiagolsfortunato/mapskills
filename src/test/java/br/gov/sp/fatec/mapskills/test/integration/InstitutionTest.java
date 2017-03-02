@@ -145,6 +145,18 @@ public class InstitutionTest extends AbstractApplicationTest {
 		assertEquals(4, allCourses.size());
 	}
 	
+	//@Test
+	public void getStudentsProgress() throws Exception {
+		mockMentorAuthentication();
+		
+		service.saveInstitution(getOneInstitution());
+		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
+		service.saveStudents(getStudentsMock());
+		
+		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/progress")).andReturn();
+		
+	}
+	
 	private void mockMentorAuthentication() {
 		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
 			.thenReturn(getMentorMock());

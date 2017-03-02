@@ -62,8 +62,14 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		final List<Alternative> alternatives = new ArrayList<>(4);
 		for(int i = 0; i < 4; i++ ) {
 			final String position = String.valueOf(i);
-			alternatives.add(new Alternative(node.get(position).get("description").asText(),
-					node.get(position).get("skillValue").asInt()));
+			if(node.has(position)) {
+				alternatives.add(new Alternative(node.get(position).get("description").asText(),
+						node.get(position).get("skillValue").asInt()));
+			} else {
+				alternatives.add(new Alternative(node.get(i).get("description").asText(),
+						node.get(i).get("skillValue").asInt()));
+			}
+			
 		}
 		return alternatives;
 	}

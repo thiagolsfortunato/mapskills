@@ -142,8 +142,8 @@ public class AdminTest extends AbstractApplicationTest {
 		super.mockMvcPerformPost(BASE_PATH.concat("/institution"), bodyInput)
 			.andExpect(status().isOk());
 		
-		assertNotNull(institutionService.findInstitutionByCode("150"));
-		assertEquals(1, institutionService.findInstitutionByCode("150").getMentors().size());
+		assertNotNull(institutionService.findInstitutionByCode("146"));
+		assertEquals(1, institutionService.findInstitutionByCode("146").getMentors().size());
 	}
 	
 	@Test

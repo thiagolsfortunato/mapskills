@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -55,16 +56,17 @@ public class InstitutionService implements RepositoryService {
 		mentorRepository.save(mentor);
 	}
 	
-	public void saveMentors(final Collection<Mentor> mentors) {
+	public void saveMentors(final Collection<Mentor> mentors, final long institutionId) {
 		for(final Mentor mentor : mentors) {
-			this.saveMentor(mentor);			
+			mentor.setInstitutionId(institutionId);
+			this.saveMentor(mentor);
 		}
 	}
 
 	@Transactional
 	public Institution saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
-		this.saveMentors(institution.getMentors());
+		this.saveMentors(institution.getMentors(), institution.getId());
 		return institution;			
 	}
 	
@@ -167,6 +169,28 @@ public class InstitutionService implements RepositoryService {
 	
 	public long findThemeCurrent(final String institutionCode) {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
+	}
+	
+	public List<Object[]> getStudentsProgress(final String institutionCode) {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getStudentsProgressByInstitution(institutionCode, year_semester);
+	}
+	
+	public List<Object[]> getGlobalPogress() {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getGlobalStudentsProgress(year_semester);
+	}
+	
+	public List<Object[]> getLevelPogress(final String level) {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getLevelStudentsProgress(level, year_semester);
+	}
+	
+	private String getYearSemesterCurrent() {
+		final LocalDate dateCurrent = LocalDate.now();
+		final String semester = dateCurrent.getMonthValue() < 6 ? "1" : "2";
+		final String year = String.valueOf(dateCurrent.getYear());
+		return year.substring(2).concat(semester);
 	}
 	
 	/* = = = = = Dependence Inject = = = = = **/

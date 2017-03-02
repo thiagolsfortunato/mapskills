@@ -11,6 +11,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
+import br.gov.sp.fatec.mapskills.restapi.serializer.StudentResultSerializer;
+
 /**
  * A classe <code>StudentResultWrapper</code> contem os arrays necessários para
  * renderização do gráfico de radar com o resultado de um aluno.
@@ -18,11 +24,6 @@ import java.util.List;
  * @author Marcelo
  *
  */
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.gov.sp.fatec.mapskills.domain.skill.Skill;
-import br.gov.sp.fatec.mapskills.restapi.serializer.StudentResultSerializer;
 @JsonSerialize(using = StudentResultSerializer.class)
 public class StudentResultWrapper {
 	

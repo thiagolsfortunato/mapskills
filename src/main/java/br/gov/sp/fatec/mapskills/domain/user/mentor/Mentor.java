@@ -22,6 +22,9 @@ public class Mentor extends User {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "ins_id")
+	private long institutionId;
+	
 	@Column(name = "ins_code")
 	private String institutionCode;
 
@@ -36,6 +39,10 @@ public class Mentor extends User {
 	
 	public String getInstitutionCode() {
 		return institutionCode;
+	}
+	
+	public void setInstitutionId(final long institutionId) {
+		this.institutionId = institutionId;
 	}
 
 }

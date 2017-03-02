@@ -12,12 +12,58 @@
 			            s.ski_description AS ski_description,
 			            SUM(sqe.sqe_skill_value) AS total
 					FROM STUDENT_QUESTION_EVENT sqe
-					INNER JOIN SKILL s
-					ON sqe.ski_id = s.ski_id
+					INNER JOIN SKILL s ON sqe.ski_id = s.ski_id
 					GROUP BY sqe.use_id, s.ski_type, s.ski_description
 					ORDER BY s.ski_type ASC
 		</createView>
+		
+		<createView catalogName="MAPSKILLS"
+	            replaceIfExists="false"
+	            viewName="INSTITUTION_STUDENTS_PROGRESS_VIEW">
+		            SELECT
+						SUBSTR(stu.STU_RA, 7, 3) AS ANO_SEMESTRE,
+						institution.INS_CODE,
+						institution.INS_LEVEL AS LEVEL,
+					    course.CRS_CODE,
+						course.CRS_NAME AS CURSO,
+					    (SELECT count(*) FROM student 
+							WHERE STU_IS_COMPLETED = 0 AND CRS_CODE = course.CRS_CODE GROUP BY CRS_CODE) AS NAO_FINALIZADOS,
+					    (SELECT count(*) FROM student
+							WHERE STU_IS_COMPLETED = 1 AND CRS_CODE = course.CRS_CODE GROUP BY CRS_CODE) AS FINALIZADOS
+					FROM student stu INNER JOIN course ON course.CRS_CODE = stu.CRS_CODE
+									 INNER JOIN institution ON course.INS_CODE = institution.INS_CODE
+					GROUP BY ANO_SEMESTRE, institution.INS_CODE, LEVEL, course.CRS_CODE, CURSO
+		</createView>
+		
+		<createView catalogName="MAPSKILLS"
+	            replaceIfExists="false"
+	            viewName="ADMIN_GLOBAL_STUDENTS_PROGRESS_VIEW">
+		            SELECT
+						SUBSTR(stu.STU_RA, 7, 3) AS YEAR_SEMESTER,
+					    institution.INS_LEVEL AS LEVEL,
+					    (SELECT count(*) FROM student 
+							WHERE STU_IS_COMPLETED = 0 AND INS_CODE = institution.INS_CODE GROUP BY INS_CODE) AS NAO_FINALIZADOS,
+					    (SELECT count(*) FROM student
+							WHERE STU_IS_COMPLETED = 1 AND INS_CODE = institution.INS_CODE GROUP BY INS_CODE) AS FINALIZADOS
+					FROM student stu INNER JOIN institution ON stu.INS_CODE = institution.INS_CODE
+					GROUP BY YEAR_SEMESTER, LEVEL
+		</createView>
+		
+		<createView catalogName="MAPSKILLS"
+	            replaceIfExists="false"
+	            viewName="ADMIN_LEVEL_STUDENTS_PROGRESS_VIEW">
+		            SELECT
+						SUBSTR(stu.STU_RA, 7, 3) AS ANO_SEMESTRE,
+						institution.INS_CODE,
+					    institution.INS_LEVEL AS LEVEL,
+						institution.INS_COMPANY AS INSTITUTION,
+					    (SELECT count(*) FROM student 
+							WHERE STU_IS_COMPLETED = 0 AND INS_CODE = institution.INS_CODE GROUP BY INS_CODE) AS NAO_FINALIZADOS,
+					    (SELECT count(*) FROM student
+							WHERE STU_IS_COMPLETED = 1 AND INS_CODE = institution.INS_CODE GROUP BY INS_CODE) AS FINALIZADOS
+					FROM student stu INNER JOIN institution ON stu.INS_CODE = institution.INS_CODE
+					GROUP BY ANO_SEMESTRE, institution.INS_CODE, LEVEL, INSTITUTION
+		</createView>
 	</changeSet>
-
 
 </databaseChangeLog>

@@ -34,6 +34,8 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentsProgressGlobalWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentsProgressLevelWrapper;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
@@ -206,6 +208,22 @@ public class AdminController {
 	public ResponseEntity<?> deleteScene(@PathVariable("sceneId") final long sceneId) {
 		sceneService.delete(sceneId);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/global/progress", method = RequestMethod.GET)
+	public ResponseEntity<StudentsProgressGlobalWrapper> getGlobalStudentsProgress() {
+		final List<Object[]> resultSet = institutionService.getGlobalPogress();
+		final StudentsProgressGlobalWrapper progress = new StudentsProgressGlobalWrapper(resultSet);
+		return new ResponseEntity<>(progress, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/level/progress", method = RequestMethod.GET)
+	public ResponseEntity<StudentsProgressLevelWrapper> getLevelStudentsProgress(
+			@PathVariable("level") final String level) {
+		
+		final List<Object[]> resultSet = institutionService.getLevelPogress(level);
+		final StudentsProgressLevelWrapper progress = new StudentsProgressLevelWrapper(resultSet);
+		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 
 }

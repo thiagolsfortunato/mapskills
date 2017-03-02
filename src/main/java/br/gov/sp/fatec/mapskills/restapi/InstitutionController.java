@@ -32,6 +32,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentsProgressByCourseWrapper;
 
 /**
  * A classe <code>MentorController</code> é responsável por conter todas
@@ -152,7 +153,7 @@ public class InstitutionController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	/**
-	 * metodo que recupera os detlhes do perfil de um mentor
+	 * metodo que recupera os detalhes do perfil de um mentor
 	 * @param userId
 	 * @return
 	 */
@@ -160,6 +161,19 @@ public class InstitutionController {
 	public ResponseEntity<?> getMentorDetails(@PathVariable("userId") final long userId) {
 		//TODO Fazer método que recupere os detalhes do mentor
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	/**
+	 * 
+	 * @param institutionCode
+	 * @return
+	 */
+	@RequestMapping(value = "/{institutionCode}/progress", method = RequestMethod.GET)
+	public ResponseEntity<StudentsProgressByCourseWrapper> getStudentsProgress(
+			@PathVariable("institutionCode") final String institutionCode) {
+		
+		final List<Object[]> resultSet = institutionService.getStudentsProgress(institutionCode);
+		final StudentsProgressByCourseWrapper progress = new StudentsProgressByCourseWrapper(resultSet);
+		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 
 }

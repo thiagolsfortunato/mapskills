@@ -142,8 +142,8 @@ public abstract class AbstractApplicationTest {
 	
 	protected Institution getOneInstitution() {
 		final Collection<Mentor> mentors = new ArrayList<>(1);
-		mentors.add(new Mentor("Fabiola Vaz", "150", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
-		return new Institution("150", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR,"Cidade-Teste", mentors);
+		mentors.add(new Mentor("Fabiola Vaz", "146", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
+		return new Institution("146", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR, "Cidade-Teste", mentors);
 	}
 
 }
