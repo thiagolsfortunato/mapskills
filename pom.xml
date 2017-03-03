@@ -256,7 +256,7 @@
 			</activation>
 			<id>cloud</id>
 			<properties>
-				<datasource.url>jdbc:mysql://164.137.186.134:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://64.137.186.134:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapsskills</datasource.username>
 				<datasource.password>mapsskills</datasource.password>
