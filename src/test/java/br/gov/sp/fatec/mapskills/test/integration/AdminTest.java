@@ -204,7 +204,16 @@ public class AdminTest extends AbstractApplicationTest {
 			.andExpect(status().isOk());
 		
 		assertTrue(themeService.findById(themes.get(0).getId()).isActive());
+	}
+	
+	@Test
+	public void getReportByInstitution() throws Exception {
+		mockAdminAuthentication();
+		for(final Skill skill : super.getSkillsMock()) {
+			skillService.save(skill);
+		}
 		
+		super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/report/146"));
 	}
 	
 	private void mockAdminAuthentication() {

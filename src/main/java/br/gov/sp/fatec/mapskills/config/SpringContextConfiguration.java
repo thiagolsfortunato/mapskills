@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 /**
  * A classe <code>SpringContextConfiguration</code> representa as configurações
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Import;
  * @author Marcelo
  *
  */
+@Configuration
 @Import({DataBaseConfig.class})
 public class SpringContextConfiguration extends AbstractSpringContextConfiguration {	
 }

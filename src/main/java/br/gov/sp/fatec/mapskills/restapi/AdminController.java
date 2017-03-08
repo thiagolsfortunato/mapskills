@@ -6,21 +6,28 @@
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.report.ReportService;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
@@ -49,7 +56,7 @@ import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 @RequestMapping(AdminController.BASE_PATH)
 public class AdminController {
 	
-	public static final String BASE_PATH = "/admin";
+	protected static final String BASE_PATH = "/admin";
 	
 	@Autowired
 	private SkillService skillService;
@@ -65,6 +72,9 @@ public class AdminController {
 	
 	@Autowired
 	private SaveImageService imageService;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	/**
 	 * Metodo que realiza a persistencia de lista de instituicoes por meio de um arquivo
@@ -210,20 +220,38 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/global/progress", method = RequestMethod.GET)
+	@RequestMapping(value = "/dashboard/global", method = RequestMethod.GET)
 	public ResponseEntity<StudentsProgressGlobalWrapper> getGlobalStudentsProgress() {
 		final List<Object[]> resultSet = institutionService.getGlobalPogress();
 		final StudentsProgressGlobalWrapper progress = new StudentsProgressGlobalWrapper(resultSet);
 		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/level/progress", method = RequestMethod.GET)
+	@RequestMapping(value = "/dashboard/{level}", method = RequestMethod.GET)
 	public ResponseEntity<StudentsProgressLevelWrapper> getLevelStudentsProgress(
 			@PathVariable("level") final String level) {
 		
 		final List<Object[]> resultSet = institutionService.getLevelPogress(level);
 		final StudentsProgressLevelWrapper progress = new StudentsProgressLevelWrapper(resultSet);
 		return new ResponseEntity<>(progress, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/report/{institutionCode}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> getReport(@PathVariable("institutionCode") final String institutionCode, final HttpServletResponse response) {
+		try {
+			final ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(reportService.getCsvReport(institutionCode));
+			outputStream.flush();
+			response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+			response.setCharacterEncoding("UTF-8");
+            response.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok().build();
+	    
 	}
 
 }

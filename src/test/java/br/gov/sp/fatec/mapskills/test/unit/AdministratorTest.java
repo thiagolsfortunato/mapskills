@@ -8,11 +8,11 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.report.ReportService;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
@@ -32,7 +33,7 @@ import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
-@Ignore
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class AdministratorTest extends MapSkillsTest {
@@ -42,6 +43,9 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@Autowired
 	private InstitutionService institutionService;
+	
+	@Autowired
+	private ReportService reportService;
 
 	
 	@Before
@@ -72,6 +76,11 @@ public class AdministratorTest extends MapSkillsTest {
 	public void saveAdministrator() {
 		final Administrator admin = new Administrator("Administrador", "admin", "admin");
 		userService.save(admin);
+	}
+	
+	@Test
+	public void getReportInstitution() throws IOException {
+		reportService.getCsvReport("146");
 	}
 
 

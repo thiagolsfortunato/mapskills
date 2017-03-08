@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.test.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
@@ -28,4 +29,5 @@ public class SpringContextTestConfiguration extends AbstractSpringContextConfigu
 	public ObjectMapper objectMapper() {
 		return new ObjectMapper();
 	}
+	
 }

@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 import br.gov.sp.fatec.mapskills.config.WebConfig;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
@@ -144,6 +145,14 @@ public abstract class AbstractApplicationTest {
 		final Collection<Mentor> mentors = new ArrayList<>(1);
 		mentors.add(new Mentor("Fabiola Vaz", "146", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
 		return new Institution("146", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR, "Cidade-Teste", mentors);
+	}
+	
+	protected Collection<Skill> getSkillsMock() {
+		final Collection<Skill> skills = new ArrayList<>();
+		skills.add(new Skill("Liderança", " liderança.."));
+		skills.add(new Skill("Visão de Futuro", " visão.."));
+		skills.add(new Skill("Gestão de Tempo", " gestão.."));
+		return skills;
 	}
 
 }

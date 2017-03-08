@@ -50,4 +50,4 @@ local.properties
 # Code Recommenders
 .recommenders/
 /target/
-/src/main/webapp/images
+#/src/main/webapp/images
