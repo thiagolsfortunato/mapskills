@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentsProgressGlobalWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
 
 public class StudentsProgressGlobalSerializer extends JsonSerializer<StudentsProgressGlobalWrapper> {
 

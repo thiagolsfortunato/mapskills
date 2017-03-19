@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentsProgressByCourseWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByCourseWrapper;
 
 public class StudentsProgressByCourseSerializer extends JsonSerializer<StudentsProgressByCourseWrapper> {
 

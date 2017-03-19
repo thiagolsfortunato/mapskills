@@ -44,7 +44,7 @@ public class DataBaseHsqldbConfig {
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		entityManagerFactoryBean
-				.setPackagesToScan("br.gov.sp.fatec.mapskills.domain");
+				.setPackagesToScan("br.gov.sp.fatec.mapskills");
 
 		entityManagerFactoryBean.setJpaProperties(hibProperties());
 

@@ -141,12 +141,12 @@ public class SetupApplicationToInitializeGame {
 	 * cria competencias persistindo-as na base de dados
 	 */
 	private void createSkills() {
-		skillRepository.save(new Skill("Visão do futuro", "Avalia projeção de perspectiva."));
-		skillRepository.save(new Skill("Comunicação", "Avalia dicção dos assuntos em grupo."));
-		skillRepository.save(new Skill("Gestão do tempo", "Avaliação a situação sob pressão no trabalho."));
-		skillRepository.save(new Skill("Equilibrio emocional", "Avalia o comportamento em situação de stress."));
-		skillRepository.save(new Skill("Trabalho em equipe", "Avalia a gestão do trablho em equipe."));
-		skillRepository.save(new Skill("Resiliência", "Avalia a facilidade de se adaptar às mudanças."));
+		skillRepository.save(new Skill("Visão do futuro", "Capacidade de antecipar barreira e tendencias identificando oportunidade mais criativas e beneficas para a organização ou para a adversidade."));
+		skillRepository.save(new Skill("Comunicação", "Capacidade de transmitir e expressar ideias, pensamentos, emoções e informações de forma clara e objetiva, de modo a garantir sua compreensão sem distorções ou ruídos."));
+		skillRepository.save(new Skill("Gestão do tempo", "Capacidade de gerenciar adequandamente a execução das tarefas, planejando e organizando recursos, em conformidade com o prazo acordado."));
+		skillRepository.save(new Skill("Equilibrio emocional", "Qualidade no dominio das emoções e de adequação a resposta emocional a estimulos internos e externos."));
+		skillRepository.save(new Skill("Trabalho em equipe", "Busca construir relacionamentos assertivos para com os outros, respeitando as necessidades e contribuições dos demais, levando os integrantes a alcançarem positivamente os resultados estabelecidos."));
+		skillRepository.save(new Skill("Resiliência", "Capacidade de lidar com problemas, superar obstaculos ou resistir a pressão de situações adversas dando condição para enfrentar a alcançar os objetivos esperados."));
 		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 	}
 	/**

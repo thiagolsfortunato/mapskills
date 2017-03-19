@@ -26,7 +26,7 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.AnswerWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
 /**
  * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
  * de controle da aplicação.

@@ -14,19 +14,12 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
 @Ignore
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class SkillTest extends MapSkillsTest {
 	
 	@Autowired

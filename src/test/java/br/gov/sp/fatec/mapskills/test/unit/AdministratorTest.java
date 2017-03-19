@@ -14,28 +14,23 @@ import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.report.ReportService;
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportFilter;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportService;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
 public class AdministratorTest extends MapSkillsTest {
 
 	@Autowired
@@ -47,14 +42,13 @@ public class AdministratorTest extends MapSkillsTest {
 	@Autowired
 	private ReportService reportService;
 
-	
 	@Before
 	public void cleanTables() {
 		super.cleanTables(institutionService, userService);
 	}
 	
 	@Test
-	public void findUserByUsernamePasswords() throws MapSkillsException {
+	public void findUserByUsernamePassword() throws MapSkillsException {
 		final String EXPECTED_RA = "Student MockA"; 
 		final Collection<Mentor> mentors = new ArrayList<>(1);
 		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
@@ -80,7 +74,11 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@Test
 	public void getReportInstitution() throws IOException {
-		reportService.getCsvReport("146");
+		for(final Skill skill : super.buildSkillsMock()) {
+			skillService.save(skill);
+		}
+		final ReportFilter filter = new ReportFilter(null, "146", null, null, null);
+		reportService.getCsvReport(filter);
 	}
 
 

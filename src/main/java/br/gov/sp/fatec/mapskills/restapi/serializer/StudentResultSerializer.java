@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentResultWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
 
 public class StudentResultSerializer extends JsonSerializer<StudentResultWrapper> {
 

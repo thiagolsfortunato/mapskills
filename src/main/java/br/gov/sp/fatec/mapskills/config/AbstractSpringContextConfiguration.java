@@ -31,13 +31,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"br.gov.sp.fatec.mapskills.restapi.serializer",
 		"br.gov.sp.fatec.mapskills.authentication",
 		"br.gov.sp.fatec.mapskills.authentication.jwt",
-		"br.gov.sp.fatec.mapskills.domain.report"})
+		"br.gov.sp.fatec.mapskills.restapi.wrapper.report"})
 @EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",
 		"br.gov.sp.fatec.mapskills.domain.scene",
 		"br.gov.sp.fatec.mapskills.domain.answerevent",
 		"br.gov.sp.fatec.mapskills.domain.theme",
-		"br.gov.sp.fatec.mapskills.domain.report"})
+		"br.gov.sp.fatec.mapskills.restapi.wrapper.report"})
 public abstract class AbstractSpringContextConfiguration {
 }

@@ -44,5 +44,9 @@ public class Mentor extends User {
 	public void setInstitutionId(final long institutionId) {
 		this.institutionId = institutionId;
 	}
+	
+	public long getInstitutionId() {
+		return institutionId;
+	}
 
 }

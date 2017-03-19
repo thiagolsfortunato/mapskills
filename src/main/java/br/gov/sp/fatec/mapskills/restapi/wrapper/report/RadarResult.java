@@ -4,7 +4,7 @@
  * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
  * proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.restapi.wrapper;
+package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 
