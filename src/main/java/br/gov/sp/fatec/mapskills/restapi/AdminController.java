@@ -21,6 +21,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
+import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
@@ -33,6 +34,8 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
@@ -43,7 +46,10 @@ import br.gov.sp.fatec.mapskills.utils.SaveImageService;
  *
  */
 @RestController
+@RequestMapping(AdminController.BASE_PATH)
 public class AdminController {
+	
+	protected static final String BASE_PATH = "/admin";
 	
 	@Autowired
 	private SkillService skillService;
@@ -188,6 +194,36 @@ public class AdminController {
 	public ResponseEntity<SkillListWrapper> getAllSkills() {
 		final SkillListWrapper gameThemes = new SkillListWrapper(skillService.findAll()); 
 		return new ResponseEntity<>(gameThemes, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/scene/question/{sceneId}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteQuestion(@PathVariable("sceneId") final long sceneId) {
+		final Scene scene = sceneService.findById(sceneId);
+		scene.deleteQuestion();
+		sceneService.save(scene);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/scene/{sceneId}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteScene(@PathVariable("sceneId") final long sceneId) {
+		sceneService.delete(sceneId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/dashboard/global", method = RequestMethod.GET)
+	public ResponseEntity<StudentsProgressGlobalWrapper> getGlobalStudentsProgress() {
+		final List<Object[]> resultSet = institutionService.getGlobalPogress();
+		final StudentsProgressGlobalWrapper progress = new StudentsProgressGlobalWrapper(resultSet);
+		return new ResponseEntity<>(progress, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/dashboard/{level}", method = RequestMethod.GET)
+	public ResponseEntity<StudentsProgressLevelWrapper> getLevelStudentsProgress(
+			@PathVariable("level") final String level) {
+		
+		final List<Object[]> resultSet = institutionService.getLevelPogress(level);
+		final StudentsProgressLevelWrapper progress = new StudentsProgressLevelWrapper(resultSet);
+		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 
 }

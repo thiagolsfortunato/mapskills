@@ -47,5 +47,9 @@ public class SkillService implements RepositoryService {
 	public Skill findById(final long id) {
 		return repository.findById(id);
 	}
+	
+	public long getCount() {
+		return repository.count();
+	}
 
 }

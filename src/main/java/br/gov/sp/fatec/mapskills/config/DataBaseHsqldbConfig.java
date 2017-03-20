@@ -20,7 +20,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
  * A classe <code>DataBaseHsqldbConfig</code> representa a configuacao do banco de dados HSQLDB
  * que é um banco de dados em memoria, para realizalçao de testes.
  * 
- * @author HyperClass04
+ * @author Marcelo Inácio
  *
  */
 @Configuration
@@ -44,7 +44,7 @@ public class DataBaseHsqldbConfig {
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		entityManagerFactoryBean
-				.setPackagesToScan("br.gov.sp.fatec.mapskills.domain");
+				.setPackagesToScan("br.gov.sp.fatec.mapskills");
 
 		entityManagerFactoryBean.setJpaProperties(hibProperties());
 

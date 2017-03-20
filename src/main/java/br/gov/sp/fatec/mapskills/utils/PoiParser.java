@@ -8,7 +8,8 @@ package br.gov.sp.fatec.mapskills.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.util.StringUtils;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
@@ -30,13 +32,18 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
  */
 public abstract class PoiParser<T> {
 	
-	private static final Logger LOGGER = Logger.getLogger( PoiParser.class.getName() );
+	private static final Logger LOGGER = Logger.getLogger(PoiParser.class.getName());
+	
+	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
 	
 	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;
 
-	protected abstract T buildObject(final Iterator<Cell> cellIterator) throws MapSkillsException;
+	protected abstract T buildObject(final List<String> attArgs) throws MapSkillsException;
+	
+	protected abstract boolean verifyListForObject(final List<String> argsToObj);
 	/**
-	 * O metodo <code>objectListFactory</code> converte um arquivo do tipo excel xlsx em uma lista de objetos.
+	 * O metodo <code>objectListFactory</code> converte um arquivo do 
+	 * tipo .xlsx (excel) em uma lista de objetos.
 	 * 
 	 * @param inputStream
 	 * @return
@@ -45,16 +52,15 @@ public abstract class PoiParser<T> {
 	 * @throws Exception
 	 */
 	protected List<T> objectListFactory(final InputStream inputStream) throws MapSkillsException {
-		XSSFWorkbook workbook;
 		try {
-			workbook = new XSSFWorkbook(inputStream);
+			final XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 			final XSSFSheet sheet = workbook.getSheetAt(0);
-			final Iterator<Row> rowIterator = sheet.iterator(); 
+			final Iterator<Row> rowIterator = sheet.iterator();
 			workbook.close();
-			return objectListBuilder(rowIterator);
-		} catch (final Exception e) {
+			return Collections.unmodifiableList(objectListBuilder(rowIterator));
+		} catch (final MapSkillsException | IOException e) {
 			LOGGER.info(e.getMessage());
-			throw new ReadFileException(e);
+			throw new ReadFileException(e.getMessage());
 		}
 	}
 	/**
@@ -67,34 +73,49 @@ public abstract class PoiParser<T> {
 	 * @throws MapSkillsException 
 	 */
 	private List<T> objectListBuilder(final Iterator<Row> rowIterator) throws MapSkillsException {
-		final List<T> objectList = new ArrayList<>();
-		Row row;
+		final List<T> objectList = new LinkedList<>();
+		rowIterator.next();
 		while (rowIterator.hasNext()) {
-			row = rowIterator.next();
-			if(row.getRowNum() == 0) {
-				continue;
-			}
+			final Row row = rowIterator.next();
 			final Iterator<Cell> cellIterator = row.cellIterator();
-			objectList.add(buildObject(cellIterator));
+			final List<String> attrForObj = new LinkedList<>();
+			attrForObj.addAll(this.cellIteratorToCellList(cellIterator));
+			if(this.verifyListForObject(attrForObj)) {
+				objectList.add(this.buildObject(attrForObj));				
+			}
 		}
-		return objectList;
+		return Collections.unmodifiableList(objectList);
 	}
+		
 	/**
-	 * O metodo <code>objectArgs</code> perrcorre nas celulas da linha do arquivo e retorna uma lista de String,
-	 * para ser usado como parametro em quem a chamou.
+	 * metodo que converte um iterator de celula do excel
+	 * em uma lista de strings que servira como parametros
+	 * para construcao do objeto definido pela classe filha.
 	 * 
 	 * @param cellIterator
+	 * @return list
+	 */
+	private Collection<String> cellIteratorToCellList(final Iterator<Cell> cellIterator) {
+		final List<String> cellList = new LinkedList<>();
+		while (cellIterator.hasNext()) {
+			final Cell cell = cellIterator.next();
+			cell.setCellType(Cell.CELL_TYPE_STRING);
+			if(this.verifyCellIsEmpty(cell)) {
+				continue;
+			}
+			cellList.add(cell.getStringCellValue()); 
+		}
+		return Collections.unmodifiableList(cellList);
+	}
+	/**
+	 * verifica se a celula esta em branco, para nao
+	 * adicionala a lista de strings.
+	 * 
+	 * @param cell
 	 * @return
 	 */
-	protected List<String> getObjectArgs(final Iterator<Cell> cellIterator) {
-		final List<String> args = new LinkedList<>();
-		Cell cell;
-		while (cellIterator.hasNext()) {
-			cell = cellIterator.next();
-			cell.setCellType(Cell.CELL_TYPE_STRING);
-			args.add(cell.getStringCellValue());
-		}
-		return args;
+	private boolean verifyCellIsEmpty(final Cell cell) {
+		return StringUtils.isEmpty(cell.getStringCellValue().trim());
 	}
 
 }

@@ -9,29 +9,25 @@ package br.gov.sp.fatec.mapskills.test.unit;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@Ignore
 public class InstitutionTest extends MapSkillsTest {
 	
 	@Autowired
@@ -42,82 +38,83 @@ public class InstitutionTest extends MapSkillsTest {
 		super.cleanTables(institutionService);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveInstitution() {
-		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123");
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentor);
+		final Collection<Mentor> mentors = new ArrayList<>(1);
+		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123"));
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		
 		assertEquals("123456789000", institutionService.findInstitutionById(fatec.getId()).getCnpj());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void findInstitutionDetails() throws MapSkillsException {
-		final Mentor mentor = new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123");
-		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", "São José", mentor);
+		final Collection<Mentor> mentors = new ArrayList<>(1);
+		mentors.add(new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123"));
+		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		
-		final List<Course> coursesList = new ArrayList<>();
-		final Course courseA = new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147");
-		final Course courseB = new Course("29", "Logistica", CoursePeriod.NOTURNO, "147");
-		final Course courseC = new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147");
-		final Course courseD = new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147");
-		coursesList.add(courseA);
-		coursesList.add(courseB);
-		coursesList.add(courseC);
-		coursesList.add(courseD);
+		final List<Course> coursesList = new ArrayList<>(4);
+		coursesList.add(new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("29", "Logistica", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147"));
 		institutionService.saveCourses(coursesList);
 		
 		final Institution institutionDetails = institutionService.findInstitutionDetailsById(fatec.getId());
 		assertEquals(4, institutionDetails.getCourses().size());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveInstitutions() {
-		final List<Institution> fatecList = new ArrayList<>();
-		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", "São José", mentorA);
+		final List<Institution> fatecList = new ArrayList<>(3);
+		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
+		mentorsOURINHOS.add(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
+		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "São José", mentorsOURINHOS);
 		
-		final Mentor mentorB = new Mentor("Mentor Responsavel PINDA", "148", "paulo@fatec", "Mudar@123");
-		final Institution fatecPINDA = new Institution("148", "123456789002", "Fatec Pinda", "Pindamonhangaba", mentorB);
+		final Collection<Mentor> mentorsPINDA = new ArrayList<>(1);
+		mentorsPINDA.add(new Mentor("Mentor Responsavel PINDA", "148", "paulo@fatec", "Mudar@123"));
+		final Institution fatecPINDA = new Institution("148", "123456789002", "Fatec Pinda", InstitutionLevel.SUPERIOR, "Pindamonhangaba", mentorsPINDA);
 		
-		final Mentor mentorC = new Mentor("Mentor Responsavel SP", "149", "fagundez@fatec", "Mudar@123");
-		final Institution fatecSP = new Institution("149", "123456789003", "Fatec SP", "São Paulo", mentorC);
+		final Collection<Mentor> mentorsSP = new ArrayList<>(1);
+		mentorsSP.add(new Mentor("Mentor Responsavel SP", "149", "fagundez@fatec", "Mudar@123"));
+		final Institution fatecSP = new Institution("149", "123456789003", "Fatec SP", InstitutionLevel.SUPERIOR, "São Paulo", mentorsSP);
 		
 		fatecList.add(fatecOURINHOS);
 		fatecList.add(fatecPINDA);
 		fatecList.add(fatecSP);
+		
 		institutionService.saveInstitutions(fatecList);
 		
 		assertEquals(3, institutionService.findAllInstitutions().size());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveAndFindAllCoursesByInstitution() {
-		final List<Course> coursesList = new ArrayList<>();
-		final Mentor mentorA = new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", "São José", mentorA);
+		final List<Course> coursesList = new ArrayList<>(4);
+		final Collection<Mentor> mentorsSP = new ArrayList<>(1);
+		mentorsSP.add(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
+		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ouro Preto", mentorsSP);
 		institutionService.saveInstitution(fatecOURINHOS);
-		
-		final Course courseA = new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147");
-		final Course courseB = new Course("29", "Logistica", CoursePeriod.NOTURNO, "147");
-		final Course courseC = new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147");
-		final Course courseD = new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147");
-		coursesList.add(courseA);
-		coursesList.add(courseB);
-		coursesList.add(courseC);
-		coursesList.add(courseD);
+
+		coursesList.add(new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("29", "Logistica", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147"));
 		
 		institutionService.saveCourses(coursesList);
 		
 		assertEquals(4, institutionService.findAllCoursesByInstitutionCode("147").size());
 	}
 		
-	@Ignore @Test
+	@Test
 	public void findAllStudentsByCourseAndInstitution() throws MapSkillsException {
 		institutionService.saveStudents(mockStudents());
-		final Student studentE = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
-		final Student studentF = new Student(new AcademicRegistry("1460281423073", "146", "038"), "Student MockF", "1289003400", "studentF@fatec.sp.gov.br", "mudar@123");
+		final Student studentE = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE",
+				"1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
+		final Student studentF = new Student(new AcademicRegistry("1460281423073", "146", "038"), "Student MockF", 
+				"1289003400", "studentF@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentE);
 		institutionService.saveStudent(studentF);
 		
@@ -127,49 +124,50 @@ public class InstitutionTest extends MapSkillsTest {
 		assertEquals(5, students.size());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void updateInstitution() {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "200", "victor@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("200", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
-		final Mentor mentorB = new Mentor("Regina", "156", "regina@fatec", "Mudar@123");
-		final Institution fatecSAMPA = new Institution("156", "123445789001", "Fatec Sampa", "São Paulo", mentorB);
+		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
+		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "200", "victor@fatec", "Mudar@123"));
+		final Institution fatecOURINHOS = new Institution("200", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
+		
+		final Collection<Mentor> mentorsSAMPA = new ArrayList<>(1);
+		mentorsSAMPA.add(new Mentor("Regina", "156", "regina@fatec", "Mudar@123"));
+		final Institution fatecSAMPA = new Institution("156", "123445789001", "Fatec Sampa", InstitutionLevel.SUPERIOR, "São Paulo", mentorsSAMPA);
 		final List<Institution> institutions = new ArrayList<>(2);
 		institutions.add(fatecSAMPA);
 		institutions.add(fatecOURINHOS);
 		institutionService.saveInstitutions(institutions);
 		
 		final Institution institution = institutionService.findInstitutionById(fatecSAMPA.getId());
-		institution.changeMentorName("Ragina_Simiões");
 		institution.changeCnpj("71461173000155");
 		institution.changeCity("Jacarei");
 		institution.changeCompany("Fatec Jacarei");
 		institutionService.saveInstitution(institution);
 		
-		assertEquals("Ragina_Simiões", institutionService.findInstitutionById(institution.getId()).getMentor().getName());
+		assertEquals("Fatec Jacarei", institutionService.findInstitutionById(institution.getId()).getCompany());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveCourses() throws MapSkillsException {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
+		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
+		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
+		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
 		institutionService.saveInstitution(fatecOURINHOS);
-		
-		final Course courseA = new Course("200", "Estruturas Leves", CoursePeriod.NOTURNO, "144");
-		final Course courseB = new Course("201", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "144");
-		final Course courseC = new Course("202", "Logistica", CoursePeriod.NOTURNO, "144");
+
 		final List<Course> courses = new ArrayList<>(3);
-		courses.add(courseA);
-		courses.add(courseB);
-		courses.add(courseC);
+		courses.add(new Course("200", "Estruturas Leves", CoursePeriod.NOTURNO, "144"));
+		courses.add(new Course("201", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "144"));
+		courses.add(new Course("202", "Logistica", CoursePeriod.NOTURNO, "144"));
 		institutionService.saveCourses(courses);
 		
 		assertEquals(3, institutionService.findAllCoursesByInstitutionCode("144").size());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveThemeInstitution() {
-		final Mentor mentorA = new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123");
-		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", "Ourinhos", mentorA);
+		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
+		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
+		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
 		institutionService.saveInstitution(fatecOURINHOS);
 		
 		assertEquals(0, institutionService.findInstitutionById(fatecOURINHOS.getId()).getThemeId());
@@ -182,14 +180,14 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	private List<Student> mockStudents() throws MapSkillsException {
 		final List<Student> students = new ArrayList<>();
-		final Student studentA = new Student(new AcademicRegistry("1460281423023", "146", "028"), "Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
-		final Student studentB = new Student(new AcademicRegistry("1460281423024", "146", "028"), "Student MockB", "1289003500", "studentB@fatec.sp.gov.br", "mudar@123");
-		final Student studentC = new Student(new AcademicRegistry("1460281423025", "146", "028"), "Student MockC", "1289003600", "studentC@fatec.sp.gov.br", "mudar@123");
-		final Student studentD = new Student(new AcademicRegistry("1460281423026", "146", "028"), "Student MockD", "1289003700", "studentD@fatec.sp.gov.br", "mudar@123");
-		students.add(studentA);
-		students.add(studentB);
-		students.add(studentC);
-		students.add(studentD);
+		students.add(new Student(new AcademicRegistry("1460281423023", "146", "028"), "Student MockA", "1289003400",
+				"studentA@fatec.sp.gov.br", "mudar@123"));
+		students.add(new Student(new AcademicRegistry("1460281423024", "146", "028"), "Student MockB", "1289003500",
+				"studentB@fatec.sp.gov.br", "mudar@123"));
+		students.add(new Student(new AcademicRegistry("1460281423025", "146", "028"), "Student MockC", "1289003600",
+				"studentC@fatec.sp.gov.br", "mudar@123"));
+		students.add(new Student(new AcademicRegistry("1460281423026", "146", "028"), "Student MockD", "1289003700",
+				"studentD@fatec.sp.gov.br", "mudar@123"));
 		return students;
 	}
 	

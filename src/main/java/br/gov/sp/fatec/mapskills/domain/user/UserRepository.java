@@ -6,10 +6,14 @@
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
 	public User findByLogin(final Login login);
+	
+	@Query("SELECT user FROM User user WHERE user.login.username = ?1")
+	public User findByUsername(final String username);
 	
 }

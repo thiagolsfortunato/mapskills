@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEvent;
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
@@ -31,18 +32,36 @@ public class SceneService implements RepositoryService {
 		answerRepo.deleteAll();
 	}
 	/**
+	 * @param id
+	 * @return
+	 * 		uma cena pelo seu id
+	 */
+	public Scene findById(final long id) {
+		return sceneRepo.findOne(id);
+	}
+	/**
+	 * exclui uma cena
+	 * @param id
+	 */
+	public void delete(final long id) {
+		sceneRepo.delete(id);
+	}
+	/**
 	 * salva a cena gerando um index válido, para aquele tema
 	 * @param scene
 	 */
 	public void save(final Scene scene) {
-		final int index = nextIndex(scene.getGameThemeId());
-		scene.putIndex(index);
+		if(scene.getIndex() < 0) {
+			final int index = nextIndex(scene.getGameThemeId());
+			scene.putIndex(index);			
+		}
 		sceneRepo.save(scene);
 	}
 	/**
 	 * realiza uma atualização da ordem das cenas
 	 * @param scenes
 	 */
+	@Transactional
 	public void updateIndex(final Collection<Scene> scenes) {
 		sceneRepo.save(scenes);
 	}
@@ -57,7 +76,7 @@ public class SceneService implements RepositoryService {
 	 * @return
 	 */
 	public Collection<Scene> findAllByGameThemeId(final long gameThemeId) {
-		return sceneRepo.findAllByGameThemeId(gameThemeId);
+		return sceneRepo.findAllByGameThemeIdOrderByIndexAsc(gameThemeId);
 	}
 	
 	/**

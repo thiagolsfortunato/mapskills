@@ -7,6 +7,7 @@
 package br.gov.sp.fatec.mapskills.domain.user;
 
 import java.io.Serializable;
+import java.security.Principal;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -27,16 +28,16 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User implements Serializable {
+public abstract class User implements Principal, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "use_id")
-	protected long id;
+	private long id;
 	
 	@Column(name = "use_name")
 	private String name;
@@ -78,12 +79,20 @@ public abstract class User implements Serializable {
 		return login.getPassword();
 	}
 	
+	public Login getLogin() {
+		return login;
+	}
+	
 	public void changeName(final String newName) {
 		name = newName;
 	}
 	
 	public void setId(final long id) {
 		this.id = id;
+	}
+	
+	public void setPassword(final String hashPass) {
+		login.setPassword(hashPass);
 	}
 
 }

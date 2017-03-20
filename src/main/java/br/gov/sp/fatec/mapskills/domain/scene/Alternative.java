@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "alternative")
+@Table(name = "ALTERNATIVE")
 public class Alternative implements Serializable{
 
 	private static final long serialVersionUID = 1L;

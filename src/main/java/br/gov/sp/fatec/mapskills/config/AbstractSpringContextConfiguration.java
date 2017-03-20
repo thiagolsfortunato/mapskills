@@ -7,8 +7,8 @@
 package br.gov.sp.fatec.mapskills.config;
 
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * A classe abstrata <code>AbstractSpringContextConfiguration</code> contém todas configurações
@@ -17,8 +17,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author Marcelo
  *
  */
-@Configuration
-@Import({SerializersConfig.class})
+//@Configuration
+@PropertySource({"classpath:application.properties",
+				 "classpath:authentication.properties"})
+@Import({SerializersConfig.class, SecurityConfig.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",
@@ -26,12 +28,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"br.gov.sp.fatec.mapskills.domain.scene",
 		"br.gov.sp.fatec.mapskills.domain.answerevent",
 		"br.gov.sp.fatec.mapskills.utils",
-		"br.gov.sp.fatec.mapskills.restapi.serializer"})
+		"br.gov.sp.fatec.mapskills.restapi.serializer",
+		"br.gov.sp.fatec.mapskills.authentication",
+		"br.gov.sp.fatec.mapskills.authentication.jwt",
+		"br.gov.sp.fatec.mapskills.restapi.wrapper.report"})
 @EnableJpaRepositories(basePackages = {"br.gov.sp.fatec.mapskills.domain.user",
 		"br.gov.sp.fatec.mapskills.domain.institution",
 		"br.gov.sp.fatec.mapskills.domain.skill",
 		"br.gov.sp.fatec.mapskills.domain.scene",
 		"br.gov.sp.fatec.mapskills.domain.answerevent",
-		"br.gov.sp.fatec.mapskills.domain.theme"})
+		"br.gov.sp.fatec.mapskills.domain.theme",
+		"br.gov.sp.fatec.mapskills.restapi.wrapper.report"})
 public abstract class AbstractSpringContextConfiguration {
 }

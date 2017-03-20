@@ -26,6 +26,10 @@ public enum ProfileType {
 	public int getId() {
 		return id;
 	}
+	
+	public boolean isAdmin() {
+		return this.equals(ADMINISTRATOR);
+	}
 
 
 }

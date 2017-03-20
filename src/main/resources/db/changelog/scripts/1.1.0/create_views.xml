@@ -6,15 +6,16 @@
 	<changeSet author="marcelo-inacio" id="createView-radar-result">
 	    <createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
-	            viewName="RADAR_RESULT_VIEW">SELECT sqe.use_id AS use_id,
-		            s.ski_type AS ski_type,
-		            s.ski_description AS ski_description,
-		            SUM(sqe.sqe_skill_value) AS total
-				FROM STUDENT_QUESTION_EVENT sqe
-				INNER JOIN SKILL s
-				ON sqe.ski_id = s.ski_id
-				GROUP BY sqe.use_id, s.ski_type, s.ski_description
-				ORDER BY s.ski_type ASC
+	            viewName="RADAR_RESULT_VIEW">
+		            SELECT sqe.use_id AS use_id,
+			            s.ski_type AS ski_type,
+			            s.ski_description AS ski_description,
+			            SUM(sqe.sqe_skill_value) AS total
+					FROM STUDENT_QUESTION_EVENT sqe
+					INNER JOIN SKILL s
+					ON sqe.ski_id = s.ski_id
+					GROUP BY sqe.use_id, s.ski_type, s.ski_description
+					ORDER BY s.ski_type ASC
 		</createView>
 	</changeSet>
 

@@ -6,6 +6,12 @@
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -14,12 +20,17 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 
 public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetailsWrapper> {
 	
+	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
 	private final static String MENTOR = "mentor";
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public InstitutionDetailsWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
@@ -28,21 +39,45 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
 
-        final Mentor mentor = new Mentor(node.get(MENTOR).get("name").asText(), node.get("code").asText(),
-        		node.get(MENTOR).get("username").asText(), node.get(MENTOR).get("password").asText());
-
-        if(node.get(MENTOR).has("id")) {
-        	mentor.setId(node.get(MENTOR).get("id").asLong());
+        final Collection<Mentor> mentors = new LinkedList<>();
+        
+        if(node.has(MENTOR)) {
+        	mentors.add(this.mentorDeserialeze(node.get(MENTOR)));
+        } else {
+        	mentors.addAll(this.mentorListDeserialize(node.get("mentors")));
         }
         
 		final Institution institution =  new Institution(node.get("code").asText(), node.get("cnpj").asText(),
-				node.get("company").asText(), node.get("city").asText(), mentor);
+				node.get("company").asText(), InstitutionLevel.valueOf(node.get("level").asText()), node.get("city").asText(), mentors);
  
         if(node.has("id")) {
         	institution.setId(node.get("id").asLong());
         }
 		
 		return new InstitutionDetailsWrapper(institution);
+	}
+	
+	private Mentor mentorDeserialeze(final JsonNode node) {
+		final Mentor mentor = new Mentor(node.get("name").asText(), node.get("institutionCode").asText(), node.get("username").asText(),
+				ENCRYPTED_DEFAULT_PASSWORD);
+
+        if(node.has("id")) {
+        	mentor.setId(node.get("id").asLong());
+        }
+        if(node.has("password") && !StringUtils.isEmpty(node.get("password").asText())) {
+        	mentor.setPassword(encoder.encode(node.get("password").asText()));
+        }
+        return mentor;
+	}
+	
+	private Collection<Mentor> mentorListDeserialize(final JsonNode node) {
+		final int sizeArray = node.size();
+		final Collection<Mentor> mentors = new LinkedList<>();
+		for(int i = 0; i < sizeArray; i++ ) {
+			final JsonNode nodeCurrent = node.get(i);
+			mentors.add(mentorDeserialeze(nodeCurrent));
+		}
+		return mentors;
 	}
 
 }

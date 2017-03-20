@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SkillRepository extends CrudRepository<Skill, Long> {
 	
-	public Skill findById(final long id);
-	
+	public Skill findById(final long id);	
 
 }

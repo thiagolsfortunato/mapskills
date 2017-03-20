@@ -11,14 +11,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
@@ -26,10 +22,8 @@ import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeRepository;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@Ignore
 public class SceneTest extends MapSkillsTest {
 	
 	@Autowired
@@ -37,12 +31,12 @@ public class SceneTest extends MapSkillsTest {
 	@Autowired
 	private GameThemeRepository themeRepo;
 
-	@After
+	@Before
 	public void cleanTables() {
 		super.cleanTables(service);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void save() {
 		final int THEME_ID = 1;
 		final int SKILL_ID = 1;
@@ -52,7 +46,7 @@ public class SceneTest extends MapSkillsTest {
 		service.save(scene);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveList() {
 		final int THEME_ID = 1;
 		final int SKILL_ID = 1;
@@ -70,7 +64,7 @@ public class SceneTest extends MapSkillsTest {
 		assertEquals(3, service.findAllByGameThemeId(THEME_ID).size());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void nextIndex() {
 		final GameTheme themeA = new GameTheme("descrição tema 001");
 		themeRepo.save(themeA);
@@ -89,7 +83,7 @@ public class SceneTest extends MapSkillsTest {
 		assertEquals(1, nextIndex);
 	}
 
-	@Ignore @Test
+	@Test
 	public void update() {
 		final int THEME_ID = 1;
 		final int SKILL_ID = 1;

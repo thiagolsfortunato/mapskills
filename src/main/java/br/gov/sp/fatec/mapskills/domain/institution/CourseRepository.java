@@ -18,5 +18,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface CourseRepository extends CrudRepository<Course, Long> {
 	
 	public List<Course> findAllByInstitutionCode(final String institutionCode);
+	public Course findByCode(final String code);
+	public Course findByCodeAndInstitutionCode(final String code, final String institutionCode);
 
 }

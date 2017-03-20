@@ -11,32 +11,26 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@Ignore
 public class SkillTest extends MapSkillsTest {
 	
 	@Autowired
 	private SkillService service;
 	
-	@After
+	@Before
 	public void cleanTables() {
 		super.cleanTables(service);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void save() {
 		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skill);
@@ -45,14 +39,14 @@ public class SkillTest extends MapSkillsTest {
 		
 	}
 	
-	@Ignore @Test
+	@Test
 	public void testClean() {
 		final Collection<Skill> skillList = service.findAll();
 		assertTrue(skillList.isEmpty());
 		
 	}
 
-	@Ignore @Test
+	@Test
 	public void update() {
 		final Skill skillSave = new Skill("Liderança", "Breve descrição da habilidade");
 		service.save(skillSave);

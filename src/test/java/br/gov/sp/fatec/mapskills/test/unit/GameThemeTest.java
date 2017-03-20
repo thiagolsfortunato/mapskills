@@ -15,19 +15,13 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+@Ignore
 public class GameThemeTest extends MapSkillsTest {
 
 	@Autowired
@@ -41,17 +35,17 @@ public class GameThemeTest extends MapSkillsTest {
 		super.cleanTables(themeService, sceneService);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveTheme() {
 		final GameTheme theme = new GameTheme("pizzaria, aplicado em 2016/2");
 		themeService.save(theme);
 		
-		assertEquals("pizzaria, aplicado em 2016/2", themeService.findById(theme.getId()).getDescription());
+		assertEquals("pizzaria, aplicado em 2016/2", themeService.findById(theme.getId()).getName());
 		assertFalse(themeService.findById(theme.getId()).isActive());
 	}
 	
 	
-	@Ignore @Test
+	@Test
 	public void findAllThemes() {
 		themeService.save(buildMockThemes());
 		final List<GameTheme> themes = new ArrayList<>();

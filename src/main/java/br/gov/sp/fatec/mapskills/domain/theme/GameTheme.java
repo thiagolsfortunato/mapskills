@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "game_theme")
+@Table(name = "GAME_THEME")
 public class GameTheme {
 	
 	@Id
@@ -22,8 +22,8 @@ public class GameTheme {
 	@Column(name = "gth_id")
 	private long id;
 	
-	@Column(name = "gth_description", nullable = false)
-	private String description;
+	@Column(name = "gth_name", nullable = false)
+	private String name;
 		
 	@Column(name = "gth_is_active", nullable = false)
 	private boolean active = false;
@@ -32,8 +32,8 @@ public class GameTheme {
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public GameTheme(final String description) {
-		this.description = description;
+	public GameTheme(final String name) {
+		this.name = name;
 	}
 	
 	public long getId() {
@@ -44,8 +44,8 @@ public class GameTheme {
 		this.id = id;
 	}
 	
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 	
 	public void disable() {

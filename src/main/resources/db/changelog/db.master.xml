@@ -7,14 +7,14 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<include file="scripts/1.1.0/create_tables.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/add_primary_key.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/add_auto_increment.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/add_unique_key.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/add_not_null.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/add_foreing_key.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/create_views.xml" relativeToChangelogFile="true" />
-	<include file="scripts/1.1.0/insert_data.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/create_tables.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/add_primary_key.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/add_auto_increment.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/add_unique_key.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/add_not_null.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/add_foreing_key.xml" relativeToChangelogFile="true" />
+	<include file="scripts/1.2.0/create_views.xml" relativeToChangelogFile="true" />
+<!-- 	<include file="scripts/1.2.0/insert_data.xml" relativeToChangelogFile="true" /> -->
 
 
 </databaseChangeLog>

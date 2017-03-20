@@ -25,7 +25,7 @@ public class GameThemeDeserializer extends JsonDeserializer<GameThemeWrapper> {
 		final ObjectCodec oc = jsonParser.getCodec();
         final JsonNode node = oc.readTree(jsonParser);
         
-        final GameTheme theme = new GameTheme(node.get("description").asText());
+        final GameTheme theme = new GameTheme(node.get("name").asText());
         
         if(node.has("id")) {
         	theme.setId(node.get("id").asLong());

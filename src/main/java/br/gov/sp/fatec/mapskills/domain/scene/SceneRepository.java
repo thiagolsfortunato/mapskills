@@ -44,7 +44,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	 * @param gameThemeId
 	 * @return lista
 	 */
-	public Collection<Scene> findAllByGameThemeId(final long gameThemeId);
+	public Collection<Scene> findAllByGameThemeIdOrderByIndexAsc(final long gameThemeId);
 
 	
 }

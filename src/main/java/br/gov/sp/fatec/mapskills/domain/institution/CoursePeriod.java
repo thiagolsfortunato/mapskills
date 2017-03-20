@@ -6,7 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 /**
- * A classe <code>CoursePeriod</code> representa o periodo em que o curso é realizado
+ * O enum <code>CoursePeriod</code> representa o periodo em que o curso é realizado.
  * @author Marcelo
  *
  */

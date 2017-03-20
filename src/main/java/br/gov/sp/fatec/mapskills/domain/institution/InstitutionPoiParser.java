@@ -7,12 +7,12 @@ package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.utils.PoiParser;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
@@ -25,15 +25,21 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 	
 	@Override
 	public List<Institution> toObjectList(final InputStream inputStream) throws MapSkillsException {
-		List<Institution> objectList = new ArrayList<>();
-		objectList.addAll(super.objectListFactory(inputStream));
-		return objectList;
+		return Collections.unmodifiableList(super.objectListFactory(inputStream));
 	}
 
 	@Override
-	protected Institution buildObject(final Iterator<Cell> cellIterator) {
-		final List<String> args = super.getObjectArgs(cellIterator);
-		return new Institution(args.get(0), args.get(1), args.get(2), args.get(3), new Mentor(args.get(4), args.get(0), args.get(5), "mudar@123"));
+	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {
+		final Collection<Mentor> mentors = new ArrayList<>();
+		mentors.add(new Mentor(attArgs.get(5), attArgs.get(0), attArgs.get(6), ENCRYPTED_DEFAULT_PASSWORD));
+		return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), 
+				InstitutionLevel.build(attArgs.get(3).toUpperCase()), attArgs.get(4), mentors);
 	}
+
+	@Override
+	protected boolean verifyListForObject(final List<String> argsToObj) {
+		return argsToObj.size() == 7;
+	}
+
 
 }

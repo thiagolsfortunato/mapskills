@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
@@ -24,10 +25,11 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 
 @Configuration
 public class MapSkillsMockBeans {
@@ -59,8 +61,9 @@ public class MapSkillsMockBeans {
 	@Bean
 	public String saveInstitution() {
 		final Collection<Institution> institutions = new ArrayList<>(1);
-		final Mentor mentorA = new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123");
-		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", "São José", mentorA);
+		final Collection<Mentor> mentors = new ArrayList<>();
+		mentors.add(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
+		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
 		institutions.add(fatecA);
 		institutionService.saveInstitutions(institutions);
 		
@@ -68,7 +71,7 @@ public class MapSkillsMockBeans {
 	}
 	
 	@Bean
-	public String saveStudent() {
+	public String saveStudent() throws MapSkillsException {
 		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "student@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(student);
 		return MESSAGE;

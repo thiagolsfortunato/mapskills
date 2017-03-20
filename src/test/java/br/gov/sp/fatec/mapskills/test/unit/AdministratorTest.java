@@ -8,28 +8,29 @@ package br.gov.sp.fatec.mapskills.test.unit;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Ignore;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.institution.Mentor;
-import br.gov.sp.fatec.mapskills.domain.user.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.user.Administrator;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportFilter;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringContextTestConfiguration.class, loader = AnnotationConfigContextLoader.class)
+
 public class AdministratorTest extends MapSkillsTest {
 
 	@Autowired
@@ -37,22 +38,25 @@ public class AdministratorTest extends MapSkillsTest {
 	
 	@Autowired
 	private InstitutionService institutionService;
-
 	
-	@After
+	@Autowired
+	private ReportService reportService;
+
+	@Before
 	public void cleanTables() {
 		super.cleanTables(institutionService, userService);
 	}
 	
-	@Ignore @Test
-	public void findUserByUsernamePasswords() throws MapSkillsException {
+	@Test
+	public void findUserByUsernamePassword() throws MapSkillsException {
 		final String EXPECTED_RA = "Student MockA"; 
-		
-		final Mentor mentorSave = new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123");
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", "São José", mentorSave);
+		final Collection<Mentor> mentors = new ArrayList<>(1);
+		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
 		institutionService.saveInstitution(fatec);
 		
-		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", "1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
+		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", 
+				"1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentSave);
 		
 		final User studentUser = userService.findUserByUsernamePassword("studentA@fatec.sp.gov.br", "mudar@123");
@@ -62,10 +66,19 @@ public class AdministratorTest extends MapSkillsTest {
 		assertEquals("Mentor Responsavel Teste", mentorUser.getName());
 	}
 	
-	@Ignore @Test
+	@Test
 	public void saveAdministrator() {
 		final Administrator admin = new Administrator("Administrador", "admin", "admin");
 		userService.save(admin);
+	}
+	
+	@Test
+	public void getReportInstitution() throws IOException {
+		for(final Skill skill : super.buildSkillsMock()) {
+			skillService.save(skill);
+		}
+		final ReportFilter filter = new ReportFilter(null, "146", null, null, null);
+		reportService.getCsvReport(filter);
 	}
 
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 /**
  * A classe <code>Login</code> representa as credenciais de acesso a aplcacao.
  * 
@@ -24,6 +25,7 @@ public class Login implements Serializable {
 	@Column(name = "use_username", nullable = false, unique = true)
 	private String username;
 	
+	@Lob
 	@Column(name = "use_password", nullable = false)
 	private String password;
 	
@@ -42,6 +44,10 @@ public class Login implements Serializable {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public void setPassword(final String hashPass) {
+		this.password = hashPass;
 	}
 
 }

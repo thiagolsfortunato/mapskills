@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,49 +14,86 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
-import br.gov.sp.fatec.mapskills.domain.user.StudentRepository;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.MentorRepository;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
+import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-
+/**
+ * A classe <code>InstitutionService</code> contem todos metodos necessários para realizacao
+ * de tudo que esta relacionado ha instituicao.
+ * @author Marcelo
+ *
+ */
 @Service
 public class InstitutionService implements RepositoryService {
 		
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
 	private StudentRepository studentRepository;
+	private MentorRepository mentorRepository;
 	
-
 	@Override
 	public void deleteAll() {
-		institutionRepository.deleteAll();
-		courseRepository.deleteAll();
+		mentorRepository.deleteAll();
 		studentRepository.deleteAll();
+		courseRepository.deleteAll();
+		institutionRepository.deleteAll();
 	}
 
+	@Transactional
 	public void saveInstitutions(final Collection<Institution> institutions) {
-		institutionRepository.save(institutions);
+		for(final Institution institution : institutions) {
+			saveInstitution(institution);
+		}
 	}
 	
-	public void saveInstitution(final Institution institution) {
+	public void saveMentor(final Mentor mentor) {
+		mentorRepository.save(mentor);
+	}
+	
+	public void saveMentors(final Collection<Mentor> mentors, final long institutionId) {
+		for(final Mentor mentor : mentors) {
+			mentor.setInstitutionId(institutionId);
+			this.saveMentor(mentor);
+		}
+	}
+
+	@Transactional
+	public Institution saveInstitution(final Institution institution) {
 		institutionRepository.save(institution);
+		this.saveMentors(institution.getMentors(), institution.getId());
+		return institution;			
 	}
 	
 	public void saveCourses(final Collection<Course> courses) {
-		courseRepository.save(courses);
+		for(final Course course : courses) {
+			this.saveCourse(course);			
+		}
 	}
 	
 	public void saveCourse(final Course course) {
 		courseRepository.save(course);
 	}
 	
-	public void saveStudents(final Collection<Student> students) {
-		studentRepository.save(students);
+	public void saveStudents(final Collection<Student> students) throws MapSkillsException {
+		for(final Student student : students) {
+			if(studentRepository.findByRaRa(student.getRa()) == null) {
+				this.saveStudent(student);
+			}
+		}
 	}
 	
-	public void saveStudent(final Student student) {
-		studentRepository.save(student);
+	public void saveStudent(final Student student) throws MapSkillsException {
+		try {
+			studentRepository.save(student);
+		} catch (final Exception exc) {
+			throw new StudentInvalidException();
+		}
 	}
 
 	public Institution findInstitutionById(final long id) {
@@ -63,11 +101,22 @@ public class InstitutionService implements RepositoryService {
 	}
 	
 	public Institution findInstitutionByCode(final String code) {
-		return institutionRepository.findByCode(code);
+		final Institution institution = institutionRepository.findByCode(code);
+		final Collection<Mentor> mentors = mentorRepository.findAllByInstitutionCode(code);
+		institution.setMentors(mentors);
+		return institution;
 	}
 	
 	public Student findStudentByRa(final String ra) {
 		return studentRepository.findByRaRa(ra);
+	}
+	
+	public Student findStudentById(final long id) {
+		return studentRepository.findOne(id);
+	}
+	
+	public Course findCourseByCode(final String code) {
+		return courseRepository.findByCode(code);
 	}
 	
 	public Collection<Institution> findAllInstitutions() {
@@ -84,6 +133,7 @@ public class InstitutionService implements RepositoryService {
 			throw new InstitutionNotFoundException(id);
 		}
 		institution.setCourses(courseRepository.findAllByInstitutionCode(institution.getCode()));
+		institution.setMentors(mentorRepository.findAllByInstitutionCode(institution.getCode()));
 		return institution;
 	}
 	
@@ -121,8 +171,29 @@ public class InstitutionService implements RepositoryService {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	
+	public List<Object[]> getStudentsProgress(final String institutionCode) {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getStudentsProgressByInstitution(institutionCode, year_semester);
+	}
 	
-	//===== Dependence Inject =====//
+	public List<Object[]> getGlobalPogress() {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getGlobalStudentsProgress(year_semester);
+	}
+	
+	public List<Object[]> getLevelPogress(final String level) {
+		final String year_semester = getYearSemesterCurrent();
+		return institutionRepository.getLevelStudentsProgress(level, year_semester);
+	}
+	
+	private String getYearSemesterCurrent() {
+		final LocalDate dateCurrent = LocalDate.now();
+		final String semester = dateCurrent.getMonthValue() < 6 ? "1" : "2";
+		final String year = String.valueOf(dateCurrent.getYear());
+		return year.substring(2).concat(semester);
+	}
+	
+	/* = = = = = Dependence Inject = = = = = **/
 	@Autowired
 	@Qualifier("institutionRepository")
 	public void setInstitutionRepository(final InstitutionRepository repository) {
@@ -140,6 +211,11 @@ public class InstitutionService implements RepositoryService {
 	public void setStudentRepository(final StudentRepository repository) {
 		studentRepository = repository;
 	}
-
+	
+	@Autowired
+	@Qualifier("mentorRepository")
+	public void setMentorRepository(final MentorRepository repository) {
+		mentorRepository = repository;
+	}
 
 }

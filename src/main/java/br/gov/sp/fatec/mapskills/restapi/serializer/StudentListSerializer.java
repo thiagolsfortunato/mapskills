@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
-import br.gov.sp.fatec.mapskills.domain.user.Student;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 
 public class StudentListSerializer extends JsonSerializer<StudentListWrapper> {
@@ -40,7 +40,7 @@ public class StudentListSerializer extends JsonSerializer<StudentListWrapper> {
 		generator.writeStringField("phone", student.getPhone());
 		generator.writeBooleanField("completed", student.isCompleted());
 		generator.writeStringField("username", student.getUsername());
-		generator.writeStringField("password", student.getPassword());
+		generator.writeStringField("password", "");
 	}
 	
 	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {
