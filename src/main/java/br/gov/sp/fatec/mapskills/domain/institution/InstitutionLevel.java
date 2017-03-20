@@ -29,5 +29,9 @@ public enum InstitutionLevel {
 	public boolean isSuperior() {
 		return this.equals(InstitutionLevel.SUPERIOR);
 	}
+	
+	public static InstitutionLevel build(final String level) {
+		return level.equals(SUPERIOR.getLevel()) ? SUPERIOR : TECHNICAL;
+	}
 
 }

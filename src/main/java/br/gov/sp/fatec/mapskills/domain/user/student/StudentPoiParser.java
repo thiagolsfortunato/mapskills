@@ -65,7 +65,7 @@ public class StudentPoiParser extends PoiParser<Student> {
 	private void raValidator(final String ra) throws MapSkillsException {
 		try {
 			Long.parseLong(ra);
-			if(ra.length() < 13) {
+			if(ra.length() < 13 || ra.length() > 14) {
 				throw new RAInvalidException(ra);
 			}
 		} catch (final NumberFormatException e) {

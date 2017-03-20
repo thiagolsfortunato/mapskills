@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultAuthenticationFailureHandler implements AuthenticationFailureHandler {
 	
-	private final String JSON = "{\"errorCode\": %d, message: \"%s\"}";
+	private final String JSON = "{\"errorCode\": %d, \"message\": \"%s\"}";
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)

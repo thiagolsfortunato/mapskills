@@ -24,7 +24,7 @@
 	<changeSet author="marcelo-inacio" id="300">
 		<createTable tableName="MENTOR">
 			<column name="USE_ID" type="java.sql.Types.BIGINT" />
-			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(5)" />
 			<column name="INS_ID" type="java.sql.Types.BIGINT" />
 		</createTable>
 	</changeSet>
@@ -32,7 +32,7 @@
 	<changeSet author="marcelo-inacio" id="400">
 		<createTable tableName="INSTITUTION">
 			<column name="INS_ID" type="java.sql.Types.BIGINT" />
-			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(5)" />
 			<column name="INS_CNPJ" type="java.sql.Types.VARCHAR(20)" />
 			<column name="INS_COMPANY" type="java.sql.Types.VARCHAR(250)" />
 			<column name="INS_CITY" type="java.sql.Types.VARCHAR(250)" />
@@ -44,10 +44,10 @@
 	<changeSet author="marcelo-inacio" id="500">
 		<createTable tableName="COURSE">
 			<column name="CRS_ID" type="java.sql.Types.BIGINT" />
-			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(5)" />
 			<column name="CRS_NAME" type="java.sql.Types.VARCHAR(250)" />
 			<column name="CRS_PERIOD" type="java.sql.Types.VARCHAR(50)" />
-			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(5)" />
 		</createTable>
 	</changeSet>
 	
@@ -57,8 +57,8 @@
 			<column name="STU_RA" type="java.sql.Types.VARCHAR(20)" />
 			<column name="STU_PHONE" type="java.sql.Types.VARCHAR(15)" />
 			<column name="STU_IS_COMPLETED" type="java.sql.Types.BOOLEAN" />
-			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(10)" />
-			<column name="INS_CODE" type="java.sql.Types.VARCHAR(10)" />
+			<column name="CRS_CODE" type="java.sql.Types.VARCHAR(5)" />
+			<column name="INS_CODE" type="java.sql.Types.VARCHAR(5)" />
 		</createTable>
 	</changeSet>
 	

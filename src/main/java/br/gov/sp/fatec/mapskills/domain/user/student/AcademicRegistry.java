@@ -26,7 +26,7 @@ public class AcademicRegistry implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "stu_ra")
-	@Size(min=13, max=13)
+	@Size(min=13, max=14)
 	private String ra;
 	
 	@Column(name = "ins_code", nullable = false)

@@ -31,14 +31,16 @@ public class StudentsProgressLevelSerializer extends JsonSerializer<StudentsProg
 		generator.writeArrayFieldStart("data");
 		generator.writeStartArray();
 		for(final Object[] tuple : resultSet) {
-			final int totalStudents = Integer.valueOf(tuple[6].toString());
-			generator.writeNumber(this.calcPercentage(Double.valueOf(tuple[4].toString()), totalStudents));
+			final int totalStudents = tuple[6] == null ? 0 : Integer.valueOf(tuple[6].toString());
+			final double totalFinalized = tuple[5] == null ? 0 : Double.valueOf(tuple[5].toString());
+			generator.writeNumber(this.calcPercentage(totalFinalized, totalStudents));
 		}
 		generator.writeEndArray();
 		generator.writeStartArray();
 		for(final Object[] tuple : resultSet) {
-			final int totalStudents = Integer.valueOf(tuple[6].toString());
-			generator.writeNumber(this.calcPercentage(Double.valueOf(tuple[5].toString()), totalStudents));
+			final int totalStudents = tuple[6] == null ? 0 : Integer.valueOf(tuple[6].toString());
+			final double totalNotFinalized = tuple[4] == null ? 0 : Double.valueOf(tuple[4].toString());
+			generator.writeNumber(this.calcPercentage(totalNotFinalized, totalStudents));
 		}
 		generator.writeEndArray();
 		generator.writeEndArray();

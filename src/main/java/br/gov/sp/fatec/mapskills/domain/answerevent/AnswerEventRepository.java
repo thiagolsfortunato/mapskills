@@ -1,3 +1,9 @@
+/*
+ * @(#)AnswerEventRepository.java 1.0 19/03/2017
+ *
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
+ * proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.answerevent;
 
 import java.util.List;
@@ -6,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AnswerEventRepository extends CrudRepository<AnswerEvent, Long> {
+// Alternativa para trabalha com objeto, ao invés de List<Object[]>
 	
 /*	@Query(value = "SELECT new br.gov.sp.fatec.mapskills.restapi.wrapper.Result(s.type, s.description, SUM(a.skillValue))"
 			+ " FROM AnswerEvent a INNER JOIN Skill s"
