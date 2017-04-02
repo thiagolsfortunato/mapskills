@@ -53,6 +53,11 @@ public abstract class User implements Principal, Serializable {
 		// CONSTRUCTOR DEFAULT
 	}
 	
+	public User(final long id, final String name, final Login login, final ProfileType profile) {
+		this(name, login, profile);
+		this.id = id;
+	}
+	
 	public User(final String name, final Login login, final ProfileType profile) {
 		this.name = name;
 		this.login = login;
@@ -89,6 +94,10 @@ public abstract class User implements Principal, Serializable {
 	
 	public void setId(final long id) {
 		this.id = id;
+	}
+	
+	public void setName(final String name) {
+		this.name = name;
 	}
 	
 	public void setPassword(final String hashPass) {

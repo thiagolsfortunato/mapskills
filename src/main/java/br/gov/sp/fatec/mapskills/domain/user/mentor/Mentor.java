@@ -32,6 +32,12 @@ public class Mentor extends User {
 		// CONSTRUCTOR DEFAULT
 	}
 	
+	public Mentor(final long id, final String name, final long institutionId, final String institutionCode, final String username, final String password) {
+		super(id, name, new Login(username, password), ProfileType.MENTOR);
+		this.institutionCode = institutionCode;
+		this.institutionId = institutionId;
+	}
+	
 	public Mentor(final String name, final String institutionCode, final String username, final String password) {
 		super(name, new Login(username, password), ProfileType.MENTOR);
 		this.institutionCode = institutionCode;
@@ -47,6 +53,10 @@ public class Mentor extends User {
 	
 	public long getInstitutionId() {
 		return institutionId;
+	}
+	
+	public void setName(final String name) {
+		super.setName(name);
 	}
 
 }

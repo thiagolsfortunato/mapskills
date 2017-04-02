@@ -9,6 +9,7 @@ package br.gov.sp.fatec.mapskills.domain.institution;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,21 +77,23 @@ public class InstitutionService implements RepositoryService {
 		}
 	}
 	
-	public void saveCourse(final Course course) {
-		courseRepository.save(course);
+	public Course saveCourse(final Course course) {
+		return courseRepository.save(course);
 	}
 	
-	public void saveStudents(final Collection<Student> students) throws MapSkillsException {
+	public List<Student> saveStudents(final Collection<Student> students) throws MapSkillsException {
+		final List<Student> studentsSaved = new ArrayList<>(students.size());
 		for(final Student student : students) {
 			if(studentRepository.findByRaRa(student.getRa()) == null) {
-				this.saveStudent(student);
+				studentsSaved.add(this.saveStudent(student));
 			}
 		}
+		return Collections.unmodifiableList(studentsSaved);
 	}
 	
-	public void saveStudent(final Student student) throws MapSkillsException {
+	public Student saveStudent(final Student student) throws MapSkillsException {
 		try {
-			studentRepository.save(student);
+			return studentRepository.save(student);
 		} catch (final Exception exc) {
 			throw new StudentInvalidException();
 		}
@@ -98,6 +101,14 @@ public class InstitutionService implements RepositoryService {
 
 	public Institution findInstitutionById(final long id) {
 		return institutionRepository.findById(id);
+	}
+	
+	public Institution findInstitutionByCnpj(final String cnpj) {
+		return institutionRepository.findByCnpj(cnpj);
+	}
+	
+	public Mentor findMentorByUsername(final String username) {
+		return mentorRepository.findByLoginUsername(username);
 	}
 	
 	public Institution findInstitutionByCode(final String code) {

@@ -21,6 +21,7 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	
 	public Institution findById(final long id);
 	public Institution findByCode(final String code);
+	public Institution findByCnpj(final String cnpj);
 	
 	@Query("SELECT ins.gameThemeId FROM Institution ins WHERE ins.code = ?1")
 	@Transactional(readOnly = true)

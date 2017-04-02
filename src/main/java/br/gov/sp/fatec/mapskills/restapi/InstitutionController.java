@@ -65,7 +65,8 @@ public class InstitutionController {
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveStudents(students);
-		return new ResponseEntity<>(HttpStatus.OK);
+		//return new ResponseEntity<>(HttpStatus.CREATED);
+		return getAllStudentsByInstitution(students.get(0).getInstitutionCode());
 	}
 	
 	/**
@@ -75,9 +76,10 @@ public class InstitutionController {
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/student", method = RequestMethod.POST)
-	public ResponseEntity<?> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
-		institutionService.saveStudent(studentWrapper.getStudent());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<StudentWrapper> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
+		final Student studentSaved = institutionService.saveStudent(studentWrapper.getStudent());
+		final StudentWrapper saved = new StudentWrapper(studentSaved);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	/**
 	 * Realiza persistencia de um novo curso em um instituição
@@ -85,9 +87,10 @@ public class InstitutionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/course", method = RequestMethod.POST)
-	public ResponseEntity<?> saveCourse(@RequestBody final CourseWrapper courseWrapper) {
-		institutionService.saveCourse(courseWrapper.getCourse());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<CourseWrapper> saveCourse(@RequestBody final CourseWrapper courseWrapper) {
+		final Course courseSaved = institutionService.saveCourse(courseWrapper.getCourse());
+		final CourseWrapper saved = new CourseWrapper(courseSaved);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	
 	/**

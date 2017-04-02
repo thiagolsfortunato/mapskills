@@ -57,7 +57,7 @@ public abstract class PoiParser<T> {
 			final XSSFSheet sheet = workbook.getSheetAt(0);
 			final Iterator<Row> rowIterator = sheet.iterator();
 			workbook.close();
-			return Collections.unmodifiableList(objectListBuilder(rowIterator));
+			return Collections.unmodifiableList(this.objectListBuilder(rowIterator));
 		} catch (final MapSkillsException | IOException e) {
 			LOGGER.info(e.getMessage());
 			throw new ReadFileException(e.getMessage());
@@ -79,9 +79,9 @@ public abstract class PoiParser<T> {
 			final Row row = rowIterator.next();
 			final Iterator<Cell> cellIterator = row.cellIterator();
 			final List<String> attrForObj = new LinkedList<>();
-			attrForObj.addAll(this.cellIteratorToCellList(cellIterator));
+			attrForObj.addAll(this.cellIteratorToListString(cellIterator));
 			if(this.verifyListForObject(attrForObj)) {
-				objectList.add(this.buildObject(attrForObj));				
+				objectList.add(buildObject(attrForObj));				
 			}
 		}
 		return Collections.unmodifiableList(objectList);
@@ -95,7 +95,7 @@ public abstract class PoiParser<T> {
 	 * @param cellIterator
 	 * @return list
 	 */
-	private Collection<String> cellIteratorToCellList(final Iterator<Cell> cellIterator) {
+	private Collection<String> cellIteratorToListString(final Iterator<Cell> cellIterator) {
 		final List<String> cellList = new LinkedList<>();
 		while (cellIterator.hasNext()) {
 			final Cell cell = cellIterator.next();

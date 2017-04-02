@@ -7,9 +7,9 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,13 +54,21 @@ public class Institution implements Serializable {
 	private long gameThemeId;
 	
 	@Transient
-	private Collection<Course> courses = new ArrayList<>();
+	private Collection<Course> courses = new HashSet<>();
 	
 	@Transient
-	private Collection<Mentor> mentors = new ArrayList<>();
+	private Collection<Mentor> mentors = new HashSet<>();
 
 	public Institution() {
 		// CONSTRUCTOR DEFAULT
+	}
+	
+	public Institution (final long id, final String code, final String cnpj, final String company,
+			final InstitutionLevel level, final String city, final Collection<Mentor> mentors, final long gameThemeId) {
+		
+		this(code, cnpj, company, level, city, mentors);
+		this.id = id;
+		this.gameThemeId = gameThemeId;
 	}
 	
 	public Institution(final String code, final String cnpj, final String company, final InstitutionLevel level,

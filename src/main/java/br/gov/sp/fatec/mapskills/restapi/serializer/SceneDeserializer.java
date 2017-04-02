@@ -35,17 +35,11 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
         final String[] background = verifyBackground(node);    
         final String fileImageBase64 = background[0];
         final String filename = background[1];
-        
-		
+        		
         final Question question = this.buildQuestion(node.get("question"));
         final long gameThemeId = node.get("gameThemeId").asLong();
         final Scene scene = new Scene(node.get("text").asText(), IP_SERVER + "images/" + filename, question, gameThemeId);
-        if(node.has("id")) {
-        	scene.setId(node.get("id").asLong());
-        }
-        if(node.has("index")) {
-        	scene.putIndex(node.get("index").asInt());
-        }
+        this.setIdAndIndex(node, scene);
         
 		return new SceneWrapper(scene, fileImageBase64, filename);
 	}
@@ -55,21 +49,32 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 			return null;
 		}
 		final List<Alternative> alternatives = buildAlternatives(node.get("alternatives"));
-		return new Question(alternatives, node.get("skillId").asLong());
+		final Question question = new Question(alternatives, this.getSkillIdFromNode(node));
+		if(node.has("id")) {
+			question.setId(node.get("id").asLong());
+		}
+		return question;
 	}
 	
 	private List<Alternative> buildAlternatives(final JsonNode node) {
 		final List<Alternative> alternatives = new ArrayList<>(4);
 		for(int i = 0; i < 4; i++ ) {
 			final String position = String.valueOf(i);
+			Alternative alternative;
 			if(node.has(position)) {
-				alternatives.add(new Alternative(node.get(position).get("description").asText(),
-						node.get(position).get("skillValue").asInt()));
+				alternative = new Alternative(node.get(position).get("description").asText(),
+						node.get(position).get("skillValue").asInt());
+				if(node.get(position).has("id")) {
+					alternative.setId(node.get(position).get("id").asLong());
+				}
 			} else {
-				alternatives.add(new Alternative(node.get(i).get("description").asText(),
-						node.get(i).get("skillValue").asInt()));
+				alternative = new Alternative(node.get(i).get("description").asText(),
+						node.get(i).get("skillValue").asInt());
+				if(node.get(i).has("id")) {
+					alternative.setId(node.get(i).get("id").asLong());
+				}
 			}
-			
+			alternatives.add(alternative);			
 		}
 		return alternatives;
 	}
@@ -88,6 +93,19 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
         	background[1] = filename.substring(lastIndex + 1);
         }
         return background;
+	}
+	
+	private long getSkillIdFromNode(final JsonNode node) {
+		return node.get("skillId").asLong() != 0 ? node.get("skillId").asLong() : node.get("skillId").get("id").asLong();
+	}
+	
+	private void setIdAndIndex(final JsonNode node, final Scene scene) {
+		if(node.has("id")) {
+        	scene.setId(node.get("id").asLong());
+        }
+        if(node.has("index")) {
+        	scene.putIndex(node.get("index").asInt());
+        }
 	}
 	
 }

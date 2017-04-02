@@ -42,9 +42,9 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
         final Collection<Mentor> mentors = new LinkedList<>();
         
         if(node.has(MENTOR)) {
-        	mentors.add(this.mentorDeserialeze(node.get(MENTOR)));
+        	mentors.add(this.mentorDeserialeze(node.get(MENTOR), node.get("code").asText()));
         } else {
-        	mentors.addAll(this.mentorListDeserialize(node.get("mentors")));
+        	mentors.addAll(this.mentorListDeserialize(node.get("mentors"), node.get("code").asText()));
         }
         
 		final Institution institution =  new Institution(node.get("code").asText(), node.get("cnpj").asText(),
@@ -57,8 +57,8 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
 		return new InstitutionDetailsWrapper(institution);
 	}
 	
-	private Mentor mentorDeserialeze(final JsonNode node) {
-		final Mentor mentor = new Mentor(node.get("name").asText(), node.get("institutionCode").asText(), node.get("username").asText(),
+	private Mentor mentorDeserialeze(final JsonNode node, final String institutionCode) {
+		final Mentor mentor = new Mentor(node.get("name").asText(), institutionCode, node.get("username").asText(),
 				ENCRYPTED_DEFAULT_PASSWORD);
 
         if(node.has("id")) {
@@ -70,12 +70,12 @@ public class InstitutionDeserializer extends JsonDeserializer<InstitutionDetails
         return mentor;
 	}
 	
-	private Collection<Mentor> mentorListDeserialize(final JsonNode node) {
+	private Collection<Mentor> mentorListDeserialize(final JsonNode node, final String institutionCode) {
 		final int sizeArray = node.size();
 		final Collection<Mentor> mentors = new LinkedList<>();
 		for(int i = 0; i < sizeArray; i++ ) {
 			final JsonNode nodeCurrent = node.get(i);
-			mentors.add(mentorDeserialeze(nodeCurrent));
+			mentors.add(mentorDeserialeze(nodeCurrent, institutionCode));
 		}
 		return mentors;
 	}

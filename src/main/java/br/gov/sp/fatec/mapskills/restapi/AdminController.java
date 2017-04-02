@@ -36,6 +36,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
+import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
@@ -75,10 +76,10 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/upload/institutions", method = RequestMethod.POST)
 	public ResponseEntity<?> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
-		final InstitutionPoiParser institutionPoi = new InstitutionPoiParser();
+		final InstitutionPoiParser institutionPoi = BeanRetriever.getBean("institutionPoiParser", InstitutionPoiParser.class);
 		final List<Institution> institutions = institutionPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveInstitutions(institutions);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	/**
@@ -89,9 +90,10 @@ public class AdminController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/institution", method = RequestMethod.POST)
-	public ResponseEntity<?> saveInstitution(@RequestBody final InstitutionDetailsWrapper institutionWrapper) {
-		institutionService.saveInstitution(institutionWrapper.getInstitution());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<InstitutionDetailsWrapper> saveInstitution(@RequestBody final InstitutionDetailsWrapper institutionWrapper) {
+		final Institution institution = institutionService.saveInstitution(institutionWrapper.getInstitution());
+		final InstitutionDetailsWrapper institutionCreated = new InstitutionDetailsWrapper(institution);
+		return new ResponseEntity<>(institutionCreated, HttpStatus.CREATED);
 	}
 	
 	/**
@@ -126,7 +128,7 @@ public class AdminController {
 	@RequestMapping(value = "/game/theme", method = RequestMethod.POST)
 	public ResponseEntity<?> saveTheme(@RequestBody final GameThemeWrapper themeWrapper) {
 		themeService.save(themeWrapper.getGameTheme());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/game/themes", method = RequestMethod.PUT)
@@ -154,7 +156,7 @@ public class AdminController {
 	public ResponseEntity<?> saveScene(@RequestBody final SceneWrapper sceneWrapper) throws MapSkillsException {
 		imageService.save(sceneWrapper.getBase64(), sceneWrapper.getFileName());
 		sceneService.save(sceneWrapper.getScene());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	/**
 	 * Realiza atualizacao de uma lista de cenas, (i.e. a ordem de exibicao)
@@ -184,7 +186,7 @@ public class AdminController {
 	@RequestMapping(value = "/skill", method = RequestMethod.POST)
 	public ResponseEntity<?> saveSkill(@RequestBody final SkillWrapper skillWrapper) {
 		skillService.save(skillWrapper.getSkill());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	/**
 	 * Retorna uma array serializado com todas competencias cadastradas na aplicacao.
