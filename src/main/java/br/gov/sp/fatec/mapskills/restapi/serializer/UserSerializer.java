@@ -15,12 +15,17 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
+import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 public class UserSerializer extends JsonSerializer<UserWrapper> {
 	
-	private final Map<ProfileType, UserSerilizerStrategy> mapSerializer = new EnumMap<>(ProfileType.class);
+	private final Map<ProfileType, UserSerilizerStrategy<User>> mapSerializer = new EnumMap<>(ProfileType.class);
 	
 	@SuppressWarnings("unchecked")
 	public UserSerializer() {
@@ -32,7 +37,7 @@ public class UserSerializer extends JsonSerializer<UserWrapper> {
 	public void serialize(final UserWrapper userWrapper, final JsonGenerator generator, final SerializerProvider arg2)
 			throws IOException {
 		
-		final UserSerilizerStrategy serializer = mapSerializer.get(userWrapper.getProfile());
+		final UserSerilizerStrategy<User> serializer = mapSerializer.get(userWrapper.getProfile());
 		serializer.serialize(userWrapper.getUser(), generator);
 		
 	}

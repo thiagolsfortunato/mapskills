@@ -12,17 +12,19 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
-import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 @Component
-public class StudentSerializer extends DefaultUserSerializer {
+public class StudentSerializer extends DefaultUserSerializer<Student> {
 	
 	@Override
-	public void serialize(final User user, final JsonGenerator generator) throws IOException {
+	public void serialize(final Student student, final JsonGenerator generator) throws IOException {
 		generator.writeStartObject();
-		super.serializeDefaultValues(user, generator);
-		final Student student = (Student) user;
+		super.serializeDefaultValues(student, generator);
 		generator.writeStringField("ra", student.getRa());
 		generator.writeStringField("institutionCode", student.getInstitutionCode());
 		generator.writeStringField("courseCode", student.getCourseCode());

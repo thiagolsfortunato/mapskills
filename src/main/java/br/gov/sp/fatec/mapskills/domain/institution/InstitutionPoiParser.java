@@ -6,9 +6,7 @@
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +36,24 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 	}
 
 	@Override
-	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {
-		final Collection<Mentor> mentors = new HashSet<>();
+	protected Institution buildObject(final List<String> attArgs) throws MapSkillsException {		
+		
+		final Institution institutionExcel = Institution.builder()
+				.code(attArgs.get(0))
+				.cnpj(attArgs.get(1))
+				.company(attArgs.get(2))
+				.level(InstitutionLevel.build(attArgs.get(3).toUpperCase()))
+				.city(attArgs.get(4))
+				.build();		
+		
 		final Institution institution = service.findInstitutionByCnpj(attArgs.get(1));
-		if(institution == null) {
-			mentors.add(new Mentor(attArgs.get(5), attArgs.get(0), attArgs.get(6), ENCRYPTED_DEFAULT_PASSWORD));
-			return new Institution(attArgs.get(0), attArgs.get(1), attArgs.get(2), 
-					InstitutionLevel.build(attArgs.get(3).toUpperCase()), attArgs.get(4), mentors);
-		} else {
-			return this.updateInstitution(institution, mentors, attArgs);
+		if(institution != null) {
+			institutionExcel.setId(institution.getId());
+			institutionExcel.setGameThemeId(institution.getGameThemeId());
 		}
+		institutionExcel.addMentor(this.buildMentor(attArgs));
+
+		return institutionExcel;
 	}
 
 	@Override
@@ -55,21 +61,18 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 		return argsToObj.size() == DATA_NUMBER;
 	}
 	
-	private Institution updateInstitution(final Institution institution, final Collection<Mentor> mentors,
-			final List<String> attArgs) {
-		
-		mentors.add(this.updateMentor(attArgs));
-		return new Institution(institution.getId(), attArgs.get(0), attArgs.get(1), attArgs.get(2), 
-				InstitutionLevel.build(attArgs.get(3).toUpperCase()), attArgs.get(4), mentors, institution.getThemeId());
-	}
-	
-	private Mentor updateMentor(final List<String> attArgs) {
-		Mentor mentor = service.findMentorByUsername(attArgs.get(6));
-		if(mentor == null) {
-			return new Mentor(attArgs.get(5), attArgs.get(0), attArgs.get(6), ENCRYPTED_DEFAULT_PASSWORD);
-		} else {
-			return new Mentor(mentor.getId(), attArgs.get(5), mentor.getInstitutionId(), attArgs.get(0), attArgs.get(6), ENCRYPTED_DEFAULT_PASSWORD);
+	private Mentor buildMentor(final List<String> attArgs) {
+		final Mentor mentor = service.findMentorByUsername(attArgs.get(6));
+		final Mentor mentorExcel = Mentor.builder()
+				.name(attArgs.get(5))
+				.institutionCode(attArgs.get(0))
+				.username(attArgs.get(6))
+				.password(ENCRYPTED_DEFAULT_PASSWORD)
+				.build();
+		if(mentor != null) {
+			mentorExcel.setId(mentor.getId());
 		}
+		return mentorExcel;
 	}
 
 }

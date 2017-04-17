@@ -1,5 +1,5 @@
 /*
- * @(#)MentorTest.java 1.0 15/01/2017
+ * @(#)InstitutionTest.java 1.0 15/01/2017
  *
  * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
  * proprietary/confidential. Use is subject to license terms.
@@ -11,15 +11,13 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -39,7 +37,12 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
-
+import br.gov.sp.fatec.mapskills.test.wrapper.StudentWrapperTest;
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 public class InstitutionTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/institution";
@@ -74,11 +77,11 @@ public class InstitutionTest extends AbstractApplicationTest {
 		
 		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), 
 						"Student MockE", "1289003400", "studentE@fatec.sp.gov.br", "mudar@123");
-		
-		final String bodyJson = objectMapper.writeValueAsString(student);
+		final StudentWrapperTest wrapper = new StudentWrapperTest(student);
+		final String bodyJson = objectMapper.writeValueAsString(wrapper);
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/student"), bodyJson)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 		
 		assertTrue(service.findStudentByRa(student.getRa()).getName().equals(student.getName()));
 	}
@@ -86,15 +89,11 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Test
 	public void uploadStudentsFromExcel() throws Exception {
 		mockMentorAuthentication();
-		
-		final InputStream inputStream = getClass().getClassLoader().getResource("student.xlsx").openStream();
-		final String excelBase64 = Base64.getEncoder().encodeToString(IOUtils.toByteArray(inputStream));
-		
-		final String obj = objectMapper.writeValueAsString(String.format("{ base64 : %s }", excelBase64));
-		final String json = obj.replace(" ", "\"").substring(1, obj.length()-1);
+
+		final String json = super.parseFileToJson("student.xlsx");
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/upload/students"), json)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 		
 		assertEquals(2, service.findAllStudentsByInstitution("146").size());
 	}
@@ -107,7 +106,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 		final String json = objectMapper.writeValueAsString(course);
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/course"), json)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 		
 		assertEquals(1, service.findAllCoursesByInstitutionCode("146").size());
 	}
@@ -145,15 +144,16 @@ public class InstitutionTest extends AbstractApplicationTest {
 		assertEquals(4, allCourses.size());
 	}
 	
-	//@Test
+	@Test
+	@Ignore
 	public void getStudentsProgress() throws Exception {
 		mockMentorAuthentication();
 		
 		service.saveInstitution(getOneInstitution());
 		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
 		service.saveStudents(getStudentsMock());
-		
-		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/progress")).andReturn();
+		//TODO criar objetos para as VIEWS do banco de dados.
+		//final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/progress")).andReturn();
 		
 	}
 	

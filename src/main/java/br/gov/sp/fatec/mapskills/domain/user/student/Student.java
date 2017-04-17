@@ -15,7 +15,14 @@ import javax.persistence.Table;
 import br.gov.sp.fatec.mapskills.domain.user.Login;
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
 @Table(name = "STUDENT")
 @PrimaryKeyJoinColumn(name = "use_id")
@@ -30,22 +37,28 @@ public class Student extends User {
 	private String phone;
 	
 	@Column(name = "stu_is_completed")
-	private boolean completed = false;
+	private boolean completed;
 		
 	public Student() {
 		// CONSTRUCTOR DEFAULT
 	}
 	
+	@Builder
 	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
 			final String password) {
 		
 		super(name, new Login(username, password), ProfileType.STUDENT);
 		this.ra = ra;
 		this.phone = phone;
+		this.completed = false;
 	}
 	
 	public String getRa() {
 		return ra.getRa();
+	}
+	
+	public AcademicRegistry getAcademicRegistry() {
+		return ra;
 	}
 	
 	public String getCourseCode() {
@@ -56,16 +69,23 @@ public class Student extends User {
 		return ra.getInstitutionCode();
 	}
 	
-	public String getPhone() {
-		return phone;
-	}
-	
 	public boolean isCompleted() {
 		return completed;
 	}
 	
 	public void completed() {
 		completed = true;
+	}
+	
+	public void setPassword(final String hash) {
+		super.setPassword(hash);
+	}
+	
+	public void update(final Student studentUpdate) {
+		super.setName(studentUpdate.getName());
+		super.setLogin(studentUpdate.getLogin());
+		this.ra = studentUpdate.getAcademicRegistry();
+		this.phone = studentUpdate.getPhone();		
 	}
 
 }

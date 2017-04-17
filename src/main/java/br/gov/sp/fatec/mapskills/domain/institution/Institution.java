@@ -22,7 +22,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "INSTITUTION")
 public class Institution implements Serializable {
@@ -63,42 +68,28 @@ public class Institution implements Serializable {
 		// CONSTRUCTOR DEFAULT
 	}
 	
+	@Builder
 	public Institution (final long id, final String code, final String cnpj, final String company,
 			final InstitutionLevel level, final String city, final Collection<Mentor> mentors, final long gameThemeId) {
 		
-		this(code, cnpj, company, level, city, mentors);
+		this(code, cnpj, company, level, city);
 		this.id = id;
 		this.gameThemeId = gameThemeId;
 	}
 	
+	@Builder
 	public Institution(final String code, final String cnpj, final String company, final InstitutionLevel level,
-			final String city, final Collection<Mentor> mentors) {
+			final String city) {
 		
 		this.code = code;
 		this.cnpj = cnpj;
 		this.company = company;
 		this.level = level;
 		this.city = city;
-		this.mentors.addAll(mentors);
-	}
-	
-	public void changeCnpj(final String newCnpj) {
-		this.cnpj = newCnpj;
-	}
-	
-	public void changeCompany(final String newCompany) {
-		this.company = newCompany;
-	}
-	
-	public void changeCity(final String newCity) {
-		this.city = newCity;
-	}
+	}	
 		
-	public void changeGameTheme(final long gameThemeId) {
-		this.gameThemeId = gameThemeId;
-	}
-	
 	public void setCourses(final Collection<Course> courses) {
+		this.courses.clear();
 		this.courses.addAll(courses);
 	}
 	
@@ -106,44 +97,17 @@ public class Institution implements Serializable {
 		this.mentors.clear();
 		this.mentors.addAll(mentors);
 	}
-	
-	public void setId(final long id) {
-		this.id = id;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	public String getCode() {
-		return code;
-	}
-	
-	public String getCnpj() {
-		return cnpj;
-	}
-	
-	public String getCompany() {
-		return company;
-	}
-	
-	public InstitutionLevel getLevel() {
-		return level;
-	}
-	
-	public String getCity() {
-		return city;
-	}
-	
+		
 	public Collection<Mentor> getMentors() {
 		return Collections.unmodifiableCollection(mentors);
 	}
 	
-	public long getThemeId() {
-		return gameThemeId;
-	}
-	
 	public Collection<Course> getCourses() {
 		return Collections.unmodifiableCollection(courses);
+	}
+
+	public void addMentor(final Mentor newMentor) {
+		this.mentors.add(newMentor);
 	}
 	
 }

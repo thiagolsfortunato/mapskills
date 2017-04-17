@@ -10,11 +10,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 
 import javax.servlet.Filter;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.config.WebConfig;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
@@ -63,6 +69,9 @@ public abstract class AbstractApplicationTest {
 	
 	@Autowired
 	protected PasswordEncoder encoder;
+	
+	@Autowired
+	protected ObjectMapper objectMapper;
 	
 	protected MockMvc mockMvc;
 	
@@ -142,9 +151,9 @@ public abstract class AbstractApplicationTest {
 	}
 	
 	protected Institution getOneInstitution() {
-		final Collection<Mentor> mentors = new ArrayList<>(1);
-		mentors.add(new Mentor("Fabiola Vaz", "146", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
-		return new Institution("146", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR, "Cidade-Teste", mentors);
+		final Institution institution = new Institution("146", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR, "Cidade-Teste");
+		institution.addMentor(new Mentor("Fabiola Vaz", "146", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
+		return institution;
 	}
 	
 	protected Collection<Skill> getSkillsMock() {
@@ -153,6 +162,15 @@ public abstract class AbstractApplicationTest {
 		skills.add(new Skill("Visão de Futuro", " visão.."));
 		skills.add(new Skill("Gestão de Tempo", " gestão.."));
 		return skills;
+	}
+	
+	protected String parseFileToJson(final String fileName) throws IOException {
+		final InputStream inputStream = getClass().getClassLoader().getResource(fileName).openStream();
+		final String excelBase64 = Base64.getEncoder().encodeToString(IOUtils.toByteArray(inputStream));
+		
+		final String obj = objectMapper.writeValueAsString(String.format("{ base64 : %s }", excelBase64));
+		final String json = obj.replace(" ", "\"").substring(1, obj.length()-1);
+		return json;
 	}
 
 }

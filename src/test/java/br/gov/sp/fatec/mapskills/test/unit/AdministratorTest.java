@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.test.unit;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,9 +48,8 @@ public class AdministratorTest extends MapSkillsTest {
 	@Test
 	public void findUserByUsernamePassword() throws MapSkillsException {
 		final String EXPECTED_RA = "Student MockA"; 
-		final Collection<Mentor> mentors = new ArrayList<>(1);
-		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José");
+		fatec.addMentor(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec.sp.gov.br", "Mudar@123"));
 		institutionService.saveInstitution(fatec);
 		
 		final Student studentSave = new Student(new AcademicRegistry("2000281423023", "200", "028"), "Student MockA", 

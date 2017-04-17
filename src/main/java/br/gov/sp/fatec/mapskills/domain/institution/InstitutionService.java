@@ -49,7 +49,7 @@ public class InstitutionService implements RepositoryService {
 	@Transactional
 	public void saveInstitutions(final Collection<Institution> institutions) {
 		for(final Institution institution : institutions) {
-			saveInstitution(institution);
+			this.saveInstitution(institution);
 		}
 	}
 	
@@ -81,6 +81,7 @@ public class InstitutionService implements RepositoryService {
 		return courseRepository.save(course);
 	}
 	
+	@Transactional
 	public List<Student> saveStudents(final Collection<Student> students) throws MapSkillsException {
 		final List<Student> studentsSaved = new ArrayList<>(students.size());
 		for(final Student student : students) {
@@ -97,6 +98,12 @@ public class InstitutionService implements RepositoryService {
 		} catch (final Exception exc) {
 			throw new StudentInvalidException();
 		}
+	}
+	
+	public Student updateStudent(final long id, final Student student) throws MapSkillsException {
+		final Student studentBase = studentRepository.findOne(id);
+		studentBase.update(student);
+		return saveStudent(studentBase);
 	}
 
 	public Institution findInstitutionById(final long id) {

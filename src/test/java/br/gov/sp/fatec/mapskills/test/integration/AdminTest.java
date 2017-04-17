@@ -12,18 +12,13 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,8 +28,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.authentication.DefaultGrantedAuthority;
 import br.gov.sp.fatec.mapskills.authentication.PreAuthenticatedAuthentication;
@@ -69,9 +62,6 @@ public class AdminTest extends AbstractApplicationTest {
 	@Autowired
 	private GameThemeService themeService;
 	
-	@Autowired
-	private ObjectMapper objectMapper;
-	
 	@Before
 	public void setuUp() {
 		super.setUpContext();
@@ -95,7 +85,6 @@ public class AdminTest extends AbstractApplicationTest {
 	}
 	
 	@Test
-	@Ignore
 	public void postSkill() throws Exception {
 		mockAdminAuthentication();
 		
@@ -105,7 +94,7 @@ public class AdminTest extends AbstractApplicationTest {
 		super.mockMvcPerformPost(BASE_PATH.concat("/skill"), bodyInput)
 			.andExpect(status().isCreated());
 		
-		assertEquals(skillService.findById(1).getType(), skill.getType());
+		assertEquals(1, skillService.findAll().size());
 	}
 	
 	@Test
@@ -134,6 +123,7 @@ public class AdminTest extends AbstractApplicationTest {
 	
 	@Test
 	public void saveInstitution() throws Exception {
+		super.cleanTables(institutionService);
 		mockAdminAuthentication();
 		
 		final String bodyInput = objectMapper.writeValueAsString(getInstitutionClient());
@@ -248,14 +238,6 @@ public class AdminTest extends AbstractApplicationTest {
 		themeCollection.add(new GameTheme("museu"));
 		return themeCollection;
 	}
-	
-	private String parseFileToJson(final String fileName) throws IOException {
-		final InputStream inputStream = getClass().getClassLoader().getResource(fileName).openStream();
-		final String excelBase64 = Base64.getEncoder().encodeToString(IOUtils.toByteArray(inputStream));
-		
-		final String obj = objectMapper.writeValueAsString(String.format("{ base64 : %s }", excelBase64));
-		final String json = obj.replace(" ", "\"").substring(1, obj.length()-1);
-		return json;
-	}
+
 
 }

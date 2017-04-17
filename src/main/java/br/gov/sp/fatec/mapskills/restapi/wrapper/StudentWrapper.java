@@ -10,7 +10,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.StudentDeserializer;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 @JsonDeserialize(using = StudentDeserializer.class)
 public class StudentWrapper {
 	

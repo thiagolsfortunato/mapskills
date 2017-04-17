@@ -61,9 +61,8 @@ public class MapSkillsMockBeans {
 	@Bean
 	public String saveInstitution() {
 		final Collection<Institution> institutions = new ArrayList<>(1);
-		final Collection<Mentor> mentors = new ArrayList<>();
-		mentors.add(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
-		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
+		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José");
+		fatecA.addMentor(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
 		institutions.add(fatecA);
 		institutionService.saveInstitutions(institutions);
 		

@@ -83,9 +83,8 @@ public class SetupApplicationToInitializeGame {
 	 * cria uma nova instituição persistindo-a na base de dados
 	 */
 	private void createInstitution() {
-		final Collection<Mentor> mentors = new ArrayList<>();
-		mentors.add(new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy"));
-		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
+		final Institution fatec = new Institution(INSTITUTION_CODE, "56381708000194", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José");
+		fatec.addMentor(new Mentor("Mentor", INSTITUTION_CODE, "mentor@fatec.sp.gov.br", "$2a$10$wEaMddZtyZp5Kkj/MpObjeCkYNoPFdoNwMKzxLuD7KjCyB63kf6Yy"));
 		institutionService.saveInstitution(fatec);
 		LOGGER.log(Level.INFO, "=== INSTITUTION SAVE SUCCESS ===");
 	}

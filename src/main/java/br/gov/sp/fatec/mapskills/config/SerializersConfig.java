@@ -14,7 +14,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.gov.sp.fatec.mapskills.domain.user.Administrator;
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
+import br.gov.sp.fatec.mapskills.domain.user.User;
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
 /**
  * A classe <code>SerializersConfig</code> possui um configuração de estrategia de serializaçao de perfil,
@@ -26,11 +30,12 @@ import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
 public class SerializersConfig {
 	
 	@Bean
-	public Map<ProfileType, UserSerilizerStrategy> mapSerializerStrategy(@Autowired @Qualifier("defaultUserSerializer") final UserSerilizerStrategy defaultSerializer,
-			@Autowired @Qualifier("studentSerializer") final UserSerilizerStrategy studentSerializer,
-			@Autowired @Qualifier("mentorSerializer") final UserSerilizerStrategy mentorSerializer) {
+	public Map<ProfileType, UserSerilizerStrategy<?>> mapSerializerStrategy(
+			@Autowired @Qualifier("defaultUserSerializer") final UserSerilizerStrategy<Administrator> defaultSerializer,
+			@Autowired @Qualifier("studentSerializer") final UserSerilizerStrategy<Student> studentSerializer,
+			@Autowired @Qualifier("mentorSerializer") final UserSerilizerStrategy<Mentor> mentorSerializer) {
 		
-		final Map<ProfileType, UserSerilizerStrategy> map = new EnumMap<>(ProfileType.class);
+		final Map<ProfileType, UserSerilizerStrategy<? extends User>> map = new EnumMap<>(ProfileType.class);
 		map.put(ProfileType.ADMINISTRATOR, defaultSerializer);
 		map.put(ProfileType.MENTOR, mentorSerializer);
 		map.put(ProfileType.STUDENT, studentSerializer);

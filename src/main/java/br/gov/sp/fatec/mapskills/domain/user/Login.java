@@ -11,12 +11,17 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
+
+import lombok.Getter;
+import lombok.Setter;
 /**
  * A classe <code>Login</code> representa as credenciais de acesso a aplcacao.
  * 
  * @author Marcelo
  *
  */
+@Getter
+@Setter
 @Embeddable
 public class Login implements Serializable {
 
@@ -38,16 +43,4 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(final String hashPass) {
-		this.password = hashPass;
-	}
-
 }

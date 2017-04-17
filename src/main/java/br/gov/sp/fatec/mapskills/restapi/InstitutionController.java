@@ -32,6 +32,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByCourseWrapper;
 
 /**
@@ -65,8 +66,7 @@ public class InstitutionController {
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveStudents(students);
-		//return new ResponseEntity<>(HttpStatus.CREATED);
-		return getAllStudentsByInstitution(students.get(0).getInstitutionCode());
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	/**
@@ -76,11 +76,28 @@ public class InstitutionController {
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/student", method = RequestMethod.POST)
-	public ResponseEntity<StudentWrapper> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
+	public ResponseEntity<UserWrapper> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
 		final Student studentSaved = institutionService.saveStudent(studentWrapper.getStudent());
-		final StudentWrapper saved = new StudentWrapper(studentSaved);
+		final UserWrapper saved = new UserWrapper(studentSaved);
 		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
+	/**
+	 * End Point que atualiza um aluno a partir de seu id.
+	 * @param studentWrapper
+	 * @param studentId
+	 * @return
+	 * @throws MapSkillsException eh lancado caso haja algum problema com objeto ao
+	 * realizar persistencia.
+	 */
+	@RequestMapping(value = "/student/{studentId}", method = RequestMethod.PUT)
+	public ResponseEntity<StudentWrapper> updateStudent(@RequestBody final StudentWrapper studentWrapper,
+			@PathVariable("studentId") final long studentId) throws MapSkillsException {
+		
+		final Student updated = institutionService.updateStudent(studentId, studentWrapper.getStudent());
+		final StudentWrapper updatedWrapper = new StudentWrapper(updated); 
+		return new ResponseEntity<>(updatedWrapper, HttpStatus.OK);
+	}
+	
 	/**
 	 * Realiza persistencia de um novo curso em um instituição
 	 * @param courseWrapper
@@ -151,7 +168,7 @@ public class InstitutionController {
 			@PathVariable("themeId") final long themeId) {
 		
 		final Institution institution = institutionService.findInstitutionByCode(institutionCode);
-		institution.changeGameTheme(themeId);
+		institution.setGameThemeId(themeId);
 		institutionService.saveInstitution(institution);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

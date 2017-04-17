@@ -13,18 +13,23 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import br.gov.sp.fatec.mapskills.domain.user.User;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ * @param <T>
+ */
 @Component
-public class DefaultUserSerializer implements UserSerilizerStrategy {
+public class DefaultUserSerializer<T extends User> implements UserSerilizerStrategy<T> {
 	
-	protected void serializeDefaultValues(final User user, final JsonGenerator generator) throws IOException {
+	protected void serializeDefaultValues(final T user, final JsonGenerator generator) throws IOException {
 		generator.writeNumberField("id", user.getId());
 		generator.writeStringField("name", user.getName());
 		generator.writeStringField("profile", user.getProfile().name());
 	}
 
 	@Override
-	public void serialize(final User user, final JsonGenerator generator) throws IOException {
+	public void serialize(final T user, final JsonGenerator generator) throws IOException {
 		generator.writeStartObject();
 		serializeDefaultValues(user, generator);
 		generator.writeEndObject();

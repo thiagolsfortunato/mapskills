@@ -9,11 +9,9 @@ package br.gov.sp.fatec.mapskills.test.unit;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,7 +25,6 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 
-@Ignore
 public class InstitutionTest extends MapSkillsTest {
 	
 	@Autowired
@@ -40,9 +37,8 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveInstitution() {
-		final Collection<Mentor> mentors = new ArrayList<>(1);
-		mentors.add(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123"));
-		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
+		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José");
+		fatec.addMentor(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatec);
 		
 		assertEquals("123456789000", institutionService.findInstitutionById(fatec.getId()).getCnpj());
@@ -50,9 +46,8 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void findInstitutionDetails() throws MapSkillsException {
-		final Collection<Mentor> mentors = new ArrayList<>(1);
-		mentors.add(new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123"));
-		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José", mentors);
+		final Institution fatec = new Institution("147", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José");
+		fatec.addMentor(new Mentor("Mentor Responsavel Teste", "147", "marquinhos@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatec);
 		
 		final List<Course> coursesList = new ArrayList<>(4);
@@ -69,17 +64,15 @@ public class InstitutionTest extends MapSkillsTest {
 	@Test
 	public void saveInstitutions() {
 		final List<Institution> fatecList = new ArrayList<>(3);
-		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
-		mentorsOURINHOS.add(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
-		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "São José", mentorsOURINHOS);
+
+		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "São José");
+		fatecOURINHOS.addMentor(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
 		
-		final Collection<Mentor> mentorsPINDA = new ArrayList<>(1);
-		mentorsPINDA.add(new Mentor("Mentor Responsavel PINDA", "148", "paulo@fatec", "Mudar@123"));
-		final Institution fatecPINDA = new Institution("148", "123456789002", "Fatec Pinda", InstitutionLevel.SUPERIOR, "Pindamonhangaba", mentorsPINDA);
+		final Institution fatecPINDA = new Institution("148", "123456789002", "Fatec Pinda", InstitutionLevel.SUPERIOR, "Pindamonhangaba");
+		fatecPINDA.addMentor(new Mentor("Mentor Responsavel PINDA", "148", "paulo@fatec", "Mudar@123"));
 		
-		final Collection<Mentor> mentorsSP = new ArrayList<>(1);
-		mentorsSP.add(new Mentor("Mentor Responsavel SP", "149", "fagundez@fatec", "Mudar@123"));
-		final Institution fatecSP = new Institution("149", "123456789003", "Fatec SP", InstitutionLevel.SUPERIOR, "São Paulo", mentorsSP);
+		final Institution fatecSP = new Institution("149", "123456789003", "Fatec SP", InstitutionLevel.SUPERIOR, "São Paulo");
+		fatecSP.addMentor(new Mentor("Mentor Responsavel SP", "149", "fagundez@fatec", "Mudar@123"));
 		
 		fatecList.add(fatecOURINHOS);
 		fatecList.add(fatecPINDA);
@@ -93,9 +86,9 @@ public class InstitutionTest extends MapSkillsTest {
 	@Test
 	public void saveAndFindAllCoursesByInstitution() {
 		final List<Course> coursesList = new ArrayList<>(4);
-		final Collection<Mentor> mentorsSP = new ArrayList<>(1);
-		mentorsSP.add(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
-		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ouro Preto", mentorsSP);
+
+		final Institution fatecOURINHOS = new Institution("147", "123456789001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ouro Preto");
+		fatecOURINHOS.addMentor(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatecOURINHOS);
 
 		coursesList.add(new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147"));
@@ -126,22 +119,21 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void updateInstitution() {
-		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
-		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "200", "victor@fatec", "Mudar@123"));
-		final Institution fatecOURINHOS = new Institution("200", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
+
+		final Institution fatecOURINHOS = new Institution("200", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos");
+		fatecOURINHOS.addMentor(new Mentor("Victor Responsavel OURINHOS", "200", "victor@fatec", "Mudar@123"));
 		
-		final Collection<Mentor> mentorsSAMPA = new ArrayList<>(1);
-		mentorsSAMPA.add(new Mentor("Regina", "156", "regina@fatec", "Mudar@123"));
-		final Institution fatecSAMPA = new Institution("156", "123445789001", "Fatec Sampa", InstitutionLevel.SUPERIOR, "São Paulo", mentorsSAMPA);
+		final Institution fatecSAMPA = new Institution("156", "123445789001", "Fatec Sampa", InstitutionLevel.SUPERIOR, "São Paulo");
+		fatecSAMPA.addMentor(new Mentor("Regina", "156", "regina@fatec", "Mudar@123"));
 		final List<Institution> institutions = new ArrayList<>(2);
 		institutions.add(fatecSAMPA);
 		institutions.add(fatecOURINHOS);
 		institutionService.saveInstitutions(institutions);
 		
 		final Institution institution = institutionService.findInstitutionById(fatecSAMPA.getId());
-		institution.changeCnpj("71461173000155");
-		institution.changeCity("Jacarei");
-		institution.changeCompany("Fatec Jacarei");
+		institution.setCnpj("71461173000155");
+		institution.setCity("Jacarei");
+		institution.setCompany("Fatec Jacarei");
 		institutionService.saveInstitution(institution);
 		
 		assertEquals("Fatec Jacarei", institutionService.findInstitutionById(institution.getId()).getCompany());
@@ -149,9 +141,8 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveCourses() throws MapSkillsException {
-		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
-		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
-		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
+		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos");
+		fatecOURINHOS.addMentor(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatecOURINHOS);
 
 		final List<Course> courses = new ArrayList<>(3);
@@ -165,17 +156,16 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveThemeInstitution() {
-		final Collection<Mentor> mentorsOURINHOS = new ArrayList<>(1);
-		mentorsOURINHOS.add(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
-		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos", mentorsOURINHOS);
+		final Institution fatecOURINHOS = new Institution("144", "123456909001", "Fatec Ourinhos", InstitutionLevel.SUPERIOR, "Ourinhos");
+		fatecOURINHOS.addMentor(new Mentor("Victor Responsavel OURINHOS", "144", "victor@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatecOURINHOS);
 		
-		assertEquals(0, institutionService.findInstitutionById(fatecOURINHOS.getId()).getThemeId());
+		assertEquals(0, institutionService.findInstitutionById(fatecOURINHOS.getId()).getGameThemeId());
 		
-		fatecOURINHOS.changeGameTheme(1);
+		fatecOURINHOS.setGameThemeId(1);
 		institutionService.saveInstitution(fatecOURINHOS);
 		
-		assertEquals(1, institutionService.findInstitutionById(fatecOURINHOS.getId()).getThemeId());
+		assertEquals(1, institutionService.findInstitutionById(fatecOURINHOS.getId()).getGameThemeId());
 	}
 	
 	private List<Student> mockStudents() throws MapSkillsException {

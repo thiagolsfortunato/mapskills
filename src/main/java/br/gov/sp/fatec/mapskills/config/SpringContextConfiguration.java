@@ -6,8 +6,11 @@
  */
 package br.gov.sp.fatec.mapskills.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * A classe <code>SpringContextConfiguration</code> representa as configurações
  * necessárias para o uso da aplicação em produção.
@@ -17,5 +20,11 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({DataBaseConfig.class})
-public class SpringContextConfiguration extends AbstractSpringContextConfiguration {	
+public class SpringContextConfiguration extends AbstractSpringContextConfiguration {
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
+	
 }

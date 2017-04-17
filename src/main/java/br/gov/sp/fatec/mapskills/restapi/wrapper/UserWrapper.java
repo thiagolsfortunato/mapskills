@@ -11,7 +11,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerializer;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 @JsonSerialize(using = UserSerializer.class)
 public class UserWrapper {
 	

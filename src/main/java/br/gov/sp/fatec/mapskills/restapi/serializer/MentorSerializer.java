@@ -14,20 +14,22 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
-import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
-
+/**
+ * 
+ * @author Marcelo
+ *
+ */
 @Component
-public class MentorSerializer extends DefaultUserSerializer {
+public class MentorSerializer extends DefaultUserSerializer<Mentor> {
 	
 	@Autowired
 	private InstitutionService service;
 	
 	@Override
-	public void serialize(final User user, final JsonGenerator generator) throws IOException {
+	public void serialize(final Mentor mentor, final JsonGenerator generator) throws IOException {
 		generator.writeStartObject();
-		serializeDefaultValues(user, generator);
-		final Mentor mentor = (Mentor) user;
+		serializeDefaultValues(mentor, generator);
 		generator.writeStringField("institutionCode", mentor.getInstitutionCode());
 		generator.writeNumberField("institutionId", mentor.getInstitutionId());
 		generator.writeStringField("institutionLevel", this.getLevel(mentor.getInstitutionCode()));

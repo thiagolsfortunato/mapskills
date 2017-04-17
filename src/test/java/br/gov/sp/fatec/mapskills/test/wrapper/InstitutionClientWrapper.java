@@ -8,8 +8,7 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 
 public class InstitutionClientWrapper {
 	
-private long id;
-	
+	private long id;	
 	private final String code;
 	private final String cnpj;
 	private final String company;

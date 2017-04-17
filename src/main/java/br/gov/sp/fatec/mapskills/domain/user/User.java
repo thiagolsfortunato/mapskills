@@ -20,6 +20,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+
+import lombok.Getter;
+import lombok.Setter;
 /**
  * A classe abstrata <code>User</code> é uma entidade que representa usuario generico
  * que pode acessar a aplicacao.
@@ -27,6 +30,8 @@ import javax.persistence.Table;
  * @author Marcelo
  *
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "USER")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -67,15 +72,7 @@ public abstract class User implements Principal, Serializable {
 	public ProfileType getProfile() {
 		return profile;
 	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
+		
 	public String getUsername() {
 		return login.getUsername();
 	}
@@ -84,24 +81,12 @@ public abstract class User implements Principal, Serializable {
 		return login.getPassword();
 	}
 	
-	public Login getLogin() {
-		return login;
+	public void setUsername(final String username) {
+		login.setUsername(username);
 	}
 	
-	public void changeName(final String newName) {
-		name = newName;
+	public void setPassword(final String hash) {
+		login.setPassword(hash);
 	}
 	
-	public void setId(final long id) {
-		this.id = id;
-	}
-	
-	public void setName(final String name) {
-		this.name = name;
-	}
-	
-	public void setPassword(final String hashPass) {
-		login.setPassword(hashPass);
-	}
-
 }

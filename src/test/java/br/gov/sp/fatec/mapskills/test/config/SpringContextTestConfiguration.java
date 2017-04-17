@@ -8,6 +8,7 @@ package br.gov.sp.fatec.mapskills.test.config;
 
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,7 @@ import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
  *
  */
 @Import({DataBaseHsqldbConfig.class})
+@ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.test.serializer"})
 public class SpringContextTestConfiguration extends AbstractSpringContextConfiguration {
 	
 	@Bean
