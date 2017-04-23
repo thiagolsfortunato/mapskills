@@ -1,7 +1,7 @@
 /* @(#)InstitutionListSerializer.java 1.0 08/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -14,7 +14,14 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionListWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-
+/**
+ * 
+ * A classe {@link InstitutionListSerializer} e responsavel
+ * por serializar uma lista de instituicao.
+ *
+ * @author Marcelo
+ * @version 1.0 08/01/2017
+ */
 public class InstitutionListSerializer extends JsonSerializer<InstitutionListWrapper> {
 	
 	private final DefaultInstitutionSerializer defaultSerializer;

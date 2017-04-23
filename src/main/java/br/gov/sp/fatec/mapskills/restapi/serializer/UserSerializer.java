@@ -1,8 +1,8 @@
 /*
  * @(#)UserSerializer.java 1.0 10/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -20,13 +20,22 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 /**
  * 
- * @author Marcelo
+ * A classe {@link UserSerializer} e responsavel por serializar um perfil de usuario.
+ * A serializacao e feita a partir da recuperacao do serializador especifico esta
+ * contido no mapa de serializadores, cuja chave e o perfil do usuario.
  *
+ * @author Marcelo
+ * @version 1.0 10/11/2016
  */
 public class UserSerializer extends JsonSerializer<UserWrapper> {
 	
 	private final Map<ProfileType, UserSerilizerStrategy<User>> mapSerializer = new EnumMap<>(ProfileType.class);
 	
+	/**
+	 * No construtor da classe e recuperado o mapa de serializadores que se encontra
+	 * no cluster de objetos do spring, instanciado no pacote de configuracoes
+	 * na classe <code>SerializersConfig</code>.
+	 */
 	@SuppressWarnings("unchecked")
 	public UserSerializer() {
 		super();

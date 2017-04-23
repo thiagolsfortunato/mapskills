@@ -1,8 +1,8 @@
 /*
  * @(#)SerializersConfig.java 1.0 10/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -21,14 +21,22 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
 /**
- * A classe <code>SerializersConfig</code> possui um configuração de estrategia de serializaçao de perfil,
- * onde cada perfil possui seu serializador.
- * @author Marcelo
+ * 
+ * A classe {@link SerializersConfig} possui uma configuração de estrategia de
+ * serializaçao de perfil, onde cada perfil possui seu serializador.
  *
+ * @author Marcelo
+ * @version 1.0 10/11/2016
  */
 @Configuration
 public class SerializersConfig {
-	
+	/**
+	 * Instancia no cluster de objetos do spring um mapa de perfil/serializador.
+	 * @param defaultSerializer
+	 * @param studentSerializer
+	 * @param mentorSerializer
+	 * @return
+	 */
 	@Bean
 	public Map<ProfileType, UserSerilizerStrategy<?>> mapSerializerStrategy(
 			@Autowired @Qualifier("defaultUserSerializer") final UserSerilizerStrategy<Administrator> defaultSerializer,

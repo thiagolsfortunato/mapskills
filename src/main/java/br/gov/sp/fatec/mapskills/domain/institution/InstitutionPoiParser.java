@@ -44,7 +44,7 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 				.company(attArgs.get(2))
 				.level(InstitutionLevel.build(attArgs.get(3).toUpperCase()))
 				.city(attArgs.get(4))
-				.build();		
+				.build();
 		
 		final Institution institution = service.findInstitutionByCnpj(attArgs.get(1));
 		if(institution != null) {

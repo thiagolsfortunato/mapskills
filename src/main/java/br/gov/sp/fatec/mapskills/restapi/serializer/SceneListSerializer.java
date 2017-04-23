@@ -1,8 +1,8 @@
 /*
  * @(#)QuestionListSerializer.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -16,11 +16,14 @@ import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
+
 /**
- * A classe <code>SceneListSerializer</code> eh responsavel por serializar todo um contexto
- * de cenas que o jogo possui.
- * @author Marcelo
+ * 
+ * A classe {@link SceneListSerializer} eh responsavel por 
+ * serializar todo um contexto de cenas que o jogo possui.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
 public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
 

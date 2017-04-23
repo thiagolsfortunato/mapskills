@@ -1,14 +1,16 @@
 /*
  * @(#)CoursePeriod.java 1.0 12/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 /**
- * O enum <code>CoursePeriod</code> representa o periodo em que o curso é realizado.
- * @author Marcelo
+ * 
+ * O Enum {@link CoursePeriod} representa o periodo em que o curso é realizado.
  *
+ * @author Marcelo
+ * @version 1.0 22/04/2017
  */
 public enum CoursePeriod {
 	

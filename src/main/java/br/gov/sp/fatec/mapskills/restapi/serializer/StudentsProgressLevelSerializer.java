@@ -1,8 +1,8 @@
 /*
  * @(#)StudentsProgressLevelSerializer.java 1.0 01/03/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -14,7 +14,16 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
-
+/**
+ * 
+ * A classe {@link StudentsProgressLevelSerializer} e responsavel
+ * por serializar os resutados contidos na classe
+ * <code>StudentsProgressLevelWrapper</code>. JSON utilizado
+ * na tela de perfil administrador.
+ *
+ * @author Marcelo
+ * @version 1.0 01/03/2017
+ */
 public class StudentsProgressLevelSerializer extends JsonSerializer<StudentsProgressLevelWrapper> {
 
 	@Override
@@ -56,7 +65,13 @@ public class StudentsProgressLevelSerializer extends JsonSerializer<StudentsProg
 		}
 		generator.writeEndArray();
 	}
-	
+	/**
+	 * Metodo que calcula uma porcentagem a partir de uma quantidade
+	 * e um total.
+	 * @param quantity
+	 * @param total
+	 * @return
+	 */
 	private double calcPercentage(final double quantity, final double total) {
 		return (quantity/total) * 100;
 	}

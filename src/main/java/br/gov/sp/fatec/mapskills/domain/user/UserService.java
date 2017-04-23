@@ -1,8 +1,8 @@
 /*
  * @(#)UserService.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.user;
 
@@ -17,7 +17,14 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-
+/**
+ * 
+ * A classe {@link UserService} e responsavel por conter
+ * as regras de negocio que diz respeito aos perfils de usuarios. 
+ *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
+ */
 @Component
 public class UserService implements RepositoryService {
 	

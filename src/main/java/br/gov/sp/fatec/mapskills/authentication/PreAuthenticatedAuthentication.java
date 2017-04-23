@@ -1,8 +1,8 @@
 /*
  * @(#)PreAuthenticatedAuthentication.java 1.0 27/01/2017
  *
- * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
@@ -14,8 +14,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import br.gov.sp.fatec.mapskills.domain.user.User;
-
-
+/**
+ * 
+ * A classe {@link PreAuthenticatedAuthentication}
+ *
+ * @author Marcelo
+ * @version 1.0 27/01/2017
+ */
 public class PreAuthenticatedAuthentication extends PreAuthenticatedAuthenticationToken {
 	
 	private static final long serialVersionUID = 1L;

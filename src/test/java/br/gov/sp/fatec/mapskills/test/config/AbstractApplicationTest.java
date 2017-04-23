@@ -1,8 +1,8 @@
 /*
  * @(#)AbstractApplicationTest.java 1.0 13/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.config;
 
@@ -43,12 +43,15 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-import br.gov.sp.fatec.mapskills.test.wrapper.InstitutionClientWrapper;
+import br.gov.sp.fatec.mapskills.test.wrapper.InstitutionWrapperTest;
+
 /**
- * A classe <code>AbstractApplicationTest</code> representa as configurações
+ * 
+ * A classe {@link AbstractApplicationTest} representa as configuracoes
  * globais de teste, para todos outros testes.
- * @author Marcelo
  *
+ * @author Marcelo
+ * @version 1.0 13/01/2017
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -146,8 +149,8 @@ public abstract class AbstractApplicationTest {
 				"Student MockE", "1289003400", "aluno@fatec.sp.gov.br", encoder.encode("mudar@123"));
 	}
 	
-	protected InstitutionClientWrapper getInstitutionClient() {
-		return new InstitutionClientWrapper(getOneInstitution());
+	protected InstitutionWrapperTest getInstitutionClient() {
+		return new InstitutionWrapperTest(getOneInstitution());
 	}
 	
 	protected Institution getOneInstitution() {
@@ -158,9 +161,9 @@ public abstract class AbstractApplicationTest {
 	
 	protected Collection<Skill> getSkillsMock() {
 		final Collection<Skill> skills = new ArrayList<>();
-		skills.add(new Skill("Liderança", " liderança.."));
-		skills.add(new Skill("Visão de Futuro", " visão.."));
-		skills.add(new Skill("Gestão de Tempo", " gestão.."));
+		skills.add(Skill.builder().type("Liderança").description(" liderança..").build());
+		skills.add(Skill.builder().type("Visão de Futuro").description(" visão..").build());
+		skills.add(Skill.builder().type("Gestão de Tempo").description(" gestão..").build());
 		return skills;
 	}
 	

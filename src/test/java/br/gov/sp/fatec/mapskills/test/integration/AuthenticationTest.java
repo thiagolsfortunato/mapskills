@@ -1,3 +1,9 @@
+/*
+ * @(#)AuthenticationTest.java 1.0 13/01/2017
+ *
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.test.integration;
 
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +31,14 @@ import com.nimbusds.jwt.SignedJWT;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
-
+/**
+ * 
+ * A classe {@link AuthenticationTest} contem os teste de
+ * autenticacao na aplicacao.
+ *
+ * @author Marcelo
+ * @version 1.0 13/01/2017
+ */
 public class AuthenticationTest extends AbstractApplicationTest {
 		
 	@Autowired

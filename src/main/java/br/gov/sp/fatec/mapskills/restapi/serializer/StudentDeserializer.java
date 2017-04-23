@@ -1,8 +1,8 @@
 /*
  * @(#)StudentDeserializer.java 1.0 24/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -13,8 +13,11 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
 /**
  * 
- * @author Marcelo
+ * A classe {@link StudentDeserializer} e responsavel
+ * por deserializar um aluno para que seja cadastrado.
  *
+ * @author Marcelo
+ * @version 1.0 24/12/2016
  */
 public class StudentDeserializer extends DefaultJsonDeserializer<StudentWrapper> {
 

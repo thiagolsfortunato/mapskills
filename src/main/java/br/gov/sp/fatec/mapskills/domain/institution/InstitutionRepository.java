@@ -1,8 +1,8 @@
 /*
- * @(#)MentorRepository.java 1.0 01/11/2016
+ * @(#)InstitutionRepository.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
@@ -11,11 +11,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
- * A classe <code>InstitutionRepository</code> é responsável por realizar as
- * transacionalidades referentes as institutições
- * @author Marcelo
+ * 
+ * A classe {@link InstitutionRepository} e responsavel por realizar as
+ * transacionalidades referentes as instituticoes.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
 public interface InstitutionRepository extends CrudRepository<Institution, Long> {
 	
@@ -29,9 +32,9 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	
 	/**
 	 * retorna todos os resultados da quantidade de alunos que
-	 * finalizaram e não finalizaram de uma maneira geral por curso de todas
-	 * as instituicoes. colunas:
-	 * ANO_SEMESTRE, INS_CODE, CRS_CODE, CURSO, NAO_FINALIZADOS e FINALIZADOS
+	 * finalizaram e não finalizaram de uma maneira geral por curso de uma
+	 * determinada instituicao.
+	 * colunas: ANO_SEMESTRE, INS_CODE, CRS_CODE, CURSO, NAO_FINALIZADOS e FINALIZADOS
 	 * @param institutionCode
 	 * @param year_semester
 	 * @return
@@ -54,7 +57,11 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	public List<Object[]> getGlobalStudentsProgress(final String year_semester);
 	
 	/**
-	 * 
+	 * retorna a quantidade de alunos que finalizaram e nao finalizaram
+	 * o jogo por nivel de instituicao (superior e tecnico) de um periodo
+	 * (concatenacao do ano mais o semestre ex.: primeiro semestre do de ano 2017 
+	 * ficaria 171) com as sequintes colunas:
+	 * YEAR_SEMESTER, INS_CODE, LEVEL, NOT_FINALIZED, FINALIZED, TOTAL 
 	 * @param level
 	 * @param year_semester
 	 * @return

@@ -5,39 +5,39 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext 
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="marcelo-inacio" id="createView-radar-result">
+	<changeSet author="marcelo-inacio" id="create-views">
 	    <createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="RADAR_RESULT_VIEW">
-		            SELECT sqe.use_id AS user_id,
-			            skill.ski_type AS skill_type,
-			            skill.ski_description AS skill_description,
-			            SUM(sqe.sqe_skill_value) AS total
-					FROM SKILL skill 
-					INNER JOIN STUDENT_QUESTION_EVENT sqe
-					ON sqe.ski_id = skill.ski_id
-					GROUP BY 1, 2, 3
-					ORDER BY skill.ski_type ASC
+		            SELECT SQE.USE_ID AS USER_ID,
+			            SKILL.SKI_TYPE AS SKILL_TYPE,
+			            SKILL.SKI_DESCRIPTION AS SKILL_DESCRIPTION,
+			            SUM(SQE.SQE_SKILL_VALUE) AS TOTAL
+					FROM SKILL
+					INNER JOIN STUDENT_QUESTION_EVENT SQE
+					ON SQE.SKI_ID = SKILL.SKI_ID
+					GROUP BY USER_ID, SKILL_TYPE, SKILL_DESCRIPTION
+					ORDER BY SKILL.SKI_TYPE ASC
 		</createView>
 		
 		<createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="INSTITUTION_STUDENTS_PROGRESS_VIEW">
 		            SELECT
-						SUBSTR(stu.STU_RA, 7, 3) AS YEAR_SEMESTER,
-						institution.INS_CODE,
-					    institution.INS_LEVEL AS LEVEL,
-					    course.CRS_CODE,
-						course.CRS_NAME AS COURSE,
-					    (SELECT count(*) FROM student 
-							WHERE STU_IS_COMPLETED = 0 AND CRS_CODE = course.CRS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY CRS_CODE) AS NOT_FINALIZED,
-					    (SELECT count(*) FROM student
-							WHERE STU_IS_COMPLETED = 1 AND CRS_CODE = course.CRS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY CRS_CODE) AS FINALIZED
-					FROM student stu INNER JOIN course ON course.CRS_CODE = stu.CRS_CODE
-									 INNER JOIN institution ON course.INS_CODE = institution.INS_CODE
-					GROUP BY YEAR_SEMESTER, institution.INS_CODE, LEVEL, course.CRS_CODE, COURSE;
+						SUBSTR(STU.STU_RA, 7, 3) AS YEAR_SEMESTER,
+						INSTITUTION.INS_CODE,
+						INSTITUTION.INS_LEVEL AS LEVEL,
+						COURSE.CRS_CODE,
+						COURSE.CRS_NAME AS COURSE,
+						(SELECT COUNT(*) FROM STUDENT 
+							WHERE STU_IS_COMPLETED = 0 AND CRS_CODE = COURSE.CRS_CODE
+							AND SUBSTR(STUDENT.STU_RA, 7, 3) = SUBSTR(STU.STU_RA, 7, 3) GROUP BY CRS_CODE) AS NOT_FINALIZED,
+						(SELECT COUNT(*) FROM STUDENT
+							WHERE STU_IS_COMPLETED = 1 AND CRS_CODE = COURSE.CRS_CODE
+							AND SUBSTR(STUDENT.STU_RA, 7, 3) = SUBSTR(STU.STU_RA, 7, 3) GROUP BY CRS_CODE) AS FINALIZED
+					FROM STUDENT STU INNER JOIN COURSE ON COURSE.CRS_CODE = STU.CRS_CODE
+									 INNER JOIN INSTITUTION ON COURSE.INS_CODE = INSTITUTION.INS_CODE
+					GROUP BY SUBSTR(STU.STU_RA, 7, 3), INSTITUTION.INS_CODE, LEVEL, COURSE.CRS_CODE, COURSE
 		</createView>
 		
 		<createView catalogName="MAPSKILLS"
@@ -48,10 +48,10 @@
 					    institution.INS_LEVEL AS LEVEL,
 					    (SELECT count(*) FROM student 
 							WHERE STU_IS_COMPLETED = 0 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS NAO_FINALIZADOS,
+					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS NOT_FINALIZED,
 					    (SELECT count(*) FROM student
 							WHERE STU_IS_COMPLETED = 1 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS FINALIZADOS,
+					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS FINALIZED,
 						COUNT(*) TOTAL
 					FROM student stu INNER JOIN institution ON stu.INS_CODE = institution.INS_CODE
 					GROUP BY YEAR_SEMESTER, LEVEL

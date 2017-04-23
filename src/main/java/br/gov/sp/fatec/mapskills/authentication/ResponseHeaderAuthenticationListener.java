@@ -1,8 +1,8 @@
 /*
  * @(#)ResponseHeaderAuthenticationListener.java 1.0 27/01/2017
  *
- * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
@@ -24,7 +24,13 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-
+/**
+ * 
+ * A classe {@link ResponseHeaderAuthenticationListener}
+ *
+ * @author Marcelo
+ * @version 1.0 27/01/2017
+ */
 @Component
 public class ResponseHeaderAuthenticationListener implements AuthenticationListener {
 	

@@ -1,8 +1,8 @@
 /*
  * @(#)DefaultAuthenticationProvider.java 1.0 27/01/2017
  *
- * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
@@ -14,7 +14,14 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
-
+/**
+ * 
+ * A classe {@link DefaultAuthenticationProvider} responsavel
+ * por realizar as autenticacoes dos usuarios na aplicacao.
+ *
+ * @author Marcelo
+ * @version 1.0 27/01/2017
+ */
 @Component
 public class DefaultAuthenticationProvider implements AuthenticationProvider {
 		

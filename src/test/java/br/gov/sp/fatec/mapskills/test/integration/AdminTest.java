@@ -1,8 +1,8 @@
 /*
- * @(#)ApplicationTest.java 1.0 13/01/2017
+ * @(#)AdminTest.java 1.0 13/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.integration;
 
@@ -45,13 +45,24 @@ import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
-
+import br.gov.sp.fatec.mapskills.utils.JsonUtil;
+/**
+ * 
+ * A classe {@link AdminTest} contem os testes de integracao
+ * do perfil de administrador.
+ *
+ * @author Marcelo
+ * @version 1.0 13/01/2017
+ */
 public class AdminTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/admin";
 	
 	@Mock
 	protected JwtAuthenticationManager jwtAuthenticationManager;
+	
+	@Mock
+	private JsonUtil jsonUtil;
 	
 	@Autowired
 	private InstitutionService institutionService;
@@ -88,7 +99,7 @@ public class AdminTest extends AbstractApplicationTest {
 	public void postSkill() throws Exception {
 		mockAdminAuthentication();
 		
-		final Skill skill = new Skill("liderança", "avalia...");
+		final Skill skill = Skill.builder().type("liderança").description("avalia...").build();
 		final String bodyInput = objectMapper.writeValueAsString(skill);
 
 		super.mockMvcPerformPost(BASE_PATH.concat("/skill"), bodyInput)
@@ -156,7 +167,8 @@ public class AdminTest extends AbstractApplicationTest {
 		mockAdminAuthentication();
 		
 		final Institution fatec = institutionService.saveInstitution(getOneInstitution());
-		institutionService.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, fatec.getCode()));
+		institutionService.saveCourse(Course.builder().code("100").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode(fatec.getCode()).build());
 		
 		final String jsonResponse = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/institution/" + fatec.getId()))
 				.andReturn().getResponse().getContentAsString();
@@ -171,7 +183,7 @@ public class AdminTest extends AbstractApplicationTest {
 	public void saveGameTheme() throws Exception {
 		mockAdminAuthentication();
 		
-		final GameTheme theme = new GameTheme("pizzaria");
+		final GameTheme theme = GameTheme.builder().name("pizzaria").build();
 		final String bodyInput = objectMapper.writeValueAsString(theme);
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/game/theme"), bodyInput)
@@ -233,11 +245,10 @@ public class AdminTest extends AbstractApplicationTest {
 	
 	private Collection<GameTheme> getThemesMock() {
 		final Collection<GameTheme> themeCollection = new ArrayList<>();
-		themeCollection.add(new GameTheme("pizzaria"));
-		themeCollection.add(new GameTheme("gravadora"));
-		themeCollection.add(new GameTheme("museu"));
+		themeCollection.add(GameTheme.builder().name("pizzaria").build());
+		themeCollection.add(GameTheme.builder().name("gravadora").build());
+		themeCollection.add(GameTheme.builder().name("museu").build());
 		return themeCollection;
 	}
-
 
 }

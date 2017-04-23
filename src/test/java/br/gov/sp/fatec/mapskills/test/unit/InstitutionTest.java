@@ -1,8 +1,8 @@
 /*
  * @(#)InstitutionTest.java 1.0 29/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.unit;
 
@@ -24,7 +24,14 @@ import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-
+/**
+ * 
+ * A classe {@link InstitutionTest} contem teste
+ * de dominio da classe <code>Institution</code>.
+ *
+ * @author Marcelo
+ * @version 1.0 29/12/2016
+ */
 public class InstitutionTest extends MapSkillsTest {
 	
 	@Autowired
@@ -37,6 +44,7 @@ public class InstitutionTest extends MapSkillsTest {
 	
 	@Test
 	public void saveInstitution() {
+		super.cleanTables(institutionService);
 		final Institution fatec = new Institution("146", "123456789000", "Jessen Vidal", InstitutionLevel.SUPERIOR, "São José");
 		fatec.addMentor(new Mentor("Mentor Responsavel Teste", "146", "marquinhos@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatec);
@@ -51,10 +59,10 @@ public class InstitutionTest extends MapSkillsTest {
 		institutionService.saveInstitution(fatec);
 		
 		final List<Course> coursesList = new ArrayList<>(4);
-		coursesList.add(new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("29", "Logistica", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(Course.builder().code("28").name("Banco de dados").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("29").name("Logistica").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("30").name("Estruturas Leves").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("31").name("Manutenção de Aeronaves").period(CoursePeriod.NOTURNO).institutionCode("147").build());
 		institutionService.saveCourses(coursesList);
 		
 		final Institution institutionDetails = institutionService.findInstitutionDetailsById(fatec.getId());
@@ -91,10 +99,10 @@ public class InstitutionTest extends MapSkillsTest {
 		fatecOURINHOS.addMentor(new Mentor("Mentor Responsavel OURINHOS", "147", "valdez@fatec", "Mudar@123"));
 		institutionService.saveInstitution(fatecOURINHOS);
 
-		coursesList.add(new Course("28", "Banco de dados", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("29", "Logistica", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("30", "Estruturas Leves", CoursePeriod.NOTURNO, "147"));
-		coursesList.add(new Course("31", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "147"));
+		coursesList.add(Course.builder().code("28").name("Banco de dados").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("29").name("Logistica").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("30").name("Estruturas Leves").period(CoursePeriod.NOTURNO).institutionCode("147").build());
+		coursesList.add(Course.builder().code("31").name("Manutenção de Aeronaves").period(CoursePeriod.NOTURNO).institutionCode("147").build());
 		
 		institutionService.saveCourses(coursesList);
 		
@@ -146,9 +154,9 @@ public class InstitutionTest extends MapSkillsTest {
 		institutionService.saveInstitution(fatecOURINHOS);
 
 		final List<Course> courses = new ArrayList<>(3);
-		courses.add(new Course("200", "Estruturas Leves", CoursePeriod.NOTURNO, "144"));
-		courses.add(new Course("201", "Manutenção de Aeronaves", CoursePeriod.NOTURNO, "144"));
-		courses.add(new Course("202", "Logistica", CoursePeriod.NOTURNO, "144"));
+		courses.add(Course.builder().code("200").name("Estruturas Leves").period(CoursePeriod.NOTURNO).institutionCode("144").build());
+		courses.add(Course.builder().code("201").name("Manutenção de Aeronaves").period(CoursePeriod.NOTURNO).institutionCode("144").build());
+		courses.add(Course.builder().code("202").name("Logistica").period(CoursePeriod.NOTURNO).institutionCode("144").build());
 		institutionService.saveCourses(courses);
 		
 		assertEquals(3, institutionService.findAllCoursesByInstitutionCode("144").size());

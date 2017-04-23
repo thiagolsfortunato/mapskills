@@ -1,8 +1,8 @@
 /*
- * @(#)JsonUtil.java 1.0 17/04/2017
+ * @(#)JsonUtil.java 1.0 22/03/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.utils;
 
@@ -36,16 +36,16 @@ public class JsonUtil {
 		return node.has(fieldName) ? node.get(fieldName).textValue() : null;
 	}
 
-	public Double getFieldDoubleValue(final JsonNode node, final String fieldName) {
-		return node.has(fieldName) ? node.get(fieldName).doubleValue() : null;
+	public double getFieldDoubleValue(final JsonNode node, final String fieldName) {
+		return node.has(fieldName) ? node.get(fieldName).doubleValue() : 0;
 	}
 
-	public Long getFieldLongValue(final JsonNode node, final String fieldName) {
-		return node.has(fieldName) ? node.get(fieldName).asLong() : null;
+	public long getFieldLongValue(final JsonNode node, final String fieldName) {
+		return node.has(fieldName) ? node.get(fieldName).asLong() : 0;
 	}
 
-	public Integer getFieldIntegerValue(final JsonNode node, final String fieldName) {
-		return node.has(fieldName) && node.hasNonNull(fieldName)? node.get(fieldName).asInt() : null;
+	public int getFieldIntegerValue(final JsonNode node, final String fieldName) {
+		return node.has(fieldName) && node.hasNonNull(fieldName)? node.get(fieldName).asInt() : 0;
 	}
 
 	public boolean getFieldBooleanValue(final JsonNode node, final String fieldName) {

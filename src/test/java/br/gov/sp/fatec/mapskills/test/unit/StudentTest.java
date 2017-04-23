@@ -1,6 +1,10 @@
+/*
+ * @(#)StudentTest.java 1.0 29/12/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.test.unit;
-
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -12,8 +16,14 @@ import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
+/**
+ * 
+ * A classe {@link StudentTest}
+ *
+ * @author Marcelo
+ * @version 1.0 29/12/2016
+ */
 
-@Ignore
 public class StudentTest extends MapSkillsTest {
 	
 	@Autowired
@@ -31,24 +41,16 @@ public class StudentTest extends MapSkillsTest {
 	}
 	
 	@Test
+	@Ignore
+	//Necessario configurar banco H2 para trabalhar com view
 	public void getResultByStudent() {
-		//prepareAnswerContext();
-		
-		final List<Object[]> result = sceneService.getResultByStudentId(3);
-		System.err.print("'label': [");
-		for(final Object[] r : result) {
-			System.err.print("'" + r[1] + "', ");
-		}
-		System.err.println("]");
-		System.err.print("'datasets': [");
-		for(final Object[] r : result) {
-			System.err.print("'" + r[3] + "', ");
-		}
-		System.err.println("]");
-
+		prepareAnswerContext();
+		//final List<Object[]> resultSet = sceneService.getResultByStudentId(3);
 	}
 	
 	@Test
+	@Ignore
+	//Necessario configurar banco H2 para trabalhar com view
 	public void testResultView() {
 		prepareAnswerContext();
 		repo.findResultViewByStudentId(1);
@@ -60,13 +62,10 @@ public class StudentTest extends MapSkillsTest {
 		final long STUDENTID = 1;
 		final int SKILLVALUE = 10;
 		
-		final Skill skillA = new Skill("liderança", "liderança ...");
-		final Skill skillB = new Skill("persuasão", "persuasão ...");
-		final Skill skillC = new Skill("visão de futuro", "visão de futuro ...");
-		skillService.save(skillA);
-		skillService.save(skillB);
-		skillService.save(skillC);
-		
+		final Skill skillA = skillService.save(Skill.builder().type("liderança").description("liderança ...").build());
+		final Skill skillB = skillService.save(Skill.builder().type("persuasão").description("persuasão ...").build());
+		final Skill skillC = skillService.save(Skill.builder().type("visão de futuro").description("visão de futuro ...").build());
+				
 		for(int i = 0; i < 3; i++ ) {
 			final AnswerEvent answer = new AnswerEvent(SCENE_INDEX + i, SCENEID + i, STUDENTID, skillA.getId(), SKILLVALUE + 1);
 			sceneService.saveAnswer(answer);

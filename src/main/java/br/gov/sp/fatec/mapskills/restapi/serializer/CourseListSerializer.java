@@ -1,8 +1,8 @@
 /*
  * @(#)CourseListSerializer.java 1.0 14/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -14,7 +14,14 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
-
+/**
+ * 
+ * A classe {@link CourseListSerializer} e responsavel
+ * por serializar uma lista de cursos.
+ *
+ * @author Marcelo
+ * @version 1.0 14/01/2017
+ */
 public class CourseListSerializer extends JsonSerializer<CourseListWrapper> {
 
 	@Override

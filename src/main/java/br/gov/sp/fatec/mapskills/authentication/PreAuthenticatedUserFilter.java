@@ -1,8 +1,8 @@
 /*
  * @(#)PreAuthenticatedUserFilter.java 1.0 26/10/2016
  *
- * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
@@ -17,7 +17,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-
+/**
+ * 
+ * A classe {@link PreAuthenticatedUserFilter}
+ *
+ * @author Marcelo
+ * @version 1.0 26/10/2016
+ */
 public class PreAuthenticatedUserFilter extends AbstractPreAuthenticatedProcessingFilter {
 	
 	private static final String AUTHORIZATION = "Authorization";

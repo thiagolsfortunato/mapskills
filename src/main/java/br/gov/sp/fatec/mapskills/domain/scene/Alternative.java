@@ -15,9 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "ALTERNATIVE")
-public class Alternative implements Serializable{
+public class Alternative implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,28 +43,11 @@ public class Alternative implements Serializable{
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public Alternative(final String description, final int skillValue) {
-		this.description = description;
-		this.skillValue = skillValue;
-	}
-	
 	public Alternative setId(final long id) {
 		this.id = id;
 		return this;
 	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public int getSkillValue() {
-		return skillValue;
-	}
-	
+
 	public void changeDescription(final String newDescription) {
 		this.description = newDescription;
 	}

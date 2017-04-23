@@ -1,8 +1,8 @@
 /*
  * @(#)AdminController.java 1.0 03/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
@@ -40,11 +40,12 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 
 /**
- * A classe <code>AdminController</code> eh responsavel por conter todas
- * rotas (uri's) do perfil administrador da aplicacao.
  * 
- * @author Marcelo
+ * A classe {@link AdminController} e responsavel por conter todos
+ * end points (uri's) de acesso do perfil administrador da aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 03/01/2017
  */
 @RestController
 @RequestMapping(AdminController.BASE_PATH)

@@ -1,8 +1,8 @@
 /*
  * @(#)SaveImageService.java 1.0 06/01/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.utils;
 
@@ -18,10 +18,12 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
- * A classe <code>SaveImageService</code> eh responsavel por salvar as
+ * 
+ * A classe {@link SaveImageService} e responsavel por salvar as
  * images feitas por upload pela aplicacao.
- * @author Marcelo
  *
+ * @author Marcelo
+ * @version 1.0 06/01/2017
  */
 @Component
 public class SaveImageService {

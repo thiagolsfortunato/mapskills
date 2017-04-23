@@ -67,13 +67,13 @@ public class Institution implements Serializable {
 	public Institution() {
 		// CONSTRUCTOR DEFAULT
 	}
-	
-	@Builder
+
 	public Institution (final long id, final String code, final String cnpj, final String company,
 			final InstitutionLevel level, final String city, final Collection<Mentor> mentors, final long gameThemeId) {
 		
 		this(code, cnpj, company, level, city);
 		this.id = id;
+		this.mentors.addAll(mentors);
 		this.gameThemeId = gameThemeId;
 	}
 	

@@ -1,8 +1,8 @@
 /*
  * @(#)InstitutionTest.java 1.0 15/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.integration;
 
@@ -40,8 +40,10 @@ import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 import br.gov.sp.fatec.mapskills.test.wrapper.StudentWrapperTest;
 /**
  * 
- * @author Marcelo
+ * A classe {@link InstitutionTest}
  *
+ * @author Marcelo
+ * @version 1.0 15/01/2017
  */
 public class InstitutionTest extends AbstractApplicationTest {
 	
@@ -102,7 +104,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 	public void saveCourse() throws Exception {
 		mockMentorAuthentication();
 		
-		final Course course = new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146");
+		final Course course = Course.builder().code("100").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build();
 		final String json = objectMapper.writeValueAsString(course);
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/course"), json)
@@ -114,8 +117,9 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Test
 	public void findAllStudentsByInstitutionCode() throws Exception {
 		mockMentorAuthentication();
-				
-		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
+		
+		service.saveCourse(Course.builder().code("028").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		service.saveStudents(getStudentsMock());
 		
 		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/students")).andReturn();
@@ -131,8 +135,9 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Test
 	public void findAllCoursesByInstitution() throws Exception {
 		mockMentorAuthentication();
-		
-		service.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
+
+		service.saveCourse(Course.builder().code("100").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		service.saveCourses(getCoursesMock());
 		
 		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/courses")).andReturn();
@@ -150,7 +155,8 @@ public class InstitutionTest extends AbstractApplicationTest {
 		mockMentorAuthentication();
 		
 		service.saveInstitution(getOneInstitution());
-		service.saveCourse(new Course("028", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
+		service.saveCourse(Course.builder().code("028").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		service.saveStudents(getStudentsMock());
 		//TODO criar objetos para as VIEWS do banco de dados.
 		//final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/progress")).andReturn();
@@ -168,9 +174,12 @@ public class InstitutionTest extends AbstractApplicationTest {
 	
 	private Collection<Course> getCoursesMock() {
 		final Collection<Course> courses = new ArrayList<>(3);
-		courses.add(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, "146"));
-		courses.add(new Course("200", "logistica", CoursePeriod.NOTURNO, "146"));
-		courses.add(new Course("300", "analise de sistemas", CoursePeriod.NOTURNO, "146"));
+		courses.add(Course.builder().code("100").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
+		courses.add(Course.builder().code("200").name("logistica")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
+		courses.add(Course.builder().code("300").name("analise de sistemas")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		return courses;
 	}
 

@@ -1,8 +1,8 @@
 /*
  * @(#)AdministratorTest.java 1.0 29/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.unit;
 
@@ -27,8 +27,14 @@ import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportFilter;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportService;
-
-
+/**
+ * 
+ * A classe {@link AdministratorTest} realiza
+ * os testes de unidade do perfil administrador.
+ *
+ * @author Marcelo
+ * @version 1.0 29/12/2016
+ */
 public class AdministratorTest extends MapSkillsTest {
 
 	@Autowired
@@ -67,6 +73,7 @@ public class AdministratorTest extends MapSkillsTest {
 	public void saveAdministrator() {
 		final Administrator admin = new Administrator("Administrador", "admin", "admin");
 		userService.save(admin);
+		assertEquals(admin.getId(), userService.findByUsername("admin").getId());
 	}
 	
 	@Test

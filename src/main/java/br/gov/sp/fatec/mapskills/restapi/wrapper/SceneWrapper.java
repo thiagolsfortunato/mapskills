@@ -1,8 +1,8 @@
 /*
  * @(#)QuestionWrapper.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper;
 
@@ -10,7 +10,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.serializer.SceneDeserializer;
-
+/**
+ * 
+ * A classe {@link SceneWrapper} encapsula uma cena de um tema,
+ * um imagem em formato base 64 e o nome da imagem para que seja
+ * deserializada e cadastrada ou atualizada.
+ *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
+ */
 @JsonDeserialize(using = SceneDeserializer.class)
 public class SceneWrapper {
 	

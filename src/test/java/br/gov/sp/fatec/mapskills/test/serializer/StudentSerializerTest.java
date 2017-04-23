@@ -1,8 +1,8 @@
 /*
  * @(#)StudentSerializerTest.java 1.0 17/04/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.serializer;
 
@@ -15,13 +15,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.test.wrapper.StudentWrapperTest;
 /**
- * A classe <code>StudentSerializerTest</code>
- * é utilizada para serializar um aluno nos
- * casos de teste simulando o JSON vindo do
- * front end.
  * 
- * @author Marcelo
+ * A classe {@link StudentSerializerTest} é utilizada 
+ * para serializar um aluno nos casos de teste simulando
+ * o JSON vindo do front end.
  *
+ * @author Marcelo
+ * @version 1.0 17/04/2017
  */
 public class StudentSerializerTest extends JsonSerializer<StudentWrapperTest> {
 

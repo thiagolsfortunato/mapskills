@@ -1,8 +1,8 @@
 /*
  * @(#)MentorSerializer.java 1.0 31/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -17,8 +17,11 @@ import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 /**
  * 
- * @author Marcelo
+ * A classe {@link MentorSerializer} e responsavel
+ * por serializar o perfil <i>Mentor</i> da aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 31/12/2016
  */
 @Component
 public class MentorSerializer extends DefaultUserSerializer<Mentor> {

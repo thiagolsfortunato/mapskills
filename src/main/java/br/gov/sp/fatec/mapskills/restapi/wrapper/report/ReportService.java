@@ -1,8 +1,8 @@
 /*
  * @(#)ReportService.java 1.0 05/03/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
@@ -17,8 +17,12 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 /**
  * 
- * @author Marcelo
+ * A classe {@link ReportService} contem as regras de negocio
+ * para geracao de relatorios da aplicacao sendo as competencias
+ * geradas dinamicamente de acordo com a quantidade cadastrada.
  *
+ * @author Marcelo
+ * @version 1.0 05/03/2017
  */
 @Service
 public class ReportService {

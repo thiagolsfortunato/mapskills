@@ -1,8 +1,8 @@
 /*
  * @(#)MentorController.java 1.0 03/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
@@ -33,14 +33,15 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByCourseWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
 
 /**
- * A classe <code>MentorController</code> é responsável por conter todas
- * rotas (uri's) do perfil mentor da aplicação.
  * 
- * @author Marcelo
+ * A classe {@link InstitutionController} e responsavel por conter todos
+ * end points (uri's) de acesso do perfil mentor da aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 03/01/2017
  */
 @RestController
 @RequestMapping(InstitutionController.BASE_PATH)
@@ -188,11 +189,11 @@ public class InstitutionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{institutionCode}/progress", method = RequestMethod.GET)
-	public ResponseEntity<StudentsProgressByCourseWrapper> getStudentsProgress(
+	public ResponseEntity<StudentsProgressByInstitutionWrapper> getStudentsProgress(
 			@PathVariable("institutionCode") final String institutionCode) {
 		
-		final List<Object[]> resultSet = institutionService.getStudentsProgress(institutionCode);
-		final StudentsProgressByCourseWrapper progress = new StudentsProgressByCourseWrapper(resultSet);
+		final List<Object[]> resultSet = institutionService.getStudentsProgressByInstitution(institutionCode);
+		final StudentsProgressByInstitutionWrapper progress = new StudentsProgressByInstitutionWrapper(resultSet);
 		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 

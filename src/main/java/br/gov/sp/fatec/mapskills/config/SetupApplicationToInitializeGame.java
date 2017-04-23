@@ -92,14 +92,14 @@ public class SetupApplicationToInitializeGame {
 	 * adiciona cursos a instituição
 	 */
 	private void createCourses() {
-		institutionService.saveCourse(new Course("048", "Tecnologia em Análise e Desenvolvimento de Sistemas", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("114", "Tecnologia em Automação Manufatura Digital", CoursePeriod.MATUTINO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("028", "Tecnologia em Banco de Dados", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("077", "Tecnologia em Gestão da Produção Industrial", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("064", "Tecnologia em Gestão Empresarial", CoursePeriod.EaD, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("074", "Tecnologia em Logística", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("068", "Tecnologia em Manutenção de Aeronaves", CoursePeriod.NOTURNO, INSTITUTION_CODE));
-		institutionService.saveCourse(new Course("115", "Tecnologia em Projetos de Estruturas Aeronáuticas", CoursePeriod.NOTURNO, INSTITUTION_CODE));
+		institutionService.saveCourse(Course.builder().code("048").name("Tecnologia em Análise e Desenvolvimento de Sistemas").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("114").name("Tecnologia em Automação Manufatura Digital").period(CoursePeriod.MATUTINO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("028").name("Tecnologia em Banco de Dados").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("077").name("Tecnologia em Gestão da Produção Industrial").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("064").name("Tecnologia em Gestão Empresarial").period(CoursePeriod.EaD).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("074").name("Tecnologia em Logística").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("068").name("Tecnologia em Manutenção de Aeronaves").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("115").name("Tecnologia em Projetos de Estruturas Aeronáuticas").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
 		LOGGER.log(Level.INFO, "=== COURSES SAVE SUCCESS ===");
 	}
 	
@@ -111,7 +111,7 @@ public class SetupApplicationToInitializeGame {
 	 * cria um tema e persiste-a na base de dados
 	 */
 	private void createGameTheme() {
-		themeService.save(new GameTheme("GERÊNCIA DE PIZZARIA"));
+		themeService.save(GameTheme.builder().name("GERÊNCIA DE PIZZARIA").build());
 		LOGGER.log(Level.INFO, "=== THEMES SAVE SUCCESS ===");
 	}
 	/**
@@ -128,10 +128,12 @@ public class SetupApplicationToInitializeGame {
 		int imageIndex = 0;
 		for(final String line : this.buildReaderFromFile(filePath)) {
 			if(imageIndex % 3 == 1) {
-				sceneService.save(new Scene(textList.get(imageIndex++), URL_SERVER.concat(line), mapQuestion.get(idQuestion++), GAME_THEME_ID));
+				sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(URL_SERVER.concat(line))
+						.question(mapQuestion.get(idQuestion++)).gameThemeId(GAME_THEME_ID).build());
 				continue;
 			}
-			sceneService.save(new Scene(textList.get(imageIndex++), URL_SERVER.concat(line), null, GAME_THEME_ID));
+			sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(URL_SERVER.concat(line))
+					.question(null).gameThemeId(GAME_THEME_ID).build());
 		}
 		LOGGER.log(Level.INFO, "=== SCENES SAVE SUCCESS ===");
 	}
@@ -140,12 +142,12 @@ public class SetupApplicationToInitializeGame {
 	 * cria competencias persistindo-as na base de dados
 	 */
 	private void createSkills() {
-		skillRepository.save(new Skill("Visão do futuro", "Capacidade de antecipar barreira e tendencias identificando oportunidade mais criativas e beneficas para a organização ou para a adversidade."));
-		skillRepository.save(new Skill("Comunicação", "Capacidade de transmitir e expressar ideias, pensamentos, emoções e informações de forma clara e objetiva, de modo a garantir sua compreensão sem distorções ou ruídos."));
-		skillRepository.save(new Skill("Gestão do tempo", "Capacidade de gerenciar adequandamente a execução das tarefas, planejando e organizando recursos, em conformidade com o prazo acordado."));
-		skillRepository.save(new Skill("Equilibrio emocional", "Qualidade no dominio das emoções e de adequação a resposta emocional a estimulos internos e externos."));
-		skillRepository.save(new Skill("Trabalho em equipe", "Busca construir relacionamentos assertivos para com os outros, respeitando as necessidades e contribuições dos demais, levando os integrantes a alcançarem positivamente os resultados estabelecidos."));
-		skillRepository.save(new Skill("Resiliência", "Capacidade de lidar com problemas, superar obstaculos ou resistir a pressão de situações adversas dando condição para enfrentar a alcançar os objetivos esperados."));
+		skillRepository.save(Skill.builder().type("Visão do futuro").description("Capacidade de antecipar barreira e tendencias identificando oportunidade mais criativas e beneficas para a organização ou para a adversidade.").build());
+		skillRepository.save(Skill.builder().type("Comunicação").description("Capacidade de transmitir e expressar ideias, pensamentos, emoções e informações de forma clara e objetiva, de modo a garantir sua compreensão sem distorções ou ruídos.").build());
+		skillRepository.save(Skill.builder().type("Gestão do tempo").description("Capacidade de gerenciar adequandamente a execução das tarefas, planejando e organizando recursos, em conformidade com o prazo acordado.").build());
+		skillRepository.save(Skill.builder().type("Equilibrio emocional").description("Qualidade no dominio das emoções e de adequação a resposta emocional a estimulos internos e externos.").build());
+		skillRepository.save(Skill.builder().type("Trabalho em equipe").description("Busca construir relacionamentos assertivos para com os outros, respeitando as necessidades e contribuições dos demais, levando os integrantes a alcançarem positivamente os resultados estabelecidos.").build());
+		skillRepository.save(Skill.builder().type("Resiliência").description("Capacidade de lidar com problemas, superar obstaculos ou resistir a pressão de situações adversas dando condição para enfrentar a alcançar os objetivos esperados.").build());
 		LOGGER.log(Level.INFO, "=== SKILLS SAVE SUCCESS ===");
 	}
 	/**
@@ -156,7 +158,7 @@ public class SetupApplicationToInitializeGame {
 	private void generateQuestions() {
 		final Random gerador = new Random();
 		for(int i = 1; i < 26; i++) {
-			mapQuestion.put(i, new Question(mapAlternatives.get(i), gerador.nextInt(6) + 1));
+			mapQuestion.put(i, Question.builder().alternatives(mapAlternatives.get(i)).skillId(gerador.nextInt(6) + 1).build());
 		}
 	}
 	
@@ -180,7 +182,6 @@ public class SetupApplicationToInitializeGame {
 		this.mapAlternatives.clear();
 		final String filePath = PATH_TXT.concat("alternativasTemaPizzaria.txt");
 		
-//		final Random gerador = new Random();
 		int idQuestion = 1;
 
 		final List<String> list = new ArrayList<>();
@@ -190,8 +191,10 @@ public class SetupApplicationToInitializeGame {
 			final List<Alternative> alternatives = new LinkedList<>();
 			for(int j = 0; j < 4; j++) {
 				final String[] lineWithValue = list.get(i++).split(";");
-				alternatives.add(new Alternative(lineWithValue[0], Integer.valueOf(lineWithValue[1])));
-//				alternatives.add(new Alternative(list.get(i++), gerador.nextInt(7)));
+				alternatives.add(Alternative.builder()
+						.description((lineWithValue[0]))
+						.skillValue(Integer.valueOf(lineWithValue[1]))
+						.build());
 			}
 			mapAlternatives.put(idQuestion++, alternatives);
 		}

@@ -1,7 +1,7 @@
 /* @(#)InstitutionDeserializer.java 1.0 08/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -16,8 +16,12 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 /**
  * 
- * @author Marcelo
+ * A classe {@link InstitutionDeserializer} e responsavel
+ * por deserializar um instituticao para que seja
+ * cadastrada ou atualizada.
  *
+ * @author Marcelo
+ * @version 1.0 08/01/2017
  */
 public class InstitutionDeserializer extends DefaultJsonDeserializer<InstitutionDetailsWrapper> {
 	
@@ -28,7 +32,7 @@ public class InstitutionDeserializer extends DefaultJsonDeserializer<Institution
 		final Collection<Mentor> mentors = new LinkedList<>();
         
         if(node.has(MENTOR)) {
-        	mentors.add(this.mentorDeserialeze(node.get(MENTOR), jsonUtil.getFieldTextValue(node, "code")));
+        	mentors.add(this.mentorDeserialize(node.get(MENTOR), jsonUtil.getFieldTextValue(node, "code")));
         } else {
         	mentors.addAll(this.mentorListDeserialize(node.get("mentors"), jsonUtil.getFieldTextValue(node, "code")));
         }
@@ -38,20 +42,21 @@ public class InstitutionDeserializer extends DefaultJsonDeserializer<Institution
 				.cnpj(jsonUtil.getFieldTextValue(node, "cnpj"))
 				.company(jsonUtil.getFieldTextValue(node, "company"))
 				.city(jsonUtil.getFieldTextValue(node, "city"))
-				.mentors(mentors)
 				.level(InstitutionLevel.valueOf(jsonUtil.getFieldTextValue(node, "level")))
 				.build();
 		
 		institution.setId(jsonUtil.getFieldLongValue(node, "id"));
+		institution.setMentors(mentors);
 		
 		return new InstitutionDetailsWrapper(institution);
 	}
 
-	private Mentor mentorDeserialeze(final JsonNode node, final String institutionCode) {
+	private Mentor mentorDeserialize(final JsonNode node, final String institutionCode) {
 		final Mentor mentor = Mentor.builder()
 				.name(jsonUtil.getFieldTextValue(node, "name"))
 				.username(jsonUtil.getFieldTextValue(node, "username"))
 				.password(jsonUtil.getFieldPasswordValue(node))
+				.institutionCode(institutionCode)
 				.build();
 
         mentor.setId(jsonUtil.getFieldLongValue(node, "id"));
@@ -64,11 +69,9 @@ public class InstitutionDeserializer extends DefaultJsonDeserializer<Institution
 		final Collection<Mentor> mentors = new LinkedList<>();
 		for(int i = 0; i < sizeArray; i++ ) {
 			final JsonNode nodeCurrent = node.get(i);
-			mentors.add(mentorDeserialeze(nodeCurrent, institutionCode));
+			mentors.add(mentorDeserialize(nodeCurrent, institutionCode));
 		}
 		return mentors;
-	}
-
-	
+	}	
 
 }

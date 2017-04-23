@@ -1,8 +1,8 @@
 /*
- * @(#)MentorService.java 1.0 01/11/2016
+ * @(#)InstitutionService.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
@@ -24,11 +24,14 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+
 /**
- * A classe <code>InstitutionService</code> contem todos metodos necessários para realizacao
- * de tudo que esta relacionado ha instituicao.
- * @author Marcelo
+ * 
+ * A classe {@link InstitutionService} contem todos metodos necessários
+ * para realizacao de tudo que esta relacionado ha instituicao.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
 @Service
 public class InstitutionService implements RepositoryService {
@@ -189,7 +192,7 @@ public class InstitutionService implements RepositoryService {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	
-	public List<Object[]> getStudentsProgress(final String institutionCode) {
+	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode) {
 		final String year_semester = getYearSemesterCurrent();
 		return institutionRepository.getStudentsProgressByInstitution(institutionCode, year_semester);
 	}
@@ -203,7 +206,9 @@ public class InstitutionService implements RepositoryService {
 		final String year_semester = getYearSemesterCurrent();
 		return institutionRepository.getLevelStudentsProgress(level, year_semester);
 	}
-	
+	/**
+	 * Merodo que recupera o ano e semestre corrente.
+	 */
 	private String getYearSemesterCurrent() {
 		final LocalDate dateCurrent = LocalDate.now();
 		final String semester = dateCurrent.getMonthValue() < 6 ? "1" : "2";

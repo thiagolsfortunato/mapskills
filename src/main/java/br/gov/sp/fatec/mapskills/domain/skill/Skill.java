@@ -15,6 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "SKILL")
 public class Skill implements Serializable {
@@ -34,23 +41,6 @@ public class Skill implements Serializable {
 	
 	public Skill() {
 		// CONSTRUCTOR DEFAULT
-	}
-	
-	public Skill(final String type, final String description) {
-		this.type = type;
-		this.description = description;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public String getType() {
-		return type;
-	}
-	
-	public String getDescription() {
-		return description;
 	}
 	
 	public void changeType(final String newType) {

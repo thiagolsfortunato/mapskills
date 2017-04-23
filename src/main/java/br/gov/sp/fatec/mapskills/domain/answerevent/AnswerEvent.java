@@ -1,3 +1,8 @@
+/* @(#)AnswerEvent.java 1.0 04/01/2017
+ *
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.answerevent;
 
 import java.io.Serializable;
@@ -14,6 +19,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Builder;
+import lombok.Getter;
+/**
+ * 
+ * A classe {@link AnswerEvent} representa todas as informacoes de
+ * escolha de uma alternativa de uma questao respondida durante o jogo.
+ *
+ * @author Marcelo
+ * @version 1.0 04/01/2017
+ */
+@Getter
 @Entity
 @Table(name = "STUDENT_QUESTION_EVENT")
 public class AnswerEvent implements Serializable {
@@ -48,7 +64,9 @@ public class AnswerEvent implements Serializable {
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public AnswerEvent(final int sceneIndex, final long sceneId, final long studentId, final long skillId, final int skillValue) {
+	@Builder
+	public AnswerEvent(final int sceneIndex, final long sceneId, final long studentId,
+			final long skillId, final int skillValue) {
 		this.sceneIndex = sceneIndex;
 		this.sceneId = sceneId;
 		this.studentId = studentId;
@@ -56,27 +74,7 @@ public class AnswerEvent implements Serializable {
 		this.skillValue = skillValue;
 		this.date = Calendar.getInstance();
 	}
-	
-	public long getSceneId() {
-		return sceneId;
-	}
-	
-	public int getSceneIndex() {
-		return sceneIndex;
-	}
-	
-	public long getStudentId() {
-		return studentId;
-	}
-	
-	public long getSkillId() {
-		return skillId;
-	}
-	
-	public int getSkillValue() {
-		return skillValue;
-	}
-	
+
 	public String getDate() {
 		return calendarDateFormatterPtBr(date);
 	}
