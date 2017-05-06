@@ -21,7 +21,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 /**
  * 
- * A classe {@link SCMCorsFilter}
+ * A classe {@link SCMCorsFilter} representa as
+ * configuracoes de <i>CORS</i> da aplicacao.
  *
  * @author Marcelo
  * @version 1.0 08/01/2017
@@ -35,7 +36,7 @@ public class SCMCorsFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
 			final FilterChain chain) throws ServletException, IOException {
 
-		LOGGER.info("== Adicionando Access Control Response Headers ==");
+		LOGGER.info("== Add Access Control Response Headers ==");
 		
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, OPTIONS, DELETE");

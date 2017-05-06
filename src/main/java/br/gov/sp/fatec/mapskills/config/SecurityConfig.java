@@ -96,9 +96,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
     public void configure(final WebSecurity web) throws Exception {
-        web
-        .ignoring()
-        .antMatchers("/images/**");
+        web.ignoring().antMatchers("/images/**",
+        		"/v2/api-docs", "/configuration/ui",
+        		"/swagger-resources", "/configuration/security",
+        		"/swagger-ui.html", "/webjars/**");
     }
 	/**
 	 * configuracao do Cross-Origin Resource Sharing (CORS) da aplicacao.
@@ -180,5 +181,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         methodInvokingFactoryBean.setArguments(new Object[] {SecurityContextHolder.MODE_INHERITABLETHREADLOCAL});
         return methodInvokingFactoryBean;
     }
-
+	
 }

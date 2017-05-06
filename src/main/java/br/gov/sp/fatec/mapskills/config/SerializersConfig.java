@@ -32,10 +32,6 @@ import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
 public class SerializersConfig {
 	/**
 	 * Instancia no cluster de objetos do spring um mapa de perfil/serializador.
-	 * @param defaultSerializer
-	 * @param studentSerializer
-	 * @param mentorSerializer
-	 * @return
 	 */
 	@Bean
 	public Map<ProfileType, UserSerilizerStrategy<?>> mapSerializerStrategy(

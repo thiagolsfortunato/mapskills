@@ -1,8 +1,8 @@
 /*
  * @(#)SetupApplicationToInitializeGame.java 1.0 20/01/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -41,7 +41,15 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-
+/**
+ * 
+ * A classe {@link SetupApplicationToInitializeGame} utilizada para
+ * automatizar a primeira carga de informacoes na base de dados da
+ * aplicacao, estando as informacoes em arquivos de texto.
+ *
+ * @author Marcelo
+ * @version 1.0 20/01/2017
+ */
 //@Configuration
 public class SetupApplicationToInitializeGame {
 	

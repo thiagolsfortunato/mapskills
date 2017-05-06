@@ -42,7 +42,7 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 @Configuration
 public class MapSkillsMockBeans {
 	
-	private static final String MESSAGE = "SUCCESS"; 
+	private static final String SUCCESS = "SUCCESS"; 
 	
 	@Autowired
 	private UserRepository userRepo;
@@ -63,7 +63,7 @@ public class MapSkillsMockBeans {
 	public String saveAdmin() {
 		final Administrator admin = new Administrator("Administrador", "admin@cps.sp.gov.br", "admin");
 		userRepo.save(admin);
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
@@ -74,21 +74,21 @@ public class MapSkillsMockBeans {
 		institutions.add(fatecA);
 		institutionService.saveInstitutions(institutions);
 		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
 	public String saveStudent() throws MapSkillsException {
 		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "student@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(student);
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
 	public String saveGameTheme() {
 		themeService.save(GameTheme.builder().name("pizzaria, aplicado em 2016/2").build());
 		themeService.save(GameTheme.builder().name("empresa de musica, aplicado em 2017/1").build());
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
@@ -108,7 +108,7 @@ public class MapSkillsMockBeans {
 		sceneService.save(Scene.builder().text("conclusão").urlBackground("url://site/img003.png")
 				.question(null).gameThemeId(THEME_ID).build());
 		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
@@ -117,7 +117,7 @@ public class MapSkillsMockBeans {
 		skillService.save(Skill.builder().type("Liderança").description("Avalia a liderança do aluno").build());
 		skillService.save(Skill.builder().type("Gestão de Tempo").description("Avalia a gestão de tempo do aluno").build());
 		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	private Collection<Alternative> builderMockAlternatives() {

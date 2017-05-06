@@ -5,7 +5,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext 
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet author="marcelo-inacio" id="create-views">
+	<changeSet author="marcelo-inacio" id="create-radar-result-view">
 	    <createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="RADAR_RESULT_VIEW">
@@ -19,65 +19,72 @@
 					GROUP BY USER_ID, SKILL_TYPE, SKILL_DESCRIPTION
 					ORDER BY SKILL.SKI_TYPE ASC
 		</createView>
-		
+	</changeSet>
+	<changeSet author="marcelo-inacio" id="create-institution-students-progress-view">
 		<createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="INSTITUTION_STUDENTS_PROGRESS_VIEW">
-		            SELECT
-						SUBSTR(STU.STU_RA, 7, 3) AS YEAR_SEMESTER,
-						INSTITUTION.INS_CODE,
-						INSTITUTION.INS_LEVEL AS LEVEL,
-						COURSE.CRS_CODE,
-						COURSE.CRS_NAME AS COURSE,
-						(SELECT COUNT(*) FROM STUDENT 
-							WHERE STU_IS_COMPLETED = 0 AND CRS_CODE = COURSE.CRS_CODE
-							AND SUBSTR(STUDENT.STU_RA, 7, 3) = SUBSTR(STU.STU_RA, 7, 3) GROUP BY CRS_CODE) AS NOT_FINALIZED,
-						(SELECT COUNT(*) FROM STUDENT
-							WHERE STU_IS_COMPLETED = 1 AND CRS_CODE = COURSE.CRS_CODE
-							AND SUBSTR(STUDENT.STU_RA, 7, 3) = SUBSTR(STU.STU_RA, 7, 3) GROUP BY CRS_CODE) AS FINALIZED
-					FROM STUDENT STU INNER JOIN COURSE ON COURSE.CRS_CODE = STU.CRS_CODE
-									 INNER JOIN INSTITUTION ON COURSE.INS_CODE = INSTITUTION.INS_CODE
-					GROUP BY SUBSTR(STU.STU_RA, 7, 3), INSTITUTION.INS_CODE, LEVEL, COURSE.CRS_CODE, COURSE
+		            SELECT SUBSTR(s.STU_RA, 7, 3),
+						i.INS_CODE,
+						i.INS_LEVEL,
+						c.CRS_CODE,
+						c.CRS_NAME,
+						(SELECT COUNT(*) FROM STUDENT st
+							WHERE st.STU_IS_COMPLETED = 0
+							AND st.CRS_CODE = c.CRS_CODE
+							AND SUBSTR(st.STU_RA, 7, 3) = SUBSTR(s.STU_RA, 7, 3)
+							GROUP BY st.CRS_CODE) AS NOT_FINALIZED,
+						(SELECT COUNT(*) FROM STUDENT st_f
+							WHERE st_f.STU_IS_COMPLETED = 1
+							AND st_f.CRS_CODE = c.CRS_CODE
+							AND SUBSTR(st_f.STU_RA, 7, 3) = SUBSTR(s.STU_RA, 7, 3)
+							GROUP BY st_f.CRS_CODE) AS FINALIZED
+					FROM STUDENT s INNER JOIN COURSE c ON c.CRS_CODE = s.CRS_CODE
+								INNER JOIN INSTITUTION i ON c.INS_CODE = i.INS_CODE
+					GROUP BY SUBSTR(s.STU_RA, 7, 3), i.INS_CODE, i.INS_LEVEL, c.CRS_CODE, c.CRS_NAME
 		</createView>
-		
+	</changeSet>
+	<changeSet author="marcelo-inacio" id="create-admin-global-students-progress-view">
 		<createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="ADMIN_GLOBAL_STUDENTS_PROGRESS_VIEW">
 		            SELECT
-						SUBSTR(stu.STU_RA, 7, 3) AS YEAR_SEMESTER,
+						SUBSTR(stu.STU_RA, 7, 3) AS ANO_SEMESTRE,
 					    institution.INS_LEVEL AS LEVEL,
 					    (SELECT count(*) FROM student 
 							WHERE STU_IS_COMPLETED = 0 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS NOT_FINALIZED,
+					        AND SUBSTR(student.STU_RA, 7, 3) = ANO_SEMESTRE GROUP BY INS_CODE) AS NOT_FINALIZED,
 					    (SELECT count(*) FROM student
 							WHERE STU_IS_COMPLETED = 1 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS FINALIZED,
+					        AND SUBSTR(student.STU_RA, 7, 3) = ANO_SEMESTRE GROUP BY INS_CODE) AS FINALIZED,
 						COUNT(*) TOTAL
 					FROM student stu INNER JOIN institution ON stu.INS_CODE = institution.INS_CODE
-					GROUP BY YEAR_SEMESTER, LEVEL
+					GROUP BY ANO_SEMESTRE, LEVEL
 		</createView>
-		
+	</changeSet>
+	<changeSet author="marcelo-inacio" id="create-admin-level-students-progress-view">
 		<createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="ADMIN_LEVEL_STUDENTS_PROGRESS_VIEW">
 		            SELECT
-						SUBSTR(stu.STU_RA, 7, 3) AS YEAR_SEMESTER,
+						SUBSTR(stud.STU_RA, 7, 3) AS YEAR_SEMESTER,
 						institution.INS_CODE,
 					    institution.INS_LEVEL AS LEVEL,
 						institution.INS_COMPANY AS INSTITUTION,
 					    (SELECT count(*) FROM student 
 							WHERE STU_IS_COMPLETED = 0 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS NOT_FINALIZED,
+					        AND SUBSTR(student.STU_RA, 7, 3) = SUBSTR(stud.STU_RA, 7, 3) GROUP BY INS_CODE) AS NOT_FINALIZED,
 					    (SELECT count(*) FROM student
 							WHERE STU_IS_COMPLETED = 1 AND INS_CODE = institution.INS_CODE
-					        AND SUBSTR(student.STU_RA, 7, 3) = YEAR_SEMESTER GROUP BY INS_CODE) AS FINALIZED,
+					        AND SUBSTR(student.STU_RA, 7, 3) = SUBSTR(stud.STU_RA, 7, 3) GROUP BY INS_CODE) AS FINALIZED,
 					
 					    COUNT(*) AS TOTAL
 					
-					FROM student stu INNER JOIN institution ON stu.INS_CODE = institution.INS_CODE
-					GROUP BY YEAR_SEMESTER, institution.INS_CODE, LEVEL, INSTITUTION
+					FROM student stud INNER JOIN institution ON student.INS_CODE = institution.INS_CODE
+					GROUP BY SUBSTR(student.STU_RA, 7, 3), institution.INS_CODE, institution.INS_LEVEL, institution.INS_COMPANY
 		</createView>
-		
+	</changeSet>
+	<changeSet author="marcelo-inacio" id="create-csv-report-view">
 		<createView catalogName="MAPSKILLS"
 	            replaceIfExists="false"
 	            viewName="CSV_REPORT_VIEW">
