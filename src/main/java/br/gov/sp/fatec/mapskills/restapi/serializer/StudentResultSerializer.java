@@ -1,7 +1,7 @@
 /* @(#)StudentResultSerializer.java 1.0 04/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -14,7 +14,16 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
-
+/**
+ * 
+ * A classe {@link StudentResultSerializer} e responsavel
+ * por serializar o resultado de um aluno para que seja
+ * exibida no grafico de radar. Devolve o objeto preparado
+ * para que o componente de grafico do JS receba.
+ *
+ * @author Marcelo
+ * @version 1.0 04/01/2017
+ */
 public class StudentResultSerializer extends JsonSerializer<StudentResultWrapper> {
 
 	@Override

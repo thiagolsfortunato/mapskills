@@ -1,8 +1,8 @@
 /*
  * @(#)MapSkillsWebApplicationInitializer.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -15,12 +15,15 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 /**
- * A classe <code>MapSkillsWebApplicationInitializer</code> representa a inicialização
- * do contexto do Spring na aplicação.
+ * 
+ * A classe {@link MapSkillsWebApplicationInitializer}
+ * representa a inicializacao do contexto do Spring na aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
-public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer implements 
-	WebApplicationInitializer {
+public class MapSkillsWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
+	implements	WebApplicationInitializer {
 
 	/** {@inheritDoc} */
 	@Override

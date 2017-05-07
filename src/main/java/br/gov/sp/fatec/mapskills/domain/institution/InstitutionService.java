@@ -1,14 +1,15 @@
 /*
- * @(#)MentorService.java 1.0 01/11/2016
+ * @(#)InstitutionService.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,14 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+
 /**
- * A classe <code>InstitutionService</code> contem todos metodos necessários para realizacao
- * de tudo que esta relacionado ha instituicao.
- * @author Marcelo
+ * 
+ * A classe {@link InstitutionService} contem todos metodos necessários
+ * para realizacao de tudo que esta relacionado ha instituicao.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
 @Service
 public class InstitutionService implements RepositoryService {
@@ -48,7 +52,7 @@ public class InstitutionService implements RepositoryService {
 	@Transactional
 	public void saveInstitutions(final Collection<Institution> institutions) {
 		for(final Institution institution : institutions) {
-			saveInstitution(institution);
+			this.saveInstitution(institution);
 		}
 	}
 	
@@ -76,28 +80,45 @@ public class InstitutionService implements RepositoryService {
 		}
 	}
 	
-	public void saveCourse(final Course course) {
-		courseRepository.save(course);
+	public Course saveCourse(final Course course) {
+		return courseRepository.save(course);
 	}
 	
-	public void saveStudents(final Collection<Student> students) throws MapSkillsException {
+	@Transactional
+	public List<Student> saveStudents(final Collection<Student> students) throws MapSkillsException {
+		final List<Student> studentsSaved = new ArrayList<>(students.size());
 		for(final Student student : students) {
 			if(studentRepository.findByRaRa(student.getRa()) == null) {
-				this.saveStudent(student);
+				studentsSaved.add(this.saveStudent(student));
 			}
 		}
+		return Collections.unmodifiableList(studentsSaved);
 	}
 	
-	public void saveStudent(final Student student) throws MapSkillsException {
+	public Student saveStudent(final Student student) throws MapSkillsException {
 		try {
-			studentRepository.save(student);
+			return studentRepository.save(student);
 		} catch (final Exception exc) {
 			throw new StudentInvalidException();
 		}
 	}
+	
+	public Student updateStudent(final long id, final Student student) throws MapSkillsException {
+		final Student studentBase = studentRepository.findOne(id);
+		studentBase.update(student);
+		return saveStudent(studentBase);
+	}
 
 	public Institution findInstitutionById(final long id) {
 		return institutionRepository.findById(id);
+	}
+	
+	public Institution findInstitutionByCnpj(final String cnpj) {
+		return institutionRepository.findByCnpj(cnpj);
+	}
+	
+	public Mentor findMentorByUsername(final String username) {
+		return mentorRepository.findByLoginUsername(username);
 	}
 	
 	public Institution findInstitutionByCode(final String code) {
@@ -171,7 +192,7 @@ public class InstitutionService implements RepositoryService {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	
-	public List<Object[]> getStudentsProgress(final String institutionCode) {
+	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode) {
 		final String year_semester = getYearSemesterCurrent();
 		return institutionRepository.getStudentsProgressByInstitution(institutionCode, year_semester);
 	}
@@ -185,7 +206,9 @@ public class InstitutionService implements RepositoryService {
 		final String year_semester = getYearSemesterCurrent();
 		return institutionRepository.getLevelStudentsProgress(level, year_semester);
 	}
-	
+	/**
+	 * Merodo que recupera o ano e semestre corrente.
+	 */
 	private String getYearSemesterCurrent() {
 		final LocalDate dateCurrent = LocalDate.now();
 		final String semester = dateCurrent.getMonthValue() < 6 ? "1" : "2";

@@ -1,40 +1,36 @@
 /*
  * @(#)CourseDeserializer.java 1.0 15/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseWrapper;
-
-public class CourseDeserializer extends JsonDeserializer<CourseWrapper> {
+/**
+ * 
+ * A classe {@link CourseDeserializer} é responsavel
+ * por deserializar um <i>POST</i> de um curso para
+ * que seja cadastrado ou atualizado.
+ *
+ * @author Marcelo
+ * @version 1.0 15/01/2017
+ */
+public class CourseDeserializer extends DefaultJsonDeserializer<CourseWrapper> {
 
 	@Override
-	public CourseWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
-			throws IOException	{
-		
-		final ObjectCodec oc = jsonParser.getCodec();
-        final JsonNode node = oc.readTree(jsonParser);
-        
-        final Course course = new Course(node.get("code").asText(), node.get("name").asText()
-        		, CoursePeriod.valueOf(node.get("period").asText()), node.get("institutionCode").asText());
-        
-        if(node.has("id")) {
-        	course.setId(node.get("id").asLong());
-        }
-        
-		return new CourseWrapper(course);
+	protected CourseWrapper deserialize(final JsonNode node) {
+		return new CourseWrapper(Course.builder()
+				.id(jsonUtil.getFieldLongValue(node, "id"))
+				.code(jsonUtil.getFieldTextValue(node, "code"))
+				.name(jsonUtil.getFieldTextValue(node, "name"))
+				.period(CoursePeriod.valueOf(jsonUtil.getFieldTextValue(node, "period")))
+				.institutionCode(jsonUtil.getFieldTextValue(node, "institutionCode"))
+				.build());
 	}
 
 }

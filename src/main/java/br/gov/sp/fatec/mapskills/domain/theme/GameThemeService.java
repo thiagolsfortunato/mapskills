@@ -1,8 +1,8 @@
 /*
  * @(#)GameThemeService.java 1.0 04/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.theme;
 
@@ -16,7 +16,14 @@ import org.springframework.stereotype.Service;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-
+/**
+ * 
+ * A classe {@link GameThemeService} contem todas as regras de negocio
+ * que diz respeito a classe <code>GameTheme</code>.
+ *
+ * @author Marcelo
+ * @version 1.0 04/11/2016
+ */
 @Service
 public class GameThemeService implements RepositoryService {
 	

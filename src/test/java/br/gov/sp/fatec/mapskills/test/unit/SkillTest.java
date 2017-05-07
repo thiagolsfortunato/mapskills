@@ -1,8 +1,8 @@
 /*
  * @(#)SkillTest.java 1.0 29/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.unit;
 
@@ -12,14 +12,20 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
+/**
+ * 
+ * A classe {@link SkillTest} contem os teste
+ * de unidade para a classe <code>Skill</code>.
+ *
+ * @author Marcelo
+ * @version 1.0 29/12/2016
+ */
 
-@Ignore
 public class SkillTest extends MapSkillsTest {
 	
 	@Autowired
@@ -32,7 +38,7 @@ public class SkillTest extends MapSkillsTest {
 	
 	@Test
 	public void save() {
-		final Skill skill = new Skill("Liderança", "Breve descrição da habilidade");
+		final Skill skill = Skill.builder().type("Liderança").description("Breve descrição da habilidade").build();
 		service.save(skill);
 		
 		assertEquals("Liderança", service.findById(skill.getId()).getType());
@@ -48,10 +54,10 @@ public class SkillTest extends MapSkillsTest {
 
 	@Test
 	public void update() {
-		final Skill skillSave = new Skill("Liderança", "Breve descrição da habilidade");
+		final Skill skillSave = Skill.builder().type("Liderança").description("Breve descrição da habilidade").build();
 		service.save(skillSave);
 		
-		final Skill skillUpdate = new Skill("força", "Breve descrição da habilidade");
+		final Skill skillUpdate = Skill.builder().type("força").description("Breve descrição da habilidade").build();
 		skillUpdate.setId(skillSave.getId());
 		service.update(skillUpdate);
 		

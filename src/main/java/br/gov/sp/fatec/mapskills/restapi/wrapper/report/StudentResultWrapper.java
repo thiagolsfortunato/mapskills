@@ -1,8 +1,8 @@
 /*
  * @(#)StudentResultWrapper.java 1.0 03/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
@@ -18,24 +18,25 @@ import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.serializer.StudentResultSerializer;
 
 /**
- * A classe <code>StudentResultWrapper</code> contem os arrays necessários para
- * renderização do gráfico de radar com o resultado de um aluno.
- *  
- * @author Marcelo
+ * 
+ * A classe {@link StudentResultWrapper} contem os conjuntos de informacoes
+ * necessarios para renderizacao do grafico de radar com o resultado de um aluno.
  *
+ * @author Marcelo
+ * @version 1.0 03/01/2017
  */
 @JsonSerialize(using = StudentResultSerializer.class)
 public class StudentResultWrapper {
 	
 	private final Collection<String> skillsLabels = new LinkedList<>();
 	private final Collection<BigDecimal> values = new LinkedList<>();
-	private final Collection<Skill> skillsDeatils = new LinkedList<>();
+	private final Collection<Skill> skillsDetails = new LinkedList<>();
 	
 	public StudentResultWrapper(final List<Object[]> context) {
 		for(final Object[] result : context) {
 			this.skillsLabels.add(String.valueOf(result[1]));
 			this.values.add((BigDecimal) result[3]);
-			this.skillsDeatils.add(new Skill(String.valueOf(result[1]), String.valueOf(result[2])));
+			this.skillsDetails.add(Skill.builder().type(String.valueOf(result[1])).description(String.valueOf(result[2])).build());
 		}
 
 	}
@@ -49,7 +50,7 @@ public class StudentResultWrapper {
 	}
 	
 	public Collection<Skill> getSkillsDeatils() {
-		return Collections.unmodifiableCollection(skillsDeatils);
+		return Collections.unmodifiableCollection(skillsDetails);
 	}
 
 }

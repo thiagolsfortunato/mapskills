@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>mapskills</name>
-	<description>plataforma de avaliação de competências, projeto mapskills, parte do dev do TG</description>
+	<description>Plataforma de avaliacao de competencias. Projeto Map Skills. Parte do desenvolvimento do TG</description>
 	<developers>
 		<developer>
 			<name>Marcelo Inacio</name>
@@ -27,6 +27,7 @@
 		<!-- LIQUIBASE BASE PROPERTIES -->
 		<liquibase-maven-plugin.version>3.4.1</liquibase-maven-plugin.version>
 		<liquibase.verbose>true</liquibase.verbose>
+		<exclude.tests>nothing-to-exclude</exclude.tests>
 
 		<!-- DEPENDENCIES VERSIONS -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -196,7 +197,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- POI-Manipulação arquivos XSLX -->
+		<!-- POI-Manipulacao arquivos MS Excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -208,21 +209,47 @@
 			<version>3.14</version>
 		</dependency>
 		
+		<!-- LOMBOK -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.16.16</version>
+		</dependency>
+		
+		<!-- SWAGGER 2 -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-data-rest</artifactId>
+		    <version>2.6.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<profiles>
 		<profile>
 			<id>sonar</id>
 			<properties>
+			<sonar.projectName>MPS - Aplicacao WEB de avaliacao de competencias</sonar.projectName>
 				<!-- Optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>
-					http://localhost:9000
-				</sonar.host.url>
+				<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
+				<sonar.exclusions>**/br/gov/sp/fatec/mapskills/config/**, **/br/gov/sp/fatec/mapskills/test/**</sonar.exclusions>
+				<sonar.junit.reportsPath>/target/surefire-reports</sonar.junit.reportsPath>
+				<sonar.language>java</sonar.language>
 			</properties>
 		</profile>
 		<profile>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<id>test</id>
 			<properties>
@@ -230,7 +257,7 @@
 				<datasource.driver>org.hsqldb.jdbcDriver</datasource.driver>
 				<datasource.username>sa</datasource.username>
 				<datasource.password>sa</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
+				<datasource.dropAll>false</datasource.dropAll>
 				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
@@ -245,8 +272,8 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
+				<datasource.dropAll>false</datasource.dropAll>
+				<liquibase.skip>true</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
@@ -260,9 +287,9 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapsskills</datasource.username>
 				<datasource.password>mapsskills</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
-				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
+				<datasource.dropAll>false</datasource.dropAll>
+				<liquibase.skip>true</liquibase.skip>
+				<datasource.promptOnNonLocalDatabase>true</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
 		<profile>
@@ -271,12 +298,13 @@
 			</activation>
 			<id>openshift</id>
 			<properties>
-				<datasource.url>jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url>
+				<!-- <datasource.url>jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url>  -->
+				<datasource.url>jdbc:mysql://127.0.0.1:56391/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-				<datasource.username>adminkk1RFrV</datasource.username>
-				<datasource.password>_bDUuxwqQUXy</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
+				<datasource.username>adminCrAhaE3</datasource.username>
+				<datasource.password>WukxYjAAgKSe</datasource.password>
+				<datasource.dropAll>false</datasource.dropAll>
+				<liquibase.skip>true</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
@@ -377,6 +405,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
 	<reporting>
 		<excludeDefaults>true</excludeDefaults>
 		<outputDirectory>${project.build.directory}/site</outputDirectory>
@@ -401,7 +430,6 @@
 				<configuration>
 					<formats>
 						<format>html</format>
-						<format>xml</format>
 					</formats>
 				</configuration>
 			</plugin>

@@ -57,7 +57,7 @@ public class StudentController {
 	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
 	public ResponseEntity<?> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
 		sceneService.saveAnswer(answerWrapper.getAnswerContext());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	/**
 	 * recupera os resultados do aluno ao finalizar o jogo.

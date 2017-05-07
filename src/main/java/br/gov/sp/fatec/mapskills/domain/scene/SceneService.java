@@ -50,12 +50,12 @@ public class SceneService implements RepositoryService {
 	 * salva a cena gerando um index válido, para aquele tema
 	 * @param scene
 	 */
-	public void save(final Scene scene) {
+	public Scene save(final Scene scene) {
 		if(scene.getIndex() < 0) {
 			final int index = nextIndex(scene.getGameThemeId());
 			scene.putIndex(index);			
 		}
-		sceneRepo.save(scene);
+		return sceneRepo.save(scene);
 	}
 	/**
 	 * realiza uma atualização da ordem das cenas

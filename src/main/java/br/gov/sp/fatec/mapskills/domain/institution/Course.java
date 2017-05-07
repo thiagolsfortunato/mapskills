@@ -1,3 +1,9 @@
+/*
+ * @(#)Course.java 1.0 01/11/2016
+ *
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
+ */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
 import java.io.Serializable;
@@ -11,6 +17,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "COURSE")
 public class Course implements Serializable {
@@ -38,32 +51,9 @@ public class Course implements Serializable {
 	public Course() {
 		// CONSTRUCTOR DEFAULT
 	}
-	
-	public Course(final String code, final String name, final CoursePeriod period, final String institutionCode) {
-		this.code = code;
-		this.name = name;
-		this.period = period;
-		this.institutionCode = institutionCode;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public String getCode() {
-		return code;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
+		
 	public String getPeriod() {
 		return period.name();
-	}
-	
-	public String getInstitutionCode() {
-		return institutionCode;
 	}
 	
 	public void setId(final long id) {

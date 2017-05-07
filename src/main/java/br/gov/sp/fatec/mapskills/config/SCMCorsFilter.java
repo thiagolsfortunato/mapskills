@@ -1,8 +1,8 @@
 /*
  * @(#)SCMCorsFilter.java 1.0 08/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -19,7 +19,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+/**
+ * 
+ * A classe {@link SCMCorsFilter} representa as
+ * configuracoes de <i>CORS</i> da aplicacao.
+ *
+ * @author Marcelo
+ * @version 1.0 08/01/2017
+ */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SCMCorsFilter extends OncePerRequestFilter {
 	
@@ -29,7 +36,7 @@ public class SCMCorsFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
 			final FilterChain chain) throws ServletException, IOException {
 
-		LOGGER.info("== Adicionando Access Control Response Headers ==");
+		LOGGER.info("== Add Access Control Response Headers ==");
 		
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, PUT, OPTIONS, DELETE");

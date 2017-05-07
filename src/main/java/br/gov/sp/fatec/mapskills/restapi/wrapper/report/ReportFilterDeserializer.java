@@ -1,44 +1,33 @@
 /*
  * @(#)ReportFilterDeserializer.java 1.0 18/03/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import br.gov.sp.fatec.mapskills.restapi.serializer.DefaultJsonDeserializer;
+
 /**
- * A classe <code>ReportFilterDeserializer</code> e responsavel
+ * 
+ * A classe {@link ReportFilterDeserializer} e responsavel
  * por deserializar o objeto filtro, para utilizacao das condicionais
  * da query de relatorio.
- * 
- * @author Marcelo
  *
+ * @author Marcelo
+ * @version 1.0 18/03/2017
  */
-public class ReportFilterDeserializer extends JsonDeserializer<ReportFilter> {
+public class ReportFilterDeserializer extends DefaultJsonDeserializer<ReportFilter> {
 
 	@Override
-	public ReportFilter deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
-			throws IOException {
-		
-		final ObjectCodec oc = jsonParser.getCodec();
-        final JsonNode node = oc.readTree(jsonParser);
-        
-		return new ReportFilter(verifyField(node, "levelInstitution"),
-				verifyField(node, "institutionCode"),
-				verifyField(node, "courseCode"),
-				verifyField(node, "startDate"),
-				verifyField(node, "endDate"));
-	}
-	
-	private String verifyField(final JsonNode node, final String field) {
-		return node.hasNonNull(field) ? node.get(field).asText() : null;
+	protected ReportFilter deserialize(JsonNode node) {
+		return new ReportFilter(jsonUtil.getFieldTextValue(node, "levelInstitution"),
+				jsonUtil.getFieldTextValue(node, "institutionCode"),
+				jsonUtil.getFieldTextValue(node, "courseCode"),
+				jsonUtil.getFieldTextValue(node, "startDate"),
+				jsonUtil.getFieldTextValue(node, "endDate"));
 	}
 
 }

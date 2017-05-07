@@ -1,8 +1,8 @@
 /*
- * @(#)StudentsProgressByCourseSerializer.java 1.0 01/03/2017
+ * @(#)StudentsProgressByInstitutionSerializer.java 1.0 01/03/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -12,12 +12,20 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByCourseWrapper;
-
-public class StudentsProgressByCourseSerializer extends JsonSerializer<StudentsProgressByCourseWrapper> {
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
+/**
+ * 
+ * A classe {@link StudentsProgressByInstitutionSerializer} e responsavel
+ * por serializar os resultados da quantidade de alunos que finalizaram e
+ * nao finalizaram de todos os cursos de uma instituicao.
+ *
+ * @author Marcelo
+ * @version 1.0 01/03/2017
+ */
+public class StudentsProgressByInstitutionSerializer extends JsonSerializer<StudentsProgressByInstitutionWrapper> {
 
 	@Override
-	public void serialize(final StudentsProgressByCourseWrapper progress, final JsonGenerator generator, 
+	public void serialize(final StudentsProgressByInstitutionWrapper progress, final JsonGenerator generator, 
 			final SerializerProvider arg2) throws IOException {
 		
 		generator.writeStartArray();

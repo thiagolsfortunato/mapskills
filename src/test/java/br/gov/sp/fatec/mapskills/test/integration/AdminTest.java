@@ -1,8 +1,8 @@
 /*
- * @(#)ApplicationTest.java 1.0 13/01/2017
+ * @(#)AdminTest.java 1.0 13/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.test.integration;
 
@@ -12,14 +12,11 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +28,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.authentication.DefaultGrantedAuthority;
 import br.gov.sp.fatec.mapskills.authentication.PreAuthenticatedAuthentication;
@@ -50,13 +45,24 @@ import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
-
+import br.gov.sp.fatec.mapskills.utils.JsonUtil;
+/**
+ * 
+ * A classe {@link AdminTest} contem os testes de integracao
+ * do perfil de administrador.
+ *
+ * @author Marcelo
+ * @version 1.0 13/01/2017
+ */
 public class AdminTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/admin";
 	
 	@Mock
 	protected JwtAuthenticationManager jwtAuthenticationManager;
+	
+	@Mock
+	private JsonUtil jsonUtil;
 	
 	@Autowired
 	private InstitutionService institutionService;
@@ -66,9 +72,6 @@ public class AdminTest extends AbstractApplicationTest {
 	
 	@Autowired
 	private GameThemeService themeService;
-	
-	@Autowired
-	private ObjectMapper objectMapper;
 	
 	@Before
 	public void setuUp() {
@@ -96,13 +99,13 @@ public class AdminTest extends AbstractApplicationTest {
 	public void postSkill() throws Exception {
 		mockAdminAuthentication();
 		
-		final Skill skill = new Skill("liderança", "avalia...");
+		final Skill skill = Skill.builder().type("liderança").description("avalia...").build();
 		final String bodyInput = objectMapper.writeValueAsString(skill);
 
 		super.mockMvcPerformPost(BASE_PATH.concat("/skill"), bodyInput)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 		
-		assertEquals(skillService.findById(1).getType(), skill.getType());
+		assertEquals(1, skillService.findAll().size());
 	}
 	
 	@Test
@@ -120,27 +123,24 @@ public class AdminTest extends AbstractApplicationTest {
 	@Test
 	public void uploadInstitutionFromExcel() throws Exception {
 		mockAdminAuthentication();
+
+		final String body = this.parseFileToJson("institution.xlsx");
 		
-		final InputStream inputStream = getClass().getClassLoader().getResource("institution.xlsx").openStream();
-		final String excelBase64 = Base64.getEncoder().encodeToString(IOUtils.toByteArray(inputStream));
-		
-		final String obj = objectMapper.writeValueAsString(String.format("{ base64 : %s }", excelBase64));
-		final String json = obj.replace(" ", "\"").substring(1, obj.length()-1);
-		
-		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), json)
-			.andExpect(status().isOk());
+		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), body)
+			.andExpect(status().isCreated());
 		
 		assertEquals(7, institutionService.findAllInstitutions().size());
 	}
 	
 	@Test
 	public void saveInstitution() throws Exception {
+		super.cleanTables(institutionService);
 		mockAdminAuthentication();
 		
 		final String bodyInput = objectMapper.writeValueAsString(getInstitutionClient());
 				
 		super.mockMvcPerformPost(BASE_PATH.concat("/institution"), bodyInput)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 		
 		assertNotNull(institutionService.findInstitutionByCode("146"));
 		assertEquals(1, institutionService.findInstitutionByCode("146").getMentors().size());
@@ -167,7 +167,8 @@ public class AdminTest extends AbstractApplicationTest {
 		mockAdminAuthentication();
 		
 		final Institution fatec = institutionService.saveInstitution(getOneInstitution());
-		institutionService.saveCourse(new Course("100", "manutenção de aeronaves", CoursePeriod.NOTURNO, fatec.getCode()));
+		institutionService.saveCourse(Course.builder().code("100").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode(fatec.getCode()).build());
 		
 		final String jsonResponse = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/institution/" + fatec.getId()))
 				.andReturn().getResponse().getContentAsString();
@@ -182,11 +183,11 @@ public class AdminTest extends AbstractApplicationTest {
 	public void saveGameTheme() throws Exception {
 		mockAdminAuthentication();
 		
-		final GameTheme theme = new GameTheme("pizzaria");
+		final GameTheme theme = GameTheme.builder().name("pizzaria").build();
 		final String bodyInput = objectMapper.writeValueAsString(theme);
 		
 		super.mockMvcPerformPost(BASE_PATH.concat("/game/theme"), bodyInput)
-			.andExpect(status().isOk());
+			.andExpect(status().isCreated());
 	}
 	
 	@Test
@@ -216,6 +217,23 @@ public class AdminTest extends AbstractApplicationTest {
 		super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/report/146"));
 	}
 	
+	@Test
+	public void updateInstitutionFromExcel() throws Exception {
+		mockAdminAuthentication();
+		
+		final String bodyOriginal = this.parseFileToJson("institution.xlsx");
+		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), bodyOriginal)
+			.andExpect(status().isCreated());
+				
+		final String bodyUpdate = this.parseFileToJson("institutionUpdate.xlsx");
+		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), bodyUpdate)
+			.andExpect(status().isCreated());
+		
+		final Institution institution = institutionService.findInstitutionByCode("148");
+		assertEquals("Nome Atualizado", institution.getMentors().iterator().next().getName());
+		
+	}
+	
 	private void mockAdminAuthentication() {
 		when(jwtAuthenticationManager.authenticate(Mockito.any(Authentication.class)))
 			.thenReturn(getAdminMock());
@@ -227,9 +245,9 @@ public class AdminTest extends AbstractApplicationTest {
 	
 	private Collection<GameTheme> getThemesMock() {
 		final Collection<GameTheme> themeCollection = new ArrayList<>();
-		themeCollection.add(new GameTheme("pizzaria"));
-		themeCollection.add(new GameTheme("gravadora"));
-		themeCollection.add(new GameTheme("museu"));
+		themeCollection.add(GameTheme.builder().name("pizzaria").build());
+		themeCollection.add(GameTheme.builder().name("gravadora").build());
+		themeCollection.add(GameTheme.builder().name("museu").build());
 		return themeCollection;
 	}
 

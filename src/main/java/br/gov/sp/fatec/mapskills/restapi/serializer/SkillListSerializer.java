@@ -1,8 +1,8 @@
 /*
  * @(#)SkillSerializer.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -14,11 +14,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
+
 /**
- * A classe <code>SkillListSerializer</code> serializa uma array
- * de competencias.
- * @author Marcelo
+ * 
+ * A classe {@link SkillListSerializer} serializa uma lista de competencias.
  *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
  */
 public class SkillListSerializer extends JsonSerializer<SkillListWrapper> {
 

@@ -19,6 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 @Entity
 @Table(name = "SCENE")
 public class Scene implements Serializable, Comparable<Scene> {
@@ -50,35 +54,15 @@ public class Scene implements Serializable, Comparable<Scene> {
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public Scene(final String text, final String urlBackground, final Question question, final long gameThemeId) {
+	@Builder
+	public Scene(final long id, final int index, final String text, final String urlBackground,
+			final Question question, final long gameThemeId) {
+		this.id = id;
+		this.index = index;
 		this.text = text;
 		this.urlBackground = urlBackground;
 		this.question = question;
 		this.gameThemeId = gameThemeId;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public String getUrlBackground() {
-		return urlBackground;
-	}
-
-	public Question getQuestion() {
-		return question;
-	}
-	
-	public long getGameThemeId() {
-		return gameThemeId;
 	}
 	
 	public void putIndex(final int index) {
@@ -94,7 +78,7 @@ public class Scene implements Serializable, Comparable<Scene> {
 	}
 	
 	/**
-	 * O método compareTo é utilizado para realizar a ordenacao das cenas através do index da cena
+	 * Metodo eh utilizado para realizar a ordenacao das cenas através do index da cena.
 	 */
 	@Override
 	public int compareTo(final Scene scene) {

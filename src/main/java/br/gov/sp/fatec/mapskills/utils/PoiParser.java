@@ -1,8 +1,8 @@
 /*
  * @(#)PoiParser.java 1.0 03/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.utils;
 
@@ -22,13 +22,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.StringUtils;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+
 /**
- * A classe <code>UserXLSXParser</code> tem objetivo de converter arquivo xlsx em objetos
- * para serem persistidos no banco de dados.
  * 
- * @author Marcelo
- * @param <T>
+ * A classe {@link PoiParser} tem objetivo de converter arquivo xlsx
+ * em objetos para serem persistidos no banco de dados. Utiliza
+ * padrao de projetos template method.
  *
+ * @author Marcelo
+ * @version 1.0 03/11/2016
  */
 public abstract class PoiParser<T> {
 	
@@ -57,7 +59,7 @@ public abstract class PoiParser<T> {
 			final XSSFSheet sheet = workbook.getSheetAt(0);
 			final Iterator<Row> rowIterator = sheet.iterator();
 			workbook.close();
-			return Collections.unmodifiableList(objectListBuilder(rowIterator));
+			return Collections.unmodifiableList(this.objectListBuilder(rowIterator));
 		} catch (final MapSkillsException | IOException e) {
 			LOGGER.info(e.getMessage());
 			throw new ReadFileException(e.getMessage());
@@ -79,9 +81,9 @@ public abstract class PoiParser<T> {
 			final Row row = rowIterator.next();
 			final Iterator<Cell> cellIterator = row.cellIterator();
 			final List<String> attrForObj = new LinkedList<>();
-			attrForObj.addAll(this.cellIteratorToCellList(cellIterator));
+			attrForObj.addAll(this.cellIteratorToListString(cellIterator));
 			if(this.verifyListForObject(attrForObj)) {
-				objectList.add(this.buildObject(attrForObj));				
+				objectList.add(buildObject(attrForObj));				
 			}
 		}
 		return Collections.unmodifiableList(objectList);
@@ -95,7 +97,7 @@ public abstract class PoiParser<T> {
 	 * @param cellIterator
 	 * @return list
 	 */
-	private Collection<String> cellIteratorToCellList(final Iterator<Cell> cellIterator) {
+	private Collection<String> cellIteratorToListString(final Iterator<Cell> cellIterator) {
 		final List<String> cellList = new LinkedList<>();
 		while (cellIterator.hasNext()) {
 			final Cell cell = cellIterator.next();

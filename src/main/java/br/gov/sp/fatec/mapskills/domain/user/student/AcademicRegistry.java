@@ -11,6 +11,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
+
+import lombok.Getter;
 /**
  * a classe <code>AcademicRegistry</code> eh
  * um Value Object que representa a RA do aluno,
@@ -20,6 +22,7 @@ import javax.validation.constraints.Size;
  * @author Marcelo
  *
  */
+@Getter
 @Embeddable
 public class AcademicRegistry implements Serializable {
 	
@@ -45,14 +48,6 @@ public class AcademicRegistry implements Serializable {
 		this.courseCode = courseCode;
 	}
 	
-	public String getRa() {
-		return ra;
-	}
-	
-	public String getInstitutionCode() {
-		return institutionCode;
-	}
-	
 	public String getYear() {
 		return ra.substring(6, 8);
 	}
@@ -64,9 +59,5 @@ public class AcademicRegistry implements Serializable {
 	public String getStudentCode() {
 		return ra.substring(9);
 	}
-
-	public String getCourseCode() {
-		return courseCode;
-	}
-
+	
 }

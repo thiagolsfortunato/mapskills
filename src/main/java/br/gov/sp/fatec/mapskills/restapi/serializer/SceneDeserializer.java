@@ -1,51 +1,49 @@
 /*
- * @(#)QuestionDeserializer.java 1.0 01/11/2016
+ * @(#)SceneDeserializer.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
-
-public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
+/**
+ * 
+ * A classe {@link SceneDeserializer} e responsavel
+ * por deserializar um <i>POST</i> de uma cena
+ * para que seja cadastrada ou atualizada.
+ *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
+ */
+public class SceneDeserializer extends DefaultJsonDeserializer<SceneWrapper> {
 	
 	private static final String IP_SERVER = "http://localhost:8585/mapskills/";
-
+	
 	@Override
-	public SceneWrapper deserialize(final JsonParser jsonParser, final DeserializationContext arg1)
-			throws IOException {
-
-		final ObjectCodec oc = jsonParser.getCodec();
-        final JsonNode node = oc.readTree(jsonParser);
-        
-        final String[] background = verifyBackground(node);    
+	protected SceneWrapper deserialize(JsonNode node) {
+		final String[] background = verifyBackground(node);    
         final String fileImageBase64 = background[0];
         final String filename = background[1];
-        
-		
+        		
         final Question question = this.buildQuestion(node.get("question"));
-        final long gameThemeId = node.get("gameThemeId").asLong();
-        final Scene scene = new Scene(node.get("text").asText(), IP_SERVER + "images/" + filename, question, gameThemeId);
-        if(node.has("id")) {
-        	scene.setId(node.get("id").asLong());
-        }
-        if(node.has("index")) {
-        	scene.putIndex(node.get("index").asInt());
-        }
+
+        final Scene scene = Scene.builder()
+        		.text(jsonUtil.getFieldTextValue(node, "text"))
+        		.urlBackground(IP_SERVER + "images/" + filename)
+        		.question(question)
+        		.gameThemeId(jsonUtil.getFieldLongValue(node, "gameThemeId"))
+        		.build();
+
+        this.setIdAndIndex(node, scene);
         
 		return new SceneWrapper(scene, fileImageBase64, filename);
 	}
@@ -55,7 +53,9 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 			return null;
 		}
 		final List<Alternative> alternatives = buildAlternatives(node.get("alternatives"));
-		return new Question(alternatives, node.get("skillId").asLong());
+		final Question question = Question.builder().alternatives(alternatives).skillId(this.getSkillIdFromNode(node)).build();
+		question.setId(jsonUtil.getFieldLongValue(node, "id"));
+		return question;
 	}
 	
 	private List<Alternative> buildAlternatives(final JsonNode node) {
@@ -63,13 +63,20 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		for(int i = 0; i < 4; i++ ) {
 			final String position = String.valueOf(i);
 			if(node.has(position)) {
-				alternatives.add(new Alternative(node.get(position).get("description").asText(),
-						node.get(position).get("skillValue").asInt()));
+				alternatives.add(Alternative
+						.builder()
+						.id(jsonUtil.getFieldLongValue(node.get(position), "id"))
+						.description(jsonUtil.getFieldTextValue(node.get(position), "description"))
+						.skillValue(jsonUtil.getFieldIntegerValue(node.get(position), "skillValue"))
+						.build());
 			} else {
-				alternatives.add(new Alternative(node.get(i).get("description").asText(),
-						node.get(i).get("skillValue").asInt()));
+				alternatives.add(Alternative
+						.builder()
+						.id(jsonUtil.getFieldLongValue(node.get(i), "id"))
+						.description(jsonUtil.getFieldTextValue(node.get(i), "description"))
+						.skillValue(jsonUtil.getFieldIntegerValue(node.get(i), "skillValue"))
+						.build());
 			}
-			
 		}
 		return alternatives;
 	}
@@ -79,15 +86,24 @@ public class SceneDeserializer extends JsonDeserializer<SceneWrapper> {
 		if(!node.has("background")) {
 			return null;
 		}
-		if(node.get("background").has("base64")) {
-			background[0] = node.get("background").get("base64").asText();
+		if(jsonUtil.has(node.get("background"), "base64")) {
+			background[0] = jsonUtil.getFieldTextValue(node.get("background"), "base64");
         }
-        if(node.get("background").has("filename")) {
-        	final String filename = node.get("background").get("filename").asText();
+        if(jsonUtil.has(node.get("background"), "filename")) {
+        	final String filename = jsonUtil.getFieldTextValue(node.get("background"), "filename");
         	final int lastIndex = filename.lastIndexOf("/");
         	background[1] = filename.substring(lastIndex + 1);
         }
         return background;
+	}
+	
+	private long getSkillIdFromNode(final JsonNode node) {
+		return jsonUtil.getFieldLongValue(node, "skillId");
+	}
+	
+	private void setIdAndIndex(final JsonNode node, final Scene scene) {
+		scene.setId(jsonUtil.getFieldLongValue(node, "id"));
+		scene.putIndex(jsonUtil.getFieldIntegerValue(node, "index"));
 	}
 	
 }

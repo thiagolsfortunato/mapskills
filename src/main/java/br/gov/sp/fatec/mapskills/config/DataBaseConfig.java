@@ -1,8 +1,8 @@
 /*
  * @(#)DataBaseConfig.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -18,7 +18,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-
+/**
+ * 
+ * A classe {@link DataBaseConfig} representa as
+ * configuracoes de banco de dados.
+ *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
+ */
 @Configuration
 public class DataBaseConfig {
 

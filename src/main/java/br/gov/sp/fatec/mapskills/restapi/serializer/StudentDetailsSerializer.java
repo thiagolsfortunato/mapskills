@@ -1,8 +1,8 @@
 /*
  * @(#)StudentDetailsSerializer.java 1.0 11/02/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -16,12 +16,14 @@ import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
+
 /**
- * A classe <code>StudentDetailsSerializer</code> representa o aluno em
- * detalhes para que possa ser serializado pela aplicacao.
  * 
- * @author Marcelo
+ * A classe {@link StudentDetailsSerializer} representa o aluno em
+ * detalhes para que possa ser serializado pela aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 11/02/2017
  */
 public class StudentDetailsSerializer extends JsonSerializer<StudentDetailsWrapper> {
 

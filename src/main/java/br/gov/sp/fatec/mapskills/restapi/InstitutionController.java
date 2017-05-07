@@ -1,8 +1,8 @@
 /*
  * @(#)MentorController.java 1.0 03/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
@@ -32,14 +32,16 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByCourseWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
+import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
 
 /**
- * A classe <code>MentorController</code> é responsável por conter todas
- * rotas (uri's) do perfil mentor da aplicação.
  * 
- * @author Marcelo
+ * A classe {@link InstitutionController} e responsavel por conter todos
+ * end points (uri's) de acesso do perfil mentor da aplicacao.
  *
+ * @author Marcelo
+ * @version 1.0 03/01/2017
  */
 @RestController
 @RequestMapping(InstitutionController.BASE_PATH)
@@ -65,7 +67,7 @@ public class InstitutionController {
 		final StudentPoiParser studentPoi = new StudentPoiParser();
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveStudents(students);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	/**
@@ -75,19 +77,38 @@ public class InstitutionController {
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/student", method = RequestMethod.POST)
-	public ResponseEntity<?> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
-		institutionService.saveStudent(studentWrapper.getStudent());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<UserWrapper> saveStudent(@RequestBody final StudentWrapper studentWrapper) throws MapSkillsException {
+		final Student studentSaved = institutionService.saveStudent(studentWrapper.getStudent());
+		final UserWrapper saved = new UserWrapper(studentSaved);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
+	/**
+	 * End Point que atualiza um aluno a partir de seu id.
+	 * @param studentWrapper
+	 * @param studentId
+	 * @return
+	 * @throws MapSkillsException eh lancado caso haja algum problema com objeto ao
+	 * realizar persistencia.
+	 */
+	@RequestMapping(value = "/student/{studentId}", method = RequestMethod.PUT)
+	public ResponseEntity<StudentWrapper> updateStudent(@RequestBody final StudentWrapper studentWrapper,
+			@PathVariable("studentId") final long studentId) throws MapSkillsException {
+		
+		final Student updated = institutionService.updateStudent(studentId, studentWrapper.getStudent());
+		final StudentWrapper updatedWrapper = new StudentWrapper(updated); 
+		return new ResponseEntity<>(updatedWrapper, HttpStatus.OK);
+	}
+	
 	/**
 	 * Realiza persistencia de um novo curso em um instituição
 	 * @param courseWrapper
 	 * @return
 	 */
 	@RequestMapping(value = "/course", method = RequestMethod.POST)
-	public ResponseEntity<?> saveCourse(@RequestBody final CourseWrapper courseWrapper) {
-		institutionService.saveCourse(courseWrapper.getCourse());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<CourseWrapper> saveCourse(@RequestBody final CourseWrapper courseWrapper) {
+		final Course courseSaved = institutionService.saveCourse(courseWrapper.getCourse());
+		final CourseWrapper saved = new CourseWrapper(courseSaved);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
 	}
 	
 	/**
@@ -148,7 +169,7 @@ public class InstitutionController {
 			@PathVariable("themeId") final long themeId) {
 		
 		final Institution institution = institutionService.findInstitutionByCode(institutionCode);
-		institution.changeGameTheme(themeId);
+		institution.setGameThemeId(themeId);
 		institutionService.saveInstitution(institution);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -168,11 +189,11 @@ public class InstitutionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{institutionCode}/progress", method = RequestMethod.GET)
-	public ResponseEntity<StudentsProgressByCourseWrapper> getStudentsProgress(
+	public ResponseEntity<StudentsProgressByInstitutionWrapper> getStudentsProgress(
 			@PathVariable("institutionCode") final String institutionCode) {
 		
-		final List<Object[]> resultSet = institutionService.getStudentsProgress(institutionCode);
-		final StudentsProgressByCourseWrapper progress = new StudentsProgressByCourseWrapper(resultSet);
+		final List<Object[]> resultSet = institutionService.getStudentsProgressByInstitution(institutionCode);
+		final StudentsProgressByInstitutionWrapper progress = new StudentsProgressByInstitutionWrapper(resultSet);
 		return new ResponseEntity<>(progress, HttpStatus.OK);
 	}
 

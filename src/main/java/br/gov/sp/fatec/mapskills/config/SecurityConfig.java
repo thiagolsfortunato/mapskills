@@ -1,8 +1,8 @@
 /*
  * @(#)SecurityConfig.java 1.0 07/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -43,11 +43,12 @@ import br.gov.sp.fatec.mapskills.authentication.jwt.JwtSignatureVerifier;
 import br.gov.sp.fatec.mapskills.authentication.jwt.JwtVerifier;
 
 /**
- * A classe <code>SecurityConfig</code> representa a configuracao de seguranca
- * da aplicacao em nivel de URI
  * 
- * @author Marcelo
+ * A classe {@link SecurityConfig} representa as configuracoes
+ * de seguranca a aplicacao em nivel de URI
  *
+ * @author Marcelo
+ * @version 1.0 07/01/2017
  */
 @Configuration
 @EnableWebSecurity
@@ -95,9 +96,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
     public void configure(final WebSecurity web) throws Exception {
-        web
-        .ignoring()
-        .antMatchers("/images/**");
+        web.ignoring().antMatchers("/images/**",
+        		"/v2/api-docs", "/configuration/ui",
+        		"/swagger-resources", "/configuration/security",
+        		"/swagger-ui.html", "/webjars/**");
     }
 	/**
 	 * configuracao do Cross-Origin Resource Sharing (CORS) da aplicacao.
@@ -179,5 +181,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         methodInvokingFactoryBean.setArguments(new Object[] {SecurityContextHolder.MODE_INHERITABLETHREADLOCAL});
         return methodInvokingFactoryBean;
     }
-
+	
 }

@@ -1,8 +1,8 @@
 /*
  * @(#)DataBaseHsqldbConfig.java 1.0 09/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -17,11 +17,13 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 /**
- * A classe <code>DataBaseHsqldbConfig</code> representa a configuacao do banco de dados HSQLDB
- * que é um banco de dados em memoria, para realizalçao de testes.
  * 
- * @author Marcelo Inácio
+ * A classe {@link DataBaseHsqldbConfig} representa as configuracoes
+ * do banco de dados HSQLDB, que é um banco de dados em memoria,
+ * utilizado para a realizacao de testes.
  *
+ * @author Marcelo
+ * @version 1.0 09/11/2016
  */
 @Configuration
 public class DataBaseHsqldbConfig {

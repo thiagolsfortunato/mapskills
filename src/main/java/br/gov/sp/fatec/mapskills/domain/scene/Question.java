@@ -22,6 +22,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "QUESTION")
 public class Question implements Serializable {
@@ -44,7 +46,9 @@ public class Question implements Serializable {
 		// CONSTRUCTOR DEFAULT
 	}
 	
-	public Question(final Collection<Alternative> alternatives, final long skillId) {
+	@Builder
+	public Question(final long id, final Collection<Alternative> alternatives, final long skillId) {
+		this.id = id;
 		this.alternatives.addAll(alternatives);
 		this.skillId = skillId;
 	}
@@ -60,10 +64,9 @@ public class Question implements Serializable {
 	public long getSkillId() {
 		return skillId;
 	}
-			
+
 	public Collection<Alternative> getAlternatives() {
 		return Collections.unmodifiableCollection(alternatives);
 	}
-
 
 }

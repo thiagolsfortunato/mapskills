@@ -1,8 +1,8 @@
 /*
  * @(#)InstitutionDetailsSerializer.java 1.0 07/01/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -18,7 +18,15 @@ import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-
+/**
+ * 
+ * A classe {@link InstitutionDetailsSerializer} e responsavel
+ * por serializar algumas informacaoes adicionais sobre uma determinada
+ * instituicao.
+ *
+ * @author Marcelo
+ * @version 1.0 07/01/2017
+ */
 public class InstitutionDetailsSerializer extends JsonSerializer<InstitutionDetailsWrapper> {
 	
 	private final DefaultInstitutionSerializer defaultSerializer;

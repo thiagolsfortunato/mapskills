@@ -1,8 +1,8 @@
 /*
  * @(#)StudentListSerializer.java 1.0 24/12/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.serializer;
 
@@ -15,7 +15,14 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
-
+/**
+ * 
+ * A classe {@link StudentListSerializer} e responsavel
+ * por serializar uma lista de alunos.
+ *
+ * @author Marcelo
+ * @version 1.0 24/12/2016
+ */
 public class StudentListSerializer extends JsonSerializer<StudentListWrapper> {
 
 	@Override

@@ -1,8 +1,8 @@
 /*
  * @(#)ReportDefaultData.java 1.0 18/03/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
@@ -21,13 +21,17 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Immutable;
 
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
+import lombok.Getter;
+
 /**
- * A Entidade <code>ReportDefaultData</code> representa a view
- * da base de dados com as informações para os relatorios simples.
  * 
- * @author Marcelo
+ * A classe {@link ReportDefaultData} representa a view
+ * da base de dados com as informações para os relatorios simples.
  *
+ * @author Marcelo
+ * @version 1.0 18/03/2017
  */
+@Getter
 @Entity
 @Immutable
 @Table(name = "CSV_REPORT_VIEW")
@@ -47,6 +51,7 @@ public class ReportDefaultData {
 	@Transient private List<Object> scores = new ArrayList<>();
 	
 	public ReportDefaultData() {
+		//DEFAULT CONSTRUCTOR
 	}
 	
 	public ReportDefaultData(final long studentId, final String studentRA, final String studentName,
@@ -62,38 +67,6 @@ public class ReportDefaultData {
 		this.institutionLevel = institutionLevel.name();
 		this.yaerSemester = yaerSemester;
 		this.courseCode = courseCode;
-	}
-
-	public long getStudentId() {
-		return studentId;
-	}
-
-	public String getStudentRA() {
-		return studentRA;
-	}
-
-	public String getStudentName() {
-		return studentName;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-	
-	public String getCourseCode() {
-		return courseCode;
-	}
-
-	public String getInstitutionCode() {
-		return institutionCode;
-	}
-
-	public String getInstitutionCompany() {
-		return institutionCompany;
-	}
-
-	public String getYaerSemester() {
-		return yaerSemester;
 	}
 	
 	public InstitutionLevel getInstitutionLevel() {

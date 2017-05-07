@@ -1,8 +1,8 @@
 /*
  * @(#)SkillService.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.skill;
 
@@ -28,8 +28,8 @@ public class SkillService implements RepositoryService {
 		repository.deleteAll();
 	}
 
-	public void save(final Skill skill) {
-		repository.save(skill);
+	public Skill save(final Skill skill) {
+		return repository.save(skill);
 	}
 	
 	public void update(final Skill skill) {

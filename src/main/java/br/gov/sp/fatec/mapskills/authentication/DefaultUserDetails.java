@@ -1,8 +1,8 @@
 /*
  * @(#)DefaultUserDetails.java 1.0 27/01/2017
  *
- * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.authentication;
 
@@ -20,7 +20,13 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.domain.user.Login;
 import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
-
+/**
+ * 
+ * A classe {@link DefaultUserDetails}
+ *
+ * @author Marcelo
+ * @version 1.0 27/01/2017
+ */
 @Component
 public class DefaultUserDetails implements UserDetailsService {
 	

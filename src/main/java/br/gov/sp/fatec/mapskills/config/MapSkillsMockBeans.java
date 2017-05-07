@@ -1,8 +1,8 @@
 /*
  * @(#)MapSkillsMockBeans.java 1.0 08/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.config;
 
@@ -30,11 +30,19 @@ import br.gov.sp.fatec.mapskills.domain.user.UserRepository;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-
+/**
+ * 
+ * A classe {@link MapSkillsMockBeans} contem metodos
+ * que retornam instancias dos objetos de dominio
+ * para que sejam feitos testes.
+ *
+ * @author Marcelo
+ * @version 1.0 08/01/2017
+ */
 @Configuration
 public class MapSkillsMockBeans {
 	
-	private static final String MESSAGE = "SUCCESS"; 
+	private static final String SUCCESS = "SUCCESS"; 
 	
 	@Autowired
 	private UserRepository userRepo;
@@ -55,35 +63,32 @@ public class MapSkillsMockBeans {
 	public String saveAdmin() {
 		final Administrator admin = new Administrator("Administrador", "admin@cps.sp.gov.br", "admin");
 		userRepo.save(admin);
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
 	public String saveInstitution() {
 		final Collection<Institution> institutions = new ArrayList<>(1);
-		final Collection<Mentor> mentors = new ArrayList<>();
-		mentors.add(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
-		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José", mentors);
+		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José");
+		fatecA.addMentor(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
 		institutions.add(fatecA);
 		institutionService.saveInstitutions(institutions);
 		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
 	public String saveStudent() throws MapSkillsException {
 		final Student student = new Student(new AcademicRegistry("1460281423050", "146", "028"), "Student MockE", "1289003400", "student@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(student);
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
 	public String saveGameTheme() {
-		final GameTheme themeA = new GameTheme("pizzaria, aplicado em 2016/2");
-		themeService.save(themeA);
-		final GameTheme themeB = new GameTheme("empresa de musica, aplicado em 2017/1");
-		themeService.save(themeB);
-		return MESSAGE;
+		themeService.save(GameTheme.builder().name("pizzaria, aplicado em 2016/2").build());
+		themeService.save(GameTheme.builder().name("empresa de musica, aplicado em 2017/1").build());
+		return SUCCESS;
 	}
 	
 	@Bean
@@ -92,42 +97,35 @@ public class MapSkillsMockBeans {
 		final int SKILL_ID = 1;
 		final Collection<Alternative> alternatives = new ArrayList<>(4);
 		alternatives.addAll(builderMockAlternatives());
-		final Question question = new Question(alternatives, SKILL_ID);
+		final Question question = Question.builder().alternatives(alternatives).skillId(SKILL_ID).build();
+
+		sceneService.save(Scene.builder().text("introdução").urlBackground("url://site/img001.png")
+				.question(null).gameThemeId(THEME_ID).build());
+
+		sceneService.save(Scene.builder().text("questão").urlBackground("url://site/img002.png")
+				.question(question).gameThemeId(THEME_ID).build());
 		
-		final Scene scene0 = new Scene("introdução", "url://site/img001.png", null, THEME_ID);
-		sceneService.save(scene0);
+		sceneService.save(Scene.builder().text("conclusão").urlBackground("url://site/img003.png")
+				.question(null).gameThemeId(THEME_ID).build());
 		
-		final Scene scene1 = new Scene("questão", "url://site/img002.png", question, THEME_ID);
-		sceneService.save(scene1);
-		
-		final Scene scene2 = new Scene("conclusão", "url://site/img003.png", null, THEME_ID);
-		sceneService.save(scene2);
-		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	@Bean
-	public String saveSkills() {
-		final Skill comunicacao = new Skill("Comunicação", "Avalia a dicção do aluno");
-		final Skill lideranca = new Skill("Liderança", "Avalia a liderança do aluno");
-		final Skill tempo = new Skill("Gestão de Tempo", "Avalia a gestão de tempo do aluno");
-		skillService.save(comunicacao);
-		skillService.save(lideranca);
-		skillService.save(tempo);
+	public String saveSkills() {		
+		skillService.save(Skill.builder().type("Comunicação").description("Avalia a dicção do aluno").build());
+		skillService.save(Skill.builder().type("Liderança").description("Avalia a liderança do aluno").build());
+		skillService.save(Skill.builder().type("Gestão de Tempo").description("Avalia a gestão de tempo do aluno").build());
 		
-		return MESSAGE;
+		return SUCCESS;
 	}
 	
 	private Collection<Alternative> builderMockAlternatives() {
 		final Collection<Alternative> alternatives = new ArrayList<>(4);
-		final Alternative a = new Alternative("AlternativaMockA", 8);
-		final Alternative b = new Alternative("AlternativaMockB", 5);
-		final Alternative c = new Alternative("AlternativaMockC", 6);
-		final Alternative d = new Alternative("AlternativaMockD", 4);
-		alternatives.add(a);
-		alternatives.add(b);
-		alternatives.add(c);
-		alternatives.add(d);
+		alternatives.add(Alternative.builder().description("AlternativaMockA").skillValue(8).build());
+		alternatives.add(Alternative.builder().description("AlternativaMockB").skillValue(5).build());
+		alternatives.add(Alternative.builder().description("AlternativaMockC").skillValue(6).build());
+		alternatives.add(Alternative.builder().description("AlternativaMockD").skillValue(4).build());
 		return alternatives;
 	}
 
