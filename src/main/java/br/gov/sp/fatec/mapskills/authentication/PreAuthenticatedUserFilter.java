@@ -31,7 +31,7 @@ public class PreAuthenticatedUserFilter extends AbstractPreAuthenticatedProcessi
 	/** {@inheritDoc} */
 	@Override
 	protected String getPreAuthenticatedPrincipal(final HttpServletRequest request) {
-		return request.getHeader(AUTHORIZATION) != null ? (String) request.getHeader(AUTHORIZATION) : request.getParameter(AUTHORIZATION);
+		return request.getHeader(AUTHORIZATION) != null ? request.getHeader(AUTHORIZATION) : request.getParameter(AUTHORIZATION);
 	}
 	
 	/** {@inheritDoc} */

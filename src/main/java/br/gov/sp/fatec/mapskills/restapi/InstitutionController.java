@@ -25,7 +25,7 @@ import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-import br.gov.sp.fatec.mapskills.domain.user.student.StudentPoiParser;
+import br.gov.sp.fatec.mapskills.domain.user.student.StudentExcelIO;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
@@ -34,6 +34,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
+import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 
 /**
  * 
@@ -63,8 +64,8 @@ public class InstitutionController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/upload/students", method = RequestMethod.POST)
-	public ResponseEntity<?> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
-		final StudentPoiParser studentPoi = new StudentPoiParser();
+	public ResponseEntity<HttpStatus> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
+		final StudentExcelIO studentPoi = BeanRetriever.getBean("studentExcelIO", StudentExcelIO.class);
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
 		institutionService.saveStudents(students);
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -164,7 +165,7 @@ public class InstitutionController {
 	}
 	
 	@RequestMapping(value = "/{institutionCode}/theme/{themeId}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateThemeCurrent(
+	public ResponseEntity<HttpStatus> updateThemeCurrent(
 			@PathVariable("institutionCode") final String institutionCode,
 			@PathVariable("themeId") final long themeId) {
 		
@@ -179,7 +180,7 @@ public class InstitutionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/mentor/details/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<?> getMentorDetails(@PathVariable("userId") final long userId) {
+	public ResponseEntity<HttpStatus> getMentorDetails(@PathVariable("userId") final long userId) {
 		//TODO Fazer método que recupere os detalhes do mentor
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -36,25 +36,25 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	 * determinada instituicao.
 	 * colunas: ANO_SEMESTRE, INS_CODE, CRS_CODE, CURSO, NAO_FINALIZADOS e FINALIZADOS
 	 * @param institutionCode
-	 * @param year_semester
+	 * @param yearSemester
 	 * @return
 	 */
 	@Query(value="SELECT * FROM INSTITUTION_STUDENTS_PROGRESS_VIEW RESULT "
 			+ "WHERE RESULT.INS_CODE = ?1 AND RESULT.ANO_SEMESTRE = ?2", nativeQuery = true)
 	@Transactional(readOnly = true)
-	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode, final String year_semester);
+	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode, final String yearSemester);
 	
 	/**
 	 * retorna todos os resultados da quantidade de alunos que
 	 * finalizaram e não finalizaram sumarizado de maneira global.
 	 * Ou seja a contabilização dos alunos ETEC e FATEC
-	 * @param year_semester
+	 * @param yearSemester
 	 * @return
 	 */
 	@Query(value="SELECT * FROM ADMIN_GLOBAL_STUDENTS_PROGRESS_VIEW RESULT "
 			+ "WHERE RESULT.YEAR_SEMESTER = ?1", nativeQuery = true)
 	@Transactional(readOnly = true)
-	public List<Object[]> getGlobalStudentsProgress(final String year_semester);
+	public List<Object[]> getGlobalStudentsProgress(final String yearSemester);
 	
 	/**
 	 * retorna a quantidade de alunos que finalizaram e nao finalizaram
@@ -63,12 +63,12 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	 * ficaria 171) com as sequintes colunas:
 	 * YEAR_SEMESTER, INS_CODE, LEVEL, NOT_FINALIZED, FINALIZED, TOTAL 
 	 * @param level
-	 * @param year_semester
+	 * @param yearSemester
 	 * @return
 	 */
 	@Query(value="SELECT * FROM ADMIN_LEVEL_STUDENTS_PROGRESS_VIEW RESULT "
 			+ "WHERE RESULT.LEVEL = ?1 AND RESULT.YEAR_SEMESTER = ?2", nativeQuery = true)
 	@Transactional(readOnly = true)
-	public List<Object[]> getLevelStudentsProgress(final String level, final String year_semester);
+	public List<Object[]> getLevelStudentsProgress(final String level, final String yearSemester);
 
 }

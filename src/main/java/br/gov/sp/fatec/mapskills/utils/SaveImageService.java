@@ -9,6 +9,7 @@ package br.gov.sp.fatec.mapskills.utils;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
@@ -50,8 +51,8 @@ public class SaveImageService {
 		    stream.close();
 		    return filename;
 		} catch (final IOException e) {
-			LOGGER.info(e.getMessage());
-			throw new SaveImageException(filename, e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			throw new SaveImageException(filename);
 		}
 	}
 	

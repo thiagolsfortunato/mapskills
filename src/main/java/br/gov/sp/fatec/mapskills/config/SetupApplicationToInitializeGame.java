@@ -21,6 +21,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
@@ -56,7 +58,8 @@ public class SetupApplicationToInitializeGame {
 	private static final Logger LOGGER = Logger.getLogger(SetupApplicationToInitializeGame.class.getName());
 	
 	private static final String PATH_TXT = "d:/temp/arquivosTexto/";
-	private static final String URL_SERVER = "http://127.0.0.1:8585/mapskills/images/";
+	@Value("${app.setup.images.ip}")
+	private static String urServer;
 	private static final long GAME_THEME_ID = 1;
 	private static final String INSTITUTION_CODE = "146";
 	
@@ -104,7 +107,7 @@ public class SetupApplicationToInitializeGame {
 		institutionService.saveCourse(Course.builder().code("114").name("Tecnologia em Automação Manufatura Digital").period(CoursePeriod.MATUTINO).institutionCode(INSTITUTION_CODE).build());
 		institutionService.saveCourse(Course.builder().code("028").name("Tecnologia em Banco de Dados").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
 		institutionService.saveCourse(Course.builder().code("077").name("Tecnologia em Gestão da Produção Industrial").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
-		institutionService.saveCourse(Course.builder().code("064").name("Tecnologia em Gestão Empresarial").period(CoursePeriod.EaD).institutionCode(INSTITUTION_CODE).build());
+		institutionService.saveCourse(Course.builder().code("064").name("Tecnologia em Gestão Empresarial").period(CoursePeriod.EAD).institutionCode(INSTITUTION_CODE).build());
 		institutionService.saveCourse(Course.builder().code("074").name("Tecnologia em Logística").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
 		institutionService.saveCourse(Course.builder().code("068").name("Tecnologia em Manutenção de Aeronaves").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
 		institutionService.saveCourse(Course.builder().code("115").name("Tecnologia em Projetos de Estruturas Aeronáuticas").period(CoursePeriod.NOTURNO).institutionCode(INSTITUTION_CODE).build());
@@ -136,11 +139,11 @@ public class SetupApplicationToInitializeGame {
 		int imageIndex = 0;
 		for(final String line : this.buildReaderFromFile(filePath)) {
 			if(imageIndex % 3 == 1) {
-				sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(URL_SERVER.concat(line))
+				sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(urServer.concat(line))
 						.question(mapQuestion.get(idQuestion++)).gameThemeId(GAME_THEME_ID).build());
 				continue;
 			}
-			sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(URL_SERVER.concat(line))
+			sceneService.save(Scene.builder().text(textList.get(imageIndex++)).urlBackground(urServer.concat(line))
 					.question(null).gameThemeId(GAME_THEME_ID).build());
 		}
 		LOGGER.log(Level.INFO, "=== SCENES SAVE SUCCESS ===");
@@ -166,7 +169,7 @@ public class SetupApplicationToInitializeGame {
 	private void generateQuestions() {
 		final Random gerador = new Random();
 		for(int i = 1; i < 26; i++) {
-			mapQuestion.put(i, Question.builder().alternatives(mapAlternatives.get(i)).skillId(gerador.nextInt(6) + 1).build());
+			mapQuestion.put(i, Question.builder().alternatives(mapAlternatives.get(i)).skillId(gerador.nextInt(6) + 1L).build());
 		}
 	}
 	
@@ -200,7 +203,7 @@ public class SetupApplicationToInitializeGame {
 			for(int j = 0; j < 4; j++) {
 				final String[] lineWithValue = list.get(i++).split(";");
 				alternatives.add(Alternative.builder()
-						.description((lineWithValue[0]))
+						.description(lineWithValue[0])
 						.skillValue(Integer.valueOf(lineWithValue[1]))
 						.build());
 			}

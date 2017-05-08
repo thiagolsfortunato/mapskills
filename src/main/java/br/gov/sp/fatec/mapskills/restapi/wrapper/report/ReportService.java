@@ -27,7 +27,7 @@ import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 @Service
 public class ReportService {
 	
-	private final static String SEMICOLON = ";";
+	private static final String SEMICOLON = ";";
 	
 	@Autowired
 	private SkillService skillService;
@@ -42,20 +42,20 @@ public class ReportService {
 	 * @throws IOException
 	 */
 	public byte[] getCsvReport(final ReportFilter filter) throws IOException {
-		final StringBuffer stringBuffer = new StringBuffer();
-		generateHeader(stringBuffer);
+		final StringBuilder stringBuilder = new StringBuilder();
+		generateHeader(stringBuilder);
 		final Specification<ReportDefaultData> specification = ReportSpecification.byFilter(filter);
 		final List<ReportDefaultData> resultSet = reportRepository.findAll(specification);
 		for(final ReportDefaultData data : resultSet) {
-			final StringBuffer csvLine = generateDataInfo(data);
+			final StringBuilder csvLine = generateDataInfo(data);
 			final List<Object> skillsResult = reportRepository.findAllSkillsByStudentId(data.getStudentId());
 			for(final Object resultGame : skillsResult) {
 				generateResultGame(resultGame, csvLine);
 			}
-			stringBuffer.append(csvLine.toString());
-			stringBuffer.append("\n");
+			stringBuilder.append(csvLine.toString());
+			stringBuilder.append("\n");
 		}
-		return stringBuffer.toString().getBytes();
+		return stringBuilder.toString().getBytes();
 	}
 	
 	public List<ReportDefaultData> getReportDatas(final Specification<ReportDefaultData> specification) {
@@ -72,13 +72,13 @@ public class ReportService {
 	 * 
 	 * @return
 	 */
-	private void generateHeader(final StringBuffer stringBuffer) {
+	private void generateHeader(final StringBuilder stringBuilder) {
 		final StringBuilder defaultHeader = new StringBuilder("RA;ALUNO;CURSO;CODIGO INSTITUIÇÃO;INSTITUIÇÃO;ANO/SEMESTRE;");
 		for(final Skill skill : skillService.findAll()) {
 			defaultHeader.append(String.format("%s;", skill.getType().toUpperCase()));
 		}
-		stringBuffer.append(defaultHeader);
-		stringBuffer.append("\n");
+		stringBuilder.append(defaultHeader);
+		stringBuilder.append("\n");
 	}
 	/**
 	 * metodo responsavel por escrever todas informacoes
@@ -87,8 +87,8 @@ public class ReportService {
 	 * @param tuple
 	 * @return
 	 */
-	private StringBuffer generateDataInfo(final ReportDefaultData data) {
-		final StringBuffer dataInfo = new StringBuffer();
+	private StringBuilder generateDataInfo(final ReportDefaultData data) {
+		final StringBuilder dataInfo = new StringBuilder();
 		dataInfo.append(data.getStudentRA()).append(SEMICOLON)
 			.append(data.getStudentName()).append(SEMICOLON)
 			.append(data.getCourseName()).append(SEMICOLON)
@@ -104,7 +104,7 @@ public class ReportService {
 	 * @param resultGame
 	 * @param dataInfo
 	 */
-	private void generateResultGame(final Object skillResult, final StringBuffer dataInfo) {
+	private void generateResultGame(final Object skillResult, final StringBuilder dataInfo) {
 		dataInfo.append(skillResult == null ? "N/A" : skillResult.toString()).append(SEMICOLON);
 	}
 

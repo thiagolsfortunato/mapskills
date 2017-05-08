@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +40,8 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportViewWrapper;
 
 @RestController
 public class ReportController {
+	
+	private static final Logger LOGGER = Logger.getLogger(ReportController.class.getName());
 		
 	@Autowired
 	private ReportService reportService;
@@ -57,9 +61,9 @@ public class ReportController {
 		    httpHeaders.add("Content-Disposition", "attachment; filename=report.csv" );
 		    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 		    response.setCharacterEncoding("UTF-8");
-			return new HttpEntity<byte[]>(report, httpHeaders);
+			return new HttpEntity<>(report, httpHeaders);
 		} catch (final IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}

@@ -10,14 +10,11 @@ import java.io.IOException;
 import java.util.Collection;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
-import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 /**
  * 
  * A classe {@link InstitutionDetailsSerializer} e responsavel
@@ -27,22 +24,15 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
  * @author Marcelo
  * @version 1.0 07/01/2017
  */
-public class InstitutionDetailsSerializer extends JsonSerializer<InstitutionDetailsWrapper> {
-	
-	private final DefaultInstitutionSerializer defaultSerializer;
-	
-	public InstitutionDetailsSerializer() {
-		this.defaultSerializer = BeanRetriever.getBean("defaultInstitutionSerializer", DefaultInstitutionSerializer.class);
-	}
-	
+public class InstitutionDetailsSerializer extends AbstractInstitutionSerializer<InstitutionDetailsWrapper> {
+		
 	@Override
-	public void serialize(final InstitutionDetailsWrapper detailsWrapper, final JsonGenerator generator,
-			final SerializerProvider arg2)	throws IOException {
+	public void serialize(final InstitutionDetailsWrapper detailsWrapper, final JsonGenerator generator) throws IOException {
 
 		final Institution institution = detailsWrapper.getInstitution();
 		
 		generator.writeStartObject();
-		defaultSerializer.serializeDefaultValues(institution, generator);
+		super.defaultSerializer.serializeDefaultValues(institution, generator);
 		this.courseListSerialize(institution, generator);
 		this.mentorsSerialize(institution.getMentors(), generator);
 		generator.writeEndObject();
@@ -80,7 +70,7 @@ public class InstitutionDetailsSerializer extends JsonSerializer<InstitutionDeta
 		generator.writeStringField("name", mentor.getName());
 		generator.writeStringField("institutionCode", mentor.getInstitutionCode());
 		generator.writeStringField("username", mentor.getUsername());
-		generator.writeStringField("password", "");
+		generator.writeStringField(DefaultJsonSerializer.PASS, DefaultJsonSerializer.EMPTY_PASS);
 		generator.writeEndObject();
 	}
 

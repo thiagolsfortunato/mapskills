@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +44,7 @@ public class UserService implements RepositoryService {
 		repository.save(admin);
 	}
 
-	public User findUserByUsernamePassword(final String username, final String password) throws MapSkillsException {
+	public User findUserByUsername(final String username) throws MapSkillsException {
 		final User user = repository.findByUsername(username);
 		if (user == null) {
 			throw new UserNotFoundException(username);
@@ -64,7 +63,7 @@ public class UserService implements RepositoryService {
 	 * @return true em caso de sucesso
 	 * 	e false em caso de falha
 	 */
-	public void authenticate(final User user, final String password) throws AuthenticationException {
+	public void authenticate(final User user, final String password) {
 		if(user == null || !encoder.matches(password, user.getPassword())) {
 			LOGGER.warning("username/password invalid");
 			throw new BadCredentialsException("username/password invalid");

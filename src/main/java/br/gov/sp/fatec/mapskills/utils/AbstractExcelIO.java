@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,18 +26,17 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 
 /**
  * 
- * A classe {@link PoiParser} tem objetivo de converter arquivo xlsx
+ * A classe {@link AbstractExcelIO} tem objetivo de converter arquivo xlsx
  * em objetos para serem persistidos no banco de dados. Utiliza
  * padrao de projetos template method.
  *
  * @author Marcelo
  * @version 1.0 03/11/2016
  */
-public abstract class PoiParser<T> {
+public abstract class AbstractExcelIO<T> {
 	
-	private static final Logger LOGGER = Logger.getLogger(PoiParser.class.getName());
-	
-	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
+	private static final Logger LOGGER = Logger.getLogger(AbstractExcelIO.class.getName());
+	protected static final String DEFAULT_ENCRYPTED_PASS = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
 	
 	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;
 
@@ -61,7 +61,7 @@ public abstract class PoiParser<T> {
 			workbook.close();
 			return Collections.unmodifiableList(this.objectListBuilder(rowIterator));
 		} catch (final MapSkillsException | IOException e) {
-			LOGGER.info(e.getMessage());
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new ReadFileException(e.getMessage());
 		}
 	}

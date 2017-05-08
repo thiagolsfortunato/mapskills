@@ -1,7 +1,7 @@
 /*
  * @(#)JsonUtil.java 1.0 22/03/2017
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
  * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.utils;
@@ -24,10 +24,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 @Component
 public class JsonUtil {
-	/*
-	 * constante que define a senha padrão de acesso a todos perfis.
-	 */
-	protected static final String ENCRYPTED_DEFAULT_PASSWORD = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
+	
+	private static final String PASS = "password";
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -68,13 +66,17 @@ public class JsonUtil {
 		return hasNonNull(node, fieldName) && get(node, fieldName).isArray();
 	}
 	/**
-	 * Método que devolve um password codificado caso haja.
-	 * se não devolve um password codificado padrão.
-	 * @param node
-	 * @return
+	 * Metodo que devolve um password codificado caso haja.
+	 * se nao devolve um password codificado padrao.
 	 */
-	public String getFieldPasswordValue(final JsonNode node) {
-		return node.has("password") && !StringUtils.isEmpty(node.get("password").asText()) ? encoder.encode(node.get("password").asText()) : ENCRYPTED_DEFAULT_PASSWORD;
+	public String getFieldPassValue(final JsonNode node) {
+		return node.has(PASS) && !StringUtils.isEmpty(node.get(PASS).asText()) ? encoder.encode(node.get(PASS).asText()) : getEncryptedPass();
+	}
+	/**
+	 * metodo que define a senha padrao de acesso a todos perfis.
+	 */
+	private String getEncryptedPass() {
+		return encoder.encode("mudar123");
 	}
 	
 }

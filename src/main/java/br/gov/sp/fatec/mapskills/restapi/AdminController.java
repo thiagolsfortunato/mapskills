@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
-import br.gov.sp.fatec.mapskills.domain.institution.InstitutionPoiParser;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionExcelIO;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
@@ -38,11 +38,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWr
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 import br.gov.sp.fatec.mapskills.utils.SaveImageService;
-
 /**
  * 
- * A classe {@link AdminController} e responsavel por conter todos
- * end points (uri's) de acesso do perfil administrador da aplicacao.
+ * A classe {@link AdminController} eh responsavel por conter todos
+ * end-points de servico do perfil administrador da aplicacao.
  *
  * @author Marcelo
  * @version 1.0 03/01/2017
@@ -76,11 +75,11 @@ public class AdminController {
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/upload/institutions", method = RequestMethod.POST)
-	public ResponseEntity<?> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
-		final InstitutionPoiParser institutionPoi = BeanRetriever.getBean("institutionPoiParser", InstitutionPoiParser.class);
+	public ResponseEntity<InstitutionListWrapper> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
+		final InstitutionExcelIO institutionPoi = BeanRetriever.getBean("institutionExcelIO", InstitutionExcelIO.class);
 		final List<Institution> institutions = institutionPoi.toObjectList(inputStreamWrapper.getInputStream());
-		institutionService.saveInstitutions(institutions);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		final InstitutionListWrapper wrapper = new InstitutionListWrapper(institutionService.saveInstitutions(institutions));
+		return new ResponseEntity<>(wrapper, HttpStatus.CREATED);
 	}
 	
 	/**
@@ -127,15 +126,15 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/game/theme", method = RequestMethod.POST)
-	public ResponseEntity<?> saveTheme(@RequestBody final GameThemeWrapper themeWrapper) {
-		themeService.save(themeWrapper.getGameTheme());
-		return new ResponseEntity<>(HttpStatus.CREATED);
+	public ResponseEntity<GameThemeWrapper> saveTheme(@RequestBody final GameThemeWrapper themeWrapper) {
+		final GameThemeWrapper wrapper = new GameThemeWrapper(themeService.save(themeWrapper.getGameTheme()));
+		return new ResponseEntity<>(wrapper, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/game/themes", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateThemes(@RequestBody final GameThemeListWrapper themeWrapper) {
-		themeService.save(themeWrapper.getGameThemes());
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<GameThemeListWrapper> updateThemes(@RequestBody final GameThemeListWrapper themeWrapper) {
+		final GameThemeListWrapper wrapper = new GameThemeListWrapper(themeService.save(themeWrapper.getGameThemes()));
+		return new ResponseEntity<>(wrapper, HttpStatus.OK);
 	}
 	
 	/***
@@ -154,7 +153,7 @@ public class AdminController {
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/game/scene", method = RequestMethod.POST)
-	public ResponseEntity<?> saveScene(@RequestBody final SceneWrapper sceneWrapper) throws MapSkillsException {
+	public ResponseEntity<HttpStatus> saveScene(@RequestBody final SceneWrapper sceneWrapper) throws MapSkillsException {
 		imageService.save(sceneWrapper.getBase64(), sceneWrapper.getFileName());
 		sceneService.save(sceneWrapper.getScene());
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -165,7 +164,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/game/scenes", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateIndexScenes(@RequestBody final SceneListWrapper sceneListWrapper) {
+	public ResponseEntity<HttpStatus> updateIndexScenes(@RequestBody final SceneListWrapper sceneListWrapper) {
 		sceneService.updateIndex(sceneListWrapper.getScenes());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -185,7 +184,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/skill", method = RequestMethod.POST)
-	public ResponseEntity<?> saveSkill(@RequestBody final SkillWrapper skillWrapper) {
+	public ResponseEntity<HttpStatus> saveSkill(@RequestBody final SkillWrapper skillWrapper) {
 		skillService.save(skillWrapper.getSkill());
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -200,7 +199,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/scene/question/{sceneId}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteQuestion(@PathVariable("sceneId") final long sceneId) {
+	public ResponseEntity<HttpStatus> deleteQuestion(@PathVariable("sceneId") final long sceneId) {
 		final Scene scene = sceneService.findById(sceneId);
 		scene.deleteQuestion();
 		sceneService.save(scene);
@@ -208,7 +207,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/scene/{sceneId}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteScene(@PathVariable("sceneId") final long sceneId) {
+	public ResponseEntity<HttpStatus> deleteScene(@PathVariable("sceneId") final long sceneId) {
 		sceneService.delete(sceneId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

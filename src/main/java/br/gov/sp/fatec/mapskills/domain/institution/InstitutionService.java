@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,7 +29,7 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
 
 /**
  * 
- * A classe {@link InstitutionService} contem todos metodos necessários
+ * A classe {@link InstitutionService} contem todos metodos necessarios
  * para realizacao de tudo que esta relacionado ha instituicao.
  *
  * @author Marcelo
@@ -35,6 +37,8 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
  */
 @Service
 public class InstitutionService implements RepositoryService {
+	
+	private static final Logger LOGGER = Logger.getLogger(InstitutionService.class.getName());
 		
 	private InstitutionRepository institutionRepository;
 	private CourseRepository courseRepository;
@@ -50,10 +54,12 @@ public class InstitutionService implements RepositoryService {
 	}
 
 	@Transactional
-	public void saveInstitutions(final Collection<Institution> institutions) {
+	public Collection<Institution> saveInstitutions(final Collection<Institution> institutions) {
+		final Collection<Institution> institutionsSaved = new ArrayList<>(institutions.size());
 		for(final Institution institution : institutions) {
-			this.saveInstitution(institution);
+			institutionsSaved.add(this.saveInstitution(institution));
 		}
+		return institutionsSaved;
 	}
 	
 	public void saveMentor(final Mentor mentor) {
@@ -99,6 +105,7 @@ public class InstitutionService implements RepositoryService {
 		try {
 			return studentRepository.save(student);
 		} catch (final Exception exc) {
+			LOGGER.log(Level.INFO, exc.getMessage(), exc);
 			throw new StudentInvalidException();
 		}
 	}
@@ -159,9 +166,7 @@ public class InstitutionService implements RepositoryService {
 	}
 	
 	/**
-	 * Método que recupera todos os cursos de uma determinada instituição
-	 * @param code
-	 * @return
+	 * Metodo que recupera todos os cursos de uma determinada instituicao
 	 */
 	public Collection<Course> findAllCoursesByInstitutionCode(final String institutionCode) {
 		final List<Course> courses = new ArrayList<>();
@@ -171,10 +176,7 @@ public class InstitutionService implements RepositoryService {
 		return courses;
 	}
 	/**
-	 * Método que recupera todos alunos de um curso de uma determinada instituição
-	 * @param courseCode
-	 * @param institutionCode
-	 * @return
+	 * Metodo que recupera todos alunos de um curso de uma determinada instituicao
 	 */
 	public Collection<Student> findAllStudentsByCourseAndInstitution(final String courseCode, final String institutionCode) {
 		final List<Student> courses = new ArrayList<>();
@@ -193,21 +195,21 @@ public class InstitutionService implements RepositoryService {
 	}
 	
 	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode) {
-		final String year_semester = getYearSemesterCurrent();
-		return institutionRepository.getStudentsProgressByInstitution(institutionCode, year_semester);
+		final String yearSemester = getYearSemesterCurrent();
+		return institutionRepository.getStudentsProgressByInstitution(institutionCode, yearSemester);
 	}
 	
 	public List<Object[]> getGlobalPogress() {
-		final String year_semester = getYearSemesterCurrent();
-		return institutionRepository.getGlobalStudentsProgress(year_semester);
+		final String yearSemester = getYearSemesterCurrent();
+		return institutionRepository.getGlobalStudentsProgress(yearSemester);
 	}
 	
 	public List<Object[]> getLevelPogress(final String level) {
-		final String year_semester = getYearSemesterCurrent();
-		return institutionRepository.getLevelStudentsProgress(level, year_semester);
+		final String yearSemester = getYearSemesterCurrent();
+		return institutionRepository.getLevelStudentsProgress(level, yearSemester);
 	}
 	/**
-	 * Merodo que recupera o ano e semestre corrente.
+	 * Metodo que recupera o ano e semestre corrente.
 	 */
 	private String getYearSemesterCurrent() {
 		final LocalDate dateCurrent = LocalDate.now();

@@ -30,7 +30,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SCMCorsFilter extends OncePerRequestFilter {
 	
-	private static final Logger LOGGER = Logger.getAnonymousLogger();
+	private static final Logger LOGGER = Logger.getLogger(SCMCorsFilter.class.getName());
 
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,

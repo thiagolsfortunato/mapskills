@@ -102,7 +102,7 @@ public class AdminTest extends AbstractApplicationTest {
 		final Skill skill = Skill.builder().type("liderança").description("avalia...").build();
 		final String bodyInput = objectMapper.writeValueAsString(skill);
 
-		super.mockMvcPerformPost(BASE_PATH.concat("/skill"), bodyInput)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/skill"), bodyInput)
 			.andExpect(status().isCreated());
 		
 		assertEquals(1, skillService.findAll().size());
@@ -126,7 +126,7 @@ public class AdminTest extends AbstractApplicationTest {
 
 		final String body = this.parseFileToJson("institution.xlsx");
 		
-		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), body)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/upload/institutions"), body)
 			.andExpect(status().isCreated());
 		
 		assertEquals(7, institutionService.findAllInstitutions().size());
@@ -139,7 +139,7 @@ public class AdminTest extends AbstractApplicationTest {
 		
 		final String bodyInput = objectMapper.writeValueAsString(getInstitutionClient());
 				
-		super.mockMvcPerformPost(BASE_PATH.concat("/institution"), bodyInput)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/institution"), bodyInput)
 			.andExpect(status().isCreated());
 		
 		assertNotNull(institutionService.findInstitutionByCode("146"));
@@ -152,7 +152,7 @@ public class AdminTest extends AbstractApplicationTest {
 		
 		institutionService.saveInstitution(getOneInstitution());
 		
-		final String jsonResponse = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/institutions"))
+		final String jsonResponse = super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/institutions"))
 										.andReturn().getResponse().getContentAsString();
 		
 		final Object[] allInstitutionAsArray = objectMapper.readValue(jsonResponse, Object[].class);
@@ -170,7 +170,7 @@ public class AdminTest extends AbstractApplicationTest {
 		institutionService.saveCourse(Course.builder().code("100").name("manutenção de aeronaves")
 				.period(CoursePeriod.NOTURNO).institutionCode(fatec.getCode()).build());
 		
-		final String jsonResponse = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/institution/" + fatec.getId()))
+		final String jsonResponse = super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/institution/" + fatec.getId()))
 				.andReturn().getResponse().getContentAsString();
 		
 		final InstitutionDetailsWrapper institutionReturn = objectMapper.readValue(jsonResponse, InstitutionDetailsWrapper.class);
@@ -186,7 +186,7 @@ public class AdminTest extends AbstractApplicationTest {
 		final GameTheme theme = GameTheme.builder().name("pizzaria").build();
 		final String bodyInput = objectMapper.writeValueAsString(theme);
 		
-		super.mockMvcPerformPost(BASE_PATH.concat("/game/theme"), bodyInput)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/game/theme"), bodyInput)
 			.andExpect(status().isCreated());
 	}
 	
@@ -201,7 +201,7 @@ public class AdminTest extends AbstractApplicationTest {
 		themes.get(0).enable();
 		final String bodyInput = objectMapper.writeValueAsString(new GameThemeListWrapper(themes));
 		
-		super.mockMvcPerformWithMockHeaderPut(BASE_PATH.concat("/game/themes"), bodyInput)
+		super.mockMvcPerformWithAuthorizationPut(BASE_PATH.concat("/game/themes"), bodyInput)
 			.andExpect(status().isOk());
 		
 		assertTrue(themeService.findById(themes.get(0).getId()).isActive());
@@ -214,7 +214,7 @@ public class AdminTest extends AbstractApplicationTest {
 			skillService.save(skill);
 		}
 		
-		super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/report/146"));
+		super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/report/146"));
 	}
 	
 	@Test
@@ -222,16 +222,22 @@ public class AdminTest extends AbstractApplicationTest {
 		mockAdminAuthentication();
 		
 		final String bodyOriginal = this.parseFileToJson("institution.xlsx");
-		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), bodyOriginal)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/upload/institutions"), bodyOriginal)
 			.andExpect(status().isCreated());
 				
 		final String bodyUpdate = this.parseFileToJson("institutionUpdate.xlsx");
-		super.mockMvcPerformPost(BASE_PATH.concat("/upload/institutions"), bodyUpdate)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/upload/institutions"), bodyUpdate)
 			.andExpect(status().isCreated());
 		
 		final Institution institution = institutionService.findInstitutionByCode("148");
 		assertEquals("Nome Atualizado", institution.getMentors().iterator().next().getName());
+	}
+	
+	@Test
+	public void expectedInstitutionNotFoundTest() throws Exception {
+		mockAdminAuthentication();
 		
+		super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/institution/20")).andExpect(status().isNotFound());
 	}
 	
 	private void mockAdminAuthentication() {

@@ -36,6 +36,8 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.gov.sp.fatec.mapskills.config.WebConfig;
+import br.gov.sp.fatec.mapskills.domain.institution.Course;
+import br.gov.sp.fatec.mapskills.domain.institution.CoursePeriod;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
@@ -98,25 +100,26 @@ public abstract class AbstractApplicationTest {
 		service.deleteAll();
 	}
 	
-	protected ResultActions mockMvcPerformPost(final String request, final String body) throws Exception {
-		return mockMvc.perform(post(request)
-				.header(AUTHORIZATION, Mockito.anyString())
-				.content(body)
-				.contentType(JSON_UTF8_MEDIA_TYPE));
-	}
 	
 	protected ResultActions mockMvcPerformGet(final String request) throws Exception {
 		return mockMvc.perform(get(request)
 				.accept(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)));
 	}
 	
-	protected ResultActions mockMvcPerformWithMockHeaderGet(final String request) throws Exception {
+	protected ResultActions mockMvcPerformWithAuthorizationPost(final String request, final String body) throws Exception {
+		return mockMvc.perform(post(request)
+				.header(AUTHORIZATION, Mockito.anyString())
+				.content(body)
+				.contentType(JSON_UTF8_MEDIA_TYPE));
+	}
+	
+	protected ResultActions mockMvcPerformWithAuthorizationGet(final String request) throws Exception {
 		return mockMvc.perform(get(request)
 				.header(AUTHORIZATION, Mockito.anyString())
 				.accept(MediaType.parseMediaType(JSON_UTF8_MEDIA_TYPE)));
 	}
 	
-	protected ResultActions mockMvcPerformWithMockHeaderPut(final String request, final String body) throws Exception {
+	protected ResultActions mockMvcPerformWithAuthorizationPut(final String request, final String body) throws Exception {
 		return mockMvc.perform(put(request)
 				.header(AUTHORIZATION, Mockito.anyString())
 				.content(body)
@@ -157,6 +160,10 @@ public abstract class AbstractApplicationTest {
 		final Institution institution = new Institution("146", "33177625000182", "Fatec-Teste", InstitutionLevel.SUPERIOR, "Cidade-Teste");
 		institution.addMentor(new Mentor("Fabiola Vaz", "146", "fabiola.vaz@fatec.sp.gov.br", "mudar@123"));
 		return institution;
+	}
+	
+	protected Course getOneCourse() {
+		return Course.builder().code("028").name("Administração").period(CoursePeriod.MATUTINO).institutionCode("146").build();
 	}
 	
 	protected Collection<Skill> getSkillsMock() {

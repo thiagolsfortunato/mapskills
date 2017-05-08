@@ -6,9 +6,9 @@
 package br.gov.sp.fatec.mapskills.domain.answerevent;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -57,8 +55,7 @@ public class AnswerEvent implements Serializable {
 	private int sceneIndex;
 			
 	@Column(name = "sqe_date", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar date;
+	private Timestamp date;
 	
 	public AnswerEvent() {
 		// CONSTRUCTOR DEFAULT
@@ -72,7 +69,7 @@ public class AnswerEvent implements Serializable {
 		this.studentId = studentId;
 		this.skillId = skillId;
 		this.skillValue = skillValue;
-		this.date = Calendar.getInstance();
+		this.date = new Timestamp(System.currentTimeMillis());
 	}
 
 	public String getDate() {
@@ -80,11 +77,11 @@ public class AnswerEvent implements Serializable {
 	}
 	
 	/**
-	 * Método que formata data no idioma portugues do Brasil
+	 * Metodo que formata data no idioma portugues do Brasil.
 	 * @param date
-	 * @return
+	 * @return string da data formatada
 	 */
-	private String calendarDateFormatterPtBr(final Calendar date) {
+	private String calendarDateFormatterPtBr(final Timestamp date) {
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return dateFormat.format(date);
 	}

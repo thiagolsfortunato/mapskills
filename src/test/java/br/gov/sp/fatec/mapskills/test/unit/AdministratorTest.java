@@ -62,8 +62,8 @@ public class AdministratorTest extends MapSkillsTest {
 				"1289003400", "studentA@fatec.sp.gov.br", "mudar@123");
 		institutionService.saveStudent(studentSave);
 		
-		final User studentUser = userService.findUserByUsernamePassword("studentA@fatec.sp.gov.br", "mudar@123");
-		final User mentorUser = userService.findUserByUsernamePassword("marquinhos@fatec.sp.gov.br", "Mudar@123");
+		final User studentUser = userService.findUserByUsername("studentA@fatec.sp.gov.br");
+		final User mentorUser = userService.findUserByUsername("marquinhos@fatec.sp.gov.br");
 		
 		assertEquals(EXPECTED_RA, studentUser.getName());
 		assertEquals("Mentor Responsavel Teste", mentorUser.getName());

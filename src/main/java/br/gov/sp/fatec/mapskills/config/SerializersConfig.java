@@ -22,8 +22,8 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.restapi.serializer.UserSerilizerStrategy;
 /**
  * 
- * A classe {@link SerializersConfig} possui uma configuração de estrategia de
- * serializaçao de perfil, onde cada perfil possui seu serializador.
+ * A classe {@link SerializersConfig} possui uma configuracao de estrategia de
+ * serializacao de perfil, onde cada perfil possui seu serializador.
  *
  * @author Marcelo
  * @version 1.0 10/11/2016
@@ -34,7 +34,7 @@ public class SerializersConfig {
 	 * Instancia no cluster de objetos do spring um mapa de perfil/serializador.
 	 */
 	@Bean
-	public Map<ProfileType, UserSerilizerStrategy<?>> mapSerializerStrategy(
+	public Map<ProfileType, UserSerilizerStrategy<? extends User>> mapSerializerStrategy(
 			@Autowired @Qualifier("defaultUserSerializer") final UserSerilizerStrategy<Administrator> defaultSerializer,
 			@Autowired @Qualifier("studentSerializer") final UserSerilizerStrategy<Student> studentSerializer,
 			@Autowired @Qualifier("mentorSerializer") final UserSerilizerStrategy<Mentor> mentorSerializer) {

@@ -22,15 +22,9 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 public class BadCredentialsExceptions extends MapSkillsException {
 
 	private static final long serialVersionUID = 1L;
-
-	private final String message;
 	
 	public BadCredentialsExceptions(final String msg) {
-		this.message = msg;
-	}
-	
-	public String getMessage() {
-		return message;
+		super(msg);
 	}
 
 }

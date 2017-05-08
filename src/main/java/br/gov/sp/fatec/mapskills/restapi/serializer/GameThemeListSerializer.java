@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.theme.GameTheme;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
@@ -23,11 +21,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
  * @author Marcelo
  * @version 1.0 22/04/2017
  */
-public class GameThemeListSerializer extends JsonSerializer<GameThemeListWrapper> {
+public class GameThemeListSerializer extends DefaultJsonSerializer<GameThemeListWrapper> {
 
 	@Override
-	public void serialize(final GameThemeListWrapper gameThemes, final JsonGenerator generator, final SerializerProvider arg2)
-			throws IOException {
+	public void serialize(final GameThemeListWrapper gameThemes, final JsonGenerator generator)	throws IOException {
 
 		generator.writeStartArray();
 		for(final GameTheme theme : gameThemes.getGameThemes()) {

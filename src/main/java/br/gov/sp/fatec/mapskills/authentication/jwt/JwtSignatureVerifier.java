@@ -6,6 +6,9 @@
  */
 package br.gov.sp.fatec.mapskills.authentication.jwt;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.stereotype.Component;
 
 import com.nimbusds.jose.JOSEException;
@@ -17,6 +20,7 @@ import com.nimbusds.jwt.SignedJWT;
 @Component
 public class JwtSignatureVerifier implements JwtVerifier {
 	
+	private static final Logger LOGGER = Logger.getLogger(JwtSignatureVerifier.class.getName());
 	private final JWSVerifier verifier;
 	
 	public JwtSignatureVerifier(final String secret) throws JOSEException {
@@ -32,6 +36,7 @@ public class JwtSignatureVerifier implements JwtVerifier {
                 throw new JwtTokenException("Invalid signature.");
             }
         } catch (final JOSEException exception) {
+        	LOGGER.log(Level.SEVERE, exception.getMessage(), exception);
             throw new JwtTokenException("The JWT signature could not be verified.");
         }
         

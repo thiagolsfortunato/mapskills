@@ -25,7 +25,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.InstitutionDetailsWrapper;
  */
 public class InstitutionDeserializer extends DefaultJsonDeserializer<InstitutionDetailsWrapper> {
 	
-	private final static String MENTOR = "mentor";
+	private static final String MENTOR = "mentor";
 	
 	@Override
 	protected InstitutionDetailsWrapper deserialize(final JsonNode node) {
@@ -55,7 +55,7 @@ public class InstitutionDeserializer extends DefaultJsonDeserializer<Institution
 		final Mentor mentor = Mentor.builder()
 				.name(jsonUtil.getFieldTextValue(node, "name"))
 				.username(jsonUtil.getFieldTextValue(node, "username"))
-				.password(jsonUtil.getFieldPasswordValue(node))
+				.password(jsonUtil.getFieldPassValue(node))
 				.institutionCode(institutionCode)
 				.build();
 
