@@ -90,6 +90,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Test
 	public void uploadStudentsFromExcel() throws Exception {
 		mockMentorAuthentication();
+		saveCoursesMock();
 
 		final String json = super.parseFileToJson("student.xlsx");
 		
@@ -188,6 +189,13 @@ public class InstitutionTest extends AbstractApplicationTest {
 		courses.add(Course.builder().code("300").name("analise de sistemas")
 				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		return courses;
+	}
+	
+	private void saveCoursesMock() {
+		service.saveCourse(Course.builder().code("030").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
+		service.saveCourse(Course.builder().code("031").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 	}
 
 }

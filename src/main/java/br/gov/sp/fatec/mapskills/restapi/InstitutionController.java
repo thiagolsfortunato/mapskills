@@ -64,11 +64,12 @@ public class InstitutionController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/upload/students", method = RequestMethod.POST)
-	public ResponseEntity<HttpStatus> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
+	public ResponseEntity<StudentListWrapper> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
 		final StudentExcelIO studentPoi = BeanRetriever.getBean("studentExcelIO", StudentExcelIO.class);
 		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		institutionService.saveStudents(students);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		final String institutionCode = students.get(0).getInstitutionCode();
+		final StudentListWrapper wrapper = new StudentListWrapper(institutionService.saveStudents(students), institutionService.findAllCoursesByInstitutionCode(institutionCode));
+		return new ResponseEntity<>(wrapper, HttpStatus.CREATED);
 	}
 	
 	/**
