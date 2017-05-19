@@ -50,9 +50,5 @@ public class Mentor extends User {
 		super(name, new Login(username, password), ProfileType.MENTOR);
 		this.institutionCode = institutionCode;
 	}
-		
-	public void setName(final String name) {
-		super.setName(name);
-	}
 
 }

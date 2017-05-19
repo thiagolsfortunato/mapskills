@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
@@ -25,18 +23,16 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
  * @author Marcelo
  * @version 1.0 11/02/2017
  */
-public class StudentDetailsSerializer extends JsonSerializer<StudentDetailsWrapper> {
+public class StudentDetailsSerializer extends DefaultJsonSerializer<StudentDetailsWrapper> {
 
 	@Override
-	public void serialize(final StudentDetailsWrapper studentWrapper, final JsonGenerator generator,
-			final SerializerProvider arg2)	throws IOException {
+	public void serialize(final StudentDetailsWrapper studentWrapper, final JsonGenerator generator) throws IOException {
 		
 		generator.writeStartObject();
 		this.studentSerialize(studentWrapper.getStudent(), generator);
 		this.courseSerialize(studentWrapper.getCourse(), generator);
 		this.institutionSerialize(studentWrapper.getInstitution(), generator);
 		generator.writeEndObject();
-		
 	}
 	
 	private void studentSerialize(final Student student, final JsonGenerator generator) throws IOException {
@@ -45,7 +41,7 @@ public class StudentDetailsSerializer extends JsonSerializer<StudentDetailsWrapp
 		generator.writeStringField("ra", student.getRa());
 		generator.writeStringField("phone", student.getPhone());
 		generator.writeStringField("username", student.getUsername());
-		generator.writeStringField("password", "");
+		generator.writeStringField(DefaultJsonSerializer.PASS, DefaultJsonSerializer.EMPTY_PASS);
 		generator.writeEndObject();
 	}
 	

@@ -1,8 +1,8 @@
 /*
  * @(#)SceneRepository.java 1.0 09/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.scene;
 
@@ -10,13 +10,19 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
+/**
+ * 
+ * A interface {@link SceneRepository}
+ *
+ * @author Marcelo
+ * @version 1.0 09/01/2017
+ */
 public interface SceneRepository extends CrudRepository<Scene, Long> {
 	
 	/**
-	 * Método recupera o próximo index valido para uma questão de um tema
+	 * Metodo recupera o proximo index valido para uma questao de um tema.
 	 * @param themeId
-	 * @return
+	 * @return proximo index
 	 */
 	@Query("SELECT (COUNT(*)) FROM Scene s WHERE s.gameThemeId = ?1")
 	public int findNextIndex(final long themeId);
@@ -40,9 +46,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	public Collection<Scene> findAllNotAnsweredByStudent(final long studentId);
 	
 	/**
-	 * Método que recupera todas cenas por um determinado id
-	 * @param gameThemeId
-	 * @return lista
+	 * Metodo que recupera todas cenas por um determinado id.
 	 */
 	public Collection<Scene> findAllByGameThemeIdOrderByIndexAsc(final long gameThemeId);
 

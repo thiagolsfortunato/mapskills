@@ -28,8 +28,8 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentDetailsWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
 /**
- * A classe <code>MapSkillsController</code> é responsavel por conter as rotas
- * de controle da aplicação.
+ * A classe <code>MapSkillsController</code> eh responsavel por conter as rotas
+ * de controle da aplicacao.
  * 
  * @author Marcelo Inácio
  *
@@ -55,7 +55,7 @@ public class StudentController {
 	 * 		HTTP 200 ao concluir o post com sucesso.
 	 */
 	@RequestMapping(value = "/game/answer", method = RequestMethod.POST)
-	public ResponseEntity<?> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
+	public ResponseEntity<HttpStatus> saveAnswer(@RequestBody final AnswerWrapper answerWrapper) {
 		sceneService.saveAnswer(answerWrapper.getAnswerContext());
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

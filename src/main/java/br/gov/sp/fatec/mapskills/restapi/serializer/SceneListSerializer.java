@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Alternative;
 import br.gov.sp.fatec.mapskills.domain.scene.Question;
@@ -25,11 +23,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
  * @author Marcelo
  * @version 1.0 01/11/2016
  */
-public class SceneListSerializer extends JsonSerializer<SceneListWrapper> {
+public class SceneListSerializer extends DefaultJsonSerializer<SceneListWrapper> {
 
 	@Override
-	public void serialize(final SceneListWrapper scenesList, final JsonGenerator generator,
-			final SerializerProvider arg2)	throws IOException {
+	public void serialize(final SceneListWrapper scenesList, final JsonGenerator generator)	throws IOException {
 
 		generator.writeStartArray();
 		for(final Scene scene : scenesList.getScenes()) {

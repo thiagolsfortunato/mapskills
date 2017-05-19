@@ -11,8 +11,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.user.ProfileType;
 import br.gov.sp.fatec.mapskills.domain.user.User;
@@ -27,7 +25,7 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
  * @author Marcelo
  * @version 1.0 10/11/2016
  */
-public class UserSerializer extends JsonSerializer<UserWrapper> {
+public class UserSerializer extends DefaultJsonSerializer<UserWrapper> {
 	
 	private final Map<ProfileType, UserSerilizerStrategy<User>> mapSerializer = new EnumMap<>(ProfileType.class);
 	
@@ -43,8 +41,7 @@ public class UserSerializer extends JsonSerializer<UserWrapper> {
 	}
 
 	@Override
-	public void serialize(final UserWrapper userWrapper, final JsonGenerator generator, final SerializerProvider arg2)
-			throws IOException {
+	public void serialize(final UserWrapper userWrapper, final JsonGenerator generator)	throws IOException {
 		
 		final UserSerilizerStrategy<User> serializer = mapSerializer.get(userWrapper.getProfile());
 		serializer.serialize(userWrapper.getUser(), generator);

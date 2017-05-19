@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
 /**
@@ -24,11 +22,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWra
  * @author Marcelo
  * @version 1.0 01/03/2017
  */
-public class StudentsProgressLevelSerializer extends JsonSerializer<StudentsProgressLevelWrapper> {
+public class StudentsProgressLevelSerializer extends DefaultJsonSerializer<StudentsProgressLevelWrapper> {
 
 	@Override
-	public void serialize(final StudentsProgressLevelWrapper progress, final JsonGenerator generator,
-			final SerializerProvider arg2) throws IOException {
+	public void serialize(final StudentsProgressLevelWrapper progress, final JsonGenerator generator) throws IOException {
 
 		generator.writeStartObject();
 		this.dataGenerate(progress.getResultSet(), generator);
@@ -68,9 +65,6 @@ public class StudentsProgressLevelSerializer extends JsonSerializer<StudentsProg
 	/**
 	 * Metodo que calcula uma porcentagem a partir de uma quantidade
 	 * e um total.
-	 * @param quantity
-	 * @param total
-	 * @return
 	 */
 	private double calcPercentage(final double quantity, final double total) {
 		return (quantity/total) * 100;

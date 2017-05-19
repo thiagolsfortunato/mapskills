@@ -33,8 +33,7 @@ public class SceneService implements RepositoryService {
 	}
 	/**
 	 * @param id
-	 * @return
-	 * 		uma cena pelo seu id
+	 * @return uma cena pelo seu id
 	 */
 	public Scene findById(final long id) {
 		return sceneRepo.findOne(id);
@@ -47,7 +46,7 @@ public class SceneService implements RepositoryService {
 		sceneRepo.delete(id);
 	}
 	/**
-	 * salva a cena gerando um index válido, para aquele tema
+	 * salva a cena gerando um index valido, para aquele tema
 	 * @param scene
 	 */
 	public Scene save(final Scene scene) {
@@ -58,7 +57,7 @@ public class SceneService implements RepositoryService {
 		return sceneRepo.save(scene);
 	}
 	/**
-	 * realiza uma atualização da ordem das cenas
+	 * realiza uma atualizacao da ordem das cenas
 	 * @param scenes
 	 */
 	@Transactional
@@ -72,17 +71,14 @@ public class SceneService implements RepositoryService {
 		}
 	}
 	/**
-	 * Método que recupera todas as cenas de um tema
-	 * @return
+	 * Metodo que recupera todas as cenas de um tema
 	 */
 	public Collection<Scene> findAllByGameThemeId(final long gameThemeId) {
 		return sceneRepo.findAllByGameThemeIdOrderByIndexAsc(gameThemeId);
 	}
 	
 	/**
-	 * Método que recupera o próximo index da cena válida, de determinado tema 
-	 * @param themeId
-	 * @return
+	 * Metodo que recupera o proximo index da cena valida, de determinado tema.
 	 */
 	public int nextIndex(final long themeId) {
 		return sceneRepo.findNextIndex(themeId);
@@ -92,10 +88,8 @@ public class SceneService implements RepositoryService {
 		answerRepo.save(answerContext);
 	}
 	/**
-	 * Método que retorna um resultset da base de dados com os resultados
+	 * Metodo que retorna um resultset da base de dados com os resultados
 	 * de uma aluno.
-	 * @param studentId
-	 * @return
 	 */
 	public List<Object[]> getResultByStudentId(final long studentId) {
 		return answerRepo.findResultViewByStudentId(studentId);

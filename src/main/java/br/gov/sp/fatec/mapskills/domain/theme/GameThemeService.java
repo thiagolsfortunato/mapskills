@@ -35,31 +35,33 @@ public class GameThemeService implements RepositoryService {
 		themeRepo.deleteAll();
 	}
 	/**
-	 * Realiza busca de um tema por seu id
+	 * Realiza busca de um tema por seu id.
 	 * @param id
-	 * @return
 	 */
 	public GameTheme findById(final long id) {
 		return themeRepo.findById(id);
 	}
 	/**
-	 * Realiza persistencia de um tema
-	 * caso não exista.
+	 * Realiza persistencia de um tema caso nao exista.
 	 * @param theme
 	 */
-	public void save(final GameTheme theme) {
-		themeRepo.save(theme);			
+	public GameTheme save(final GameTheme theme) {
+		return themeRepo.save(theme);			
 	}
 	/**
 	 * Realiza persistencia de uma lista de temas
 	 * verificando se ja estão cadastrados.
 	 * @param themes
 	 */
-	public void save(final Collection<GameTheme> themes) {
-		themeRepo.save(themes);
+	public Collection<GameTheme> save(final Collection<GameTheme> themes) {
+		final Collection<GameTheme> themesSaved = new ArrayList<>(themes.size());
+		for(final GameTheme theme : themes) {
+			themesSaved.add(this.save(theme));	
+		}
+		return themesSaved;
 	}
 	/**
-	 * Metodo que retorna todos temas cadastrados na aplicacao
+	 * Metodo que retorna todos temas cadastrados na aplicacao.
 	 * @return lista
 	 */
 	public Collection<GameTheme> findAllThemes() {
@@ -70,7 +72,7 @@ public class GameThemeService implements RepositoryService {
 		return themes;
 	}
 	/**
-	 * Método que retorna todas as cenas que estão ativas de um determinado tema
+	 * Metodo que retorna todas as cenas que estao ativas de um determinado tema
 	 * de uma determinada instituicao.
 	 * @param themeId
 	 * @return lista

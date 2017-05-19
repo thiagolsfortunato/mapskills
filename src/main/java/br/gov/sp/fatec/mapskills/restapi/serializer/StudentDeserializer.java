@@ -34,7 +34,7 @@ public class StudentDeserializer extends DefaultJsonDeserializer<StudentWrapper>
         		.name(jsonUtil.getFieldTextValue(node, "name"))
         		.phone(jsonUtil.getFieldTextValue(node, "phone"))
         		.username(jsonUtil.getFieldTextValue(node, "username"))
-        		.password(jsonUtil.getFieldPasswordValue(node)).build();
+        		.password(jsonUtil.getFieldPassValue(node)).build();
         
 		return new StudentWrapper(student);
 	}

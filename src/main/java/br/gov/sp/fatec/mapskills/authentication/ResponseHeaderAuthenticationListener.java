@@ -8,6 +8,8 @@ package br.gov.sp.fatec.mapskills.authentication;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +36,8 @@ import com.nimbusds.jwt.SignedJWT;
 @Component
 public class ResponseHeaderAuthenticationListener implements AuthenticationListener {
 	
-	private static final long FIVE_HOURS_IN_MILLISECONDS = 60000 * 300;
+	private static final Logger LOGGER = Logger.getLogger(ResponseHeaderAuthenticationListener.class.getName());
+	private static final long FIVE_HOURS_IN_MILLISECONDS = 60000L * 300L;
     private final JWSSigner signer;
     
     @Autowired
@@ -61,6 +64,7 @@ public class ResponseHeaderAuthenticationListener implements AuthenticationListe
         try {
             signedJWT.sign(signer);
         } catch (final JOSEException e) {
+        	LOGGER.log(Level.SEVERE, e.getMessage(), e);
             throw new AuthenticationServiceException("The given JWT could not be signed.");
         }
 

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+@FunctionalInterface
 public interface AuthenticationListener {
 	
 	/**

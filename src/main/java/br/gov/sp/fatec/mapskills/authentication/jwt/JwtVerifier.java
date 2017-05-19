@@ -8,6 +8,7 @@ package br.gov.sp.fatec.mapskills.authentication.jwt;
 
 import com.nimbusds.jwt.JWT;
 
+@FunctionalInterface
 public interface JwtVerifier {
 	
 	public void verify(final JWT jwt);

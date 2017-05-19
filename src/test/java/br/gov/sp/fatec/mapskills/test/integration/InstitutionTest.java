@@ -17,7 +17,6 @@ import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -82,7 +81,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 		final StudentWrapperTest wrapper = new StudentWrapperTest(student);
 		final String bodyJson = objectMapper.writeValueAsString(wrapper);
 		
-		super.mockMvcPerformPost(BASE_PATH.concat("/student"), bodyJson)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/student"), bodyJson)
 			.andExpect(status().isCreated());
 		
 		assertTrue(service.findStudentByRa(student.getRa()).getName().equals(student.getName()));
@@ -91,10 +90,11 @@ public class InstitutionTest extends AbstractApplicationTest {
 	@Test
 	public void uploadStudentsFromExcel() throws Exception {
 		mockMentorAuthentication();
+		saveCoursesMock();
 
 		final String json = super.parseFileToJson("student.xlsx");
 		
-		super.mockMvcPerformPost(BASE_PATH.concat("/upload/students"), json)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/upload/students"), json)
 			.andExpect(status().isCreated());
 		
 		assertEquals(2, service.findAllStudentsByInstitution("146").size());
@@ -108,7 +108,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 				.period(CoursePeriod.NOTURNO).institutionCode("146").build();
 		final String json = objectMapper.writeValueAsString(course);
 		
-		super.mockMvcPerformPost(BASE_PATH.concat("/course"), json)
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/course"), json)
 			.andExpect(status().isCreated());
 		
 		assertEquals(1, service.findAllCoursesByInstitutionCode("146").size());
@@ -122,7 +122,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		service.saveStudents(getStudentsMock());
 		
-		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/students")).andReturn();
+		final MvcResult result = super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/146/students")).andReturn();
 		
 		final String jsonResponse = result.getResponse().getContentAsString();
 		final Object[] allStudentsAsArray = objectMapper.readValue(jsonResponse, Object[].class);
@@ -140,7 +140,7 @@ public class InstitutionTest extends AbstractApplicationTest {
 				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		service.saveCourses(getCoursesMock());
 		
-		final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/courses")).andReturn();
+		final MvcResult result = super.mockMvcPerformWithAuthorizationGet(BASE_PATH.concat("/146/courses")).andReturn();
 		
 		final String jsonResponse = result.getResponse().getContentAsString();
 		final Course[] allCourseAsArray = objectMapper.readValue(jsonResponse, Course[].class);
@@ -150,7 +150,6 @@ public class InstitutionTest extends AbstractApplicationTest {
 	}
 	
 	@Test
-	@Ignore
 	public void getStudentsProgress() throws Exception {
 		mockMentorAuthentication();
 		
@@ -160,7 +159,16 @@ public class InstitutionTest extends AbstractApplicationTest {
 		service.saveStudents(getStudentsMock());
 		//TODO criar objetos para as VIEWS do banco de dados.
 		//final MvcResult result = super.mockMvcPerformWithMockHeaderGet(BASE_PATH.concat("/146/progress")).andReturn();
+	}
+	
+	@Test
+	public void expectedExceptionTest() throws Exception {
+		mockMentorAuthentication();
 		
+		final Student studentA = getOneStudent();
+		final String studentAJson = objectMapper.writeValueAsString(new StudentWrapperTest(studentA));
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/student"), studentAJson).andExpect(status().isCreated());
+		super.mockMvcPerformWithAuthorizationPost(BASE_PATH.concat("/student"), studentAJson).andExpect(status().isBadRequest());
 	}
 	
 	private void mockMentorAuthentication() {
@@ -181,6 +189,13 @@ public class InstitutionTest extends AbstractApplicationTest {
 		courses.add(Course.builder().code("300").name("analise de sistemas")
 				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 		return courses;
+	}
+	
+	private void saveCoursesMock() {
+		service.saveCourse(Course.builder().code("030").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
+		service.saveCourse(Course.builder().code("031").name("manutenção de aeronaves")
+				.period(CoursePeriod.NOTURNO).institutionCode("146").build());
 	}
 
 }

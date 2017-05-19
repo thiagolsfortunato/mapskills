@@ -77,10 +77,6 @@ public class Student extends User {
 		completed = true;
 	}
 	
-	public void setPassword(final String hash) {
-		super.setPassword(hash);
-	}
-	
 	public void update(final Student studentUpdate) {
 		super.setName(studentUpdate.getName());
 		super.setLogin(studentUpdate.getLogin());

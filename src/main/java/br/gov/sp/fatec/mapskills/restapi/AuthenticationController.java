@@ -1,8 +1,8 @@
 /*
  * @(#)AuthenticationController.java 1.0 03/01/2017
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2017, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
@@ -20,7 +20,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 
 /**
  * A classe <code>AuthenticationController</code> eh responsavel por conter a
- * rota (uri) de detalhes do usuario logado na aplicação.
+ * rota (uri) de detalhes do usuario logado na aplicacao.
  * 
  * @author Marcelo
  *
@@ -50,7 +50,7 @@ public class AuthenticationController {
 	 * @return
 	 */
 	@RequestMapping(value = "/user/change/password", method = RequestMethod.POST)
-	public ResponseEntity<?> changePassword(@RequestParam("username") String username,
+	public ResponseEntity<HttpStatus> changePassword(@RequestParam("username") String username,
 			@RequestParam("newPassword") String newPassword) {
 		
 		userService.updatePassword(username, newPassword);

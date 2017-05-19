@@ -18,7 +18,7 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
 public class AuthenticationEvent extends AuthenticationSuccessEvent {
 
 	private static final long serialVersionUID = 1L;
-	private final HttpServletResponse response;
+	private final transient HttpServletResponse response;
 	
 	public AuthenticationEvent(final HttpServletResponse response, final Authentication authentication) {
         super(authentication);
@@ -45,5 +45,5 @@ public class AuthenticationEvent extends AuthenticationSuccessEvent {
     private Principal getUser() {
         return getAuthentication().getPrincipal();
     }
-
+  
 }

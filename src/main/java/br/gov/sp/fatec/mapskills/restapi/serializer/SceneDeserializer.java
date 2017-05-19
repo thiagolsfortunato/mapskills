@@ -27,6 +27,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneWrapper;
 public class SceneDeserializer extends DefaultJsonDeserializer<SceneWrapper> {
 	
 	private static final String IP_SERVER = "http://localhost:8585/mapskills/";
+	private static final String BACKGROUND = "background";
 	
 	@Override
 	protected SceneWrapper deserialize(JsonNode node) {
@@ -83,15 +84,15 @@ public class SceneDeserializer extends DefaultJsonDeserializer<SceneWrapper> {
 	
 	private String[] verifyBackground(final JsonNode node) {
 		final String[] background = new String[2];
-		if(!node.has("background")) {
-			return null;
+		if(!node.has(BACKGROUND)) {
+			return new String[2];
 		}
-		if(jsonUtil.has(node.get("background"), "base64")) {
-			background[0] = jsonUtil.getFieldTextValue(node.get("background"), "base64");
+		if(jsonUtil.has(node.get(BACKGROUND), "base64")) {
+			background[0] = jsonUtil.getFieldTextValue(node.get(BACKGROUND), "base64");
         }
-        if(jsonUtil.has(node.get("background"), "filename")) {
-        	final String filename = jsonUtil.getFieldTextValue(node.get("background"), "filename");
-        	final int lastIndex = filename.lastIndexOf("/");
+        if(jsonUtil.has(node.get(BACKGROUND), "filename")) {
+        	final String filename = jsonUtil.getFieldTextValue(node.get(BACKGROUND), "filename");
+        	final int lastIndex = filename.lastIndexOf('/');
         	background[1] = filename.substring(lastIndex + 1);
         }
         return background;

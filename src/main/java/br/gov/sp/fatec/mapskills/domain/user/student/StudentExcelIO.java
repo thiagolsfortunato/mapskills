@@ -9,8 +9,10 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-import br.gov.sp.fatec.mapskills.utils.PoiParser;
+import br.gov.sp.fatec.mapskills.utils.AbstractExcelIO;
 /**
  * A classe <code>StudentPoiParser</code> converte um arquivo xlsx em objetos do tipo Student
  * para serem persistidos no banco de dados.
@@ -18,7 +20,8 @@ import br.gov.sp.fatec.mapskills.utils.PoiParser;
  * @author Marcelo
  *
  */
-public class StudentPoiParser extends PoiParser<Student> {
+@Component
+public class StudentExcelIO extends AbstractExcelIO<Student> {
 	/**
 	 * O metodo <code>toObjectList</code> converte um arqiuvo do tipo excel xlsx em uma
 	 * lista de objetos do tipo Student.
@@ -35,7 +38,7 @@ public class StudentPoiParser extends PoiParser<Student> {
 	@Override
 	protected Student buildObject(final List<String> attArgs) throws MapSkillsException {
 		return new Student(academicRegistry(attArgs.get(0)), attArgs.get(1),
-				attArgs.get(2), attArgs.get(3), ENCRYPTED_DEFAULT_PASSWORD);
+				attArgs.get(2), attArgs.get(3), AbstractExcelIO.DEFAULT_ENCRYPTED_PASS);
 	}
 	/**
 	 * verifica se o numero de string da lista que servira como

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * 
- * A classe {@link AbstractSpringContextConfiguration} contem todas configuracoes
- * necessaria para aplicacao, utilizadas nos testes e em produção.
+ * A interface {@link AbstractSpringContextConfiguration} contem todas configuracoes
+ * necessaria para aplicacao, utilizadas nos testes e em producao.
  *
  * @author Marcelo
  * @version 1.0 28/12/2016

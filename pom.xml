@@ -237,6 +237,9 @@
 
 	<profiles>
 		<profile>
+			<!-- COMANDOS PARA RODAR SONAR -->
+			<!-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true -->
+			<!-- mvn sonar:sonar -->
 			<id>sonar</id>
 			<properties>
 			<sonar.projectName>MPS - Aplicacao WEB de avaliacao de competencias</sonar.projectName>
@@ -272,8 +275,8 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>false</datasource.dropAll>
-				<liquibase.skip>true</liquibase.skip>
+				<datasource.dropAll>true</datasource.dropAll>
+				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
@@ -281,12 +284,12 @@
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<id>cloud</id>
+			<id>azure</id>
 			<properties>
-				<datasource.url>jdbc:mysql://64.137.186.134:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://104.41.62.221:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
-				<datasource.username>mapsskills</datasource.username>
-				<datasource.password>mapsskills</datasource.password>
+				<datasource.username>mapskills</datasource.username>
+				<datasource.password>mapskills</datasource.password>
 				<datasource.dropAll>false</datasource.dropAll>
 				<liquibase.skip>true</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>true</datasource.promptOnNonLocalDatabase>

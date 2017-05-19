@@ -7,7 +7,6 @@
 package br.gov.sp.fatec.mapskills.test.unit;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,7 +40,6 @@ public class StudentTest extends MapSkillsTest {
 	}
 	
 	@Test
-	@Ignore
 	//Necessario configurar banco H2 para trabalhar com view
 	public void getResultByStudent() {
 		prepareAnswerContext();
@@ -49,11 +47,10 @@ public class StudentTest extends MapSkillsTest {
 	}
 	
 	@Test
-	@Ignore
 	//Necessario configurar banco H2 para trabalhar com view
 	public void testResultView() {
 		prepareAnswerContext();
-		repo.findResultViewByStudentId(1);
+		//repo.findResultViewByStudentId(1);
 	}
 	
 	private void prepareAnswerContext() {

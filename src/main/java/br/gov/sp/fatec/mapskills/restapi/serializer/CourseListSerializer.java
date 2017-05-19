@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.institution.Course;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
@@ -22,11 +20,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
  * @author Marcelo
  * @version 1.0 14/01/2017
  */
-public class CourseListSerializer extends JsonSerializer<CourseListWrapper> {
+public class CourseListSerializer extends DefaultJsonSerializer<CourseListWrapper> {
 
 	@Override
-	public void serialize(final CourseListWrapper courseList, final JsonGenerator generator, final SerializerProvider arg2)
-			throws IOException {
+	public void serialize(final CourseListWrapper courseList, final JsonGenerator generator) throws IOException {
 		
 		generator.writeStartArray();
 		for(final Course course : courseList.getCourses()) {

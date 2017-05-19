@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
@@ -24,11 +22,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentResultWrapper;
  * @author Marcelo
  * @version 1.0 04/01/2017
  */
-public class StudentResultSerializer extends JsonSerializer<StudentResultWrapper> {
+public class StudentResultSerializer extends DefaultJsonSerializer<StudentResultWrapper> {
 
 	@Override
-	public void serialize(final StudentResultWrapper result, final JsonGenerator generator, final SerializerProvider arg2)
-			throws IOException {
+	public void serialize(final StudentResultWrapper result, final JsonGenerator generator)	throws IOException {
 
 		generator.writeStartObject();
 		this.generateLabels(result, generator);

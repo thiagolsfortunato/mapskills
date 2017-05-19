@@ -9,8 +9,6 @@ package br.gov.sp.fatec.mapskills.restapi.serializer;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
 /**
@@ -22,11 +20,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstit
  * @author Marcelo
  * @version 1.0 01/03/2017
  */
-public class StudentsProgressByInstitutionSerializer extends JsonSerializer<StudentsProgressByInstitutionWrapper> {
+public class StudentsProgressByInstitutionSerializer extends DefaultJsonSerializer<StudentsProgressByInstitutionWrapper> {
 
 	@Override
-	public void serialize(final StudentsProgressByInstitutionWrapper progress, final JsonGenerator generator, 
-			final SerializerProvider arg2) throws IOException {
+	public void serialize(final StudentsProgressByInstitutionWrapper progress, final JsonGenerator generator) throws IOException {
 		
 		generator.writeStartArray();
 		

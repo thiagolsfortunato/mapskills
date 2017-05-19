@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
-import br.gov.sp.fatec.mapskills.utils.PoiParser;
+import br.gov.sp.fatec.mapskills.utils.AbstractExcelIO;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
  * para serem persistidos no banco de dados.
@@ -23,7 +23,7 @@ import br.gov.sp.fatec.mapskills.utils.PoiParser;
  *
  */
 @Component
-public class InstitutionPoiParser extends PoiParser<Institution> {
+public class InstitutionExcelIO extends AbstractExcelIO<Institution> {
 	
 	private static final int DATA_NUMBER = 7;
 	
@@ -67,7 +67,7 @@ public class InstitutionPoiParser extends PoiParser<Institution> {
 				.name(attArgs.get(5))
 				.institutionCode(attArgs.get(0))
 				.username(attArgs.get(6))
-				.password(ENCRYPTED_DEFAULT_PASSWORD)
+				.password(AbstractExcelIO.DEFAULT_ENCRYPTED_PASS)
 				.build();
 		if(mentor != null) {
 			mentorExcel.setId(mentor.getId());

@@ -24,15 +24,8 @@ public class SaveImageException extends MapSkillsException {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final String filename;
-	
-	public SaveImageException(final String filename, final Exception e) {
+	public SaveImageException(final String filename) {
 		super("Problema ao salvar ".concat(filename));
-		this.filename = filename;
 	}
 	
-	public String getFilename() {
-		return filename;
-	}
-
 }

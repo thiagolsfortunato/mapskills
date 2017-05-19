@@ -93,20 +93,20 @@ public class MapSkillsMockBeans {
 	
 	@Bean
 	public String saveScenes() {
-		final int THEME_ID = 1;
-		final int SKILL_ID = 1;
+		final int themeId = 1;
+		final int skillId = 1;
 		final Collection<Alternative> alternatives = new ArrayList<>(4);
 		alternatives.addAll(builderMockAlternatives());
-		final Question question = Question.builder().alternatives(alternatives).skillId(SKILL_ID).build();
+		final Question question = Question.builder().alternatives(alternatives).skillId(skillId).build();
 
 		sceneService.save(Scene.builder().text("introdução").urlBackground("url://site/img001.png")
-				.question(null).gameThemeId(THEME_ID).build());
+				.question(null).gameThemeId(themeId).build());
 
 		sceneService.save(Scene.builder().text("questão").urlBackground("url://site/img002.png")
-				.question(question).gameThemeId(THEME_ID).build());
+				.question(question).gameThemeId(themeId).build());
 		
 		sceneService.save(Scene.builder().text("conclusão").urlBackground("url://site/img003.png")
-				.question(null).gameThemeId(THEME_ID).build());
+				.question(null).gameThemeId(themeId).build());
 		
 		return SUCCESS;
 	}
