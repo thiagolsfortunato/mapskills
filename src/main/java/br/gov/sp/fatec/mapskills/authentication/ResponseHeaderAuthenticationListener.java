@@ -28,7 +28,10 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 /**
  * 
- * A classe {@link ResponseHeaderAuthenticationListener}
+ * A classe {@link ResponseHeaderAuthenticationListener} e
+ * reponsavel por gerar o token JWT, e gravar no header da
+ * resposta o token que dara ao cliente autorizacao aos
+ * servicos fornecidos pela aplicacao.
  *
  * @author Marcelo
  * @version 1.0 27/01/2017

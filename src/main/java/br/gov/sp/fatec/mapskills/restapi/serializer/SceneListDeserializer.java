@@ -27,19 +27,12 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SceneListWrapper;
 public class SceneListDeserializer extends DefaultJsonDeserializer<SceneListWrapper> {
 
 	@Override
-	protected SceneListWrapper deserialize(JsonNode node) {
+	protected SceneListWrapper deserialize(final JsonNode node) {
 		final int sizeArray = node.size();
         final Collection<Scene> scenes = new ArrayList<>(sizeArray);
         for(int i = 0; i < sizeArray; i++) {
         	final JsonNode nodeCurrent = node.get(i);
-        	scenes.add(Scene.builder()
-        			.id(jsonUtil.getFieldLongValue(nodeCurrent, "id"))
-        			.index(this.getIndexFromNode(jsonUtil.getFieldIntegerValue(nodeCurrent, "index")))
-        			.text(jsonUtil.getFieldTextValue(nodeCurrent, "text"))
-        			.urlBackground(jsonUtil.getFieldTextValue(nodeCurrent.get("background"), "filename"))
-        			.question(this.buildQuestion(jsonUtil.get(nodeCurrent, "question")))
-        			.gameThemeId(jsonUtil.getFieldLongValue(nodeCurrent, "gameThemeId"))
-        			.build());
+        	scenes.add(buildScene(nodeCurrent));
         }
 		return new SceneListWrapper(scenes);
 	}
@@ -65,6 +58,20 @@ public class SceneListDeserializer extends DefaultJsonDeserializer<SceneListWrap
 					.build());
 		}
 		return alternatives;
+	}
+	/**
+	 * Metodo responsavel por construir uma cena, a partir
+	 * de uma JSON.
+	 */
+	private Scene buildScene(final JsonNode nodeCurrent) {
+		return Scene.builder()
+    			.id(jsonUtil.getFieldLongValue(nodeCurrent, "id"))
+    			.index(this.getIndexFromNode(jsonUtil.getFieldIntegerValue(nodeCurrent, "index")))
+    			.text(jsonUtil.getFieldTextValue(nodeCurrent, "text"))
+    			.urlBackground(jsonUtil.getFieldTextValue(nodeCurrent.get("background"), "filename"))
+    			.question(this.buildQuestion(jsonUtil.get(nodeCurrent, "question")))
+    			.gameThemeId(jsonUtil.getFieldLongValue(nodeCurrent, "gameThemeId"))
+    			.build();
 	}
 	
 	private int getIndexFromNode(final Integer index) {

@@ -47,9 +47,9 @@ public class PreAuthenticatedAuthentication extends PreAuthenticatedAuthenticati
         return false;
     }
     /**
-     * retorna a autorizacao que o usuario logado possue
-     * @param user
-     * @return
+     * Metodo responsavel por criar a autorizacao que o usuario logado possue.
+     * @param user um usuario da aplicacao.
+     * @return uma colecao de autorizacoes ao qual possui acesso.
      */
     private static Collection<GrantedAuthority> buildAuthorities(final User user) {
 		final Collection<GrantedAuthority> authorities = new ArrayList<>(1);

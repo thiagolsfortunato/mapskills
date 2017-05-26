@@ -25,6 +25,7 @@ import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
+import br.gov.sp.fatec.mapskills.infrastructure.SaveImageService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.InputStreamWrapper;
@@ -37,7 +38,6 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
-import br.gov.sp.fatec.mapskills.utils.SaveImageService;
 /**
  * 
  * A classe {@link AdminController} eh responsavel por conter todos

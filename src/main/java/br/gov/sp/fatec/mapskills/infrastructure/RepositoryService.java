@@ -9,7 +9,9 @@ package br.gov.sp.fatec.mapskills.infrastructure;
 /**
  * 
  * A interface {@link RepositoryService} contem a assinatura de metodo
- * que todas as classes que a implementam devem implemetar.
+ * que todas as classes que a implementam devem implemetar. Utilizado
+ * nos testes para limpar as tabelas da base de dados, para que um
+ * escopo de teste nao interfira no outro.
  *
  * @author Marcelo
  * @version 1.0 01/11/2016

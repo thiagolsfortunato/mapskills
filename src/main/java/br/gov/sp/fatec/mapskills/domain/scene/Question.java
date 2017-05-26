@@ -1,8 +1,8 @@
 /*
  * @(#)Question.java 1.0 01/11/2016
  *
- * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved. Fatec Jessen Vidal
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
+ * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
 package br.gov.sp.fatec.mapskills.domain.scene;
 
@@ -23,7 +23,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
-
+/**
+ * 
+ * A classe {@link Question} representa uma
+ * questao que um cena possa haver ou nao.
+ *
+ * @author Marcelo
+ * @version 1.0 21/05/2017
+ */
 @Entity
 @Table(name = "QUESTION")
 public class Question implements Serializable {

@@ -30,7 +30,7 @@ public class SceneDeserializer extends DefaultJsonDeserializer<SceneWrapper> {
 	private static final String BACKGROUND = "background";
 	
 	@Override
-	protected SceneWrapper deserialize(JsonNode node) {
+	protected SceneWrapper deserialize(final JsonNode node) {
 		final String[] background = verifyBackground(node);    
         final String fileImageBase64 = background[0];
         final String filename = background[1];

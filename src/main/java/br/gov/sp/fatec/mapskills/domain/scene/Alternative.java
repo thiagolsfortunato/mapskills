@@ -18,7 +18,15 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
+/**
+ * 
+ * A classe {@link Alternative} representa
+ * uma alternativa de uma questao, dentro
+ * da aplicacao.
+ *
+ * @author Marcelo
+ * @version 1.0 21/05/2017
+ */
 @Getter
 @Builder
 @AllArgsConstructor

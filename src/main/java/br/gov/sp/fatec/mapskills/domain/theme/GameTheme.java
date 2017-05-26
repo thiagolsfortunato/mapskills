@@ -16,7 +16,14 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
+/**
+ * 
+ * A classe {@link GameTheme} representa um tema
+ * de jogo que pode aplicado pelo mentor.
+ *
+ * @author Marcelo
+ * @version 1.0 01/11/2016
+ */
 @Getter
 @AllArgsConstructor
 @Builder

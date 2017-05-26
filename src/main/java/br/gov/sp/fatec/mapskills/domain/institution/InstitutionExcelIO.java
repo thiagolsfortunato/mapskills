@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
-import br.gov.sp.fatec.mapskills.utils.AbstractExcelIO;
+import br.gov.sp.fatec.mapskills.infrastructure.AbstractExcelIO;
 /**
  * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
  * para serem persistidos no banco de dados.
