@@ -6,12 +6,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>mapskills</name>
-	<description>Plataforma de avaliacao de competencias. Projeto Map Skills. Parte do desenvolvimento do TG</description>
+	<description>Aplicacao para avaliacao de competencias. Projeto Map Skills. Parte do desenvolvimento do TG</description>
 	<developers>
 		<developer>
 			<name>Marcelo Inacio</name>
 			<organization>Faculdade de Tecnologia - FATEC - Jessen Vidal</organization>
-			<organizationUrl>http://www.fatecsjc.com.br</organizationUrl>
+			<organizationUrl>http://http://fatecsjc.azurewebsites.net</organizationUrl>
 			<email>marcelo.silva135@fatec.sp.gov.br</email>
 			<roles>
 				<role>Java Developer</role>
@@ -216,7 +216,7 @@
 		    <version>1.16.16</version>
 		</dependency>
 		
-		<!-- SWAGGER 2 -->
+		<!-- SWAGGER 2 - Documentacao da API -->
 		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger2</artifactId>
@@ -242,7 +242,7 @@
 			<!-- mvn sonar:sonar -->
 			<id>sonar</id>
 			<properties>
-			<sonar.projectName>MPS - Aplicacao WEB de avaliacao de competencias</sonar.projectName>
+			<sonar.projectName>MPS - Aplicacao web para avaliacao de competencias</sonar.projectName>
 				<!-- Optional URL to server. Default value is http://localhost:9000 -->
 				<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
 				<sonar.exclusions>**/br/gov/sp/fatec/mapskills/config/**, **/br/gov/sp/fatec/mapskills/test/**</sonar.exclusions>
@@ -286,13 +286,13 @@
 			</activation>
 			<id>azure</id>
 			<properties>
-				<datasource.url>jdbc:mysql://104.41.62.221:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://172.17.0.5:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
 				<datasource.dropAll>false</datasource.dropAll>
 				<liquibase.skip>true</liquibase.skip>
-				<datasource.promptOnNonLocalDatabase>true</datasource.promptOnNonLocalDatabase>
+				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
 		<profile>

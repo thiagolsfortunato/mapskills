@@ -24,8 +24,8 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 /**
- * A classe abstrata <code>User</code> é uma entidade que representa usuario generico
- * que pode acessar a aplicacao.
+ * A classe abstrata <code>User</code> é uma entidade que 
+ * representa usuario generico que pode acessar a aplicacao.
  * 
  * @author Marcelo
  *

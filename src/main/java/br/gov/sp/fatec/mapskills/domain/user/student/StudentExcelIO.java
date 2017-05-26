@@ -12,7 +12,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-import br.gov.sp.fatec.mapskills.utils.AbstractExcelIO;
+import br.gov.sp.fatec.mapskills.infrastructure.AbstractExcelIO;
 /**
  * A classe <code>StudentPoiParser</code> converte um arquivo xlsx em objetos do tipo Student
  * para serem persistidos no banco de dados.
