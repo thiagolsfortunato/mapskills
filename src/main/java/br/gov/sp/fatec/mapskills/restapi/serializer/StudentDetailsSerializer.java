@@ -44,7 +44,9 @@ public class StudentDetailsSerializer extends DefaultJsonSerializer<StudentDetai
 		generator.writeStringField(DefaultJsonSerializer.PASS, DefaultJsonSerializer.EMPTY_PASS);
 		generator.writeEndObject();
 	}
-	
+	/*
+	 * TODO metodo duplicado, olhar comentario na classe {@link CourseListSerializer}.
+	 */
 	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {
 		generator.writeObjectFieldStart("course");
 		generator.writeStringField("code", course.getCode());

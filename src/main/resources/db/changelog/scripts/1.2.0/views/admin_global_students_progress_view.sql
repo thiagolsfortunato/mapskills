@@ -2,6 +2,8 @@
 -- Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
 -- Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
 
+DROP VIEW IF EXISTS ADMIN_GLOBAL_STUDENTS_PROGRESS_VIEW;
+
 CREATE OR REPLACE VIEW ADMIN_GLOBAL_STUDENTS_PROGRESS_VIEW AS
 	SELECT
 		SUBSTR(STUD.STU_RA, 7, 3) AS YEAR_SEMESTER,

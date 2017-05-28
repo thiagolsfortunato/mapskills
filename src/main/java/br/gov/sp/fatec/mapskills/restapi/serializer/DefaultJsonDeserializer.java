@@ -29,7 +29,7 @@ import br.gov.sp.fatec.mapskills.utils.JsonUtil;
  */
 public abstract class DefaultJsonDeserializer<T> extends JsonDeserializer<T> {
 	
-	protected JsonUtil jsonUtil = BeanRetriever.getBean("jsonUtil", JsonUtil.class);
+	protected final JsonUtil jsonUtil = BeanRetriever.getBean("jsonUtil", JsonUtil.class);
 	
 	protected abstract T deserialize(final JsonNode node);
 	

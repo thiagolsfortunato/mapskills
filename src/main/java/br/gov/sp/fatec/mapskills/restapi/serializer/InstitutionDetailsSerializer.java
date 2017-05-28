@@ -46,7 +46,9 @@ public class InstitutionDetailsSerializer extends AbstractInstitutionSerializer<
 		}
 		generator.writeEndArray();
 	}
-	
+	/*
+	 * TODO metodo duplicado, olhar comentario na classe {@link CourseListSerializer}.
+	 */
 	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {
 		generator.writeStartObject();
 		generator.writeNumberField("id", course.getId());
