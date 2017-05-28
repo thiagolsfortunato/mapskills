@@ -34,7 +34,12 @@ public class CourseListSerializer extends DefaultJsonSerializer<CourseListWrappe
 		generator.writeEndArray();
 		
 	}
-	
+	/*TODO extrair para uma classe 'CourseSerializer' e deixar a responsabilidade
+	 * para o metodo 'serialize' a responsabilidade de serializacao do objeto.
+	 * Este metodo esta duplicado nas classe {@link InstitutionDetailsSerializer},
+	 * {@link StudentDetailsSerializer} e {@link StudentListSerializer}
+	 * no metodo courseSerialize.
+	 */
 	private void courseSerialize(final Course course, final JsonGenerator generator) throws IOException {
 		generator.writeNumberField("id", course.getId());
 		generator.writeStringField("code", course.getCode());

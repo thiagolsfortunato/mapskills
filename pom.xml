@@ -45,6 +45,7 @@
 
 	<dependencies>
 
+		<!-- MANIPULAÇÃO DE ARQUIVOS VIA MULTIPART FILE -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -150,7 +151,7 @@
 			<version>${org.springframework.data.version}</version>
 		</dependency>
 
-		<!-- formatador JSON -->
+		<!-- FORMATADOR JSON -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -260,14 +261,14 @@
 				<datasource.driver>org.hsqldb.jdbcDriver</datasource.driver>
 				<datasource.username>sa</datasource.username>
 				<datasource.password>sa</datasource.password>
-				<datasource.dropAll>false</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
+				<datasource.dropAll>true</datasource.dropAll>
+				<liquibase.skip>true</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
 		<profile>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<id>local</id>
 			<properties>
@@ -275,7 +276,7 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
+				<datasource.dropAll>false</datasource.dropAll>
 				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
@@ -352,8 +353,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
+				<groupId>org.liquibase</groupId>
 				<version>${liquibase-maven-plugin.version}</version>
 				<configuration>
 					<changeLogFile>src/main/resources/db/changelog/db.master.xml</changeLogFile>

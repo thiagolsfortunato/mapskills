@@ -2,7 +2,9 @@
 -- Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
 -- Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
 
-CREATE OR REPLACE VIEW RADAR_RESULT_VIEW AS
+DROP VIEW IF EXISTS RADAR_RESULT_VIEW;
+
+CREATE VIEW RADAR_RESULT_VIEW AS
 	SELECT SQE.USE_ID AS USER_ID,
         SKILL.SKI_TYPE AS SKILL_TYPE,
         SKILL.SKI_DESCRIPTION AS SKILL_DESCRIPTION,

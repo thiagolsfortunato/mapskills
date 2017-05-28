@@ -2,6 +2,8 @@
 -- Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
 -- Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
 
+DROP VIEW IF EXISTS CSV_REPORT_VIEW;
+
 CREATE OR REPLACE VIEW CSV_REPORT_VIEW AS
 	SELECT	USER.USE_ID AS STUDENT_ID,
     		STUDENT.STU_RA AS STUDENT_RA,

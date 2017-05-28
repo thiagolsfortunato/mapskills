@@ -10,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -48,8 +47,9 @@ public class StudentTest extends AbstractApplicationTest {
     	filter.setAuthenticationManager(jwtAuthenticationManager); 
 	}
 	
-	@After
+	@Before
 	public void cleanTables() {
+		institutionSerivce.deleteAll();
 	}
 	
 	@Test
