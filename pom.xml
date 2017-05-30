@@ -287,12 +287,12 @@
 			</activation>
 			<id>azure</id>
 			<properties>
-				<datasource.url>jdbc:mysql://172.17.0.5:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://104.41.62.221:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>false</datasource.dropAll>
-				<liquibase.skip>true</liquibase.skip>
+				<datasource.dropAll>true</datasource.dropAll>
+				<liquibase.skip>false</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
