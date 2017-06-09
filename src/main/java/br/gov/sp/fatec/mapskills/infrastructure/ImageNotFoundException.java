@@ -1,5 +1,5 @@
 /*
- * @(#)ReadFileException.java 1.0 21/01/2017
+ * @(#)ImageNotFoundException.java 1.0 04/06/2017
  *
  * Copyright (c) 2017, Fatec Jessen Vidal. All rights reserved.
  * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
  * 
- * A classe {@link ReadFileException} e lancada
- * quando um problema ao ler um arquivo e encontrado.
+ * A classe {@link ImageNotFoundException} e lancada
+ * quando uma requisicao de uma imagem no servidor
+ * nao e encontrada.
  *
  * @author Marcelo
- * @version 1.0 21/01/2017
+ * @version 1.0 04/06/2017
  */
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class ReadFileException extends MapSkillsException {
-	
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ImageNotFoundException extends MapSkillsException {
+
+	/****/
 	private static final long serialVersionUID = 1L;
 	
-	public ReadFileException(final String message) {
+	public ImageNotFoundException(final String message) {
 		super(message);
 	}
 

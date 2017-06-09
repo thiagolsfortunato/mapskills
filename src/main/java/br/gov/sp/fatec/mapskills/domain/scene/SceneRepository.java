@@ -24,7 +24,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 	 * @param themeId
 	 * @return proximo index
 	 */
-	@Query("SELECT (COUNT(*)) FROM Scene s WHERE s.gameThemeId = ?1")
+	@Query("SELECT (COUNT(scene.id)) FROM Scene scene WHERE scene.gameThemeId = ?1")
 	public int findNextIndex(final long themeId);
 	
 	/**
@@ -40,7 +40,7 @@ public interface SceneRepository extends CrudRepository<Scene, Long> {
 			+ "	(SELECT COALESCE(MAX(event.sceneIndex + 1), 0) FROM AnswerEvent event "
 			+ "		INNER JOIN Student stud ON event.studentId = stud.id "
 			+ "		WHERE event.studentId = ?1) "
-			+ "AND stu.completed = false "
+			+ "AND stu.completed = FALSE "
 			+ "AND stu.id = ?1 "
 			+ "ORDER BY scene.index ASC")
 	public Collection<Scene> findAllNotAnsweredByStudent(final long studentId);

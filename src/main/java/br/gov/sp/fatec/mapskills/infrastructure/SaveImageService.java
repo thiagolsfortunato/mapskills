@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.utils.Base64Parser;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
+import lombok.AllArgsConstructor;
 /**
  * 
  * A classe {@link SaveImageService} e responsavel por salvar as
@@ -29,12 +29,13 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
  * @version 1.0 06/01/2017
  */
 @Component
+@AllArgsConstructor
 public class SaveImageService {
 	
 	private static final Logger LOGGER = Logger.getLogger( SaveImageService.class.getName() );
 	
-	private ServletContext context;
-	private Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
+	private final ServletContext context;
+	private final Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	
 	/**
 	 * Metodo que salva a imagem no diretorio do servidor definido como padrao
@@ -58,10 +59,4 @@ public class SaveImageService {
 		}
 	}
 	
-	@Autowired
-	public void setServletContext(final ServletContext servletContext) {
-		this.context = servletContext;
-	}
-
-
 }

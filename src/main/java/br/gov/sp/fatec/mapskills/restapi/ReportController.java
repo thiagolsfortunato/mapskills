@@ -8,8 +8,6 @@ package br.gov.sp.fatec.mapskills.restapi;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +15,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,66 +27,84 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.sp.fatec.mapskills.domain.skill.Skill;
-import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportDefaultData;
+import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+import br.gov.sp.fatec.mapskills.infrastructure.ImageNotFoundException;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportFilter;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportService;
-import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportSpecification;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.ReportViewWrapper;
+import lombok.AllArgsConstructor;
 
 @RestController
+@AllArgsConstructor
 public class ReportController {
 	
 	private static final Logger LOGGER = Logger.getLogger(ReportController.class.getName());
-		
-	@Autowired
-	private ReportService reportService;
-	
-	@Autowired
-	private SkillService skillService;
-	
-	@Autowired
-	private ServletContext servletContext;
-	
+
+	private final ReportService reportService;
+	private final ServletContext servletContext;
+	/**
+	 * End-point para realizar download do relatorio,
+	 * chamado nas interfaces de administrador e mentor.
+	 * @param filter
+	 * 		Filtro para busca do relatorio.
+	 * @param response
+	 * 		Sera escrito o tipo do conteudo.
+	 * @return
+	 * 		Atraves de stream o relatorio.
+	 */
 	@RequestMapping(value = "/report/download", method = RequestMethod.POST)
 	@ResponseBody
 	public HttpEntity<byte[]> getReportDownload(@RequestBody final ReportFilter filter, final HttpServletResponse response) {
 		try {
 			final byte[] report = reportService.getCsvReport(filter);
-			final HttpHeaders httpHeaders = new HttpHeaders();
-		    httpHeaders.add("Content-Disposition", "attachment; filename=report.csv" );
 		    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 		    response.setCharacterEncoding("UTF-8");
-			return new HttpEntity<>(report, httpHeaders);
-		} catch (final IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new HttpEntity<>(report, getHttpHeaders());
+		} catch (final IOException exception) {
+			LOGGER.log(Level.SEVERE, exception.getMessage(), exception);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+	/**
+	 * End-point que recupera um relatorio dos alunos.
+	 * @param filter
+	 * 		Filtro para pesquisa requerida.
+	 * @return
+	 * 		Relatorio em json.
+	 */
 	@RequestMapping(value = "/report/view", method = RequestMethod.POST)
 	public ResponseEntity<ReportViewWrapper> getReportView(@RequestBody final ReportFilter filter) {
-		final List<Skill> skills = new ArrayList<>();
-		final List<ReportDefaultData> datas = new ArrayList<>();
-		datas.addAll(reportService.getReportDatas(ReportSpecification.byFilter(filter)));
-		for(final ReportDefaultData data : datas) {
-			data.setScores(reportService.getScoresByStudentId(data.getStudentId()));
-		}
-		skills.addAll(skillService.findAll());
-		
-		final ReportViewWrapper reportView = new ReportViewWrapper(skills, datas);
+		final ReportViewWrapper reportView = reportService.getReport(filter);
 		return new ResponseEntity<>(reportView, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/image/{image_name}", method = RequestMethod.GET)
+	/**
+	 * End-point que recupera uma imagem de cena salva no servidor da aplicacao.
+	 * @param imageName
+	 * 			Nome da imagem a ser recuperada com a respectiva extensao. Ex.: scene00.jpg
+	 * @param response
+	 * 			Atraves de stream e retornada a imagem.
+	 * @throws MapSkillsException
+	 * 			Excecao lancada caso nao encontre a imagem.
+	 */
+	@RequestMapping(value = "/image/{imageName:.+}", method = RequestMethod.GET)
 	@ResponseBody
-	public void getImageAsResource(@PathVariable("image_name") final String imageName,
-			final HttpServletResponse response) throws IOException {
+	public void getImageAsResource(@PathVariable("imageName") final String imageName,
+			final HttpServletResponse response) throws MapSkillsException {
 		
-		final InputStream in = servletContext.getResourceAsStream("/images/"+imageName+".jpg");
-	    response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-	    IOUtils.copy(in, response.getOutputStream());
+	    try {
+	    	final InputStream inputStream = servletContext.getResourceAsStream("/images/"+imageName);
+	    	response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+			IOUtils.copy(inputStream, response.getOutputStream());
+		} catch (final IOException | NullPointerException exception) {
+			LOGGER.log(Level.SEVERE, imageName + " não encontrada", exception);
+			throw new ImageNotFoundException(imageName + " não encontrada");
+		}
+	}
+	
+	private HttpHeaders getHttpHeaders() {
+		final HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.add("Content-Disposition", "attachment; filename=report.csv" );
+	    return httpHeaders;
 	}
 
 }

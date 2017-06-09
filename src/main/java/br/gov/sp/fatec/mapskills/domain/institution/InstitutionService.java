@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +24,7 @@ import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+import lombok.AllArgsConstructor;
 
 /**
  * 
@@ -36,14 +35,15 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
  * @version 1.0 01/11/2016
  */
 @Service
+@AllArgsConstructor
 public class InstitutionService implements RepositoryService {
 	
 	private static final Logger LOGGER = Logger.getLogger(InstitutionService.class.getName());
 		
-	private InstitutionRepository institutionRepository;
-	private CourseRepository courseRepository;
-	private StudentRepository studentRepository;
-	private MentorRepository mentorRepository;
+	private final InstitutionRepository institutionRepository;
+	private final CourseRepository courseRepository;
+	private final StudentRepository studentRepository;
+	private final MentorRepository mentorRepository;
 	
 	@Override
 	public void deleteAll() {
@@ -190,23 +190,27 @@ public class InstitutionService implements RepositoryService {
 		return studentRepository.findAllByRaInstitutionCode(institutionCode);
 	}
 	
+	@Transactional(readOnly = true)
 	public long findThemeCurrent(final String institutionCode) {
 		return institutionRepository.findGameThemeIdByCode(institutionCode);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Object[]> getStudentsProgressByInstitution(final String institutionCode) {
 		final String yearSemester = getYearSemesterCurrent();
-		return institutionRepository.getStudentsProgressByInstitution(institutionCode, yearSemester);
+		return institutionRepository.findStudentsProgressByInstitution(institutionCode, yearSemester);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Object[]> getGlobalPogress() {
 		final String yearSemester = getYearSemesterCurrent();
-		return institutionRepository.getGlobalStudentsProgress(yearSemester);
+		return institutionRepository.findGlobalStudentsProgress(yearSemester);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Object[]> getLevelPogress(final String level) {
 		final String yearSemester = getYearSemesterCurrent();
-		return institutionRepository.getLevelStudentsProgress(level, yearSemester);
+		return institutionRepository.findLevelStudentsProgress(level, yearSemester);
 	}
 	/**
 	 * Metodo que recupera o ano e semestre corrente.
@@ -216,31 +220,6 @@ public class InstitutionService implements RepositoryService {
 		final String semester = dateCurrent.getMonthValue() < 6 ? "1" : "2";
 		final String year = String.valueOf(dateCurrent.getYear());
 		return year.substring(2).concat(semester);
-	}
-	
-	/* = = = = = Dependence Inject = = = = = **/
-	@Autowired
-	@Qualifier("institutionRepository")
-	public void setInstitutionRepository(final InstitutionRepository repository) {
-		institutionRepository = repository;
-	}
-	
-	@Autowired
-	@Qualifier("courseRepository")
-	public void setCourseRepository(final CourseRepository repository) {
-		courseRepository = repository;
-	}
-	
-	@Autowired
-	@Qualifier("studentRepository")
-	public void setStudentRepository(final StudentRepository repository) {
-		studentRepository = repository;
-	}
-	
-	@Autowired
-	@Qualifier("mentorRepository")
-	public void setMentorRepository(final MentorRepository repository) {
-		mentorRepository = repository;
 	}
 
 }

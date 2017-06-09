@@ -9,22 +9,20 @@ package br.gov.sp.fatec.mapskills.domain.scene;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEvent;
 import br.gov.sp.fatec.mapskills.domain.answerevent.AnswerEventRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class SceneService implements RepositoryService {
 	
-	@Autowired
-	private SceneRepository sceneRepo;
-	
-	@Autowired
-	private AnswerEventRepository answerRepo;
+	private final SceneRepository sceneRepo;
+	private final AnswerEventRepository answerRepo;
 
 	@Override
 	public void deleteAll() {

@@ -5,6 +5,9 @@
  */
 package br.gov.sp.fatec.mapskills.infrastructure;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 /**
  * 
@@ -16,6 +19,7 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
  * @author Marcelo
  * @version 1.0 05/02/2017
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class CellBlankException extends MapSkillsException {
 
 	private static final long serialVersionUID = 1L;
