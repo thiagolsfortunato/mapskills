@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +34,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
+import lombok.AllArgsConstructor;
 
 /**
  * 
@@ -46,15 +46,13 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
  */
 @RestController
 @RequestMapping(InstitutionController.BASE_PATH)
+@AllArgsConstructor
 public class InstitutionController {
 	
 	public static final String BASE_PATH = "/institution";
 	
-	@Autowired
-	private InstitutionService institutionService;
-	
-	@Autowired
-	private GameThemeService themeService;
+	private final InstitutionService institutionService;
+	private final GameThemeService themeService;
 	
 	/**
 	 * Metodo que realiza o cadastro de uma lista de alunos por meio de um aquivio

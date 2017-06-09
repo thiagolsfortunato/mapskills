@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneRepository;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+import lombok.AllArgsConstructor;
 /**
  * 
  * A classe {@link GameThemeService} contem todas as regras de negocio
@@ -25,10 +25,11 @@ import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
  * @version 1.0 04/11/2016
  */
 @Service
+@AllArgsConstructor
 public class GameThemeService implements RepositoryService {
 	
-	private GameThemeRepository themeRepo;
-	private SceneRepository sceneRepo;
+	private final GameThemeRepository themeRepo;
+	private final SceneRepository sceneRepo;
 	
 	@Override
 	public void deleteAll() {
@@ -83,19 +84,6 @@ public class GameThemeService implements RepositoryService {
 	
 	public Collection<GameTheme> findAllThemesActivated() {
 		return themeRepo.findAllByActive(true);
-	}
-		
-	
-	//=== Dependecy Inject ===
-
-	@Autowired
-	public void setGameThemeRepository(final GameThemeRepository repository) {
-		this.themeRepo = repository;
-	}
-	
-	@Autowired
-	public void setSceneRepository(final SceneRepository repository) {
-		this.sceneRepo = repository;
 	}
 	
 }

@@ -8,7 +8,6 @@ package br.gov.sp.fatec.mapskills.restapi;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +37,7 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
 import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
+import lombok.AllArgsConstructor;
 /**
  * 
  * A classe {@link AdminController} eh responsavel por conter todos
@@ -48,24 +48,16 @@ import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
  */
 @RestController
 @RequestMapping(AdminController.BASE_PATH)
+@AllArgsConstructor
 public class AdminController {
 	
 	protected static final String BASE_PATH = "/admin";
 	
-	@Autowired
-	private SkillService skillService;
-	
-	@Autowired
-	private GameThemeService themeService;
-	
-	@Autowired
-	private SceneService sceneService;
-	
-	@Autowired
-	private InstitutionService institutionService;
-	
-	@Autowired
-	private SaveImageService imageService;
+	private final SkillService skillService;
+	private final GameThemeService themeService;
+	private final SceneService sceneService;
+	private final InstitutionService institutionService;
+	private final SaveImageService imageService;
 	
 	/**
 	 * Metodo que realiza a persistencia de lista de instituicoes por meio de um arquivo

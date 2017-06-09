@@ -6,7 +6,6 @@
  */
 package br.gov.sp.fatec.mapskills.restapi;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.sp.fatec.mapskills.domain.user.User;
 import br.gov.sp.fatec.mapskills.domain.user.UserService;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
+import lombok.AllArgsConstructor;
 
 /**
  * A classe <code>AuthenticationController</code> eh responsavel por conter a
@@ -26,10 +26,10 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
  *
  */
 @RestController
+@AllArgsConstructor
 public class AuthenticationController {
 	
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 	
 	/**
 	 * Metodo que retorna os detalhes do usuário logado na aplicacao.

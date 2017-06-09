@@ -25,8 +25,8 @@ public interface ReportRepository extends Repository<ReportDefaultData, Long>, J
 	 * @param studentId
 	 * @return
 	 */
-	@Query(value="SELECT view.total FROM skill LEFT JOIN radar_result_view view ON skill.ski_type = view.skill_type "
-			+ "WHERE view.user_id = ?1 OR view.user_id IS NULL ORDER BY skill.ski_id;", nativeQuery = true)
+	@Query(value="SELECT VIEW.TOTAL FROM SKILL LEFT JOIN RADAR_RESULT_VIEW VIEW ON SKILL.SKI_TYPE = VIEW.SKILL_TYPE "
+			+ "WHERE VIEW.USER_ID = ?1 OR VIEW.USER_ID IS NULL ORDER BY SKILL.SKI_ID;", nativeQuery = true)
 	public List<Object> findAllSkillsByStudentId(final long studentId);
 
 }

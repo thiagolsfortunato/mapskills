@@ -15,7 +15,7 @@ public class MapSkillsException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	public MapSkillsException() {
-		this("problema encontrado durante a execução");
+		this("problema encontrado na aplicação");
 	}
 	
 	public MapSkillsException(final String message) {

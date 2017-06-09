@@ -7,14 +7,15 @@
 package br.gov.sp.fatec.mapskills.restapi.wrapper.report;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
+import lombok.AllArgsConstructor;
 /**
  * 
  * A classe {@link ReportService} contem as regras de negocio
@@ -25,15 +26,13 @@ import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
  * @version 1.0 05/03/2017
  */
 @Service
+@AllArgsConstructor
 public class ReportService {
 	
 	private static final String SEMICOLON = ";";
 	
-	@Autowired
-	private SkillService skillService;
-	
-	@Autowired
-	private ReportRepository reportRepository;
+	private final SkillService skillService;
+	private final ReportRepository reportRepository;
 	
 	/**
 	 * 
@@ -64,6 +63,17 @@ public class ReportService {
 	
 	public List<Object> getScoresByStudentId(final long studentId) {
 		return reportRepository.findAllSkillsByStudentId(studentId);
+	}
+	
+	public ReportViewWrapper getReport(final ReportFilter filter) {
+		final List<Skill> skills = new ArrayList<>();
+		final List<ReportDefaultData> datas = new ArrayList<>();
+		datas.addAll(getReportDatas(ReportSpecification.byFilter(filter)));
+		for(final ReportDefaultData data : datas) {
+			data.setScores(getScoresByStudentId(data.getStudentId()));
+		}
+		skills.addAll(skillService.findAll());
+		return new ReportViewWrapper(skills, datas);
 	}
 	
 	/**

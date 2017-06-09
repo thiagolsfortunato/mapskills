@@ -12,14 +12,17 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface StudentRepository extends CrudRepository<Student, Long> {
 	
-	@Query("SELECT s FROM Student s WHERE s.ra.courseCode = ?1 AND s.ra.institutionCode = ?2")
+	@Query("SELECT student FROM Student student WHERE student.ra.courseCode = ?1 AND student.ra.institutionCode = ?2")
 	public List<Student> findAllByCourseAndInstitution(final String courseCode, final String institutionCode);
 	
 	public Student findByRaRa(final String ra); 
 	/**
-	 * recupera todos alunos em detalhes de uma instituição
+	 * Recupera todos alunos em detalhes de uma instituicao
 	 * @param institutionCode
+	 * 			Codigo da instituicao de tres digitos.
 	 * @return
+	 * 			Lista de alunos que fazem parte da instituicao
+	 * 			que possui o codigo.
 	 */
 	public List<Student> findAllByRaInstitutionCode(final String institutionCode);
 
