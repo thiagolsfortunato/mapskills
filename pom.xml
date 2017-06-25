@@ -291,8 +291,8 @@
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
-				<datasource.dropAll>true</datasource.dropAll>
-				<liquibase.skip>false</liquibase.skip>
+				<datasource.dropAll>false</datasource.dropAll>
+				<liquibase.skip>true</liquibase.skip>
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
