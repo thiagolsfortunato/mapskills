@@ -38,7 +38,7 @@ public final class ReportSpecification {
 	    		  final CriteriaBuilder builder) {
 	    	  
 	        final List<Predicate> predicates = new LinkedList<>();
-	        //TODO melhoria futura, implementar padrão de projeto chain of responsability
+
 	        verifyFilters(filter, predicates, root, builder);
 	        return builder.and(predicates.toArray(new Predicate[]{}));
 	      }

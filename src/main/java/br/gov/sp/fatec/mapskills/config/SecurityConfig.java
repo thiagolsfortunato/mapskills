@@ -45,7 +45,7 @@ import br.gov.sp.fatec.mapskills.authentication.jwt.JwtVerifier;
 /**
  * 
  * A classe {@link SecurityConfig} representa as configuracoes
- * de seguranca a aplicacao em nivel de URI
+ * de seguranca da aplicacao em nivel de URI.
  *
  * @author Marcelo
  * @version 1.0 07/01/2017
