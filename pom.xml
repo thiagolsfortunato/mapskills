@@ -41,22 +41,12 @@
 		<sonar.language>java</sonar.language>
 		<maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
 		<cobertura.version>2.1.1</cobertura.version>
+		
+		<!-- NEXUS -->
+		<maven-deploy-plugin.version>3.5.0</maven-deploy-plugin.version>
 	</properties>
 
 	<dependencies>
-
-		<!-- MANIPULAÇÃO DE ARQUIVOS VIA MULTIPART FILE -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
-		</dependency>
-
 		<!-- SPRING TEST -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -287,7 +277,7 @@
 			</activation>
 			<id>azure</id>
 			<properties>
-				<datasource.url>jdbc:mysql://104.41.62.221:3306/mapskills</datasource.url>
+				<datasource.url>jdbc:mysql://191.232.161.50:3306/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>mapskills</datasource.username>
 				<datasource.password>mapskills</datasource.password>
@@ -312,8 +302,15 @@
 				<datasource.promptOnNonLocalDatabase>false</datasource.promptOnNonLocalDatabase>
 			</properties>
 		</profile>
-
 	</profiles>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>http://191.232.161.50:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<build>
 		<finalName>mapskills</finalName>
 		<resources>
@@ -398,6 +395,33 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-deploy-plugin</artifactId>
+			   <version>${maven-deploy-plugin.version}</version>
+			   <configuration>
+			      <skip>true</skip>
+			   </configuration>
+			</plugin>
+			<plugin>
+			   <groupId>org.sonatype.plugins</groupId>
+			   <artifactId>nexus-staging-maven-plugin</artifactId>
+			   <version>1.5.1</version>
+			   <executions>
+			      <execution>
+			         <id>default-deploy</id>
+			         <phase>deploy</phase>
+			         <goals>
+			            <goal>deploy</goal>
+			         </goals>
+			      </execution>
+			   </executions>
+			   <configuration>
+			      <serverId>nexus</serverId>
+			      <nexusUrl>http://191.232.161.50:8081/nexus/</nexusUrl>
+			      <skipStaging>true</skipStaging>
+			   </configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -435,6 +459,14 @@
 					<formats>
 						<format>html</format>
 					</formats>
+					<instrumentation>
+						<ignores>
+							<ignore>br.gov.sp.fatec.mapskills.config.*</ignore>
+						</ignores>
+						<excludes>
+							<exclude>br/gov/sp/fatec/mapskills/config/*.class</exclude>
+						</excludes>
+					</instrumentation>
 				</configuration>
 			</plugin>
 		</plugins>

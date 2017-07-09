@@ -32,8 +32,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SaveImageService {
 	
-	private static final Logger LOGGER = Logger.getLogger( SaveImageService.class.getName() );
-	
+	private static final Logger LOGGER = Logger.getLogger(SaveImageService.class.getName());
+	/*TODO aqui deve ser o local definido no arquivo properties definido.
+	 *   */
 	private final ServletContext context;
 	private final Base64Parser parser = BeanRetriever.getBean("base64Parser", Base64Parser.class);
 	
@@ -42,14 +43,17 @@ public class SaveImageService {
 	 * @param base64
 	 * @param filename
 	 * @return
-	 * @throws MapSkillsException 
+	 * @throws MapSkillsException
 	 */
+	/*TODO salvar imagem com um hash, para que não salve duas imagens com mesmo nome,
+	 * DICA: salvar id do tema + id da cena + nome da imagem. Caso a imagem já exista,
+	 * a mesma deve ser excluida */
 	public String save(final String base64, final String filename) throws MapSkillsException {
 		if(base64 == null) {
 			return null;
 		}
-		final String path = context.getRealPath("/images");
-		try (final OutputStream stream = new FileOutputStream(path.concat("/").concat(filename))) {
+		final String path = context.getRealPath("/images/");
+		try (final OutputStream stream = new FileOutputStream(path.concat(filename))) {
 		    stream.write(parser.toByteArray(base64));
 		    stream.close();
 		    return filename;
