@@ -39,7 +39,7 @@ public class JsonUtil {
 	}
 
 	public long getFieldLongValue(final JsonNode node, final String fieldName) {
-		return node.has(fieldName) ? node.get(fieldName).asLong() : 0;
+		return node.has(fieldName) ? node.get(fieldName).asLong() : 0L;
 	}
 
 	public int getFieldIntegerValue(final JsonNode node, final String fieldName) {
