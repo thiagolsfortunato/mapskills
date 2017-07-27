@@ -199,31 +199,31 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
-		
+
 		<!-- LOMBOK -->
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.16.16</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.16</version>
 		</dependency>
-		
+
 		<!-- SWAGGER 2 - Documentacao da API -->
 		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger2</artifactId>
-		    <version>2.6.1</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>2.6.1</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-data-rest</artifactId>
-		    <version>2.6.1</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-data-rest</artifactId>
+			<version>2.6.1</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<profiles>
@@ -233,10 +233,11 @@
 			<!-- mvn sonar:sonar -->
 			<id>sonar</id>
 			<properties>
-			<sonar.projectName>MPS - Aplicacao web para avaliacao de competencias</sonar.projectName>
+				<sonar.projectName>MPS - Aplicacao web para avaliacao de competencias</sonar.projectName>
 				<!-- Optional URL to server. Default value is http://localhost:9000 -->
 				<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
-				<sonar.exclusions>**/br/gov/sp/fatec/mapskills/config/**, **/br/gov/sp/fatec/mapskills/test/**</sonar.exclusions>
+				<sonar.exclusions>**/br/gov/sp/fatec/mapskills/config/**,
+					**/br/gov/sp/fatec/mapskills/test/**</sonar.exclusions>
 				<sonar.junit.reportsPath>/target/surefire-reports</sonar.junit.reportsPath>
 				<sonar.language>java</sonar.language>
 			</properties>
@@ -292,7 +293,7 @@
 			</activation>
 			<id>openshift</id>
 			<properties>
-				<!-- <datasource.url>jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url>  -->
+				<!-- <datasource.url>jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/mapskills</datasource.url> -->
 				<datasource.url>jdbc:mysql://127.0.0.1:56391/mapskills</datasource.url>
 				<datasource.driver>com.mysql.jdbc.Driver</datasource.driver>
 				<datasource.username>adminCrAhaE3</datasource.username>
