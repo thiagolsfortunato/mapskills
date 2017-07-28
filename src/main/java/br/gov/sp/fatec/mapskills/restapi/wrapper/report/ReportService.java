@@ -104,7 +104,7 @@ public class ReportService {
 			.append(data.getCourseName()).append(SEMICOLON)
 			.append(data.getInstitutionCompany()).append(SEMICOLON)
 			.append(data.getInstitutionCode()).append(SEMICOLON)
-			.append(data.getYaerSemester()).append(SEMICOLON);
+			.append(data.getYearSemester()).append(SEMICOLON);
 		return dataInfo;
 	}
 	/**
