@@ -15,7 +15,10 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	@Query("SELECT student FROM Student student WHERE student.ra.courseCode = ?1 AND student.ra.institutionCode = ?2")
 	public List<Student> findAllByCourseAndInstitution(final String courseCode, final String institutionCode);
 	
-	public Student findByRaRa(final String ra); 
+	@Query("SELECT student FROM Student student WHERE student.ra.ra = ?1 OR student.login.username = ?2")
+	public Student findByRaOrUsername(final String ra, final String username);
+	
+	public Student findByRaRa(final String ra);
 	/**
 	 * Recupera todos alunos em detalhes de uma instituicao
 	 * @param institutionCode

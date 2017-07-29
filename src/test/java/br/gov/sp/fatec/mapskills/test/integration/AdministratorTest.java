@@ -48,13 +48,13 @@ import br.gov.sp.fatec.mapskills.test.config.AbstractApplicationTest;
 import br.gov.sp.fatec.mapskills.utils.JsonUtil;
 /**
  * 
- * A classe {@link AdminTest} contem os testes de integracao
+ * A classe {@link AdministratorTest} contem os testes de integracao
  * do perfil de administrador.
  *
  * @author Marcelo
  * @version 1.0 13/01/2017
  */
-public class AdminTest extends AbstractApplicationTest {
+public class AdministratorTest extends AbstractApplicationTest {
 	
 	private static final String BASE_PATH = "/admin";
 	

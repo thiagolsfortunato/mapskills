@@ -1,5 +1,5 @@
 /*
- * @(#)PoiParser.java 1.0 03/11/2016
+ * @(#)ExcelFileHandle.java 1.0 03/11/2016
  *
  * Copyright (c) 2016, Fatec Jessen Vidal. All rights reserved.
  * Fatec Jessen Vidal proprietary/confidential. Use is subject to license terms.
@@ -26,16 +26,16 @@ import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 
 /**
  * 
- * A classe {@link AbstractExcelIO} tem objetivo de converter arquivo xlsx
+ * A classe {@link ExcelFileHandle} tem objetivo de converter arquivo xlsx
  * em objetos para serem persistidos no banco de dados. Utiliza
  * padrao de projetos template method.
  *
  * @author Marcelo
  * @version 1.0 03/11/2016
  */
-public abstract class AbstractExcelIO<T> {
+public abstract class ExcelFileHandle<T> {
 	
-	private static final Logger LOGGER = Logger.getLogger(AbstractExcelIO.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ExcelFileHandle.class.getName());
 	protected static final String DEFAULT_ENCRYPTED_PASS = "$2a$10$TH9WvYSs4BYDi7NaesV.Uerv7ZyzXXrEuriWeo2qAl96i6fN3oz8G";
 	
 	protected abstract List<T> toObjectList(final InputStream inputStream) throws MapSkillsException;

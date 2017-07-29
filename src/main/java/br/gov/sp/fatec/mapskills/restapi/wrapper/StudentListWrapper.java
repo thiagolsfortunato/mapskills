@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,7 +34,7 @@ public class StudentListWrapper {
 	private final Collection<Student> students = new ArrayList<>();
 	private final Map<String, Course> coursesMap = new HashMap<>();
 	
-	public StudentListWrapper(final Collection<Student> students, final Collection<Course> courses) {
+	public StudentListWrapper(final List<Student> students, final List<Course> courses) {
 		this.students.addAll(students);
 		for(final Course course : courses) {
 			this.coursesMap.put(course.getCode(), course);

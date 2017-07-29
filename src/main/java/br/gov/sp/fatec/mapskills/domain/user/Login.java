@@ -43,4 +43,9 @@ public class Login implements Serializable {
 		this.password = password;
 	}
 	
+	public void update(final Login newLogin) {
+		setUsername(newLogin.getUsername());
+		setPassword(newLogin.getPassword());
+	}
+	
 }

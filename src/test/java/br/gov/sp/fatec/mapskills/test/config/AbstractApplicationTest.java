@@ -57,7 +57,7 @@ import br.gov.sp.fatec.mapskills.test.wrapper.InstitutionWrapperTest;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {SpringContextTestConfiguration.class, WebConfig.class})
+@ContextConfiguration(classes = {SpringContextConfigurationTest.class, WebConfig.class})
 public abstract class AbstractApplicationTest {
 	
 	protected static final String AUTHORIZATION = "Authorization";

@@ -58,9 +58,11 @@ public class Institution implements Serializable {
 	@Column(name = "gth_id")
 	private long gameThemeId;
 	
+	//TODO quando salva instituicao deve salvar os cursos como cascade.
 	@Transient
 	private Collection<Course> courses = new HashSet<>();
 	
+	//TODO quando salva instituicao deve salvar os mentores como cascade.
 	@Transient
 	private Collection<Mentor> mentors = new HashSet<>();
 

@@ -22,7 +22,7 @@ import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.skill.Skill;
 import br.gov.sp.fatec.mapskills.domain.skill.SkillService;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
-import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
+import br.gov.sp.fatec.mapskills.test.config.SpringContextConfigurationTest;
 /**
  * 
  * A classe {@link MapSkillsTest} possui metodos
@@ -33,7 +33,7 @@ import br.gov.sp.fatec.mapskills.test.config.SpringContextTestConfiguration;
  * @version 1.0 29/12/2016
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {SpringContextTestConfiguration.class, WebConfig.class})
+@ContextConfiguration(classes = {SpringContextConfigurationTest.class, WebConfig.class})
 @WebAppConfiguration
 public abstract class MapSkillsTest {
 	
