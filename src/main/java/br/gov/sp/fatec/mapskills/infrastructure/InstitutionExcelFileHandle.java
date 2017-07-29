@@ -1,34 +1,38 @@
-/* @(#)InstitutionPoiParser.java 1.0 03/11/2016
+/* @(#)InstitutionExcelFileHandle.java 1.0 03/11/2016
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.institution;
+package br.gov.sp.fatec.mapskills.infrastructure;
 
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
+import br.gov.sp.fatec.mapskills.domain.institution.Institution;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionLevel;
+import br.gov.sp.fatec.mapskills.domain.institution.InstitutionRepository;
 import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
-import br.gov.sp.fatec.mapskills.infrastructure.AbstractExcelIO;
+import lombok.AllArgsConstructor;
+
 /**
- * A classe <code>InstitutionXLSXParser</code> converte um arquivo .xlsx em objetos do tipo Mentor
- * para serem persistidos no banco de dados.
  * 
- * @author Marcelo
+ * A classe {@link InstitutionExcelFileHandle} eh responsavel
+ * por manipular arquivos excel para objetos {@link Institution}.
  *
+ * @author Marcelo
+ * @version 1.0 03/11/2016
  */
 @Component
-public class InstitutionExcelIO extends AbstractExcelIO<Institution> {
+@AllArgsConstructor
+public class InstitutionExcelFileHandle extends ExcelFileHandle<Institution> {
 	
 	private static final int DATA_NUMBER = 7;
 	
-	@Autowired
-	private InstitutionService service;
+	private final InstitutionRepository repository;
 	
 	@Override
 	public List<Institution> toObjectList(final InputStream inputStream) throws MapSkillsException {
@@ -46,7 +50,7 @@ public class InstitutionExcelIO extends AbstractExcelIO<Institution> {
 				.city(attArgs.get(4))
 				.build();
 		
-		final Institution institution = service.findInstitutionByCnpj(attArgs.get(1));
+		final Institution institution = repository.findByCnpj(attArgs.get(1));
 		if(institution != null) {
 			institutionExcel.setId(institution.getId());
 			institutionExcel.setGameThemeId(institution.getGameThemeId());
@@ -62,12 +66,12 @@ public class InstitutionExcelIO extends AbstractExcelIO<Institution> {
 	}
 	
 	private Mentor buildMentor(final List<String> attArgs) {
-		final Mentor mentor = service.findMentorByUsername(attArgs.get(6));
+		final Mentor mentor = repository.findMentorByUsername(attArgs.get(6));
 		final Mentor mentorExcel = Mentor.builder()
 				.name(attArgs.get(5))
 				.institutionCode(attArgs.get(0))
 				.username(attArgs.get(6))
-				.password(AbstractExcelIO.DEFAULT_ENCRYPTED_PASS)
+				.password(DEFAULT_ENCRYPTED_PASS)
 				.build();
 		if(mentor != null) {
 			mentorExcel.setId(mentor.getId());

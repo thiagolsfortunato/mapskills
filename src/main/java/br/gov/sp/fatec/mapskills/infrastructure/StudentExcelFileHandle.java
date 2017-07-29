@@ -1,9 +1,9 @@
-/* @(#)StudentPoiParser.java 1.0 03/11/2016
+/* @(#)StudentExcelFileHandle.java 1.0 03/11/2016
  *
- * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.Fatec-Jessen Vidal 
- * proprietary/confidential. Use is subject to license terms.
+ * Copyright (c) 2016, Fatec-Jessen Vidal. All rights reserved.
+ * Fatec-Jessen Vidal proprietary/confidential. Use is subject to license terms.
  */
-package br.gov.sp.fatec.mapskills.domain.user.student;
+package br.gov.sp.fatec.mapskills.infrastructure;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -12,16 +12,20 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
-import br.gov.sp.fatec.mapskills.infrastructure.AbstractExcelIO;
+import br.gov.sp.fatec.mapskills.domain.user.student.AcademicRegistry;
+import br.gov.sp.fatec.mapskills.domain.user.student.RAInvalidException;
+import br.gov.sp.fatec.mapskills.domain.user.student.Student;
+
 /**
- * A classe <code>StudentPoiParser</code> converte um arquivo xlsx em objetos do tipo Student
- * para serem persistidos no banco de dados.
  * 
- * @author Marcelo
+ * A classe {@link StudentExcelFileHandle} e responsavel por
+ * manipular arquivos excel em objetos {@link Student}.
  *
+ * @author Marcelo
+ * @version 1.0 03/11/2016
  */
 @Component
-public class StudentExcelIO extends AbstractExcelIO<Student> {
+public class StudentExcelFileHandle extends ExcelFileHandle<Student> {
 	/**
 	 * O metodo <code>toObjectList</code> converte um arqiuvo do tipo excel xlsx em uma
 	 * lista de objetos do tipo Student.
@@ -38,7 +42,7 @@ public class StudentExcelIO extends AbstractExcelIO<Student> {
 	@Override
 	protected Student buildObject(final List<String> attArgs) throws MapSkillsException {
 		return new Student(academicRegistry(attArgs.get(0)), attArgs.get(1),
-				attArgs.get(2), attArgs.get(3), AbstractExcelIO.DEFAULT_ENCRYPTED_PASS);
+				attArgs.get(2), attArgs.get(3), ExcelFileHandle.DEFAULT_ENCRYPTED_PASS);
 	}
 	/**
 	 * verifica se o numero de string da lista que servira como

@@ -22,6 +22,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 /**
  * A classe abstrata <code>User</code> é uma entidade que 
@@ -32,6 +33,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "USER")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -54,10 +56,6 @@ public abstract class User implements Principal, Serializable {
 	@Column(name = "pro_id")
 	private ProfileType profile;
 		
-	public User() {
-		// CONSTRUCTOR DEFAULT
-	}
-	
 	public User(final long id, final String name, final Login login, final ProfileType profile) {
 		this(name, login, profile);
 		this.id = id;
@@ -79,6 +77,10 @@ public abstract class User implements Principal, Serializable {
 	
 	public String getPassword() {
 		return login.getPassword();
+	}
+	
+	public void updateLogin(final Login newLogin) {
+		login.update(newLogin);
 	}
 	
 	public void setUsername(final String username) {

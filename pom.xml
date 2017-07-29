@@ -234,12 +234,24 @@
 			<id>sonar</id>
 			<properties>
 				<sonar.projectName>MPS - Aplicacao web para avaliacao de competencias</sonar.projectName>
-				<!-- Optional URL to server. Default value is http://localhost:9000 -->
-				<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
-				<sonar.exclusions>**/br/gov/sp/fatec/mapskills/config/**,
-					**/br/gov/sp/fatec/mapskills/test/**</sonar.exclusions>
 				<sonar.junit.reportsPath>/target/surefire-reports</sonar.junit.reportsPath>
 				<sonar.language>java</sonar.language>
+				<!-- Optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
+				<sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
+				<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+				<sonar.coverage.exclusions>
+                    **/config/*.java,
+                    **/jwt/*.java,
+                    **/authentication/*.java
+                </sonar.coverage.exclusions>
+				<sonar.exclusions>
+					**/config/*.java,
+                    **/jwt/*.java,
+                    **/authentication/*.java
+					**/config/*.java,
+					**/test/*.java
+				</sonar.exclusions>
 			</properties>
 		</profile>
 		<profile>
@@ -465,7 +477,10 @@
 							<ignore>br.gov.sp.fatec.mapskills.config.*</ignore>
 						</ignores>
 						<excludes>
-							<exclude>br/gov/sp/fatec/mapskills/config/*.class</exclude>
+							<exclude>**/authentication/*.class</exclude>
+							<exclude>**/jwt/*.class</exclude>
+							<exclude>**/config/*.class</exclude>
+							<exclude>**/test/*.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>

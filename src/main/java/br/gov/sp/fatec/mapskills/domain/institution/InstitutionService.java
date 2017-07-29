@@ -6,6 +6,7 @@
  */
 package br.gov.sp.fatec.mapskills.domain.institution;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +24,9 @@ import br.gov.sp.fatec.mapskills.domain.user.mentor.MentorRepository;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentInvalidException;
 import br.gov.sp.fatec.mapskills.domain.user.student.StudentRepository;
+import br.gov.sp.fatec.mapskills.infrastructure.InstitutionExcelFileHandle;
 import br.gov.sp.fatec.mapskills.infrastructure.RepositoryService;
+import br.gov.sp.fatec.mapskills.infrastructure.StudentExcelFileHandle;
 import lombok.AllArgsConstructor;
 
 /**
@@ -44,6 +47,8 @@ public class InstitutionService implements RepositoryService {
 	private final CourseRepository courseRepository;
 	private final StudentRepository studentRepository;
 	private final MentorRepository mentorRepository;
+	private final StudentExcelFileHandle studentExcelHandle;
+	private final InstitutionExcelFileHandle institutionExcelFileHandle;
 	
 	@Override
 	public void deleteAll() {
@@ -52,10 +57,20 @@ public class InstitutionService implements RepositoryService {
 		courseRepository.deleteAll();
 		institutionRepository.deleteAll();
 	}
+	
+	public List<Institution> saveInstituionFromExcel(final InputStream inputStream) throws MapSkillsException {
+		final List<Institution> institutionsFromExcel = institutionExcelFileHandle.toObjectList(inputStream);
+		return saveInstitutions(institutionsFromExcel);
+	}
+	
+	public List<Student> saveStudentsFromExcel(final InputStream inputStream) throws MapSkillsException {
+		final List<Student> studentsFromExcel = studentExcelHandle.toObjectList(inputStream);
+		return saveStudents(studentsFromExcel);
+	}
 
 	@Transactional
-	public Collection<Institution> saveInstitutions(final Collection<Institution> institutions) {
-		final Collection<Institution> institutionsSaved = new ArrayList<>(institutions.size());
+	public List<Institution> saveInstitutions(final List<Institution> institutions) {
+		final List<Institution> institutionsSaved = new ArrayList<>(institutions.size());
 		for(final Institution institution : institutions) {
 			institutionsSaved.add(this.saveInstitution(institution));
 		}
@@ -94,9 +109,13 @@ public class InstitutionService implements RepositoryService {
 	public List<Student> saveStudents(final Collection<Student> students) throws MapSkillsException {
 		final List<Student> studentsSaved = new ArrayList<>(students.size());
 		for(final Student student : students) {
-			if(studentRepository.findByRaRa(student.getRa()) == null) {
+			final Student existingStudent = studentRepository.findByRaOrUsername(student.getRa(), student.getUsername()); 
+			if(existingStudent == null) {
 				studentsSaved.add(this.saveStudent(student));
+				continue;
 			}
+			existingStudent.update(student);
+			studentsSaved.add(this.saveStudent(existingStudent));
 		}
 		return Collections.unmodifiableList(studentsSaved);
 	}
@@ -168,7 +187,7 @@ public class InstitutionService implements RepositoryService {
 	/**
 	 * Metodo que recupera todos os cursos de uma determinada instituicao
 	 */
-	public Collection<Course> findAllCoursesByInstitutionCode(final String institutionCode) {
+	public List<Course> findAllCoursesByInstitutionCode(final String institutionCode) {
 		final List<Course> courses = new ArrayList<>();
 		for(final Course course : courseRepository.findAllByInstitutionCode(institutionCode)) {
 			courses.add(course);
@@ -186,7 +205,7 @@ public class InstitutionService implements RepositoryService {
 		return courses;
 	}
 	
-	public Collection<Student> findAllStudentsByInstitution(final String institutionCode) {
+	public List<Student> findAllStudentsByInstitution(final String institutionCode) {
 		return studentRepository.findAllByRaInstitutionCode(institutionCode);
 	}
 	

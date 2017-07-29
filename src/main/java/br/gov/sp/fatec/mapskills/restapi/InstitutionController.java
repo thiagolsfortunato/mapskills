@@ -24,7 +24,6 @@ import br.gov.sp.fatec.mapskills.domain.institution.Institution;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.theme.GameThemeService;
 import br.gov.sp.fatec.mapskills.domain.user.student.Student;
-import br.gov.sp.fatec.mapskills.domain.user.student.StudentExcelIO;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.CourseWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.GameThemeListWrapper;
@@ -33,7 +32,6 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.StudentWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.UserWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressByInstitutionWrapper;
-import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 import lombok.AllArgsConstructor;
 
 /**
@@ -59,14 +57,14 @@ public class InstitutionController {
 	 * excel (.xlsx) feito pelo perfil <code>MENTOR</code>
 	 * @param inputStreamWrapper
 	 * @return
-	 * @throws Exception
+	 * @throws MapSkillsException caso ocorra algum problema.
 	 */
 	@RequestMapping(value = "/upload/students", method = RequestMethod.POST)
 	public ResponseEntity<StudentListWrapper> importStudents(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
-		final StudentExcelIO studentPoi = BeanRetriever.getBean("studentExcelIO", StudentExcelIO.class);
-		final List<Student> students = studentPoi.toObjectList(inputStreamWrapper.getInputStream());
-		final String institutionCode = students.get(0).getInstitutionCode();
-		final StudentListWrapper wrapper = new StudentListWrapper(institutionService.saveStudents(students), institutionService.findAllCoursesByInstitutionCode(institutionCode));
+		final List<Student> studentsSaved = institutionService.saveStudentsFromExcel(inputStreamWrapper.getInputStream());
+		final String institutionCode = studentsSaved.get(0).getInstitutionCode();
+		final List<Course> courses = institutionService.findAllCoursesByInstitutionCode(institutionCode);
+		final StudentListWrapper wrapper = new StudentListWrapper(studentsSaved, courses);
 		return new ResponseEntity<>(wrapper, HttpStatus.CREATED);
 	}
 	
@@ -121,10 +119,8 @@ public class InstitutionController {
 	public ResponseEntity<StudentListWrapper> getAllStudentsByInstitution(
 			@PathVariable("institutionCode") final String institutionCode) {
 		
-		final Collection<Course> courses = new ArrayList<>(); 
-		final Collection<Student> students = new ArrayList<>();
-		courses.addAll(institutionService.findAllCoursesByInstitutionCode(institutionCode));
-		students.addAll(institutionService.findAllStudentsByInstitution(institutionCode));
+		final List<Course> courses = institutionService.findAllCoursesByInstitutionCode(institutionCode);
+		final List<Student> students = institutionService.findAllStudentsByInstitution(institutionCode);
 		final StudentListWrapper studentsWrapper = new StudentListWrapper(students, courses);
 		return new ResponseEntity<>(studentsWrapper, HttpStatus.OK);
 	}

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.sp.fatec.mapskills.application.MapSkillsException;
 import br.gov.sp.fatec.mapskills.domain.institution.Institution;
-import br.gov.sp.fatec.mapskills.domain.institution.InstitutionExcelIO;
 import br.gov.sp.fatec.mapskills.domain.institution.InstitutionService;
 import br.gov.sp.fatec.mapskills.domain.scene.Scene;
 import br.gov.sp.fatec.mapskills.domain.scene.SceneService;
@@ -36,20 +35,19 @@ import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillListWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.SkillWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressGlobalWrapper;
 import br.gov.sp.fatec.mapskills.restapi.wrapper.report.StudentsProgressLevelWrapper;
-import br.gov.sp.fatec.mapskills.utils.BeanRetriever;
 import lombok.AllArgsConstructor;
 /**
  * 
- * A classe {@link AdminController} eh responsavel por conter todos
+ * A classe {@link AdministratorController} eh responsavel por conter todos
  * end-points de servico do perfil administrador da aplicacao.
  *
  * @author Marcelo
  * @version 1.0 03/01/2017
  */
 @RestController
-@RequestMapping(AdminController.BASE_PATH)
+@RequestMapping(AdministratorController.BASE_PATH)
 @AllArgsConstructor
-public class AdminController {
+public class AdministratorController {
 	
 	protected static final String BASE_PATH = "/admin";
 	
@@ -63,14 +61,13 @@ public class AdminController {
 	 * Metodo que realiza a persistencia de lista de instituicoes por meio de um arquivo
 	 * excel .(xlsx) feito pelo perfil <code>ADMINISTRATOR</code>
 	 * @param inputStreamWrapper
-	 * @return
+	 * @return lista de instituicoes cadastradas
 	 * @throws MapSkillsException 
 	 */
 	@RequestMapping(value = "/upload/institutions", method = RequestMethod.POST)
-	public ResponseEntity<InstitutionListWrapper> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {
-		final InstitutionExcelIO institutionPoi = BeanRetriever.getBean("institutionExcelIO", InstitutionExcelIO.class);
-		final List<Institution> institutions = institutionPoi.toObjectList(inputStreamWrapper.getInputStream());
-		final InstitutionListWrapper wrapper = new InstitutionListWrapper(institutionService.saveInstitutions(institutions));
+	public ResponseEntity<InstitutionListWrapper> importInstitutions(@RequestBody final InputStreamWrapper inputStreamWrapper) throws MapSkillsException {		
+		final List<Institution> institutionsSaved = institutionService.saveInstituionFromExcel(inputStreamWrapper.getInputStream());		
+		final InstitutionListWrapper wrapper = new InstitutionListWrapper(institutionsSaved);
 		return new ResponseEntity<>(wrapper, HttpStatus.CREATED);
 	}
 	

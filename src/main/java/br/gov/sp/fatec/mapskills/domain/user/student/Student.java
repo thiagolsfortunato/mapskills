@@ -18,10 +18,12 @@ import br.gov.sp.fatec.mapskills.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "STUDENT")
@@ -38,11 +40,7 @@ public class Student extends User {
 	
 	@Column(name = "stu_is_completed")
 	private boolean completed;
-		
-	public Student() {
-		// CONSTRUCTOR DEFAULT
-	}
-	
+			
 	@Builder
 	public Student(final AcademicRegistry ra, final String name, final String phone, final String username,
 			final String password) {
@@ -79,7 +77,7 @@ public class Student extends User {
 	
 	public void update(final Student studentUpdate) {
 		super.setName(studentUpdate.getName());
-		super.setLogin(studentUpdate.getLogin());
+		super.updateLogin(studentUpdate.getLogin());
 		this.ra = studentUpdate.getAcademicRegistry();
 		this.phone = studentUpdate.getPhone();		
 	}

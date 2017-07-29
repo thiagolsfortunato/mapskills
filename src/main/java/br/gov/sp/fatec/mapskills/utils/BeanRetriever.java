@@ -24,7 +24,7 @@ public class BeanRetriever implements ApplicationContextAware {
 	private static ApplicationContext context;
 	
 	@Override
-	public void setApplicationContext(final ApplicationContext ctx) {
+	public synchronized void setApplicationContext(final ApplicationContext ctx) {
 		context = ctx;
 	}
 

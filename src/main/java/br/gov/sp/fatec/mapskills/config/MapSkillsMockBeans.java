@@ -8,6 +8,7 @@ package br.gov.sp.fatec.mapskills.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -68,7 +69,7 @@ public class MapSkillsMockBeans {
 	
 	@Bean
 	public String saveInstitution() {
-		final Collection<Institution> institutions = new ArrayList<>(1);
+		final List<Institution> institutions = new ArrayList<>(1);
 		final Institution fatecA = new Institution("146", "60565187000100", "Jessen Vidal", InstitutionLevel.SUPERIOR,"São José");
 		fatecA.addMentor(new Mentor("Marquinhos", "146", "marquinhos@cps.sp.gov.br", "mudar@123"));
 		institutions.add(fatecA);

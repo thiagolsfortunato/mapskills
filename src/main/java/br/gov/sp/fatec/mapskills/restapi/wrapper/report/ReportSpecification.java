@@ -97,7 +97,7 @@ public final class ReportSpecification {
 			final Root<ReportDefaultData> root, final CriteriaBuilder builder) {
 		
 		if (!StringUtils.isEmpty(filter.getStartDate())) {
-        	predicates.add(builder.greaterThanOrEqualTo(root.<String>get("yaerSemester"), filter.getStartDate()));
+        	predicates.add(builder.greaterThanOrEqualTo(root.<String>get("yearSemester"), filter.getStartDate()));
         }
 		verifyEndDateFilter(filter, predicates, root, builder);
 	}
@@ -109,7 +109,7 @@ public final class ReportSpecification {
 			final Root<ReportDefaultData> root, final CriteriaBuilder builder) {
 		
 		if (!StringUtils.isEmpty(filter.getEndDate())) {
-        	predicates.add(builder.lessThanOrEqualTo(root.<String>get("yaerSemester"), filter.getEndDate()));
+        	predicates.add(builder.lessThanOrEqualTo(root.<String>get("yearSemester"), filter.getEndDate()));
 	    }
 	}
 

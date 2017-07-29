@@ -11,6 +11,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import br.gov.sp.fatec.mapskills.domain.user.mentor.Mentor;
+
 /**
  * 
  * A classe {@link InstitutionRepository} e responsavel por realizar as
@@ -65,5 +67,8 @@ public interface InstitutionRepository extends CrudRepository<Institution, Long>
 	@Query(value="SELECT * FROM ADMIN_LEVEL_STUDENTS_PROGRESS_VIEW RESULT "
 			+ "WHERE RESULT.LEVEL = ?1 AND RESULT.YEAR_SEMESTER = ?2", nativeQuery = true)
 	public List<Object[]> findLevelStudentsProgress(final String level, final String yearSemester);
+	
+	@Query("SELECT mentor FROM Mentor mentor WHERE mentor.login.username = ?1")
+	public Mentor findMentorByUsername(final String username);
 
 }

@@ -16,7 +16,7 @@ import br.gov.sp.fatec.mapskills.config.AbstractSpringContextConfiguration;
 import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
 /**
  * 
- * A classe {@link SpringContextTestConfiguration} representa as configuracoes
+ * A classe {@link SpringContextConfigurationTest} representa as configuracoes
  * necessarias para o realizacao dos testes da aplicacao, utilizando
  * banco de dados em memoria no caso o HSQLDB.
  *
@@ -25,7 +25,7 @@ import br.gov.sp.fatec.mapskills.config.DataBaseHsqldbConfig;
  */
 @Import({DataBaseHsqldbConfig.class})
 @ComponentScan(basePackages = {"br.gov.sp.fatec.mapskills.test.serializer"})
-public class SpringContextTestConfiguration extends AbstractSpringContextConfiguration {
+public class SpringContextConfigurationTest extends AbstractSpringContextConfiguration {
 	
 	@Bean
 	public ObjectMapper objectMapper() {

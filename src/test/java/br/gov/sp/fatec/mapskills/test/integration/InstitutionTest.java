@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -67,7 +66,7 @@ public class InstitutionTest extends AbstractApplicationTest {
     	filter.setAuthenticationManager(jwtAuthenticationManager);
 	}
 	
-	@After
+	@Before
 	public void cleanTables() {
 		super.cleanTables(service);
 	}
